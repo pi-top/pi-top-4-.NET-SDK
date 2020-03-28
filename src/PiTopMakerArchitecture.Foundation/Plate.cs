@@ -92,8 +92,8 @@ namespace PiTopMakerArchitecture.Foundation
                 {
                     factory = (p) =>
                     {
-                        var addess = p as AnalogAddress;
-                        return Activator.CreateInstance(typeof(T), addess.Port, addess.Address);
+                        var address = p as AnalogAddress;
+                        return Activator.CreateInstance(typeof(T), address.Port, address.Address);
                     };
                     _factories[typeof(T)] = factory;
                 }
