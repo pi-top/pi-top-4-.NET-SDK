@@ -4,8 +4,8 @@ namespace PiTopMakerArchitecture.Foundation.Components
 {
     public class Buzzer : DigitalPortDeviceBase
     {
-        private GpioController _controller;
-        private int _buzzPin;
+        private readonly GpioController _controller;
+        private readonly int _buzzPin;
         private bool _isOn;
 
         public Buzzer(DigitalPort port) : base(port)
