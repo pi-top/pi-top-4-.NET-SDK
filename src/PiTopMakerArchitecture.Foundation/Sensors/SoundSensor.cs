@@ -12,7 +12,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         {
         }
 
-        public SoundSensor(AnaloguePort port, int deviceAddress, bool normalizeValue = true) : base(port, deviceAddress)
+        public SoundSensor(AnaloguePort port, int deviceAddress, bool normalizeValue) : base(port, deviceAddress)
         {
             _normalizeValue = normalizeValue;
             var (pin1, _) = Port.ToPinPair();

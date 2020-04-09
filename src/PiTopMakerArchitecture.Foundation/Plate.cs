@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 
 namespace PiTopMakerArchitecture.Foundation
@@ -27,6 +28,11 @@ namespace PiTopMakerArchitecture.Foundation
         private const string RpiFoundationName = "PI-TOP Foundation Base RPI";
         private const string RpiZeroFoundationName = "PI-TOP Foundation Base  RPi Zero";
 
+        public IEnumerable<(DigitalPort port, DigitalPortDeviceBase device)> DigitalDevices =>
+            _digitalPortDevices.Select(e => (e.Key, e.Value));
+
+        public IEnumerable<(AnaloguePort port, AnaloguePortDeviceBase device)> AnalogueDevices =>
+            _analoguePortDevices.Select(e => (e.Key, e.Value));
 
         public T GetOrCreateDigitalDevice<T>(DigitalPort port, Func<DigitalPort, T> factory) where T : DigitalPortDeviceBase
         {
