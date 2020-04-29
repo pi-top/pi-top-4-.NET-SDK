@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Html;
 using Microsoft.DotNet.Interactive.Formatting;
 using Microsoft.FSharp.Core;
@@ -40,9 +41,9 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             return PocketViewTags.div[id: id](
                 PocketViewTags.svg[viewBox: "0 0 800 600", width: "100%", height: "100%"](
                     PocketViewTags.g(
-                        plate.GetPlateSvg(),
-                        plate.GetWiresSvg(),
-                        plate.GetDevicesSvg()
+                        plate.GetPlateSvg().ToString(),
+                        plate.GetWiresSvg().ToString(),
+                        plate.GetDevicesSvg().ToString()
                     )
                 )
                 );
@@ -129,7 +130,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 }
             }
             return PocketViewTags.g[@class: "wires_group"](
-                lines
+                string.Join("\n", lines.Select(e => e.ToString()))
             );
         }
 
@@ -138,7 +139,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             var devices = new List<IHtmlContent>();
 
             return PocketViewTags.g[@class: "devices_group"](
-                devices
+                string.Join("\n", devices.Select(e => e.ToString()))
                 );
         }
 
