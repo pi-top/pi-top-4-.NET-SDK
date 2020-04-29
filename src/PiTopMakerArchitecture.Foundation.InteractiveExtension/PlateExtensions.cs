@@ -13,21 +13,21 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
         {
             var root = new JObject();
 
-            foreach (var digital in plate.DigitalDevices)
+            foreach (var digitalDevice in plate.DigitalDevices)
             {
-                root[digital.port.ToString()] = new JObject
+                root[digitalDevice.Port.ToString()] = new JObject
                 {
-                    {"type", digital.device.GetType().Name },
-                    {"value", JToken.FromObject( digital.device.GetDeviceValue()) },
+                    {"type", digitalDevice.GetType().Name },
+                    {"value", JToken.FromObject( digitalDevice.GetDeviceValue()) },
                 };
             }
 
-            foreach (var analogue in plate.AnalogueDevices)
+            foreach (var analogueDevice in plate.AnalogueDevices)
             {
-                root[analogue.port.ToString()] = new JObject
+                root[analogueDevice.Port.ToString()] = new JObject
                 {
-                    {"type", analogue.device.GetType().Name },
-                    {"value", JToken.FromObject( analogue.device.GetDeviceValue() )},
+                    {"type", analogueDevice.GetType().Name },
+                    {"value", JToken.FromObject( analogueDevice.GetDeviceValue() )},
                 };
             }
 
@@ -43,8 +43,8 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                         plate.GetPlateSvg(),
                         plate.GetWiresSvg(),
                         plate.GetDevicesSvg()
+                        )
                     )
-                )
                 );
         }
 
@@ -52,48 +52,48 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
         {
             var lineStyle = "fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;";
             var svgWires = new List<PocketView>();
-            foreach (var (digitalPort, _) in plate.DigitalDevices)
+            foreach (var digitalDevice in  plate.DigitalDevices)
             {
-                switch (digitalPort)
+                switch (digitalDevice.Port)
                 {
                     case DigitalPort.D0:
-                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-192.173)"](
+                        svgWires.Add(g[@class: $"{digitalDevice.Port}Line", transform: "matrix(1,0,0,1,-353.998,-192.173)"](
                             _.path[d: "M840.189,439.958L936.223,440.495L1014.66,455.647L1061.13,455.215", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D1:
-                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-232.278)"](
+                        svgWires.Add(g[@class: $"{digitalDevice.Port}Line", transform: "matrix(1,0,0,1,-353.998,-232.278)"](
                             _.path[d: "M840.189,439.958L935.591,440.491L1014.66,449.524L1061.13,451.186", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D2:
-                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-272.646)"](
+                        svgWires.Add(g[@class: $"{digitalDevice.Port}Line", transform: "matrix(1,0,0,1,-353.998,-272.646)"](
                             _.path[d: "M840.189,439.958L935.782,440.493L1014.66,435.03L1061.13,435.148", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D3:
-                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-313.785)"](
+                        svgWires.Add(g[@class: $"{digitalDevice.Port}Line", transform: "matrix(1,0,0,1,-353.998,-313.785)"](
                             _.path[d: "M840.189,439.958L934.19,440.484L1014.66,434.353L1061.13,433.246", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D4:
-                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-314.91)"](
+                        svgWires.Add(g[@class: $"{digitalDevice.Port}Line", transform: "matrix(1,0,0,1,-804.429,-314.91)"](
                             _.path[d: "M825.429,435.727L862.406,435.727L945.578,440.547L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D5:
-                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-274.674)"](
+                        svgWires.Add(g[@class: $"{digitalDevice.Port}Line", transform: "matrix(1,0,0,1,-804.429,-274.674)"](
                             _.path[d: "M825.429,438.876L865.328,439.149L944.183,440.54L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D6:
-                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-233.539)"](
+                        svgWires.Add(g[@class: $"{digitalDevice.Port}Line", transform: "matrix(1,0,0,1,-804.429,-233.539)"](
                             _.path[d: "M825.429,449.825L863.58,449.319L945.966,440.549L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
 
                     case DigitalPort.D7:
-                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-193.297)"](
+                        svgWires.Add(g[@class: $"{digitalDevice.Port}Line", transform: "matrix(1,0,0,1,-804.429,-193.297)"](
                             _.path[d: "M825.429,452.968L863.85,452.602L945.425,440.546L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
@@ -102,27 +102,27 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 }
             }
 
-            foreach (var (analoguePort, _) in plate.AnalogueDevices)
+            foreach (var analogueDevice in plate.AnalogueDevices)
             {
-                switch (analoguePort)
+                switch (analogueDevice.Port)
                 {
                     case AnaloguePort.A0:
-                        svgWires.Add(g[@class: $"{analoguePort}Line", transform: "matrix(1, 0, 0, 1, -353.998, -353.235)"](
+                        svgWires.Add(g[@class: $"{analogueDevice.Port}Line", transform: "matrix(1, 0, 0, 1, -353.998, -353.235)"](
                             _.path[d: "M840.189,439.958L934.715,440.487L1014.66,425.698L1061.13,425.662", style: lineStyle]()
                         ));
                         break;
                     case AnaloguePort.A1:
-                        svgWires.Add(g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-353.998,-394.475)"](
+                        svgWires.Add(g[@class: $"{analogueDevice.Port}Line", transform: "matrix(1,0,0,1,-353.998,-394.475)"](
                             _.path[d: "M840.189,439.958L934.749,440.487L1014.66,418.622L1061.13,419.001", style: lineStyle]()
                         ));
                         break;
                     case AnaloguePort.A2:
-                        svgWires.Add(g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-804.429,-154.828)"](
+                        svgWires.Add(g[@class: $"{analogueDevice.Port}Line", transform: "matrix(1,0,0,1,-804.429,-154.828)"](
                             _.path[d: "M825.429,461.776L866.007,462.122L945.83,440.549L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
                     case AnaloguePort.A3:
-                        svgWires.Add(g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-804.429,-115.255)"](
+                        svgWires.Add(g[@class: $"{analogueDevice.Port}Line", transform: "matrix(1,0,0,1,-804.429,-115.255)"](
                             _.path[d: "M827.964,469.271L866.25,467.464L944.568,440.542L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
@@ -137,81 +137,77 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
         internal static PocketView GetDevicesSvg(this Plate plate)
         {
             var svgDevices = new List<PocketView>();
-            foreach (var (digitalPort, digitalDevice) in plate.DigitalDevices)
+            foreach (var  digitalDevice in plate.DigitalDevices)
             {
-                switch (digitalPort)
+                switch (digitalDevice.Port)
                 {
                     case DigitalPort.D0:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,669.385,233.341)"](
+                        svgDevices.Add(g[@class: $"{digitalDevice.Port}Target", transform: "matrix(1,0,0,1,669.385,233.341)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
                     case DigitalPort.D1:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,669.385,185.607)"](
+                        svgDevices.Add(g[@class: $"{digitalDevice.Port}Target", transform: "matrix(1,0,0,1,669.385,185.607)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
                     case DigitalPort.D2:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,669.385,137.873)"](
+                        svgDevices.Add(g[@class: $"{digitalDevice.Port}Target", transform: "matrix(1,0,0,1,669.385,137.873)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
                     case DigitalPort.D3:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,669.385,90.1386)"](
+                        svgDevices.Add(g[@class: $"{digitalDevice.Port}Target", transform: "matrix(1,0,0,1,669.385,90.1386)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
                     case DigitalPort.D4:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,-11.0292,87.7579)"](
+                        svgDevices.Add(g[@class: $"{digitalDevice.Port}Target", transform: "matrix(1,0,0,1,-11.0292,87.7579)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
                     case DigitalPort.D5:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,-11.0292,135.492)"](
+                        svgDevices.Add(g[@class: $"{digitalDevice.Port}Target", transform: "matrix(1,0,0,1,-11.0292,135.492)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
                     case DigitalPort.D6:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,-11.0292,183.226)"](
+                        svgDevices.Add(g[@class: $"{digitalDevice.Port}Target", transform: "matrix(1,0,0,1,-11.0292,183.226)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
                     case DigitalPort.D7:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,-11.0292,230.96)"](
+                        svgDevices.Add(g[@class: $"{digitalDevice.Port}Target", transform: "matrix(1,0,0,1,-11.0292,230.96)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
             }
 
-            foreach (var (analoguePort, analogueDevice) in plate.AnalogueDevices)
+            foreach (var analogueDevice in plate.AnalogueDevices)
             {
-                switch (analoguePort)
+                switch (analogueDevice.Port)
                 {
                     case AnaloguePort.A0:
-                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(1,0,0,1,669.385,42.4044)"](
+                        svgDevices.Add(g[@class: $"{analogueDevice.Port}Target", transform: "matrix(1,0,0,1,669.385,42.4044)"](
                             analogueDevice.GetSvg()
                         ));
                         break;
                     case AnaloguePort.A1:
-                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(1,0,0,1,669.385,-5.3297)"](
+                        svgDevices.Add(g[@class: $"{analogueDevice.Port}Target", transform: "matrix(1,0,0,1,669.385,-5.3297)"](
                             analogueDevice.GetSvg()
                         ));
                         break;
                     case AnaloguePort.A2:
-                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(1,0,0,1,-11.0292,278.694)"](
+                        svgDevices.Add(g[@class: $"{analogueDevice.Port}Target", transform: "matrix(1,0,0,1,-11.0292,278.694)"](
                             analogueDevice.GetSvg()
                         ));
                         break;
                     case AnaloguePort.A3:
-                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(1,0,0,1,-11.0292,326.429)"](
+                        svgDevices.Add(g[@class: $"{analogueDevice.Port}Target", transform: "matrix(1,0,0,1,-11.0292,326.429)"](
                             analogueDevice.GetSvg()
                         ));
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
             }
 

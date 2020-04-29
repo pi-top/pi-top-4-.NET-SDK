@@ -52,7 +52,7 @@ namespace SampleApp
 
         private static void AllLedOff(Plate plate)
         {
-            foreach (var led in plate.DigitalDevices.Select(p => p.device).OfType<Led>())
+            foreach (var led in plate.DigitalDevices.OfType<Led>())
             {
                 led.Off();
             }
@@ -77,7 +77,7 @@ namespace SampleApp
                 }
 
                 AllLedOff(plate);
-                var leds = plate.DigitalDevices.Select(p => p.device).OfType<Led>().ToArray();
+                var leds = plate.DigitalDevices.OfType<Led>().ToArray();
 
                 var buttonStream = Observable
                     .FromEventPattern<bool>(h => button.PressedChanged += h, h => button.PressedChanged -= h);
