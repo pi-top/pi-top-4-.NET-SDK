@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using PiTopMakerArchitecture.Foundation;
 using PiTopMakerArchitecture.Foundation.Components;
 using PiTopMakerArchitecture.Foundation.InteractiveExtension;
@@ -27,7 +28,7 @@ namespace SampleApp
         {
             var cancellationSource = new CancellationTokenSource();
             var plate = new Plate();
-            var json = plate.ToJObject();
+           
             Task.Run(() =>
             {
                 var potentiometer = plate.GetOrCreateAnalogueDevice<Potentiometer>(port);
@@ -36,7 +37,7 @@ namespace SampleApp
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Select(_ => potentiometer.Position)
                     .Subscribe(Console.WriteLine);
-
+                PrintPlate(plate);
                 Console.WriteLine("press enter key to exit");
             }, cancellationSource.Token);
 
@@ -47,6 +48,11 @@ namespace SampleApp
                 cancellationSource.Cancel(false);
             }, cancellationSource.Token);
 
+        }
+
+        private static void PrintPlate(Plate plate)
+        {
+            Console.WriteLine(plate.ToJObject().ToString(Formatting.Indented));
         }
 
         private static Task TestButton(DigitalPort buttonPort, DigitalPort[] ledPorts)
@@ -84,6 +90,7 @@ namespace SampleApp
                         leds[p.Next].On();
                     });
 
+                PrintPlate(plate);
                 Console.WriteLine("press enter key to exit");
             }, cancellationSource.Token);
 
@@ -136,6 +143,8 @@ namespace SampleApp
                                 break;
                         }
                     });
+
+                PrintPlate(plate);
                 Console.WriteLine("press enter key to exit");
 
             }, cancellationSource.Token);
@@ -169,6 +178,8 @@ namespace SampleApp
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Subscribe(_ => { Console.WriteLine(sensor.Distance); });
+
+                PrintPlate(plate);
                 Console.WriteLine("press enter key to exit");
             }, cancellationSource.Token);
 
@@ -199,6 +210,7 @@ namespace SampleApp
             {
                 leds[pos].Toggle();
                 pos = (pos + 1) % 3;
+                PrintPlate(plate);
                 await Task.Delay(300);
             }
 
