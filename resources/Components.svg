@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 543 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-681.279,-120.438)">
+        <g transform="matrix(0.0834819,0,0,0.0762288,750.236,112.727)">
+            <path d="M623.239,203.06C623.239,154.054 586.908,114.267 542.16,114.267L225.172,114.267C180.423,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 180.423,639.003 225.172,639.003L542.16,639.003C586.908,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:white;stroke:black;stroke-width:25.02px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-6.29204,-1.53952)">
+            <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
+        </g>
+        <g id="Light" transform="matrix(0.689751,0,0,0.689751,238.357,41.4775)">
+            <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(42,236,14);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,5.38499,8.25384)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">LED</text>
+        </g>
+    </g>
+    <g id="Button" transform="matrix(1,0,0,1,-760.994,-178.8)">
+        <g transform="matrix(0.0834819,0,0,0.0762288,749.965,171.09)">
+            <path d="M623.239,203.06C623.239,154.054 586.908,114.267 542.16,114.267L225.172,114.267C180.423,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 180.423,639.003 225.172,639.003L542.16,639.003C586.908,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:white;stroke:black;stroke-width:25.02px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-3.08962,66.5187)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">BUTT<tspan x="789.49px 795.713px " y="149.76px 149.76px ">ON</tspan></text>
+        </g>
+        <g id="ButtonState" transform="matrix(1,0,0,1,-6.56329,56.823)">
+            <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
+        </g>
+    </g>
+    <g id="Buzzer" transform="matrix(1,0,0,1,-521.435,-178.8)">
+        <g transform="matrix(0.0834819,0,0,0.0762288,749.965,171.09)">
+            <path d="M623.239,203.06C623.239,154.054 586.908,114.267 542.16,114.267L225.172,114.267C180.423,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 180.423,639.003 225.172,639.003L542.16,639.003C586.908,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:white;stroke:black;stroke-width:25.02px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-3.08962,66.5187)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">BUZZER</text>
+        </g>
+        <g transform="matrix(1,0,0,1,-144.929,-4)">
+            <g id="waves">
+                <path d="M933.18,189.115C936.844,191.266 939.306,195.248 939.306,199.8C939.306,204.46 936.726,208.522 932.919,210.635" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
+                <path d="M920.686,210.498C917.011,208.349 914.54,204.361 914.54,199.8C914.54,195.347 916.896,191.44 920.429,189.258" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
+                <g transform="matrix(1.27179,0,0,1.27179,-251.928,-54.3035)">
+                    <path d="M920.686,210.498C917.011,208.349 914.54,204.361 914.54,199.8C914.54,195.347 916.896,191.44 920.429,189.258" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:1.57px;"/>
+                </g>
+                <g transform="matrix(-1.27179,0.000527782,-0.000527782,-1.27179,2105.88,453.415)">
+                    <path d="M920.686,210.498C917.011,208.349 914.54,204.361 914.54,199.8C914.54,195.347 916.896,191.44 920.429,189.258" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:1.57px;"/>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,138.366,61.1472)">
+                <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
+            </g>
+        </g>
+    </g>
+    <g id="Sound" transform="matrix(1,0,0,1,-442.435,-178.8)">
+        <g transform="matrix(0.0834819,0,0,0.0762288,749.965,171.09)">
+            <path d="M623.239,203.06C623.239,154.054 586.908,114.267 542.16,114.267L225.172,114.267C180.423,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 180.423,639.003 225.172,639.003L542.16,639.003C586.908,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:white;stroke:black;stroke-width:25.02px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-3.08962,66.5187)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">SOUND</text>
+        </g>
+        <g id="SoundLevel" transform="matrix(1,0,0,1,8.91038,58.5187)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">01</text>
+        </g>
+        <g transform="matrix(1,0,0,1,-144.929,-4)">
+            <g transform="matrix(0.586987,0,0,0.586987,473.851,113.711)">
+                <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:3.41px;"/>
+            </g>
+            <g transform="matrix(0.0293774,0,0,0.026825,906.652,185.697)">
+                <path d="M623.239,203.06C623.239,154.054 586.908,114.267 542.16,114.267L225.172,114.267C180.423,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 180.423,639.003 225.172,639.003L542.16,639.003C586.908,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:rgb(0,24,255);stroke:black;stroke-width:71.1px;"/>
+            </g>
+        </g>
+    </g>
+    <g id="Light1" serif:id="Light" transform="matrix(1,0,0,1,-360.54,-178.8)">
+        <g transform="matrix(0.0834819,0,0,0.0762288,749.965,171.09)">
+            <path d="M623.239,203.06C623.239,154.054 586.908,114.267 542.16,114.267L225.172,114.267C180.423,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 180.423,639.003 225.172,639.003L542.16,639.003C586.908,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:white;stroke:black;stroke-width:25.02px;"/>
+        </g>
+        <g id="_-LIGHT-" serif:id="(LIGHT)" transform="matrix(1,0,0,1,1.25413,66.5187)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">LIGHT</text>
+        </g>
+        <g id="LightLevel" transform="matrix(1,0,0,1,9.01604,56.5187)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">01</text>
+        </g>
+        <g transform="matrix(0.730603,0,0,0.730603,205.872,89.7984)">
+            <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2.74px;"/>
+        </g>
+    </g>
+    <g id="Ultrasound" transform="matrix(1,0,0,1,-297.553,-178.416)">
+        <g transform="matrix(0.159967,0,0,0.0762288,738.944,171.09)">
+            <path d="M623.239,203.06C623.239,154.054 604.279,114.267 580.926,114.267L186.406,114.267C163.053,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 163.053,639.003 186.406,639.003L580.926,639.003C604.279,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:white;stroke:black;stroke-width:15.96px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,4.20682,66.8869)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">UL<tspan x="778.381px 783.267px " y="149.76px 149.76px ">TR</tspan>ASOUND</text>
+        </g>
+        <g id="UltrasoundLevel" transform="matrix(1,0,0,1,4.20682,57.8869)">
+            <text x="791.56px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">50</text>
+        </g>
+        <g transform="matrix(1.26023,0,0,1.26023,-214.772,20.3635)">
+            <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:1.59px;"/>
+        </g>
+        <g transform="matrix(1.26023,0,0,1.26023,-172.447,20.3635)">
+            <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:1.59px;"/>
+        </g>
+    </g>
+    <g id="Potentiomenter" transform="matrix(1,0,0,1,-698.668,-178.8)">
+        <g transform="matrix(0.0834819,0,0,0.0762288,848.273,171.09)">
+            <path d="M623.239,203.06C623.239,154.054 586.908,114.267 542.16,114.267L225.172,114.267C180.423,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 180.423,639.003 225.172,639.003L542.16,639.003C586.908,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:white;stroke:black;stroke-width:25.02px;"/>
+        </g>
+        <g id="Pot" transform="matrix(1,0,0,1,0.271595,-4.96971)">
+            <path d="M871.086,208.585L872.604,204.441C871.982,203.245 871.63,201.886 871.63,200.446C871.63,195.659 875.516,191.773 880.303,191.773C885.089,191.773 888.976,195.659 888.976,200.446C888.976,205.233 885.089,209.119 880.303,209.119C878.424,209.119 876.684,208.52 875.263,207.504L871.086,208.585Z" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
+            <g transform="matrix(0.743034,-0.597245,0.56137,0.698402,93.8923,710.93)">
+                <rect x="971.577" y="104.115" width="13.572" height="3.795" style="fill:rgb(217,217,217);stroke:black;stroke-width:0.92px;stroke-linecap:square;"/>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,103.104,66.5187)">
+            <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">POT</text>
+        </g>
+    </g>
+</svg>

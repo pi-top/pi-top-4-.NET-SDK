@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-79.986,-8.17124e-14)">
+        <g id="Led" transform="matrix(1,0,0,1,-681.279,-120.438)">
+            <g transform="matrix(0.0834819,0,0,0.0762288,750.236,112.727)">
+                <path d="M623.239,203.06C623.239,154.054 586.908,114.267 542.16,114.267L225.172,114.267C180.423,114.267 144.093,154.054 144.093,203.06L144.093,550.209C144.093,599.216 180.423,639.003 225.172,639.003L542.16,639.003C586.908,639.003 623.239,599.216 623.239,550.209L623.239,203.06Z" style="fill:white;stroke:black;stroke-width:25.02px;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,-6.29204,-1.53952)">
+                <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
+            </g>
+            <g id="Light" transform="matrix(0.689751,0,0,0.689751,238.357,41.4775)">
+                <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(42,236,14);"/>
+            </g>
+            <g transform="matrix(1,0,0,1,5.38499,8.25384)">
+                <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">LED</text>
+            </g>
+        </g>
+    </g>
+</svg>

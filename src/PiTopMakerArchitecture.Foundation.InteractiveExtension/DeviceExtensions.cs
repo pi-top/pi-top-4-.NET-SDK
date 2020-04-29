@@ -3,37 +3,40 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.DotNet.Interactive.Formatting;
 using PiTopMakerArchitecture.Foundation.Components;
 using PiTopMakerArchitecture.Foundation.Sensors;
+using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 
 namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
 {
+    internal static class SvgUtilities
+    {
+        internal const string TextStyle = "font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;";
+
+        public static PocketView CreatePath(string pathData, string style = null)
+        {
+            var path = _.path[d: pathData]();
+
+            if (!string.IsNullOrWhiteSpace(style))
+            {
+                path["style"](style);
+            }
+
+            return path;
+        }
+    }
+
     public static class DeviceExtensions
     {
+       
         internal static IHtmlContent DrawSvg(this Led led)
         {
             var id = "PiTopMakerArchitecture.Foundation.InteractiveExtension" + Guid.NewGuid().ToString("N");
-            return PocketViewTags.div[id: id](
-                PocketViewTags.svg(
-                    PocketViewTags.g(
-                        PocketViewTags.circle[cx: 20, cy: 20, r: 15, fill:(led.IsOn? "white":"black"), stroke: "black"],
-                        PocketViewTags.text[x: 9, y: 50, @class: "text"]("LED")
+            return div[id: id](
+                svg(
+                    g(
+                        circle[cx: 20, cy: 20, r: 15, fill: (led.IsOn ? "white" : "black"), stroke: "black"],
+                        text[x: 9, y: 50, @class: "text"]("LED")
                     )));
         }
-
-        public static object GetDeviceValue(this AnaloguePortDeviceBase analogueDevice)
-        {
-            switch (analogueDevice)
-            {
-                case LightSensor lightSensor:
-                    return lightSensor.Value;
-                case Potentiometer potentiometer:
-                    return potentiometer.Position;
-                case SoundSensor soundSensor:
-                    return soundSensor.Value;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(analogueDevice));
-            }
-        }
-
 
         public static object GetDeviceValue(this DigitalPortDeviceBase digitalDevice)
         {

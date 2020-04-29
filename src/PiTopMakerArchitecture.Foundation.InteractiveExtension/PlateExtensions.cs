@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Html;
 using Microsoft.DotNet.Interactive.Formatting;
 using Newtonsoft.Json.Linq;
+using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 
 namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
 {
@@ -36,9 +37,9 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
         internal static IHtmlContent DrawSvg(this Plate plate)
         {
             var id = "PiTopMakerArchitecture.Foundation.InteractiveExtension" + Guid.NewGuid().ToString("N");
-            return PocketViewTags.div[id: id](
-                PocketViewTags.svg[viewBox: "0 0 800 600", width: "100%", height: "100%"](
-                    PocketViewTags.g(
+            return div[id: id](
+                svg[viewBox: "0 0 800 600", width: "100%", height: "100%"](
+                    g(
                         plate.GetPlateSvg(),
                         plate.GetWiresSvg(),
                         plate.GetDevicesSvg()
@@ -56,44 +57,44 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 switch (digitalPort)
                 {
                     case DigitalPort.D0:
-                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-192.173)"](
-                            PocketViewTags._.path[d: "M840.189,439.958L936.223,440.495L1014.66,455.647L1061.13,455.215", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-192.173)"](
+                            _.path[d: "M840.189,439.958L936.223,440.495L1014.66,455.647L1061.13,455.215", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D1:
-                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-232.278)"](
-                            PocketViewTags._.path[d: "M840.189,439.958L935.591,440.491L1014.66,449.524L1061.13,451.186", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-232.278)"](
+                            _.path[d: "M840.189,439.958L935.591,440.491L1014.66,449.524L1061.13,451.186", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D2:
-                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-272.646)"](
-                            PocketViewTags._.path[d: "M840.189,439.958L935.782,440.493L1014.66,435.03L1061.13,435.148", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-272.646)"](
+                            _.path[d: "M840.189,439.958L935.782,440.493L1014.66,435.03L1061.13,435.148", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D3:
-                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-313.785)"](
-                            PocketViewTags._.path[d: "M840.189,439.958L934.19,440.484L1014.66,434.353L1061.13,433.246", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-313.785)"](
+                            _.path[d: "M840.189,439.958L934.19,440.484L1014.66,434.353L1061.13,433.246", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D4:
-                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-314.91)"](
-                            PocketViewTags._.path[d: "M825.429,435.727L862.406,435.727L945.578,440.547L1041.39,441.083", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-314.91)"](
+                            _.path[d: "M825.429,435.727L862.406,435.727L945.578,440.547L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D5:
-                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-274.674)"](
-                            PocketViewTags._.path[d: "M825.429,438.876L865.328,439.149L944.183,440.54L1041.39,441.083", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-274.674)"](
+                            _.path[d: "M825.429,438.876L865.328,439.149L944.183,440.54L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
                     case DigitalPort.D6:
-                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-233.539)"](
-                            PocketViewTags._.path[d: "M825.429,449.825L863.58,449.319L945.966,440.549L1041.39,441.083", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-233.539)"](
+                            _.path[d: "M825.429,449.825L863.58,449.319L945.966,440.549L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
 
                     case DigitalPort.D7:
-                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-193.297)"](
-                            PocketViewTags._.path[d: "M825.429,452.968L863.85,452.602L945.425,440.546L1041.39,441.083", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-193.297)"](
+                            _.path[d: "M825.429,452.968L863.85,452.602L945.425,440.546L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
                     default:
@@ -106,23 +107,23 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 switch (analoguePort)
                 {
                     case AnaloguePort.A0:
-                        svgWires.Add(PocketViewTags.g[@class: $"{analoguePort}Line", transform: "matrix(1, 0, 0, 1, -353.998, -353.235)"](
-                            PocketViewTags._.path[d: "M840.189,439.958L934.715,440.487L1014.66,425.698L1061.13,425.662", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{analoguePort}Line", transform: "matrix(1, 0, 0, 1, -353.998, -353.235)"](
+                            _.path[d: "M840.189,439.958L934.715,440.487L1014.66,425.698L1061.13,425.662", style: lineStyle]()
                         ));
                         break;
                     case AnaloguePort.A1:
-                        svgWires.Add(PocketViewTags.g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-353.998,-394.475)"](
-                            PocketViewTags._.path[d: "M840.189,439.958L934.749,440.487L1014.66,418.622L1061.13,419.001", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-353.998,-394.475)"](
+                            _.path[d: "M840.189,439.958L934.749,440.487L1014.66,418.622L1061.13,419.001", style: lineStyle]()
                         ));
                         break;
                     case AnaloguePort.A2:
-                        svgWires.Add(PocketViewTags.g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-804.429,-154.828)"](
-                            PocketViewTags._.path[d: "M825.429,461.776L866.007,462.122L945.83,440.549L1041.39,441.083", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-804.429,-154.828)"](
+                            _.path[d: "M825.429,461.776L866.007,462.122L945.83,440.549L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
                     case AnaloguePort.A3:
-                        svgWires.Add(PocketViewTags.g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-804.429,-115.255)"](
-                            PocketViewTags._.path[d: "M827.964,469.271L866.25,467.464L944.568,440.542L1041.39,441.083", style: lineStyle]()
+                        svgWires.Add(g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-804.429,-115.255)"](
+                            _.path[d: "M827.964,469.271L866.25,467.464L944.568,440.542L1041.39,441.083", style: lineStyle]()
                         ));
                         break;
                     default:
@@ -130,14 +131,70 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 }
             }
 
-            return PocketViewTags.g[@class: "wires_group"](svgWires);
+            return g[@class: "wires_group"](svgWires);
         }
 
         internal static PocketView GetDevicesSvg(this Plate plate)
         {
-            var devices = new List<PocketView>();
+            var svgDevices = new List<PocketView>();
+            foreach (var (digitalPort, digitalDevice) in plate.DigitalDevices)
+            {
+                switch (digitalPort)
+                {
+                    case DigitalPort.D0:
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(0.0834819,0,0,0.0762288,669.385,233.341)"](
+                            digitalDevice.GetSvg()
+                        ));
+                        break;
+                    case DigitalPort.D1:
+                        break;
+                    case DigitalPort.D2:
+                        break;
+                    case DigitalPort.D3:
+                        break;
+                    case DigitalPort.D4:
+                        break;
+                    case DigitalPort.D5:
+                        break;
+                    case DigitalPort.D6:
+                        break;
+                    case DigitalPort.D7:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
 
-            return PocketViewTags.g[@class: "devices_group"](devices);
+            foreach (var (analoguePort, analogueDevice) in plate.AnalogueDevices)
+            {
+                switch (analoguePort)
+                {
+                    case AnaloguePort.A0:
+                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(0.0834819,0,0,0.0762288,669.385,42.4044)"](
+                            analogueDevice.GetSvg()
+                        ));
+                        break;
+                    case AnaloguePort.A1:
+                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(0.0834819,0,0,0.0762288,669.385,-5.3297)"](
+                            analogueDevice.GetSvg()
+                        ));
+                        break;
+                    case AnaloguePort.A2:
+                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(0.0834819,0,0,0.0762288,-11.0292,278.694)"](
+                            analogueDevice.GetSvg()
+                        ));
+                        break;
+                    case AnaloguePort.A3:
+                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(0.0834819,0,0,0.0762288,-11.0292,326.429)"](
+                            analogueDevice.GetSvg()
+                        ));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return g[@class: "devices_group"](svgDevices);
         }
 
         internal static PocketView GetPlateSvg(this Plate plate)
@@ -295,7 +352,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             <text x=""683.295px"" y=""178.773px"" style=""font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;"">A3</text>
         </g>
     </g>");
-            return PocketViewTags.g[@class: "plate_group"](plateSvg);
+            return g[@class: "plate_group"](plateSvg);
         }
 
     }
