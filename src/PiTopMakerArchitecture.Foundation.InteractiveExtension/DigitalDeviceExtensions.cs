@@ -108,7 +108,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                     _.text[x: "768.748px", y: "149.76px", style: TextStyle]("ULTRASOUND")
                     ),
                 g[@class: "UltrasoundLevel", transform: "matrix(1,0,0,1,-756.787,-120.913)"](
-                    _.text[x: "791.56px", y: "149.76px", style: TextStyle](value)
+                    _.text[x: "785px", y: "149.76px", style: TextStyle](value)
                     ),
                 g[transform: "matrix(1.26023,0,0,1.26023,-975.766,-158.437)"](
                     _.circle[cx: "788.557", cy: "138.653", r: "8.673", style: "fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:1.59px;"]()
