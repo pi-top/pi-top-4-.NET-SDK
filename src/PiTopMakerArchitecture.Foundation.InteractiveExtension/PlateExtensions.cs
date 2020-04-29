@@ -39,9 +39,9 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             return PocketViewTags.div[id: id](
                 PocketViewTags.svg[viewBox: "0 0 800 600", width: "100%", height: "100%"](
                     PocketViewTags.g(
-                        plate.GetPlateSvg().ToString(),
-                        plate.GetWiresSvg().ToString(),
-                        plate.GetDevicesSvg().ToString()
+                        plate.GetPlateSvg(),
+                        plate.GetWiresSvg(),
+                        plate.GetDevicesSvg()
                     )
                 )
                 );
@@ -141,9 +141,9 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             return PocketViewTags.g[@class: "devices_group"](devices);
         }
 
-        internal static IHtmlContent GetPlateSvg(this Plate plate)
+        internal static PocketView GetPlateSvg(this Plate plate)
         {
-            return new HtmlString(@"     <g class=""FoundationPlate"" transform=""matrix(1.0428,0,0,1.19407,-290.953,-136.392)"">
+            var plateSvg =  new HtmlString(@"     <g class=""FoundationPlate"" transform=""matrix(1.0428,0,0,1.19407,-290.953,-136.392)"">
         <g transform=""matrix(0.521762,0,0,0.571716,426.226,54.9563)"">
             <path d=""M623.239,126.164C623.239,119.598 616.55,114.267 608.312,114.267L159.02,114.267C150.782,114.267 144.093,119.598 144.093,126.164L144.093,627.106C144.093,633.672 150.782,639.003 159.02,639.003L608.312,639.003C616.55,639.003 623.239,633.672 623.239,627.106L623.239,126.164Z"" style=""fill:white;stroke:black;stroke-width:3.24px;""/>
         </g>
@@ -296,6 +296,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             <text x=""683.295px"" y=""178.773px"" style=""font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;"">A3</text>
         </g>
     </g>");
+            return PocketViewTags.g[@class:"plate_group"](plateSvg.ToString());
         }
 
     }
