@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -120,8 +121,11 @@ namespace SampleApp
 
             var cancellationSource = new CancellationTokenSource();
             var greenLed = plate.GetOrCreateDigitalDevice<Led>(greenLedPort);
+            greenLed.DisplayProperties.Add(new NamedCssColor("green"));
             var yellowLed = plate.GetOrCreateDigitalDevice<Led>(yellowLedPort);
+            yellowLed.DisplayProperties.Add(new NamedCssColor("yellow"));
             var redLed = plate.GetOrCreateDigitalDevice<Led>(redLedPort);
+            redLed.DisplayProperties.Add(new NamedCssColor("red"));
             ClearLeds();
             Task.Run(() =>
             {
