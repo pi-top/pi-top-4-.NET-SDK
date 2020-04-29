@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Html;
 using Microsoft.DotNet.Interactive.Formatting;
-using Microsoft.FSharp.Core;
 using Newtonsoft.Json.Linq;
 
 namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
@@ -51,50 +49,53 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
 
         internal static PocketView GetWiresSvg(this Plate plate)
         {
+            var lineStyle = "fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;";
             var lines = new List<IHtmlContent>();
+            var svgWires = new List<PocketView>();
             foreach (var (digitalPort, _) in plate.DigitalDevices)
             {
                 switch (digitalPort)
                 {
                     case DigitalPort.D0:
-                        lines.Add(new HtmlString(@"     <g class=""D0Line"" transform=""matrix(1,0,0,1,-353.998,-192.173)"">
-        <path d=""M840.189,439.958L936.223,440.495L1014.66,455.647L1061.13,455.215"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-192.173)"](
+                            PocketViewTags._.path[d: "M840.189,439.958L936.223,440.495L1014.66,455.647L1061.13,455.215", style: lineStyle]()
+                        ));
                         break;
                     case DigitalPort.D1:
-                        lines.Add(new HtmlString(@"     <g class=""D1Line"" transform=""matrix(1,0,0,1,-353.998,-232.278)"">
-        <path d=""M840.189,439.958L935.591,440.491L1014.66,449.524L1061.13,451.186"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-232.278)"](
+                            PocketViewTags._.path[d: "M840.189,439.958L935.591,440.491L1014.66,449.524L1061.13,451.186", style: lineStyle]()
+                        ));
                         break;
                     case DigitalPort.D2:
-                        lines.Add(new HtmlString(@"     <g class=""D2Line"" transform=""matrix(1,0,0,1,-353.998,-272.646)"">
-        <path d=""M840.189,439.958L935.782,440.493L1014.66,435.03L1061.13,435.148"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-272.646)"](
+                            PocketViewTags._.path[d: "M840.189,439.958L935.782,440.493L1014.66,435.03L1061.13,435.148", style: lineStyle]()
+                        ));
                         break;
                     case DigitalPort.D3:
-                        lines.Add(new HtmlString(@"     <g class=""D3Line"" transform=""matrix(1,0,0,1,-353.998,-313.785)"">
-        <path d=""M840.189,439.958L934.19,440.484L1014.66,434.353L1061.13,433.246"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-353.998,-313.785)"](
+                            PocketViewTags._.path[d: "M840.189,439.958L934.19,440.484L1014.66,434.353L1061.13,433.246", style: lineStyle]()
+                        ));
                         break;
                     case DigitalPort.D4:
-                        lines.Add(new HtmlString(@"     <g class=""D4Line"" transform=""matrix(1,0,0,1,-804.429,-314.91)"">
-        <path d=""M825.429,435.727L862.406,435.727L945.578,440.547L1041.39,441.083"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-314.91)"](
+                            PocketViewTags._.path[d: "M825.429,435.727L862.406,435.727L945.578,440.547L1041.39,441.083", style: lineStyle]()
+                        ));
                         break;
                     case DigitalPort.D5:
-                        lines.Add(new HtmlString(@"     <g class=""D5Line"" transform=""matrix(1,0,0,1,-804.429,-274.674)"">
-        <path d=""M825.429,438.876L865.328,439.149L944.183,440.54L1041.39,441.083"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-274.674)"](
+                            PocketViewTags._.path[d: "M825.429,438.876L865.328,439.149L944.183,440.54L1041.39,441.083", style: lineStyle]()
+                        ));
                         break;
                     case DigitalPort.D6:
-                        lines.Add(new HtmlString(@"     <g class=""D6Line"" transform=""matrix(1,0,0,1,-804.429,-233.539)"">
-        <path d=""M825.429,449.825L863.58,449.319L945.966,440.549L1041.39,441.083"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-233.539)"](
+                            PocketViewTags._.path[d: "M825.429,449.825L863.58,449.319L945.966,440.549L1041.39,441.083", style: lineStyle]()
+                        ));
                         break;
+
                     case DigitalPort.D7:
-                        lines.Add(new HtmlString(@"     <g class=""D7Line"" transform=""matrix(1,0,0,1,-804.429,-193.297)"">
-        <path d=""M825.429,452.968L863.85,452.602L945.425,440.546L1041.39,441.083"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{digitalPort}Line", transform: "matrix(1,0,0,1,-804.429,-193.297)"](
+                            PocketViewTags._.path[d: "M825.429,452.968L863.85,452.602L945.425,440.546L1041.39,441.083", style: lineStyle]()
+                        ));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -106,41 +107,38 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 switch (analoguePort)
                 {
                     case AnaloguePort.A0:
-                        lines.Add(new HtmlString(@"     <g class=""A0Line"" transform=""matrix(1,0,0,1,-353.998,-353.235)"">
-        <path d=""M840.189,439.958L934.715,440.487L1014.66,425.698L1061.13,425.662"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{analoguePort}Line", transform: "matrix(1, 0, 0, 1, -353.998, -353.235)"](
+                            PocketViewTags._.path[d: "M840.189,439.958L934.715,440.487L1014.66,425.698L1061.13,425.662", style: lineStyle]()
+                        ));
                         break;
                     case AnaloguePort.A1:
-                        lines.Add(new HtmlString(@"     <g class=""A1Line"" transform=""matrix(1,0,0,1,-353.998,-394.475)"">
-        <path d=""M840.189,439.958L934.749,440.487L1014.66,418.622L1061.13,419.001"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-353.998,-394.475)"](
+                            PocketViewTags._.path[d: "M840.189,439.958L934.749,440.487L1014.66,418.622L1061.13,419.001", style: lineStyle]()
+                        ));
                         break;
                     case AnaloguePort.A2:
-                        lines.Add(new HtmlString(@"     <g class=""A2Line"" transform=""matrix(1,0,0,1,-804.429,-154.828)"">
-        <path d=""M825.429,461.776L866.007,462.122L945.83,440.549L1041.39,441.083"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-804.429,-154.828)"](
+                            PocketViewTags._.path[d: "M825.429,461.776L866.007,462.122L945.83,440.549L1041.39,441.083", style: lineStyle]()
+                        ));
                         break;
                     case AnaloguePort.A3:
-                        lines.Add(new HtmlString(@"     <g class=""A3Line"" transform=""matrix(1,0,0,1,-804.429,-115.255)"">
-        <path d=""M827.964,469.271L866.25,467.464L944.568,440.542L1041.39,441.083"" style=""fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;""/>
-    </g>"));
+                        svgWires.Add(PocketViewTags.g[@class: $"{analoguePort}Line", transform: "matrix(1,0,0,1,-804.429,-115.255)"](
+                            PocketViewTags._.path[d: "M827.964,469.271L866.25,467.464L944.568,440.542L1041.39,441.083", style: lineStyle]()
+                        ));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
             }
-            return PocketViewTags.g[@class: "wires_group"](
-                string.Join("\n", lines.Select(e => e.ToString()))
-            );
+
+            return PocketViewTags.g[@class: "wires_group"](svgWires);
         }
 
         internal static PocketView GetDevicesSvg(this Plate plate)
         {
-            var devices = new List<IHtmlContent>();
+            var devices = new List<PocketView>();
 
-            return PocketViewTags.g[@class: "devices_group"](
-                string.Join("\n", devices.Select(e => e.ToString()))
-                );
+            return PocketViewTags.g[@class: "devices_group"](devices);
         }
 
         internal static IHtmlContent GetPlateSvg(this Plate plate)
