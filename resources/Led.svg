@@ -7,7 +7,7 @@
     <g transform="matrix(1,0,0,1,-767.557,-121.977)">
         <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
     </g>
-    <g id="Light" transform="matrix(0.689751,0,0,0.689751,-522.908,-78.9604)">
+    <g class="Light" transform="matrix(0.689751,0,0,0.689751,-522.908,-78.9604)">
         <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(42,236,14);"/>
     </g>
     <g transform="matrix(1,0,0,1,-755.88,-112.184)">
