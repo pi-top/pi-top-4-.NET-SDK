@@ -16,8 +16,8 @@ namespace SampleApp
         static async Task Main(string[] args)
         {
             Console.WriteLine("ready");
-            await TestPotentiometer(AnaloguePort.A0);
-            //await TestButton(DigitalPort.D4, DigitalPort.D0.GetDigitalPortRange(3).ToArray());
+            //await TestPotentiometer(AnaloguePort.A0);
+            await TestButton(DigitalPort.D4, DigitalPort.D0.GetDigitalPortRange(3).ToArray());
             //await TestLed01();
             //await TestUltrasoundSensor();
             //await TestSemaphore(DigitalPort.D3, DigitalPort.D0, DigitalPort.D1, DigitalPort.D2, 40, 20, 5);
@@ -50,6 +50,13 @@ namespace SampleApp
 
         }
 
+        private static void AllLedOff(Plate plate)
+        {
+            foreach (var led in plate.DigitalDevices.Select(p => p.device).OfType<Led>())
+            {
+                led.Off();
+            }
+        }
         private static void PrintPlate(Plate plate)
         {
             Console.WriteLine(plate.ToJObject().ToString(Formatting.Indented));
@@ -63,11 +70,8 @@ namespace SampleApp
             {
 
                 var button = plate.GetOrCreateDigitalDevice<Button>(buttonPort);
-                var leds = ledPorts.Select(ledPort => plate.GetOrCreateDigitalDevice<Led>(ledPort)).ToArray();
-                foreach (var led in leds)
-                {
-                    led.Off();
-                }
+                AllLedOff(plate);
+                var leds = plate.DigitalDevices.Select(p => p.device).OfType<Led>().ToArray();
 
                 var buttonStream = Observable
                     .FromEventPattern<bool>(h => button.PressedChanged += h, h => button.PressedChanged -= h);
@@ -88,6 +92,7 @@ namespace SampleApp
                             leds[p.Prev].Off();
                         }
                         leds[p.Next].On();
+                        PrintPlate(plate);
                     });
 
                 PrintPlate(plate);
@@ -142,6 +147,8 @@ namespace SampleApp
                                 redLed.On();
                                 break;
                         }
+
+                        PrintPlate(plate);
                     });
 
                 PrintPlate(plate);
