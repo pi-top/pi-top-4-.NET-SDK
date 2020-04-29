@@ -21,10 +21,16 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
     public static class DeviceExtensions
     {
        
-        internal static IHtmlContent DrawSvg(this Led led)
+        internal static IHtmlContent DrawSvg(this DigitalPortDeviceBase digitalDevice)
         {
             var id = "PiTopMakerArchitecture.Foundation.InteractiveExtension" + Guid.NewGuid().ToString("N");
-            return div[id: id](svg(led.GetSvg()));
+            return div[id: id](svg(digitalDevice.GetSvg()));
+        }
+
+        internal static IHtmlContent DrawSvg(this AnaloguePortDeviceBase analogueDevice)
+        {
+            var id = "PiTopMakerArchitecture.Foundation.InteractiveExtension" + Guid.NewGuid().ToString("N");
+            return div[id: id](svg(analogueDevice.GetSvg()));
         }
 
         public static object GetDeviceValue(this DigitalPortDeviceBase digitalDevice)

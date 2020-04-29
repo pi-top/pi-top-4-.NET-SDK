@@ -8,7 +8,7 @@
         <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">BUZZER</text>
     </g>
     <g transform="matrix(1,0,0,1,-905.923,-182.8)">
-        <g id="waves">
+        <g class="waves">
             <path d="M933.18,189.115C936.844,191.266 939.306,195.248 939.306,199.8C939.306,204.46 936.726,208.522 932.919,210.635" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
             <path d="M920.686,210.498C917.011,208.349 914.54,204.361 914.54,199.8C914.54,195.347 916.896,191.44 920.429,189.258" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
             <g transform="matrix(1.27179,0,0,1.27179,-251.928,-54.3035)">

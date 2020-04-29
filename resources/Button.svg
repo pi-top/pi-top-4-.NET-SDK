@@ -7,7 +7,7 @@
     <g transform="matrix(1,0,0,1,-764.084,-112.282)">
         <text x="768.748px" y="149.76px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;">BUTTON</text>
     </g>
-    <g id="ButtonState" transform="matrix(1,0,0,1,-767.557,-121.977)">
+    <g class="ButtonState" transform="matrix(1,0,0,1,-767.557,-121.977)">
         <circle cx="788.557" cy="138.653" r="8.673" style="fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"/>
     </g>
 </svg>

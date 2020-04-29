@@ -23,9 +23,45 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter<Led>.Register((led, writer) =>
+            Formatter<Led>.Register((device, writer) =>
             {
-                var svg = led.DrawSvg();
+                var svg = device.DrawSvg();
+                writer.Write(svg);
+            }, HtmlFormatter.MimeType);
+
+            Formatter<UltrasonicSensor>.Register((device, writer) =>
+            {
+                var svg = device.DrawSvg();
+                writer.Write(svg);
+            }, HtmlFormatter.MimeType);
+
+            Formatter<SoundSensor>.Register((device, writer) =>
+            {
+                var svg = device.DrawSvg();
+                writer.Write(svg);
+            }, HtmlFormatter.MimeType);
+
+            Formatter<LightSensor>.Register((device, writer) =>
+            {
+                var svg = device.DrawSvg();
+                writer.Write(svg);
+            }, HtmlFormatter.MimeType);
+
+            Formatter<Button>.Register((device, writer) =>
+            {
+                var svg = device.DrawSvg();
+                writer.Write(svg);
+            }, HtmlFormatter.MimeType);
+
+            Formatter<Potentiometer>.Register((device, writer) =>
+            {
+                var svg = device.DrawSvg();
+                writer.Write(svg);
+            }, HtmlFormatter.MimeType);
+
+            Formatter<Buzzer>.Register((device, writer) =>
+            {
+                var svg = device.DrawSvg();
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
