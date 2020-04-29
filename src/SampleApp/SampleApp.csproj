@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="4.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj" />
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.InteractiveExtension\PiTopMakerArchitecture.Foundation.InteractiveExtension.csproj" />
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj" />
