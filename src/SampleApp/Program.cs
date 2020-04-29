@@ -70,6 +70,12 @@ namespace SampleApp
             {
 
                 var button = plate.GetOrCreateDigitalDevice<Button>(buttonPort);
+                
+                foreach (var digitalPort in ledPorts)
+                {
+                    plate.GetOrCreateDigitalDevice<Led>(digitalPort);
+                }
+
                 AllLedOff(plate);
                 var leds = plate.DigitalDevices.Select(p => p.device).OfType<Led>().ToArray();
 
