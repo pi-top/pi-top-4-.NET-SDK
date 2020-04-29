@@ -142,23 +142,44 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 switch (digitalPort)
                 {
                     case DigitalPort.D0:
-                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(0.0834819,0,0,0.0762288,669.385,233.341)"](
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,669.385,233.341)"](
                             digitalDevice.GetSvg()
                         ));
                         break;
                     case DigitalPort.D1:
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,669.385,185.607)"](
+                            digitalDevice.GetSvg()
+                        ));
                         break;
                     case DigitalPort.D2:
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,669.385,137.873)"](
+                            digitalDevice.GetSvg()
+                        ));
                         break;
                     case DigitalPort.D3:
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,669.385,90.1386)"](
+                            digitalDevice.GetSvg()
+                        ));
                         break;
                     case DigitalPort.D4:
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,-11.0292,87.7579)"](
+                            digitalDevice.GetSvg()
+                        ));
                         break;
                     case DigitalPort.D5:
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,-11.0292,135.492)"](
+                            digitalDevice.GetSvg()
+                        ));
                         break;
                     case DigitalPort.D6:
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,-11.0292,183.226)"](
+                            digitalDevice.GetSvg()
+                        ));
                         break;
                     case DigitalPort.D7:
+                        svgDevices.Add(g[@class: $"{digitalPort}Target", transform: "matrix(1,0,0,1,-11.0292,230.96)"](
+                            digitalDevice.GetSvg()
+                        ));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -170,22 +191,22 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 switch (analoguePort)
                 {
                     case AnaloguePort.A0:
-                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(0.0834819,0,0,0.0762288,669.385,42.4044)"](
+                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(1,0,0,1,669.385,42.4044)"](
                             analogueDevice.GetSvg()
                         ));
                         break;
                     case AnaloguePort.A1:
-                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(0.0834819,0,0,0.0762288,669.385,-5.3297)"](
+                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(1,0,0,1,669.385,-5.3297)"](
                             analogueDevice.GetSvg()
                         ));
                         break;
                     case AnaloguePort.A2:
-                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(0.0834819,0,0,0.0762288,-11.0292,278.694)"](
+                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(1,0,0,1,-11.0292,278.694)"](
                             analogueDevice.GetSvg()
                         ));
                         break;
                     case AnaloguePort.A3:
-                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(0.0834819,0,0,0.0762288,-11.0292,326.429)"](
+                        svgDevices.Add(g[@class: $"{analoguePort}Target", transform: "matrix(1,0,0,1,-11.0292,326.429)"](
                             analogueDevice.GetSvg()
                         ));
                         break;
