@@ -59,11 +59,11 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                     CreatePath("M871.086,208.585L872.604,204.441C871.982,203.245 871.63,201.886 871.63,200.446C871.63,195.659 875.516,191.773 880.303,191.773C885.089,191.773 888.976,195.659 888.976,200.446C888.976,205.233 885.089,209.119 880.303,209.119C878.424,209.119 876.684,208.52 875.263,207.504L871.086,208.585Z", "fill:rgb(235,235,235);fill-opacity:0;stroke:black;stroke-width:2px;"),
                     g[transform: "matrix(0.743034,-0.597245,0.56137,0.698402,93.8923,710.93)"](
                         _.rect[x: 971.577, y: 104.115, width: 13.572, height: 3.795, style: "fill:rgb(217,217,217);stroke:black;stroke-width:0.92px;stroke-linecap:square;"]()
-                        ),
-                    g[transform: "matrix(1,0,0,1,-756.199,-120)"](
-                        _.text[x: "768.748px", y: "149.76px", style: TextStyle](value)
-                    )
+                        )
                     ),
+                g[transform: "matrix(1,0,0,1,-756.199,-120)"](
+                    _.text[x: "768.748px", y: "149.76px", style: TextStyle](value)
+                ),
                 g[transform: "matrix(1,0,0,1,-756.199,-112.282)"](
                     _.text[x: "768.748px", y: "149.76px", style: TextStyle]("POT")
                     )
