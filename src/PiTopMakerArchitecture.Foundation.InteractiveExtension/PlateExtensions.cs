@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks.Dataflow;
 using Microsoft.AspNetCore.Html;
 using Microsoft.DotNet.Interactive.Formatting;
 using Newtonsoft.Json.Linq;
@@ -39,7 +40,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             var id = "PiTopMakerArchitecture.Foundation.InteractiveExtension" + Guid.NewGuid().ToString("N");
             return div[id: id](
                 svg[viewBox: "0 0 800 600", width: "100%", height: "100%"](
-                    g(
+                    g[transform: "matrix(0.9,0,0,0.9,100,40)"](
                         plate.GetPlateSvg(),
                         plate.GetWiresSvg(),
                         plate.GetDevicesSvg()
