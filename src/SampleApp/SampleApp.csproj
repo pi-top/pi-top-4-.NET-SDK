@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj" />
+    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.InteractiveExtension\PiTopMakerArchitecture.Foundation.InteractiveExtension.csproj" />
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj" />
     <ProjectReference Include="..\PiTop\PiTop.csproj" />
   </ItemGroup>

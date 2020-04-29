@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using PiTopMakerArchitecture.Foundation;
 using PiTopMakerArchitecture.Foundation.Components;
+using PiTopMakerArchitecture.Foundation.InteractiveExtension;
 using PiTopMakerArchitecture.Foundation.Sensors;
 
 namespace SampleApp
@@ -26,6 +27,7 @@ namespace SampleApp
         {
             var cancellationSource = new CancellationTokenSource();
             var plate = new Plate();
+            var json = plate.ToJObject();
             Task.Run(() =>
             {
                 var potentiometer = plate.GetOrCreateAnalogueDevice<Potentiometer>(port);
