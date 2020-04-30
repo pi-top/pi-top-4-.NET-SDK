@@ -1,7 +1,7 @@
 # pi-top
-.NET core api for pi-
+.NET core api for [pi-top4](https://www.pi-top.com/products/pi-top-4)
 
-The src directory contains the code for libraries you can use to create .NET core app for the amazing [pi-top4 paltform](https://www.pi-top.com/products/pi-top-4). Get one and get creative.
+The src directory contains the code for libraries you can use to create .NET core app for the amazing [pi-top4 platform](https://www.pi-top.com/products/pi-top-4). Get one and get creative.
 
 The libraries comes along with [dotnet interactive](https://github.com/dotnet/interactive/) intergration so you can use notebooks to explore the power of pi-top.
 
