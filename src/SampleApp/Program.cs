@@ -17,11 +17,39 @@ namespace SampleApp
         static async Task Main(string[] args)
         {
             Console.WriteLine("ready");
-            //await TestPotentiometer(AnaloguePort.A0);
-            await TestButton(DigitalPort.D4, DigitalPort.D0.GetDigitalPortRange(3).ToArray());
-            //await TestLed01();
-            //await TestUltrasoundSensor();
-            //await TestSemaphore(DigitalPort.D3, DigitalPort.D0, DigitalPort.D1, DigitalPort.D2, 40, 20, 5);
+
+            Console.WriteLine(@"Select one of the options
+1 potentiometer test
+2 button test
+3 led test
+4 ultrasound test
+5 semaphore test");
+
+            var read = Console.ReadKey();
+
+            switch (read.KeyChar)
+            {
+                case '1':
+                    await TestPotentiometer(AnaloguePort.A0);
+                    break;
+                case '2':
+                    await TestButton(DigitalPort.D4, DigitalPort.D0.GetDigitalPortRange(3).ToArray());
+                    break;
+                case '3':
+                    await TestLed01();
+                    break;
+                case '4':
+                    await TestUltrasoundSensor();
+                    break;
+                case '5':
+                    await TestSemaphore(DigitalPort.D3, DigitalPort.D0, DigitalPort.D1, DigitalPort.D2, 40, 20, 5);
+                    break;
+                default:
+                    Console.WriteLine("invalid option");
+                    break;
+            }
+            
+            
             Console.WriteLine("done");
         }
 
@@ -51,13 +79,6 @@ namespace SampleApp
 
         }
 
-        private static void AllLedOff(Plate plate)
-        {
-            foreach (var led in plate.DigitalDevices.OfType<Led>())
-            {
-                led.Off();
-            }
-        }
         private static void PrintPlate(Plate plate)
         {
             Console.WriteLine(plate.ToJObject().ToString(Formatting.Indented));
@@ -77,7 +98,6 @@ namespace SampleApp
                     plate.GetOrCreateDigitalDevice<Led>(digitalPort);
                 }
 
-                AllLedOff(plate);
                 var leds = plate.DigitalDevices.OfType<Led>().ToArray();
 
                 var buttonStream = Observable
@@ -115,7 +135,7 @@ namespace SampleApp
 
         }
 
-        private Task TestSemaphore(DigitalPort ultrasonicSensorPort, DigitalPort greenLedPort, DigitalPort yellowLedPort, DigitalPort redLedPort, int greenThreshold, int yellowThreshold, int redThreshold)
+        private static Task TestSemaphore(DigitalPort ultrasonicSensorPort, DigitalPort greenLedPort, DigitalPort yellowLedPort, DigitalPort redLedPort, int greenThreshold, int yellowThreshold, int redThreshold)
         {
             var plate = new Plate();
 
