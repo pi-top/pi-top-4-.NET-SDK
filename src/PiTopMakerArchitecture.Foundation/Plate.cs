@@ -44,11 +44,17 @@ namespace PiTopMakerArchitecture.Foundation
             var newDevice = factory(port);
             _disposables.Add(newDevice);
             _digitalPortDevices[port] = newDevice;
+            newDevice.Initialize();
             return newDevice;
         }
 
         public T GetOrCreateDigitalDevice<T>(DigitalPort port) where T : DigitalPortDeviceBase
         {
+            if (_digitalPortDevices.TryGetValue(port, out var digitalDevice) && digitalDevice is T requestedDevice)
+            {
+                return requestedDevice;
+            }
+
             if (!_factories.TryGetValue(typeof(T), out var factory))
             {
                 var ctor = typeof(T).GetConstructor(new[] {typeof(DigitalPort)});
@@ -61,10 +67,7 @@ namespace PiTopMakerArchitecture.Foundation
 
             if (factory != null)
             {
-                var newDevice = factory.Invoke(port) as T;
-                _disposables.Add(newDevice);
-                _digitalPortDevices[port] = newDevice;
-                return newDevice;
+                return GetOrCreateDigitalDevice(port, (dp) => factory(dp) as T);
             }
            
             throw new InvalidOperationException();
@@ -80,6 +83,7 @@ namespace PiTopMakerArchitecture.Foundation
             var newDevice = factory(port, deviceAddress);
             _disposables.Add(newDevice);
             _analoguePortDevices[port] = newDevice;
+            newDevice.Initialize();
             return newDevice;
         }
 
@@ -91,6 +95,11 @@ namespace PiTopMakerArchitecture.Foundation
         
         public T GetOrCreateAnalogueDevice<T>(AnaloguePort port, int deviceAddress = DefaultI2CAddress) where T : AnaloguePortDeviceBase
         {
+            if (_analoguePortDevices.TryGetValue(port, out var analogueDevice) && analogueDevice is T requestedDevice)
+            {
+                return requestedDevice;
+            }
+
             if (!_factories.TryGetValue(typeof(T), out var factory))
             {
                 var ctor = typeof(T).GetConstructor(new[] { typeof(AnaloguePort), typeof(int) });
@@ -107,15 +116,8 @@ namespace PiTopMakerArchitecture.Foundation
 
             if (factory != null)
             {
-                var address = new AnalogAddress
-                {
-                    Port = port,
-                    Address = deviceAddress
-                };
-                var newDevice =  factory.Invoke(address) as T;
-                _disposables.Add(newDevice);
-                _analoguePortDevices[port] = newDevice;
-                return newDevice;
+
+                return GetOrCreateAnalogueDevice(port, (ap,da) => factory(new AnalogAddress{Port = ap, Address = da}) as T, deviceAddress);
             }
 
             throw new InvalidOperationException();

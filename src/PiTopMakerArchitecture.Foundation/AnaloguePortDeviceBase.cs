@@ -4,7 +4,7 @@ using System.Reactive.Disposables;
 
 namespace PiTopMakerArchitecture.Foundation
 {
-    public abstract class AnaloguePortDeviceBase : IDisposable
+    public abstract class AnaloguePortDeviceBase : IPiTopComponent
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
@@ -33,6 +33,16 @@ namespace PiTopMakerArchitecture.Foundation
         public void Dispose()
         {
             _disposables.Dispose();
+        }
+
+        public void Initialize()
+        {
+            OnInitialize();
+        }
+
+        protected virtual void OnInitialize()
+        {
+            
         }
     }
 }

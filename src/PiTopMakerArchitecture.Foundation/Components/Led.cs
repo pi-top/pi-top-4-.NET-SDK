@@ -16,6 +16,12 @@ namespace PiTopMakerArchitecture.Foundation.Components
             _controller.OpenPin(_ledPin, PinMode.Output);
         }
 
+        protected override void OnInitialise()
+        {
+            _isOn = false;
+            _controller.Write(_ledPin, PinValue.Low);
+        }
+
         public void On()
         {
             if (!_isOn)
