@@ -4,22 +4,19 @@ namespace PiTopMakerArchitecture.Foundation.Components
 {
     public class Led : DigitalPortDeviceBase
     {
-        private readonly GpioController _controller;
         private readonly int _ledPin;
         private bool _isOn;
 
-        public Led(DigitalPort port) : base(port)
+        public Led(DigitalPort port, GpioController controller) : base(port, controller)
         {
-            _controller = new GpioController();
-            AddToDisposables(_controller);
             (_ledPin,_) = Port.ToPinPair();
-            _controller.OpenPin(_ledPin, PinMode.Output);
+            Controller.OpenPin(_ledPin, PinMode.Output);
         }
 
         protected override void OnInitialise()
         {
             _isOn = false;
-            _controller.Write(_ledPin, PinValue.Low);
+            Controller.Write(_ledPin, PinValue.Low);
         }
 
         public void On()
@@ -27,7 +24,7 @@ namespace PiTopMakerArchitecture.Foundation.Components
             if (!_isOn)
             {
                 _isOn = true;
-                _controller.Write(_ledPin, PinValue.High);
+                Controller.Write(_ledPin, PinValue.High);
             }
         }
 
@@ -36,7 +33,7 @@ namespace PiTopMakerArchitecture.Foundation.Components
             if (_isOn)
             {
                 _isOn = false;
-                _controller.Write(_ledPin, PinValue.Low);
+                Controller.Write(_ledPin, PinValue.Low);
             }
         }
 

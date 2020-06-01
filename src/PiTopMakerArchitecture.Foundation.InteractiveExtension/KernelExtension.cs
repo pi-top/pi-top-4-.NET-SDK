@@ -11,13 +11,13 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
     {
         public Task OnLoadAsync(IKernel kernel)
         {
-            Formatter<Plate>.Register((plate, writer) =>
+            Formatter<FoundationPlate>.Register((plate, writer) =>
             {
                 var root = plate.ToJObject();
                 writer.Write(root.ToString(Formatting.Indented));
             }, JsonFormatter.MimeType);
 
-            Formatter<Plate>.Register((plate, writer) =>
+            Formatter<FoundationPlate>.Register((plate, writer) =>
             {
                 var svg = plate.DrawSvg();
                 writer.Write(svg);
@@ -65,7 +65,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter.SetPreferredMimeTypeFor(typeof(Plate), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypeFor(typeof(FoundationPlate), HtmlFormatter.MimeType);
             Formatter.SetPreferredMimeTypeFor(typeof(Led), HtmlFormatter.MimeType);
             Formatter.SetPreferredMimeTypeFor(typeof(UltrasonicSensor), HtmlFormatter.MimeType);
             Formatter.SetPreferredMimeTypeFor(typeof(SoundSensor), HtmlFormatter.MimeType);

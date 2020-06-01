@@ -9,18 +9,18 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         public event EventHandler<bool> PressedChanged;
         public event EventHandler<EventArgs> Pressed;
         public event EventHandler<EventArgs> Released;
-        public Button(DigitalPort port) : base(port)
+        public Button(DigitalPort port, GpioController controller) : base(port, controller)
         {
             var (buttonPin, _) = Port.ToPinPair();
-            var controller = new GpioController(PinNumberingScheme.Logical);
+
             AddToDisposables(Disposable.Create(() =>
             {
-                controller.UnregisterCallbackForPinValueChangedEvent(buttonPin, Callback);
-                controller.Dispose();
+                Controller.UnregisterCallbackForPinValueChangedEvent(buttonPin, Callback);
+                Controller.Dispose();
             }));
 
-            controller.OpenPin(buttonPin, PinMode.Input);
-            controller.RegisterCallbackForPinValueChangedEvent(buttonPin, PinEventTypes.Falling| PinEventTypes.Rising, Callback);
+            Controller.OpenPin(buttonPin, PinMode.Input);
+            Controller.RegisterCallbackForPinValueChangedEvent(buttonPin, PinEventTypes.Falling| PinEventTypes.Rising, Callback);
 
             IsPressed = controller.Read(buttonPin) == PinValue.Low;
         }

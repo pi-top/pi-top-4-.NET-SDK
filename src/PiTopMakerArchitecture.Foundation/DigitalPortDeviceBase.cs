@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Device.Gpio;
 using System.Reactive.Disposables;
 
 namespace PiTopMakerArchitecture.Foundation
@@ -8,13 +9,15 @@ namespace PiTopMakerArchitecture.Foundation
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         public DigitalPort Port { get; }
+        protected GpioController Controller { get; }
 
         public ICollection<DisplayPropertyBase> DisplayProperties { get;  }
 
-        protected  DigitalPortDeviceBase(DigitalPort port)
+        protected  DigitalPortDeviceBase(DigitalPort port, GpioController controller)
         {
             DisplayProperties = new List<DisplayPropertyBase>();
             Port = port;
+            Controller = controller;
         }
 
         protected void AddToDisposables(IDisposable disposable)

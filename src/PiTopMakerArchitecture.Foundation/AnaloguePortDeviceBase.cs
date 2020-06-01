@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
+using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation
 {
@@ -11,13 +12,15 @@ namespace PiTopMakerArchitecture.Foundation
         public AnaloguePort Port { get; }
 
         public int DeviceAddress { get; }
+        public II2CDeviceFactory I2CDeviceFactory { get; }
 
         public ICollection<DisplayPropertyBase> DisplayProperties { get; }
 
-        protected AnaloguePortDeviceBase(AnaloguePort port, int deviceAddress)
+        protected AnaloguePortDeviceBase(AnaloguePort port, int deviceAddress, II2CDeviceFactory i2CDeviceFactory)
         {
             DisplayProperties = new List<DisplayPropertyBase>();
             DeviceAddress = deviceAddress;
+            I2CDeviceFactory = i2CDeviceFactory;
             Port = port;
         }
 

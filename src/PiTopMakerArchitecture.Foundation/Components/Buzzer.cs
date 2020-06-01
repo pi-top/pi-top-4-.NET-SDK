@@ -4,16 +4,13 @@ namespace PiTopMakerArchitecture.Foundation.Components
 {
     public class Buzzer : DigitalPortDeviceBase
     {
-        private readonly GpioController _controller;
         private readonly int _buzzPin;
         private bool _isOn;
 
-        public Buzzer(DigitalPort port) : base(port)
+        public Buzzer(DigitalPort port, GpioController controller) : base(port, controller)
         {
-            _controller = new GpioController();
-            AddToDisposables(_controller);
             (_buzzPin, _) = Port.ToPinPair();
-            _controller.OpenPin(_buzzPin, PinMode.Output);
+            Controller.OpenPin(_buzzPin, PinMode.Output);
         }
 
         public void On()
@@ -21,7 +18,7 @@ namespace PiTopMakerArchitecture.Foundation.Components
             if (!_isOn)
             {
                 _isOn = true;
-                _controller.Write(_buzzPin, PinValue.High);
+                Controller.Write(_buzzPin, PinValue.High);
             }
         }
 
@@ -30,7 +27,7 @@ namespace PiTopMakerArchitecture.Foundation.Components
             if (_isOn)
             {
                 _isOn = false;
-                _controller.Write(_buzzPin, PinValue.Low);
+                Controller.Write(_buzzPin, PinValue.Low);
             }
         }
 
