@@ -12,17 +12,19 @@ namespace PiTop.PsiApp
         {
             using var pipeline = Pipeline.Create("PiTop", true);
             using var module = new PiTopModule();
-            using var plate = module.GetOrCreatePlate<FoundationPlate>();
+            var plate = module.GetOrCreatePlate<FoundationPlate>();
 
-            var position = plate.GetOrCreateAnalogueDevice<Potentiometer>(AnaloguePort.A0)
+            var position = plate
+                .GetOrCreateAnalogueDevice<Potentiometer>(AnaloguePort.A0)
                 .CreateComponent(pipeline, TimeSpan.FromSeconds(0.5));
 
-            var speed = position.Delta();
+            var speed = position
+                .Delta(deliveryPolicy: DeliveryPolicy.LatencyConstrained(TimeSpan.FromSeconds(0.01)));
 
-            position.Join(speed)
+            position
+                .Join(speed)
                 .Do((p) => Console.WriteLine($"current {p.Item1} changing by {p.Item2}"));
-
-
+            
             pipeline.Run();
         }
     }
