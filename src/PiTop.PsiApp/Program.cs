@@ -14,9 +14,13 @@ namespace PiTop.PsiApp
             using var module = new PiTopModule();
             using var plate = module.GetOrCreatePlate<FoundationPlate>();
 
-            plate.GetOrCreateAnalogueDevice<Potentiometer>(AnaloguePort.A0)
-                .CreateComponent(pipeline, TimeSpan.FromSeconds(0.5))
-                .Do(Console.WriteLine);
+            var position = plate.GetOrCreateAnalogueDevice<Potentiometer>(AnaloguePort.A0)
+                .CreateComponent(pipeline, TimeSpan.FromSeconds(0.5));
+
+            var speed = position.Delta();
+
+            position.Join(speed)
+                .Do((p) => Console.WriteLine($"current {p.Item1} changing by {p.Item2}"));
 
 
             pipeline.Run();
