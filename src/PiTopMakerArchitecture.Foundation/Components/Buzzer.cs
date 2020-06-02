@@ -1,4 +1,5 @@
 ﻿using System.Device.Gpio;
+using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Components
 {
@@ -7,7 +8,7 @@ namespace PiTopMakerArchitecture.Foundation.Components
         private readonly int _buzzPin;
         private bool _isOn;
 
-        public Buzzer(DigitalPort port, GpioController controller) : base(port, controller)
+        public Buzzer(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             (_buzzPin, _) = Port.ToPinPair();
             Controller.OpenPin(_buzzPin, PinMode.Output);

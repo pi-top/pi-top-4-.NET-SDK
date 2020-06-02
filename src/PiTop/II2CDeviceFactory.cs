@@ -4,6 +4,6 @@ namespace PiTop
 {
     public interface II2CDeviceFactory
     {
-        I2cDevice GetCreateI2CDevice(int deviceAddress);
+        I2cDevice GetOrCreateI2CDevice(int deviceAddress);
     }
 }

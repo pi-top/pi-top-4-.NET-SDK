@@ -8,13 +8,17 @@ using NetMQ;
 
 namespace PiTop
 {
-    public class PiTopModule : IDisposable, II2CDeviceFactory
+    public interface IGpioControllerFactory
+    {
+        GpioController GetOrCreateController();
+    }
+    public class PiTopModule : IDisposable, II2CDeviceFactory, IGpioControllerFactory
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         private ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
         private ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
         private readonly Client _client;
-        public GpioController Controller { get; }
+        private readonly GpioController _controller;
 
         private const int I2CBusId = 1;
 
@@ -25,7 +29,7 @@ namespace PiTop
 
         public PiTopModule()
         {
-            Controller = new GpioController();
+            _controller = new GpioController();
             _client = new Client();
             _client.MessageReceived += _client_MessageReceived;
             _disposables.Add(Disposable.Create(() =>
@@ -44,8 +48,9 @@ namespace PiTop
                     i2CDevice.Dispose();
                 }
             }));
+
             _disposables.Add(_client);
-            _disposables.Add(Controller);
+            _disposables.Add(_controller);
         }
 
         public T GetOrCreatePlate<T>() where T : PiTopPlate
@@ -209,7 +214,7 @@ namespace PiTop
 
         }
 
-        public I2cDevice GetCreateI2CDevice(int deviceAddress)
+        public I2cDevice GetOrCreateI2CDevice(int deviceAddress)
         {
             return _i2cBusses.GetOrAdd(deviceAddress, address => I2cDevice.Create(new I2cConnectionSettings(I2CBusId, deviceAddress)));
         }
@@ -218,6 +223,11 @@ namespace PiTop
         {
             _client.MessageReceived -= _client_MessageReceived;
             _disposables.Dispose();
+        }
+
+        public GpioController GetOrCreateController()
+        {
+            return _controller;
         }
     }
 }

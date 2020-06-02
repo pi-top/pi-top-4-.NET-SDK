@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Reactive.Disposables;
+using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation
 {
@@ -13,11 +14,15 @@ namespace PiTopMakerArchitecture.Foundation
 
         public ICollection<DisplayPropertyBase> DisplayProperties { get;  }
 
-        protected  DigitalPortDeviceBase(DigitalPort port, GpioController controller)
+        protected  DigitalPortDeviceBase(DigitalPort port, IGpioControllerFactory controllerFactory)
         {
+            if (controllerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(controllerFactory));
+            }
             DisplayProperties = new List<DisplayPropertyBase>();
             Port = port;
-            Controller = controller;
+            Controller = controllerFactory.GetOrCreateController();
         }
 
         protected void AddToDisposables(IDisposable disposable)

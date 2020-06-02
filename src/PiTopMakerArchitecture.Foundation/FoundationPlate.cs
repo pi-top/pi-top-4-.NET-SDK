@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Device.Gpio;
 using System.Linq;
 using PiTop;
 
@@ -37,14 +36,14 @@ namespace PiTopMakerArchitecture.Foundation
         public IEnumerable<AnaloguePortDeviceBase> AnalogueDevices =>
             _analoguePortDevices.Select(e => e.Value);
 
-        public T GetOrCreateDigitalDevice<T>(DigitalPort port, Func<DigitalPort, GpioController,  T> factory) where T : DigitalPortDeviceBase
+        public T GetOrCreateDigitalDevice<T>(DigitalPort port, Func<DigitalPort, IGpioControllerFactory,  T> factory) where T : DigitalPortDeviceBase
         {
             if (_digitalPortDevices.TryGetValue(port, out var digitalDevice) && digitalDevice is T requestedDevice)
             {
                 return requestedDevice;
             }
 
-            var newDevice = factory(port, Module.Controller);
+            var newDevice = factory(port, Module);
             RegisterForDisposal(newDevice);
             _digitalPortDevices[port] = newDevice;
             newDevice.Initialize();
@@ -60,7 +59,7 @@ namespace PiTopMakerArchitecture.Foundation
 
             if (!_factories.TryGetValue(typeof(T), out var factory))
             {
-                var ctor = typeof(T).GetConstructor(new[] {typeof(DigitalPort), typeof(GpioController)});
+                var ctor = typeof(T).GetConstructor(new[] {typeof(DigitalPort), typeof(IGpioControllerFactory)});
                 if (ctor != null)
                 {
                     factory = (p,c) => Activator.CreateInstance(typeof(T), p, c);

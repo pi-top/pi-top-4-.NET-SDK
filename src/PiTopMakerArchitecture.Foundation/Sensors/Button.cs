@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Reactive.Disposables;
+using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
 {
@@ -9,7 +10,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         public event EventHandler<bool> PressedChanged;
         public event EventHandler<EventArgs> Pressed;
         public event EventHandler<EventArgs> Released;
-        public Button(DigitalPort port, GpioController controller) : base(port, controller)
+        public Button(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             var (buttonPin, _) = Port.ToPinPair();
 
@@ -22,7 +23,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             Controller.OpenPin(buttonPin, PinMode.Input);
             Controller.RegisterCallbackForPinValueChangedEvent(buttonPin, PinEventTypes.Falling| PinEventTypes.Rising, Callback);
 
-            IsPressed = controller.Read(buttonPin) == PinValue.Low;
+            IsPressed = Controller.Read(buttonPin) == PinValue.Low;
         }
 
         private void Callback(object _, PinValueChangedEventArgs pinValueChangedEventArgs)

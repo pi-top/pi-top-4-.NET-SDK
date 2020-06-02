@@ -16,7 +16,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         {
             _normalizeValue = normalizeValue;
             var (pin1, _) = Port.ToPinPair();
-            var bus = i2CDeviceFactory.GetCreateI2CDevice(DeviceAddress);
+            var bus = i2CDeviceFactory.GetOrCreateI2CDevice(DeviceAddress);
             _adc = new AnalogueDigitalConverter(bus, pin1);
 
             AddToDisposables(_adc);

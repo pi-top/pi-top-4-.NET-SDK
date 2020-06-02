@@ -1,4 +1,5 @@
 ﻿using System.Device.Gpio;
+using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Components
 {
@@ -7,7 +8,7 @@ namespace PiTopMakerArchitecture.Foundation.Components
         private readonly int _ledPin;
         private bool _isOn;
 
-        public Led(DigitalPort port, GpioController controller) : base(port, controller)
+        public Led(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             (_ledPin,_) = Port.ToPinPair();
             Controller.OpenPin(_ledPin, PinMode.Output);
