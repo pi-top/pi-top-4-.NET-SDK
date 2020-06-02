@@ -75,7 +75,7 @@ namespace SampleApp
             return Task.Run(() =>
             {
                 Console.ReadLine();
-                plate.Dispose();
+                module.Dispose();
                 cancellationSource.Cancel(false);
             }, cancellationSource.Token);
 
@@ -133,7 +133,7 @@ namespace SampleApp
             return Task.Run(() =>
             {
                 Console.ReadLine();
-                plate.Dispose();
+                module.Dispose();
                 cancellationSource.Cancel(false);
             }, cancellationSource.Token);
 
@@ -195,7 +195,7 @@ namespace SampleApp
             return Task.Run(() =>
             {
                 Console.ReadLine();
-                plate.Dispose();
+                module.Dispose();
                 ClearLeds();
                 cancellationSource.Cancel(false);
             }, cancellationSource.Token);
@@ -229,7 +229,7 @@ namespace SampleApp
             return Task.Run(() =>
                 {
                     Console.ReadLine();
-                    plate.Dispose();
+                    module.Dispose();
                     cancellationSource.Cancel(false);
                 }, cancellationSource.Token);
 
