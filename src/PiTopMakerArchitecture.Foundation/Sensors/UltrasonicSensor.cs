@@ -2,13 +2,13 @@
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
+using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
 {
     public class UltrasonicSensor : DigitalPortDeviceBase
     {
         private const int MaxDistance = 300;
-        private readonly GpioController _controller;
         private readonly int _echoPin;
         private readonly int _triggerPin;
         private readonly Stopwatch _timer = new Stopwatch();
@@ -16,16 +16,14 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         private int _lastMeasurement = 0;
 
 
-        public UltrasonicSensor(DigitalPort port) : base(port)
+        public UltrasonicSensor(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             (_echoPin, _triggerPin) = port.ToPinPair();
-            _controller = new GpioController(PinNumberingScheme.Logical);
-            AddToDisposables(_controller);
-            _controller.OpenPin(_echoPin, PinMode.Input);
-            _controller.OpenPin(_triggerPin, PinMode.Output);
-            _controller.Write(_triggerPin, PinValue.Low);
-
-            _controller.Read(_echoPin);
+          
+            Controller.OpenPin(_echoPin, PinMode.Input);
+            Controller.OpenPin(_triggerPin, PinMode.Output);
+            Controller.Write(_triggerPin, PinValue.Low);
+            Controller.Read(_echoPin);
         }
 
         public double Distance => GetDistance();
@@ -60,12 +58,12 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             }
 
             // Trigger input for 10uS to start ranging
-            _controller.Write(_triggerPin, PinValue.High);
+            Controller.Write(_triggerPin, PinValue.High);
             Thread.Sleep(TimeSpan.FromMilliseconds(0.01));
-            _controller.Write(_triggerPin, PinValue.Low);
+            Controller.Write(_triggerPin, PinValue.Low);
 
             // Wait until the echo pin is HIGH (that marks the beginning of the pulse length we want to measure)
-            while (_controller.Read(_echoPin) == PinValue.Low)
+            while (Controller.Read(_echoPin) == PinValue.Low)
             {
                 if (Environment.TickCount - hangTicks > 0)
                 {
@@ -79,7 +77,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             _timer.Start();
 
             // Wait until the pin is LOW again, (that marks the end of the pulse we are measuring)
-            while (_controller.Read(_echoPin) == PinValue.High)
+            while (Controller.Read(_echoPin) == PinValue.High)
             {
                 if (Environment.TickCount - hangTicks > 0)
                 {

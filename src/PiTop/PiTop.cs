@@ -1,11 +1,24 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Device.Gpio;
 using System.Device.I2c;
+using System.Linq;
+using System.Reactive.Disposables;
+using NetMQ;
 
 namespace PiTop
 {
-    public class PiTopModule : IDisposable
+    public interface IGpioControllerFactory
     {
+        GpioController GetOrCreateController();
+    }
+    public class PiTopModule : IDisposable, II2CDeviceFactory, IGpioControllerFactory
+    {
+        private readonly CompositeDisposable _disposables = new CompositeDisposable();
+        private ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
+        private ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
         private readonly Client _client;
+        private readonly GpioController _controller;
 
         private const int I2CBusId = 1;
 
@@ -16,8 +29,41 @@ namespace PiTop
 
         public PiTopModule()
         {
+            _controller = new GpioController();
             _client = new Client();
             _client.MessageReceived += _client_MessageReceived;
+            _disposables.Add(Disposable.Create(() =>
+            {
+                var plates = _plates.Values.ToList();
+
+                foreach (var piTopPlate in plates)
+                {
+                    piTopPlate.Dispose();
+                }
+
+                var busses = _i2cBusses.Values.ToList();
+
+                foreach (var i2CDevice in busses)
+                {
+                    i2CDevice.Dispose();
+                }
+            }));
+
+            _disposables.Add(_client);
+            _disposables.Add(_controller);
+        }
+
+        public T GetOrCreatePlate<T>() where T : PiTopPlate
+        {
+            var key = typeof(T);
+            var plate =  _plates.GetOrAdd(key, plateType =>
+            {
+                var newPlate = (Activator.CreateInstance(plateType, args:new object[] {this})) as T;
+                newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
+                return newPlate;
+            });
+
+            return plate as T;
         }
 
         private void _client_MessageReceived(object sender, PiTopMessage message)
@@ -168,11 +214,20 @@ namespace PiTop
 
         }
 
-        public static I2cDevice CreateI2CDevice(int deviceAddress) => I2cDevice.Create(new I2cConnectionSettings(I2CBusId, deviceAddress));
+        public I2cDevice GetOrCreateI2CDevice(int deviceAddress)
+        {
+            return _i2cBusses.GetOrAdd(deviceAddress, address => I2cDevice.Create(new I2cConnectionSettings(I2CBusId, deviceAddress)));
+        }
+       
         public void Dispose()
         {
             _client.MessageReceived -= _client_MessageReceived;
-            _client.Dispose();
+            _disposables.Dispose();
+        }
+
+        public GpioController GetOrCreateController()
+        {
+            return _controller;
         }
     }
 }

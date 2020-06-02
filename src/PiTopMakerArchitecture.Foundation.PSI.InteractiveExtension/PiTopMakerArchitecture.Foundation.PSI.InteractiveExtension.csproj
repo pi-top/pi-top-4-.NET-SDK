@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.PSI\PiTopMakerArchitecture.Foundation.PSI.csproj" />
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj" />
   </ItemGroup>
 

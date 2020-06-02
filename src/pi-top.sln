@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop", "PiTop\PiTop.csproj", "{79EE7D16-C478-4159-A1B7-38C7B4764D30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.InteractiveExtension", "PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj", "{0264F0D4-CBB8-4A38-86FD-B65B8668C077}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.InteractiveExtension", "PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj", "{0264F0D4-CBB8-4A38-86FD-B65B8668C077}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTopMakerArchitecture.Foundation.InteractiveExtension", "PiTopMakerArchitecture.Foundation.InteractiveExtension\PiTopMakerArchitecture.Foundation.InteractiveExtension.csproj", "{4BA30F39-13E1-4F37-B7F8-E7054FFB1A84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.InteractiveExtension", "PiTopMakerArchitecture.Foundation.InteractiveExtension\PiTopMakerArchitecture.Foundation.InteractiveExtension.csproj", "{4BA30F39-13E1-4F37-B7F8-E7054FFB1A84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InteractiveExtensions", "InteractiveExtensions", "{931E6A07-3272-4153-B7BA-A597BC40FAA5}"
 EndProject
@@ -22,6 +22,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.nuget", "PiTop.nuget\PiTop.nuget.csproj", "{B8EDB470-BCBD-4120-9CD0-9FC4CBF168F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.nuget", "PiTopMakerArchitecture.Foundation.nuget\PiTopMakerArchitecture.Foundation.nuget.csproj", "{7C99308D-A11A-43A0-9C2D-F28466A0B711}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTopMakerArchitecture.Foundation.PSI", "PiTopMakerArchitecture.Foundation.PSI\PiTopMakerArchitecture.Foundation.PSI.csproj", "{6003624A-34E4-4891-A29C-6957DE6ADF9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.PSI.nuget", "PiTopMakerArchitecture.Foundation.PSI.nuget\PiTopMakerArchitecture.Foundation.PSI.nuget.csproj", "{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension", "PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension\PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension.csproj", "{5322025D-EFDF-472D-8CD7-947A23B15E38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.PsiApp", "PiTop.PsiApp\PiTop.PsiApp.csproj", "{9F60841F-6489-49D6-952F-042B9ABD4226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +65,22 @@ Global
 		{7C99308D-A11A-43A0-9C2D-F28466A0B711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C99308D-A11A-43A0-9C2D-F28466A0B711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C99308D-A11A-43A0-9C2D-F28466A0B711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6003624A-34E4-4891-A29C-6957DE6ADF9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6003624A-34E4-4891-A29C-6957DE6ADF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6003624A-34E4-4891-A29C-6957DE6ADF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6003624A-34E4-4891-A29C-6957DE6ADF9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5322025D-EFDF-472D-8CD7-947A23B15E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5322025D-EFDF-472D-8CD7-947A23B15E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5322025D-EFDF-472D-8CD7-947A23B15E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5322025D-EFDF-472D-8CD7-947A23B15E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F60841F-6489-49D6-952F-042B9ABD4226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F60841F-6489-49D6-952F-042B9ABD4226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F60841F-6489-49D6-952F-042B9ABD4226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F60841F-6489-49D6-952F-042B9ABD4226}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +92,9 @@ Global
 		{4BA30F39-13E1-4F37-B7F8-E7054FFB1A84} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
 		{B8EDB470-BCBD-4120-9CD0-9FC4CBF168F7} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
 		{7C99308D-A11A-43A0-9C2D-F28466A0B711} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
+		{6003624A-34E4-4891-A29C-6957DE6ADF9F} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
+		{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
+		{5322025D-EFDF-472D-8CD7-947A23B15E38} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98E1ADF8-88DF-4B1F-B486-650F4F9CC573}

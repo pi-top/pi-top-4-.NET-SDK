@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PiTop;
 using PiTopMakerArchitecture.Foundation;
 using PiTopMakerArchitecture.Foundation.Components;
 using PiTopMakerArchitecture.Foundation.InteractiveExtension;
@@ -56,7 +56,9 @@ namespace SampleApp
         private static Task TestPotentiometer(AnaloguePort port)
         {
             var cancellationSource = new CancellationTokenSource();
-            var plate = new Plate();
+            
+            var module = new PiTopModule();
+            var plate = module.GetOrCreatePlate<FoundationPlate>();
            
             Task.Run(() =>
             {
@@ -79,7 +81,7 @@ namespace SampleApp
 
         }
 
-        private static void PrintPlate(Plate plate)
+        private static void PrintPlate(FoundationPlate plate)
         {
             Console.WriteLine(plate.ToJObject().ToString(Formatting.Indented));
         }
@@ -87,7 +89,9 @@ namespace SampleApp
         private static Task TestButton(DigitalPort buttonPort, DigitalPort[] ledPorts)
         {
             var cancellationSource = new CancellationTokenSource();
-            var plate = new Plate();
+            var module = new PiTopModule();
+            var plate = module.GetOrCreatePlate<FoundationPlate>();
+
             Task.Run(() =>
             {
 
@@ -137,7 +141,8 @@ namespace SampleApp
 
         private static Task TestSemaphore(DigitalPort ultrasonicSensorPort, DigitalPort greenLedPort, DigitalPort yellowLedPort, DigitalPort redLedPort, int greenThreshold, int yellowThreshold, int redThreshold)
         {
-            var plate = new Plate();
+            var module = new PiTopModule();
+            var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
             var greenLed = plate.GetOrCreateDigitalDevice<Led>(greenLedPort);
@@ -205,13 +210,14 @@ namespace SampleApp
 
         private static Task TestUltrasoundSensor()
         {
-            var plate = new Plate();
+            var module = new PiTopModule();
+            var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
             Task.Run(() =>
             {
                 var sensor =
-                    plate.GetOrCreateDigitalDevice<UltrasonicSensor>(DigitalPort.D3, (dp) => new UltrasonicSensor(dp));
+                    plate.GetOrCreateDigitalDevice<UltrasonicSensor>(DigitalPort.D3, (dp,c) => new UltrasonicSensor(dp,c));
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Subscribe(_ => { Console.WriteLine(sensor.Distance); });
@@ -231,10 +237,12 @@ namespace SampleApp
 
         private static async Task TestLed01()
         {
-            using var plate = new Plate();
+            var module = new PiTopModule();
+            var plate = module.GetOrCreatePlate<FoundationPlate>();
+
             var ports = DigitalPort.D0.GetDigitalPortRange(3);
             var leds = ports
-                .Select(p => plate.GetOrCreateDigitalDevice(p, (dp) => new Led(dp)))
+                .Select(p => plate.GetOrCreateDigitalDevice(p, (dp,c) => new Led(dp,c)))
                 .ToArray();
 
             foreach (var led in leds)

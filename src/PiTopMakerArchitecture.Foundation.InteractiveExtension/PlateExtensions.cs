@@ -10,7 +10,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
 {
     public static class PlateExtensions
     {
-        public static JObject ToJObject(this Plate plate)
+        public static JObject ToJObject(this FoundationPlate plate)
         {
             var root = new JObject();
 
@@ -35,7 +35,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             return root;
         }
 
-        internal static IHtmlContent DrawSvg(this Plate plate)
+        internal static IHtmlContent DrawSvg(this FoundationPlate plate)
         {
             var id = "PiTopMakerArchitecture.Foundation.InteractiveExtension" + Guid.NewGuid().ToString("N");
             return div[id: id](
@@ -49,7 +49,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 );
         }
 
-        internal static PocketView GetWiresSvg(this Plate plate)
+        internal static PocketView GetWiresSvg(this FoundationPlate plate)
         {
             var lineStyle = "fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;";
             var svgWires = new List<PocketView>();
@@ -135,7 +135,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             return g[@class: "wires_group"](svgWires);
         }
 
-        internal static PocketView GetDevicesSvg(this Plate plate)
+        internal static PocketView GetDevicesSvg(this FoundationPlate plate)
         {
             var svgDevices = new List<PocketView>();
             foreach (var  digitalDevice in plate.DigitalDevices)
@@ -215,7 +215,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             return g[@class: "devices_group"](svgDevices);
         }
 
-        internal static PocketView GetPlateSvg(this Plate plate)
+        internal static PocketView GetPlateSvg(this FoundationPlate plate)
         {
             var plateSvg = new HtmlString(@"     <g class=""FoundationPlate"" transform=""matrix(1.0428,0,0,1.19407,-290.953,-136.392)"">
         <g transform=""matrix(0.521762,0,0,0.571716,426.226,54.9563)"">
