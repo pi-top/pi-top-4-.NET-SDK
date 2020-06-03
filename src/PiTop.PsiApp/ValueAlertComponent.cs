@@ -6,23 +6,23 @@ using PiTopMakerArchitecture.Foundation.Components;
 
 namespace PiTop.PsiApp
 {
-    public class DistanceAlertComponent
+    public class ValueAlertComponent
     {
         private readonly Led[] _alertDisplay;
         private double _currentThreshold;
-        private double _currentDistance;
+        private double _currentValue;
 
-        public DistanceAlertComponent(Pipeline pipeline, Led[] alertDisplay)
+        public ValueAlertComponent(Pipeline pipeline, Led[] alertDisplay)
         {
             _alertDisplay = alertDisplay;
             Threshold = pipeline.CreateReceiver<double>(this, OnThreshold, nameof(Threshold));
-            Distance = pipeline.CreateReceiver<double>(this, OnDistance, nameof(Distance));
+            Value = pipeline.CreateReceiver<double>(this, OnValue, nameof(Value));
 
         }
 
-        private void OnDistance(Message<double> distanceMessage)
+        private void OnValue(Message<double> valueMessage)
         {
-            _currentDistance = Math.Round(distanceMessage.Data, 1);
+            _currentValue = Math.Round(valueMessage.Data, 1);
 
             UpdateDisplay();
         }
@@ -58,17 +58,17 @@ namespace PiTop.PsiApp
 
         private double ComputeAlertLevel()
         {
-            if (_currentDistance > _currentThreshold)
+            if (_currentValue > _currentThreshold)
             {
                 return 0;
             }
 
-            var level = Math.Min(Math.Max((_currentThreshold - _currentDistance) / _currentThreshold, 0), 1);
+            var level = Math.Min(Math.Max((_currentThreshold - _currentValue) / _currentThreshold, 0), 1);
             return level;
 
         }
 
-        public Receiver<double> Distance { get; set; }
+        public Receiver<double> Value { get; set; }
 
         private void OnThreshold(Message<double> thresholdMessage)
         {

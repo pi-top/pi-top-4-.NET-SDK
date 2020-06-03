@@ -26,7 +26,7 @@ namespace PiTop.PsiApp
                 .GetOrCreateDigitalDevice<UltrasonicSensor>(DigitalPort.D3)
                 .CreateComponent(pipeline, TimeSpan.FromSeconds(0.1));
 
-            var alert = new DistanceAlertComponent(pipeline,
+            var alert = new ValueAlertComponent(pipeline,
                 new[]
                 {
                    plate.GetOrCreateDigitalDevice<Led>(DigitalPort.D0),
@@ -39,7 +39,7 @@ namespace PiTop.PsiApp
                 .PipeTo(alert.Threshold);
 
             distance
-                .PipeTo(alert.Distance);
+                .PipeTo(alert.Value);
 
             pipeline.Run();
         }
