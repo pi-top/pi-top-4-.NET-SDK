@@ -1,7 +1,5 @@
 ﻿using System;
-
 using Microsoft.Psi;
-
 using PiTopMakerArchitecture.Foundation.Components;
 
 namespace PiTop.PsiApp
