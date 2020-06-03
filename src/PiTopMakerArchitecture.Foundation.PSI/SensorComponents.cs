@@ -1,13 +1,33 @@
 ﻿using System;
 
 using Microsoft.Psi;
-
+using Microsoft.Psi.Components;
 using PiTopMakerArchitecture.Foundation.Sensors;
 
 namespace PiTopMakerArchitecture.Foundation.PSI
 {
     public static class SensorComponents
     {
+        public static IProducer<bool> CreateComponent(this Button button, Pipeline pipeline)
+        {
+            if (button == null)
+            {
+                throw new ArgumentNullException(nameof(button));
+            }
+            if (pipeline == null)
+            {
+                throw new ArgumentNullException(nameof(pipeline));
+            }
+
+            var pressedEvents = new EventSource<EventHandler<bool>, bool>(
+                pipeline,
+                handler => button.PressedChanged += handler,
+                handler => button.PressedChanged -= handler,
+                post => (sender, e) => post(e));
+
+            return pressedEvents;
+        }
+
         public static IProducer<double> CreateComponent(this UltrasonicSensor ultrasonicSensor, Pipeline pipeline, TimeSpan samplingInterval)
         {
             if (ultrasonicSensor == null)
