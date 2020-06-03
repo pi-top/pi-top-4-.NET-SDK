@@ -1,5 +1,7 @@
 ﻿using System;
+
 using Microsoft.Psi;
+
 using PiTopMakerArchitecture.Foundation.Components;
 
 namespace PiTop.PsiApp
@@ -15,13 +17,11 @@ namespace PiTop.PsiApp
             _alertDisplay = alertDisplay;
             Threshold = pipeline.CreateReceiver<double>(this, OnThreshold, nameof(Threshold));
             Value = pipeline.CreateReceiver<double>(this, OnValue, nameof(Value));
-
         }
 
         private void OnValue(Message<double> valueMessage)
         {
             _currentValue = Math.Round(valueMessage.Data, 1);
-
             UpdateDisplay();
         }
 
@@ -38,7 +38,6 @@ namespace PiTop.PsiApp
             }
             else
             {
-
                 var limit = Math.Floor(_alertDisplay.Length * alertLevel);
                 for (var i = 0; i < _alertDisplay.Length; i++)
                 {
@@ -63,7 +62,6 @@ namespace PiTop.PsiApp
 
             var level = Math.Min(Math.Max((_currentThreshold - _currentValue) / _currentThreshold, 0), 1);
             return level;
-
         }
 
         public Receiver<double> Value { get; set; }
@@ -74,7 +72,6 @@ namespace PiTop.PsiApp
             if (Math.Abs(thresholdValue - _currentThreshold) > 0.01)
             {
                 _currentThreshold = thresholdValue;
-
                 UpdateDisplay();
 
             }

@@ -1,12 +1,14 @@
 ﻿using System;
+
 using Microsoft.Psi;
+
 using PiTopMakerArchitecture.Foundation.Sensors;
 
 namespace PiTopMakerArchitecture.Foundation.PSI
 {
     public static class SensorComponents
     {
-        public static IProducer<double> CreateComponent(this UltrasonicSensor ultrasonicSensor, Pipeline pipeline, TimeSpan samplingInterval) 
+        public static IProducer<double> CreateComponent(this UltrasonicSensor ultrasonicSensor, Pipeline pipeline, TimeSpan samplingInterval)
         {
             if (ultrasonicSensor == null)
             {
