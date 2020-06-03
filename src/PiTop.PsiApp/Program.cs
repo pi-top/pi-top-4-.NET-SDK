@@ -18,19 +18,19 @@ namespace PiTop.PsiApp
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var threshold = plate
-                .GetOrCreateAnalogueDevice<Potentiometer>(AnaloguePort.A0)
+                .GetOrCreateDevice<Potentiometer>(AnaloguePort.A0)
                 .CreateComponent(pipeline, TimeSpan.FromSeconds(0.5));
 
             var distance = plate
-                .GetOrCreateDigitalDevice<UltrasonicSensor>(DigitalPort.D3)
+                .GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D3)
                 .CreateComponent(pipeline, TimeSpan.FromSeconds(0.1));
 
             var alert = new ValueAlertComponent(pipeline,
                 new[]
                 {
-                   plate.GetOrCreateDigitalDevice<Led>(DigitalPort.D0),
-                   plate.GetOrCreateDigitalDevice<Led>(DigitalPort.D1),
-                   plate.GetOrCreateDigitalDevice<Led>(DigitalPort.D2)
+                   plate.GetOrCreateDevice<Led>(DigitalPort.D0),
+                   plate.GetOrCreateDevice<Led>(DigitalPort.D1),
+                   plate.GetOrCreateDevice<Led>(DigitalPort.D2)
                 });
 
             threshold

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
+
 using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation
 {
-    public abstract class AnaloguePortDeviceBase : IPiTopComponent
+    public abstract class AnaloguePortDeviceBase : IPiTopConnectedDevice
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
@@ -45,7 +46,7 @@ namespace PiTopMakerArchitecture.Foundation
 
         protected virtual void OnInitialize()
         {
-            
+
         }
     }
 }

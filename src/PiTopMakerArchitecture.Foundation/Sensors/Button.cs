@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Reactive.Disposables;
+
 using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
@@ -21,7 +22,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             }));
 
             Controller.OpenPin(buttonPin, PinMode.Input);
-            Controller.RegisterCallbackForPinValueChangedEvent(buttonPin, PinEventTypes.Falling| PinEventTypes.Rising, Callback);
+            Controller.RegisterCallbackForPinValueChangedEvent(buttonPin, PinEventTypes.Falling | PinEventTypes.Rising, Callback);
 
             IsPressed = Controller.Read(buttonPin) == PinValue.Low;
         }
@@ -39,7 +40,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
                     IsPressed = true;
                     Pressed?.Invoke(this, EventArgs.Empty);
                     break;
-               
+
             }
             PressedChanged?.Invoke(this, IsPressed);
         }

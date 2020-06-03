@@ -62,7 +62,7 @@ namespace SampleApp
            
             Task.Run(() =>
             {
-                var potentiometer = plate.GetOrCreateAnalogueDevice<Potentiometer>(port);
+                var potentiometer = plate.GetOrCreateDevice<Potentiometer>(port);
 
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
@@ -95,11 +95,11 @@ namespace SampleApp
             Task.Run(() =>
             {
 
-                var button = plate.GetOrCreateDigitalDevice<Button>(buttonPort);
+                var button = plate.GetOrCreateDevice<Button>(buttonPort);
                 
                 foreach (var digitalPort in ledPorts)
                 {
-                    plate.GetOrCreateDigitalDevice<Led>(digitalPort);
+                    plate.GetOrCreateDevice<Led>(digitalPort);
                 }
 
                 var leds = plate.DigitalDevices.OfType<Led>().ToArray();
@@ -145,16 +145,16 @@ namespace SampleApp
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
-            var greenLed = plate.GetOrCreateDigitalDevice<Led>(greenLedPort);
+            var greenLed = plate.GetOrCreateDevice<Led>(greenLedPort);
             greenLed.DisplayProperties.Add(new NamedCssColor("green"));
-            var yellowLed = plate.GetOrCreateDigitalDevice<Led>(yellowLedPort);
+            var yellowLed = plate.GetOrCreateDevice<Led>(yellowLedPort);
             yellowLed.DisplayProperties.Add(new NamedCssColor("yellow"));
-            var redLed = plate.GetOrCreateDigitalDevice<Led>(redLedPort);
+            var redLed = plate.GetOrCreateDevice<Led>(redLedPort);
             redLed.DisplayProperties.Add(new NamedCssColor("red"));
             ClearLeds();
             Task.Run(() =>
             {
-                var sensor = plate.GetOrCreateDigitalDevice<UltrasonicSensor>(ultrasonicSensorPort);
+                var sensor = plate.GetOrCreateDevice<UltrasonicSensor>(ultrasonicSensorPort);
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Subscribe(_ =>
@@ -217,7 +217,7 @@ namespace SampleApp
             Task.Run(() =>
             {
                 var sensor =
-                    plate.GetOrCreateDigitalDevice<UltrasonicSensor>(DigitalPort.D3, (dp,c) => new UltrasonicSensor(dp,c));
+                    plate.GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D3, (dp,c) => new UltrasonicSensor(dp,c));
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Subscribe(_ => { Console.WriteLine(sensor.Distance); });
@@ -242,7 +242,7 @@ namespace SampleApp
 
             var ports = DigitalPort.D0.GetDigitalPortRange(3);
             var leds = ports
-                .Select(p => plate.GetOrCreateDigitalDevice(p, (dp,c) => new Led(dp,c)))
+                .Select(p => plate.GetOrCreateDevice(p, (dp,c) => new Led(dp,c)))
                 .ToArray();
 
             foreach (var led in leds)

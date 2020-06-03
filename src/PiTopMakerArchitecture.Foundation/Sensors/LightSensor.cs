@@ -1,4 +1,5 @@
 ﻿using System;
+
 using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
@@ -25,7 +26,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
 
         private double ReadValue()
         {
-            var value = _adc.ReadSample(numberOfSamples:3);
+            var value = _adc.ReadSample(numberOfSamples: 3);
             return Math.Round(_normalizeValue ? value / 999.0 : value, 2);
         }
     }

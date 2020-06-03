@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Reactive.Disposables;
+
 using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation
 {
-    public abstract class DigitalPortDeviceBase : IPiTopComponent
+    public abstract class DigitalPortDeviceBase : IPiTopConnectedDevice
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         public DigitalPort Port { get; }
         protected GpioController Controller { get; }
 
-        public ICollection<DisplayPropertyBase> DisplayProperties { get;  }
+        public ICollection<DisplayPropertyBase> DisplayProperties { get; }
 
-        protected  DigitalPortDeviceBase(DigitalPort port, IGpioControllerFactory controllerFactory)
+        protected DigitalPortDeviceBase(DigitalPort port, IGpioControllerFactory controllerFactory)
         {
             if (controllerFactory == null)
             {

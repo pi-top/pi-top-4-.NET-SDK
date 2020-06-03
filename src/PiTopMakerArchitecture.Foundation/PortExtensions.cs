@@ -52,7 +52,7 @@ namespace PiTopMakerArchitecture.Foundation
                 case DigitalPort.D0:
                     return (22, 23);
                 case DigitalPort.D1:
-                    return (24,25);
+                    return (24, 25);
                 case DigitalPort.D2:
                     return (26, 27);
                 case DigitalPort.D3:

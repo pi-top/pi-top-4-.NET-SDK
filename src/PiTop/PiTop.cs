@@ -4,14 +4,11 @@ using System.Device.Gpio;
 using System.Device.I2c;
 using System.Linq;
 using System.Reactive.Disposables;
+
 using NetMQ;
 
 namespace PiTop
 {
-    public interface IGpioControllerFactory
-    {
-        GpioController GetOrCreateController();
-    }
     public class PiTopModule : IDisposable, II2CDeviceFactory, IGpioControllerFactory
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
@@ -56,12 +53,12 @@ namespace PiTop
         public T GetOrCreatePlate<T>() where T : PiTopPlate
         {
             var key = typeof(T);
-            var plate =  _plates.GetOrAdd(key, plateType =>
-            {
-                var newPlate = (Activator.CreateInstance(plateType, args:new object[] {this})) as T;
-                newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
-                return newPlate;
-            });
+            var plate = _plates.GetOrAdd(key, plateType =>
+           {
+               var newPlate = (Activator.CreateInstance(plateType, args: new object[] { this })) as T;
+               newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
+               return newPlate;
+           });
 
             return plate as T;
         }
@@ -218,7 +215,7 @@ namespace PiTop
         {
             return _i2cBusses.GetOrAdd(deviceAddress, address => I2cDevice.Create(new I2cConnectionSettings(I2CBusId, deviceAddress)));
         }
-       
+
         public void Dispose()
         {
             _client.MessageReceived -= _client_MessageReceived;

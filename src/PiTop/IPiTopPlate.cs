@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Disposables;
 
 namespace PiTop
 {
     public abstract class PiTopPlate : IDisposable
     {
-        public PiTopModule Module { get; }
+        protected PiTopModule Module { get; }
+
+        public abstract IEnumerable<IPiTopConnectedDevice> Devices { get; }
+
         protected PiTopPlate(PiTopModule module)
         {
             Module = module ?? throw new ArgumentNullException(nameof(module));

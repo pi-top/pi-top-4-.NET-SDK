@@ -39,7 +39,7 @@ namespace PiTopMakerArchitecture.Foundation
             return ReadRegister(registerAddress, _device);
         }
 
-        public double ReadSample( int numberOfSamples= 1, int delayBetweenSamplesMs=50, bool peakDetection= false)
+        public double ReadSample(int numberOfSamples = 1, int delayBetweenSamplesMs = 50, bool peakDetection = false)
         {
             if (numberOfSamples <= 0)
             {
@@ -59,7 +59,7 @@ namespace PiTopMakerArchitecture.Foundation
                 }
                 System.Threading.Thread.Sleep(delay);
             }
-            return value  / numberOfSamples;
+            return value / numberOfSamples;
         }
 
 

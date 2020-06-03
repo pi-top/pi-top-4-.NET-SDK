@@ -1,4 +1,5 @@
 ﻿using System;
+
 using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors

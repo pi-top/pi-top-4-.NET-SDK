@@ -2,6 +2,7 @@
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
+
 using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
@@ -19,7 +20,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         public UltrasonicSensor(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             (_echoPin, _triggerPin) = port.ToPinPair();
-          
+
             Controller.OpenPin(_echoPin, PinMode.Input);
             Controller.OpenPin(_triggerPin, PinMode.Output);
             Controller.Write(_triggerPin, PinValue.Low);

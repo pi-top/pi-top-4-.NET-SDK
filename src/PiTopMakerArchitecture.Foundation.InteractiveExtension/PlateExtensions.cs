@@ -14,22 +14,25 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
         {
             var root = new JObject();
 
-            foreach (var digitalDevice in plate.DigitalDevices)
+            foreach (var piTopComponent in plate.Devices)
             {
-                root[digitalDevice.Port.ToString()] = new JObject
+                switch (piTopComponent)
                 {
-                    {"type", digitalDevice.GetType().Name },
-                    {"value", JToken.FromObject( digitalDevice.GetDeviceValue()) },
-                };
-            }
-
-            foreach (var analogueDevice in plate.AnalogueDevices)
-            {
-                root[analogueDevice.Port.ToString()] = new JObject
-                {
-                    {"type", analogueDevice.GetType().Name },
-                    {"value", JToken.FromObject( analogueDevice.GetDeviceValue() )},
-                };
+                    case DigitalPortDeviceBase digitalDevice:
+                        root[digitalDevice.Port.ToString()] = new JObject
+                        {
+                            {"type", digitalDevice.GetType().Name },
+                            {"value", JToken.FromObject( digitalDevice.GetDeviceValue()) },
+                        };
+                        break;
+                    case AnaloguePortDeviceBase analogueDevice:
+                        root[analogueDevice.Port.ToString()] = new JObject
+                        {
+                            {"type", analogueDevice.GetType().Name },
+                            {"value", JToken.FromObject( analogueDevice.GetDeviceValue() )},
+                        };
+                        break;
+                }
             }
 
             return root;
