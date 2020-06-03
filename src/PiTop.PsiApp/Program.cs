@@ -24,7 +24,7 @@ namespace PiTop.PsiApp
 
             var distance = plate
                 .GetOrCreateDigitalDevice<UltrasonicSensor>(DigitalPort.D3)
-                .CreateComponent(pipeline, TimeSpan.FromSeconds(0.5));
+                .CreateComponent(pipeline, TimeSpan.FromSeconds(0.1));
 
             var alert = new DistanceAlertComponent(pipeline,
                 new[]
