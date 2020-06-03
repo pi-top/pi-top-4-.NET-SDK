@@ -34,8 +34,14 @@ namespace PiTop.PsiApp
                    plate.GetOrCreateDigitalDevice<Led>(DigitalPort.D2)
                 });
 
-            threshold.Select(t => t * 50).PipeTo(alert.Threshold);
-            distance.PipeTo(alert.Distance);
+            threshold
+                .Select(t => t * 50)
+                .Average(TimeSpan.FromSeconds(1))
+                .PipeTo(alert.Threshold);
+
+            distance
+                .Average(TimeSpan.FromSeconds(1))
+                .PipeTo(alert.Distance);
 
             pipeline.Run();
         }
