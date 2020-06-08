@@ -34,7 +34,7 @@ namespace PiTopMakerArchitecture.Foundation
                var ctor = deviceType.GetConstructor(ctorSignature);
                if (ctor != null)
                {
-                   return devicePort => (DigitalPortDeviceBase)Activator.CreateInstance(deviceType, devicePort, module);
+                   return devicePort => (DigitalPortDeviceBase)Activator.CreateInstance(deviceType, devicePort, module)!;
 
                }
 
@@ -50,7 +50,7 @@ namespace PiTopMakerArchitecture.Foundation
                     if (ctor != null)
                     {
                         return devicePort =>
-                            (AnaloguePortDeviceBase)Activator.CreateInstance(deviceType, devicePort, DefaultI2CAddress, module);
+                            (AnaloguePortDeviceBase)Activator.CreateInstance(deviceType, devicePort, DefaultI2CAddress, module)!;
 
                     }
 

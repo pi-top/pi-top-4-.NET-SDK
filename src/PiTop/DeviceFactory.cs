@@ -5,12 +5,13 @@ using System.Linq;
 namespace PiTop
 {
     public class DeviceFactory<TPort, TDevice> : IDeviceFactory<TPort, TDevice>, IDisposable
+        where TPort: notnull
         where TDevice : IPiTopConnectedDevice
     {
         private readonly Dictionary<TPort, TDevice> _devices = new Dictionary<TPort, TDevice>();
         private readonly Func<Type, Func<TPort, TDevice>> _defaultDeviceFactoryGenerator;
         private readonly Dictionary<Type, Func<TPort, TDevice>> _factories = new Dictionary<Type, Func<TPort, TDevice>>();
-        public DeviceFactory(Func<Type, Func<TPort, TDevice>> defaultDeviceFactoryGenerator = null)
+        public DeviceFactory(Func<Type, Func<TPort, TDevice>>? defaultDeviceFactoryGenerator = null)
         {
 
             defaultDeviceFactoryGenerator ??= deviceType =>
@@ -19,8 +20,7 @@ namespace PiTop
                 var ctor = deviceType.GetConstructor(ctorSignature);
                 if (ctor != null)
                 {
-                    return devicePort => (TDevice)Activator.CreateInstance(deviceType, devicePort);
-
+                    return devicePort => (TDevice)Activator.CreateInstance(deviceType, devicePort)!;
                 }
 
                 throw new InvalidOperationException(

@@ -11,29 +11,25 @@ namespace PiTop
     {
         private readonly SubscriberSocket _socket;
         private NetMQPoller _poller;
-        private CancellationTokenSource _cancellationSource;
-        public event EventHandler<PiTopMessage> MessageReceived;
+        private readonly CancellationTokenSource _cancellationSource;
+        public event EventHandler<PiTopMessage>? MessageReceived;
 
         public Client()
         {
             _socket = new SubscriberSocket();
-
-        }
-
-        public void Start()
-        {
             _cancellationSource = new CancellationTokenSource();
-            _socket.Connect("tcp://127.0.0.1:3781");
-            _socket.Subscribe("");
-
             _socket.ReceiveReady += SocketOnReceiveReady;
             _poller = new NetMQPoller
             {
                 _socket
             };
+        }
 
+        public void Start()
+        {
+            _socket.Connect("tcp://127.0.0.1:3781");
+            _socket.Subscribe("");
             Task.Run(() => { _poller.Run(); }, _cancellationSource.Token);
-
         }
 
         private void SocketOnReceiveReady(object? sender, NetMQSocketEventArgs e)

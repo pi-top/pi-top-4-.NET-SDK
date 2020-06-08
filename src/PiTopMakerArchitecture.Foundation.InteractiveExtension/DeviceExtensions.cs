@@ -11,7 +11,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
     {
         internal const string TextStyle = "font-family:'ArialMT', 'Arial', sans-serif;font-size:8px;";
 
-        public static PocketView CreatePath(string pathData, string style = null)
+        public static PocketView CreatePath(string pathData, string? style = null)
         {
             var path = _.path[d: pathData, style: style?? ""]();
             return path;

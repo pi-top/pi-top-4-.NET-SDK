@@ -8,9 +8,9 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
 {
     public class Button : DigitalPortDeviceBase
     {
-        public event EventHandler<bool> PressedChanged;
-        public event EventHandler<EventArgs> Pressed;
-        public event EventHandler<EventArgs> Released;
+        public event EventHandler<bool>? PressedChanged;
+        public event EventHandler<EventArgs>? Pressed;
+        public event EventHandler<EventArgs>? Released;
         public Button(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             var (buttonPin, _) = Port.ToPinPair();
@@ -27,7 +27,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             IsPressed = Controller.Read(buttonPin) == PinValue.Low;
         }
 
-        private void Callback(object _, PinValueChangedEventArgs pinValueChangedEventArgs)
+        private void Callback(object? _, PinValueChangedEventArgs pinValueChangedEventArgs)
         {
             switch (pinValueChangedEventArgs.ChangeType)
             {

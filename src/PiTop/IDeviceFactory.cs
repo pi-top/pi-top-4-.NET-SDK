@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace PiTop
 {
     public interface IDeviceFactory<TPort, TDevice>
+        where TPort : notnull
         where TDevice : IPiTopConnectedDevice
     {
         T GetOrCreateDevice<T>(TPort port) where T : TDevice;

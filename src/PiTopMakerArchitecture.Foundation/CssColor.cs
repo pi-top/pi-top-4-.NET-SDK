@@ -4,13 +4,14 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public abstract class CssColor : DisplayPropertyBase
     {
-        public string Value { get; protected set; }
+        public string? Value { get; protected set; }
     }
 
     public class NamedCssColor : CssColor
     {
         public NamedCssColor(string colorName)
         {
+            if (colorName == null) throw new ArgumentNullException(nameof(colorName));
             if (string.IsNullOrWhiteSpace(colorName))
             {
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(colorName));

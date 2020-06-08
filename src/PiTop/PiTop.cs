@@ -55,15 +55,15 @@ namespace PiTop
             var key = typeof(T);
             var plate = _plates.GetOrAdd(key, plateType =>
            {
-               var newPlate = Activator.CreateInstance(plateType, args: new object[] { this }) as T;
+               var newPlate =( Activator.CreateInstance(plateType, args: new object[] { this }) as T)!;
                newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
                return newPlate;
            });
 
-            return plate as T;
+            return (plate as T)!;
         }
 
-        private void _client_MessageReceived(object sender, PiTopMessage message)
+        private void _client_MessageReceived(object? sender, PiTopMessage message)
         {
             switch (message.Id)
             {
