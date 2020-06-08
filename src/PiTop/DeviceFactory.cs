@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PiTop
 {
-    public class DeviceFactory<TPort, TDevice> : IDisposable
+    public class DeviceFactory<TPort, TDevice> : IDeviceFactory<TPort, TDevice>, IDisposable
         where TDevice : IPiTopConnectedDevice
     {
         private readonly Dictionary<TPort, TDevice> _devices = new Dictionary<TPort, TDevice>();
@@ -22,7 +22,6 @@ namespace PiTop
                     return devicePort => (TDevice)Activator.CreateInstance(deviceType, devicePort);
 
                 }
-
 
                 throw new InvalidOperationException(
                     $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");

@@ -12,8 +12,8 @@ namespace PiTop
     public class PiTopModule : IDisposable, II2CDeviceFactory, IGpioControllerFactory
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
-        private ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
-        private ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
+        private readonly ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
+        private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
         private readonly Client _client;
         private readonly GpioController _controller;
 
@@ -55,7 +55,7 @@ namespace PiTop
             var key = typeof(T);
             var plate = _plates.GetOrAdd(key, plateType =>
            {
-               var newPlate = (Activator.CreateInstance(plateType, args: new object[] { this })) as T;
+               var newPlate = Activator.CreateInstance(plateType, args: new object[] { this }) as T;
                newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
                return newPlate;
            });

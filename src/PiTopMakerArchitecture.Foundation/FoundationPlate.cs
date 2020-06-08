@@ -28,20 +28,19 @@ namespace PiTopMakerArchitecture.Foundation
 
         public FoundationPlate(PiTopModule module) : base(module)
         {
-            _digitalDeviceFactory = new DeviceFactory< DigitalPort, DigitalPortDeviceBase>(deviceType =>
-            {
-                var ctorSignature = new[] { typeof(DigitalPort), typeof(IGpioControllerFactory) };
-                var ctor = deviceType.GetConstructor(ctorSignature);
-                if (ctor != null)
-                {
-                    return devicePort => (DigitalPortDeviceBase)Activator.CreateInstance(deviceType, devicePort, module);
+            _digitalDeviceFactory = new DeviceFactory<DigitalPort, DigitalPortDeviceBase>(deviceType =>
+           {
+               var ctorSignature = new[] { typeof(DigitalPort), typeof(IGpioControllerFactory) };
+               var ctor = deviceType.GetConstructor(ctorSignature);
+               if (ctor != null)
+               {
+                   return devicePort => (DigitalPortDeviceBase)Activator.CreateInstance(deviceType, devicePort, module);
 
-                }
+               }
 
-
-                throw new InvalidOperationException(
-                    $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
-            });
+               throw new InvalidOperationException(
+                   $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
+           });
 
             _analogueDeviceFactory = new DeviceFactory<AnaloguePort, AnaloguePortDeviceBase>(
                 deviceType =>
@@ -51,10 +50,9 @@ namespace PiTopMakerArchitecture.Foundation
                     if (ctor != null)
                     {
                         return devicePort =>
-                            (AnaloguePortDeviceBase) Activator.CreateInstance(deviceType, devicePort, DefaultI2CAddress, module);
+                            (AnaloguePortDeviceBase)Activator.CreateInstance(deviceType, devicePort, DefaultI2CAddress, module);
 
                     }
-
 
                     throw new InvalidOperationException(
                         $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
