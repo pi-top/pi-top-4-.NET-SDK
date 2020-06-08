@@ -5,6 +5,7 @@
     <RootNamespace>PiTopMakerArchitecture.Foundation</RootNamespace>
     <AssemblyName>PiTopMakerArchitecture.Foundation</AssemblyName>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   
   <ItemGroup>
