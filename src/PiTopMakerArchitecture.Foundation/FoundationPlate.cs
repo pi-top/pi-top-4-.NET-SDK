@@ -8,9 +8,8 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public class FoundationPlate : PiTopPlate
     {
-        private readonly Dictionary<DigitalPort, DigitalPortDeviceBase> _digitalPortDevices = new Dictionary<DigitalPort, DigitalPortDeviceBase>();
-        private readonly Dictionary<AnaloguePort, AnaloguePortDeviceBase> _analoguePortDevices = new Dictionary<AnaloguePort, AnaloguePortDeviceBase>();
-        private readonly Dictionary<Type, Func<object, object, object>> _factories = new Dictionary<Type, Func<object, object, object>>();
+        private readonly DeviceFactory<DigitalPort, DigitalPortDeviceBase> _digitalDeviceFactory;
+        private readonly DeviceFactory<AnaloguePort, AnaloguePortDeviceBase> _analogueDeviceFactory;
 
         //PMA Foundation for RPI I2C Registers
         //0x10 ~ 0x17: ADC raw data
@@ -29,104 +28,65 @@ namespace PiTopMakerArchitecture.Foundation
 
         public FoundationPlate(PiTopModule module) : base(module)
         {
+            _digitalDeviceFactory = new DeviceFactory<DigitalPort, DigitalPortDeviceBase>(deviceType =>
+           {
+               var ctorSignature = new[] { typeof(DigitalPort), typeof(IGpioControllerFactory) };
+               var ctor = deviceType.GetConstructor(ctorSignature);
+               if (ctor != null)
+               {
+                   return devicePort => (DigitalPortDeviceBase)Activator.CreateInstance(deviceType, devicePort, module);
+
+               }
+
+               throw new InvalidOperationException(
+                   $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
+           });
+
+            _analogueDeviceFactory = new DeviceFactory<AnaloguePort, AnaloguePortDeviceBase>(
+                deviceType =>
+                {
+                    var ctorSignature = new[] { typeof(AnaloguePort), typeof(int), typeof(II2CDeviceFactory) };
+                    var ctor = deviceType.GetConstructor(ctorSignature);
+                    if (ctor != null)
+                    {
+                        return devicePort =>
+                            (AnaloguePortDeviceBase)Activator.CreateInstance(deviceType, devicePort, DefaultI2CAddress, module);
+
+                    }
+
+                    throw new InvalidOperationException(
+                        $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
+                });
+
+            RegisterForDisposal(_digitalDeviceFactory);
+            RegisterForDisposal(_analogueDeviceFactory);
         }
 
-        public IEnumerable<DigitalPortDeviceBase> DigitalDevices =>
-            _digitalPortDevices.Select(e => e.Value);
+        public IEnumerable<DigitalPortDeviceBase> DigitalDevices => _digitalDeviceFactory.Devices;
 
         public IEnumerable<AnaloguePortDeviceBase> AnalogueDevices =>
-            _analoguePortDevices.Select(e => e.Value);
+            _analogueDeviceFactory.Devices;
 
         public override IEnumerable<IPiTopConnectedDevice> Devices => DigitalDevices.Cast<IPiTopConnectedDevice>().Concat(AnalogueDevices);
 
         public T GetOrCreateDevice<T>(DigitalPort port, Func<DigitalPort, IGpioControllerFactory, T> factory) where T : DigitalPortDeviceBase
         {
-            if (_digitalPortDevices.TryGetValue(port, out var digitalDevice) && digitalDevice is T requestedDevice)
-            {
-                return requestedDevice;
-            }
-
-            var newDevice = factory(port, Module);
-            RegisterForDisposal(newDevice);
-            _digitalPortDevices[port] = newDevice;
-            newDevice.Initialize();
-            return newDevice;
+            return _digitalDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, Module));
         }
 
         public T GetOrCreateDevice<T>(DigitalPort port) where T : DigitalPortDeviceBase
         {
-            if (_digitalPortDevices.TryGetValue(port, out var digitalDevice) && digitalDevice is T requestedDevice)
-            {
-                return requestedDevice;
-            }
-
-            if (!_factories.TryGetValue(typeof(T), out var factory))
-            {
-                var ctor = typeof(T).GetConstructor(new[] { typeof(DigitalPort), typeof(IGpioControllerFactory) });
-                if (ctor != null)
-                {
-                    factory = (p, c) => Activator.CreateInstance(typeof(T), p, c);
-                    _factories[typeof(T)] = factory;
-                }
-            }
-
-            if (factory != null)
-            {
-                return GetOrCreateDevice(port, (dp, c) => factory(dp, c) as T);
-            }
-
-            throw new InvalidOperationException();
+            return _digitalDeviceFactory.GetOrCreateDevice<T>(port);
         }
 
         public T GetOrCreateDevice<T>(AnaloguePort port, Func<AnaloguePort, int, II2CDeviceFactory, T> factory, int deviceAddress = DefaultI2CAddress) where T : AnaloguePortDeviceBase
         {
-            if (_analoguePortDevices.TryGetValue(port, out var analogueDevice) && analogueDevice is T requestedDevice)
-            {
-                return requestedDevice;
-            }
-
-            var newDevice = factory(port, deviceAddress, Module);
-            RegisterForDisposal(newDevice);
-            _analoguePortDevices[port] = newDevice;
-            newDevice.Initialize();
-            return newDevice;
+            return _analogueDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, deviceAddress, Module));
         }
 
-        private class AnalogAddress
+        public T GetOrCreateDevice<T>(AnaloguePort port) where T : AnaloguePortDeviceBase
         {
-            public AnaloguePort Port { get; set; }
-            public int Address { get; set; }
+            return _analogueDeviceFactory.GetOrCreateDevice<T>(port);
         }
-
-        public T GetOrCreateDevice<T>(AnaloguePort port, int deviceAddress = DefaultI2CAddress) where T : AnaloguePortDeviceBase
-        {
-            if (_analoguePortDevices.TryGetValue(port, out var analogueDevice) && analogueDevice is T requestedDevice)
-            {
-                return requestedDevice;
-            }
-
-            if (!_factories.TryGetValue(typeof(T), out var factory))
-            {
-                var ctor = typeof(T).GetConstructor(new[] { typeof(AnaloguePort), typeof(int), typeof(II2CDeviceFactory) });
-                if (ctor != null)
-                {
-                    factory = (p, bf) =>
-                    {
-                        var address = p as AnalogAddress;
-                        return Activator.CreateInstance(typeof(T), address.Port, address.Address, bf);
-                    };
-                    _factories[typeof(T)] = factory;
-                }
-            }
-
-            if (factory != null)
-            {
-
-                return GetOrCreateDevice(port, (ap, da, bf) => factory(new AnalogAddress { Port = ap, Address = da }, bf) as T, deviceAddress);
-            }
-
-            throw new InvalidOperationException();
-        }
-
     }
 }
