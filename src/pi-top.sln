@@ -23,13 +23,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.nuget", "PiTop.nuget\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.nuget", "PiTopMakerArchitecture.Foundation.nuget\PiTopMakerArchitecture.Foundation.nuget.csproj", "{7C99308D-A11A-43A0-9C2D-F28466A0B711}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTopMakerArchitecture.Foundation.PSI", "PiTopMakerArchitecture.Foundation.PSI\PiTopMakerArchitecture.Foundation.PSI.csproj", "{6003624A-34E4-4891-A29C-6957DE6ADF9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.PSI", "PiTopMakerArchitecture.Foundation.PSI\PiTopMakerArchitecture.Foundation.PSI.csproj", "{6003624A-34E4-4891-A29C-6957DE6ADF9F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.PSI.nuget", "PiTopMakerArchitecture.Foundation.PSI.nuget\PiTopMakerArchitecture.Foundation.PSI.nuget.csproj", "{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension", "PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension\PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension.csproj", "{5322025D-EFDF-472D-8CD7-947A23B15E38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.PsiApp", "PiTop.PsiApp\PiTop.PsiApp.csproj", "{9F60841F-6489-49D6-952F-042B9ABD4226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.PsiApp", "PiTop.PsiApp\PiTop.PsiApp.csproj", "{9F60841F-6489-49D6-952F-042B9ABD4226}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera", "PiTop.Camera\PiTop.Camera.csproj", "{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{28231AC6-36A0-4746-8384-DE482C818EF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.App", "PiTop.Camera.App\PiTop.Camera.App.csproj", "{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.Camera.PSI", "PiTop.Camera.PSI\PiTop.Camera.PSI.csproj", "{DEA5FE65-F3FD-4E85-9231-4F36F793307D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,11 +89,24 @@ Global
 		{9F60841F-6489-49D6-952F-042B9ABD4226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F60841F-6489-49D6-952F-042B9ABD4226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F60841F-6489-49D6-952F-042B9ABD4226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEA5FE65-F3FD-4E85-9231-4F36F793307D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEA5FE65-F3FD-4E85-9231-4F36F793307D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEA5FE65-F3FD-4E85-9231-4F36F793307D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA5FE65-F3FD-4E85-9231-4F36F793307D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{C4DB5902-DB47-4108-8423-8687D6395567} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 		{AB82DFB4-86E7-4F21-9033-9398F9407654} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 		{79EE7D16-C478-4159-A1B7-38C7B4764D30} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 		{0264F0D4-CBB8-4A38-86FD-B65B8668C077} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
@@ -95,6 +116,10 @@ Global
 		{6003624A-34E4-4891-A29C-6957DE6ADF9F} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 		{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
 		{5322025D-EFDF-472D-8CD7-947A23B15E38} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
+		{9F60841F-6489-49D6-952F-042B9ABD4226} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
+		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{DEA5FE65-F3FD-4E85-9231-4F36F793307D} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98E1ADF8-88DF-4B1F-B486-650F4F9CC573}

@@ -2,7 +2,7 @@
 
 namespace PiTop
 {
-    public interface IPiTopConnectedDevice : IDisposable
+    public interface IConnectedDevice : IDisposable
     {
         void Initialize();
     }

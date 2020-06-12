@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Device.I2c;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace PiTop
         private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
         private readonly Client _client;
         private readonly GpioController _controller;
+        private readonly Dictionary<Type, object> _deviceFactories = new Dictionary<Type, object>();
 
         private const int I2CBusId = 1;
 
@@ -45,7 +47,7 @@ namespace PiTop
                     i2CDevice.Dispose();
                 }
             }));
-
+            _client.Start();
             _disposables.Add(_client);
             _disposables.Add(_controller);
         }
@@ -225,6 +227,34 @@ namespace PiTop
         public GpioController GetOrCreateController()
         {
             return _controller;
+        }
+
+        public IConnectedDeviceFactory<TConnectionConfiguration, TDevice> GetDeviceFactory<TConnectionConfiguration, TDevice>()
+            where TConnectionConfiguration : notnull
+            where TDevice : IConnectedDevice
+        {
+            return (IConnectedDeviceFactory<TConnectionConfiguration, TDevice>) _deviceFactories[typeof(IConnectedDeviceFactory<TConnectionConfiguration, TDevice>)];
+        }
+
+        public void AddDeviceFactory<TConnectionConfiguration, TDevice>(IConnectedDeviceFactory<TConnectionConfiguration, TDevice> connectedDeviceFactory)
+            where TConnectionConfiguration : notnull
+            where TDevice : IConnectedDevice
+        {
+            if (connectedDeviceFactory == null)
+            {
+                throw new ArgumentNullException(nameof(connectedDeviceFactory));
+            }
+
+            _deviceFactories.Add(typeof(IConnectedDeviceFactory<TConnectionConfiguration, TDevice>), connectedDeviceFactory);
+            _disposables.Add(connectedDeviceFactory);
+        }
+
+        public void AddDeviceFactory<TConnectionConfiguration, TDevice>(Func<Type, Func<TConnectionConfiguration, TDevice>>? defaultDeviceFactoryGenerator = null)
+            where TConnectionConfiguration : notnull
+            where TDevice : IConnectedDevice
+        {
+            var deviceFactory = new ConnectedDeviceFactory<TConnectionConfiguration, TDevice>(defaultDeviceFactoryGenerator);
+            AddDeviceFactory(deviceFactory);
         }
     }
 }
