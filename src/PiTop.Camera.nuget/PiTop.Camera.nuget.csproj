@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+
+    <PackageId>piTop.Camera</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageDescription>piTop Camera module module.</PackageDescription>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenCvSharp4" Version="4.3.0.20200524" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PiTop.Camera\PiTop.Camera.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\PiTop.Camera.InteractiveExtension\PiTop.Camera.InteractiveExtension.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../PiTop.Camera/bin/$(Configuration)/$(TargetFramework)/PiTop.Camera.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
+    <None Include="../PiTop.Camera.InteractiveExtension/bin/$(Configuration)/$(TargetFramework)/PiTop.Camera.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
+  </ItemGroup>
+
+</Project>
+

@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+
+    <PackageId>piTop.Camera.Psi</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageDescription>piTop Camera module module.</PackageDescription>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Psi.Imaging" Version="0.11.82.2-beta" />
+    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.11.82.2-beta" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PiTop.Camera.Psi\PiTop.Camera.Psi.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\PiTop.Camera.Psi.InteractiveExtension\PiTop.Camera.Psi.InteractiveExtension.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../PiTop.Camera.Psi/bin/$(Configuration)/$(TargetFramework)/PiTop.Camera.Psi.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
+    <None Include="../PiTop.Camera.Psi.InteractiveExtension/bin/$(Configuration)/$(TargetFramework)/PiTop.Camera.Psi.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
+  </ItemGroup>
+
+</Project>
+
