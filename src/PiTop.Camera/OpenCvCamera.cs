@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 
@@ -12,7 +13,7 @@ namespace PiTop.Camera
 
         public static int GetCameraCount()
         {
-            var  cameraCount = 0;
+            var cameraCount = 0;
             var camera = new VideoCapture();
             while (true)
             {
@@ -20,7 +21,7 @@ namespace PiTop.Camera
                 {
                     break;
                 }
-                
+
                 camera.Release();
             }
             camera.Dispose();
@@ -33,22 +34,19 @@ namespace PiTop.Camera
             _capture = new VideoCapture();
         }
 
-        public Mat GetFrame()
+        public void GetFrame(out Mat image)
         {
             if (_capture.IsOpened())
             {
-                var image = new Mat();
+                image = new Mat();
                 _capture.Read(image);
-                return image;
-
             }
 
             throw new InvalidOperationException("Camera not initialized");
         }
 
-        public void Dispose()
-        {
-            
+        public void Dispose() {
+
             _capture.Release();
             _capture.Dispose();
         }
@@ -58,10 +56,10 @@ namespace PiTop.Camera
             _capture.Open(_index);
         }
 
-        Bitmap ICamera.GetFrame()
+        public  void GetFrame(out Bitmap frame)
         {
-            var frame = GetFrame();
-            return frame?.ToBitmap();
+            GetFrame(out Mat raw);
+            frame = raw.ToBitmap();
         }
     }
 }

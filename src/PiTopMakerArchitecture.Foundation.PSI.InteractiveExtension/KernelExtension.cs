@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.DotNet.Interactive;
 
-namespace PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension
+namespace PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension
     {

@@ -4,7 +4,7 @@ using Microsoft.Psi;
 using Microsoft.Psi.Components;
 using PiTopMakerArchitecture.Foundation.Sensors;
 
-namespace PiTopMakerArchitecture.Foundation.PSI
+namespace PiTopMakerArchitecture.Foundation.Psi
 {
     public static class SensorComponents
     {

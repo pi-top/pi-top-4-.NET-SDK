@@ -4,7 +4,7 @@ using Microsoft.Psi;
 
 using PiTopMakerArchitecture.Foundation;
 using PiTopMakerArchitecture.Foundation.Components;
-using PiTopMakerArchitecture.Foundation.PSI;
+using PiTopMakerArchitecture.Foundation.Psi;
 using PiTopMakerArchitecture.Foundation.Sensors;
 
 namespace PiTop.PsiApp

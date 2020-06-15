@@ -23,11 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.nuget", "PiTop.nuget\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.nuget", "PiTopMakerArchitecture.Foundation.nuget\PiTopMakerArchitecture.Foundation.nuget.csproj", "{7C99308D-A11A-43A0-9C2D-F28466A0B711}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.PSI", "PiTopMakerArchitecture.Foundation.PSI\PiTopMakerArchitecture.Foundation.PSI.csproj", "{6003624A-34E4-4891-A29C-6957DE6ADF9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Psi", "PiTopMakerArchitecture.Foundation.Psi\PiTopMakerArchitecture.Foundation.Psi.csproj", "{6003624A-34E4-4891-A29C-6957DE6ADF9F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.PSI.nuget", "PiTopMakerArchitecture.Foundation.PSI.nuget\PiTopMakerArchitecture.Foundation.PSI.nuget.csproj", "{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Psi.nuget", "PiTopMakerArchitecture.Foundation.Psi.nuget\PiTopMakerArchitecture.Foundation.Psi.nuget.csproj", "{28BDA459-1FAA-4C79-BF2B-28BEBAC3CE61}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension", "PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension\PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension.csproj", "{5322025D-EFDF-472D-8CD7-947A23B15E38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension", "PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension\PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension.csproj", "{5322025D-EFDF-472D-8CD7-947A23B15E38}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.PsiApp", "PiTop.PsiApp\PiTop.PsiApp.csproj", "{9F60841F-6489-49D6-952F-042B9ABD4226}"
 EndProject
@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{2823
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.App", "PiTop.Camera.App\PiTop.Camera.App.csproj", "{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.Camera.PSI", "PiTop.Camera.PSI\PiTop.Camera.PSI.csproj", "{DEA5FE65-F3FD-4E85-9231-4F36F793307D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.Camera.Psi", "PiTop.Camera.Psi\PiTop.Camera.Psi.csproj", "{DEA5FE65-F3FD-4E85-9231-4F36F793307D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.PSI\PiTopMakerArchitecture.Foundation.PSI.csproj" />
+    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.Psi\PiTopMakerArchitecture.Foundation.Psi.csproj" />
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj" />
   </ItemGroup>
 
