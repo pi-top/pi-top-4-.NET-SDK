@@ -13,7 +13,7 @@ namespace PiTop.Camera.Psi
 
         protected override Shared<Image> ProcessImage(Bitmap image, Envelope envelope)
         {
-            var sharedImage = ImagePool.GetOrCreate(image);
+            var sharedImage = ImagePool.GetOrCreateFromBitmap(image);
             return sharedImage;
         }
     }

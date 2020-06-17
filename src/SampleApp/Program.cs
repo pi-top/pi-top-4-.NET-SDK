@@ -148,7 +148,7 @@ namespace SampleApp
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Subscribe(_ =>
                     {
-                        var distance = sensor.Distance;
+                        var distance = sensor.Distance.Value;
 
 
                         switch (distance)

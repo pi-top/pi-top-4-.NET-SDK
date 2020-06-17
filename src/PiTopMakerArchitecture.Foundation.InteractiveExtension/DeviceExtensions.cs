@@ -44,7 +44,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
                 case Button button:
                     return button.IsPressed ? 1 : 0;
                 case UltrasonicSensor ultrasonicSensor:
-                    return ultrasonicSensor.Distance;
+                    return ultrasonicSensor.Distance.Value;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(digitalDevice));
             }

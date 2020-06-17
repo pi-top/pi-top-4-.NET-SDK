@@ -1,5 +1,6 @@
 ﻿using Microsoft.Psi;
 using Microsoft.Psi.Imaging;
+
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 
@@ -14,7 +15,7 @@ namespace PiTop.Camera.Psi
         protected override Shared<Image> ProcessImage(Mat image, Envelope envelope)
         {
             var bitmap = image.ToBitmap();
-            var sharedImage = ImagePool.GetOrCreate(bitmap);
+            var sharedImage = ImagePool.GetOrCreateFromBitmap(bitmap);
             return sharedImage;
         }
     }

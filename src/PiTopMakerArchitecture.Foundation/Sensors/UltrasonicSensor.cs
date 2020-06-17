@@ -5,6 +5,8 @@ using System.Threading;
 
 using PiTop;
 
+using UnitsNet;
+
 namespace PiTopMakerArchitecture.Foundation.Sensors
 {
     public class UltrasonicSensor : DigitalPortDeviceBase
@@ -27,15 +29,16 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             Controller.Read(_echoPin);
         }
 
-        public double Distance => GetDistance();
+        public Length Distance => GetDistance();
 
-        private double GetDistance()
+        private Length GetDistance()
         {
+            
             for (var i = 0; i < 10; i++)
             {
-                if (TryGetDistance(out double result))
+                if (TryGetDistance(out var result))
                 {
-                    return result;
+                    return Length.FromCentimeters(result);
                 }
             }
 

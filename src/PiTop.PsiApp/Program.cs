@@ -38,6 +38,7 @@ namespace PiTop.PsiApp
                 .PipeTo(alert.Threshold);
 
             distance
+                .Select(d => d.Value)
                 .PipeTo(alert.Value);
 
             pipeline.Run();

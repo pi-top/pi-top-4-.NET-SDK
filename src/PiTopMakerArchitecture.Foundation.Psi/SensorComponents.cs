@@ -3,6 +3,8 @@
 using Microsoft.Psi;
 using Microsoft.Psi.Components;
 using PiTopMakerArchitecture.Foundation.Sensors;
+using UnitsNet;
+using UnitsNet.Units;
 
 namespace PiTopMakerArchitecture.Foundation.Psi
 {
@@ -28,7 +30,7 @@ namespace PiTopMakerArchitecture.Foundation.Psi
             return pressedEvents;
         }
 
-        public static IProducer<double> CreateComponent(this UltrasonicSensor ultrasonicSensor, Pipeline pipeline, TimeSpan samplingInterval)
+        public static IProducer<Length> CreateComponent(this UltrasonicSensor ultrasonicSensor, Pipeline pipeline, TimeSpan samplingInterval)
         {
             if (ultrasonicSensor == null)
             {
@@ -38,7 +40,8 @@ namespace PiTopMakerArchitecture.Foundation.Psi
             {
                 throw new ArgumentNullException(nameof(pipeline));
             }
-            return Generators.Sequence(pipeline, 0.0, _ => ultrasonicSensor.Distance, samplingInterval);
+
+            return Generators.Sequence(pipeline, new Length(0,LengthUnit.Centimeter), _ => ultrasonicSensor.Distance, samplingInterval);
         }
 
         public static IProducer<bool> CreateComponent(this Button button, Pipeline pipeline, TimeSpan samplingInterval)
