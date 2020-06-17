@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
+
 using PiTop;
+
 using UnitsNet;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
@@ -37,7 +38,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
 
         private double ReadValue(bool normalize)
         {
-            var value = _adc.ReadSample(peakDetection: true) ;
+            var value = _adc.ReadSample(peakDetection: true);
             if (normalize)
             {
                 value /= ushort.MaxValue;
