@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
+
 using Microsoft.DotNet.Interactive;
 
-namespace PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension
+namespace PiTop.Camera.Psi.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension
     {

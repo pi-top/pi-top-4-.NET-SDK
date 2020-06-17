@@ -7,7 +7,7 @@ using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation
 {
-    public abstract class DigitalPortDeviceBase : IPiTopConnectedDevice
+    public abstract class DigitalPortDeviceBase : IConnectedDevice
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         public DigitalPort Port { get; }

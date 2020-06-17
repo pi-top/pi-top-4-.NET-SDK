@@ -41,9 +41,16 @@ namespace PiTop
         public void Dispose()
         {
             _cancellationSource.Dispose();
-            _poller.Stop();
+            if (_poller.IsRunning)
+            {
+                _poller.Stop();
+            }
+            _poller.Remove(_socket);
             _poller.Dispose();
+
+            _socket.Disconnect("tcp://127.0.0.1:3781");
             _socket.Dispose();
+            
         }
     }
 }

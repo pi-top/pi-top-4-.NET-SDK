@@ -4,19 +4,19 @@ using System.Linq;
 
 namespace PiTop
 {
-    public class DeviceFactory<TPort, TDevice> : IDeviceFactory<TPort, TDevice>, IDisposable
-        where TPort: notnull
-        where TDevice : IPiTopConnectedDevice
+    public class ConnectedDeviceFactory<TConnectionConfiguration, TDevice> : IConnectedDeviceFactory<TConnectionConfiguration, TDevice>
+        where TConnectionConfiguration: notnull
+        where TDevice : IConnectedDevice
     {
-        private readonly Dictionary<TPort, TDevice> _devices = new Dictionary<TPort, TDevice>();
-        private readonly Func<Type, Func<TPort, TDevice>> _defaultDeviceFactoryGenerator;
-        private readonly Dictionary<Type, Func<TPort, TDevice>> _factories = new Dictionary<Type, Func<TPort, TDevice>>();
-        public DeviceFactory(Func<Type, Func<TPort, TDevice>>? defaultDeviceFactoryGenerator = null)
+        private readonly Dictionary<TConnectionConfiguration, TDevice> _devices = new Dictionary<TConnectionConfiguration, TDevice>();
+        private readonly Func<Type, Func<TConnectionConfiguration, TDevice>> _defaultDeviceFactoryGenerator;
+        private readonly Dictionary<Type, Func<TConnectionConfiguration, TDevice>> _factories = new Dictionary<Type, Func<TConnectionConfiguration, TDevice>>();
+        public ConnectedDeviceFactory(Func<Type, Func<TConnectionConfiguration, TDevice>>? defaultDeviceFactoryGenerator = null)
         {
 
             defaultDeviceFactoryGenerator ??= deviceType =>
             {
-                var ctorSignature = new[] { typeof(TPort) };
+                var ctorSignature = new[] { typeof(TConnectionConfiguration) };
                 var ctor = deviceType.GetConstructor(ctorSignature);
                 if (ctor != null)
                 {
@@ -41,7 +41,7 @@ namespace PiTop
                 };
         }
 
-        public T GetOrCreateDevice<T>(TPort port) where T : TDevice
+        public T GetOrCreateDevice<T>(TConnectionConfiguration connectionConfiguration) where T : TDevice
         {
             if (!_factories.TryGetValue(typeof(T), out var factory))
             {
@@ -49,20 +49,20 @@ namespace PiTop
                 _factories[typeof(T)] = factory;
             }
 
-            return GetOrCreateDevice<T>(port, factory);
+            return GetOrCreateDevice<T>(connectionConfiguration, factory);
         }
 
-        public T GetOrCreateDevice<T>(TPort port, Func<TPort, TDevice> deviceFactory) where T : TDevice
+        public T GetOrCreateDevice<T>(TConnectionConfiguration connectionConfiguration, Func<TConnectionConfiguration, TDevice> deviceFactory) where T : TDevice
         {
             if (deviceFactory == null)
             {
                 throw new ArgumentNullException(nameof(deviceFactory));
             }
 
-            if (!_devices.TryGetValue(port, out var device))
+            if (!_devices.TryGetValue(connectionConfiguration, out var device))
             {
-                device = deviceFactory(port);
-                _devices[port] = device;
+                device = deviceFactory(connectionConfiguration);
+                _devices[connectionConfiguration] = device;
                 device.Initialize();
             }
 

@@ -6,11 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.11.82.2-beta" />
+    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.12.53.2-beta" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.PSI\PiTopMakerArchitecture.Foundation.PSI.csproj" />
+    <ProjectReference Include="..\PiTop.Camera.Psi\PiTop.Camera.Psi.csproj" />
+    <ProjectReference Include="..\PiTop.Camera\PiTop.Camera.csproj" />
+    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.Psi\PiTopMakerArchitecture.Foundation.Psi.csproj" />
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj" />
     <ProjectReference Include="..\PiTop\PiTop.csproj" />
   </ItemGroup>

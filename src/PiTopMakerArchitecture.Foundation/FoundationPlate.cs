@@ -8,8 +8,8 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public class FoundationPlate : PiTopPlate
     {
-        private readonly DeviceFactory<DigitalPort, DigitalPortDeviceBase> _digitalDeviceFactory;
-        private readonly DeviceFactory<AnaloguePort, AnaloguePortDeviceBase> _analogueDeviceFactory;
+        private readonly ConnectedDeviceFactory<DigitalPort, DigitalPortDeviceBase> _digitalConnectedDeviceFactory;
+        private readonly ConnectedDeviceFactory<AnaloguePort, AnaloguePortDeviceBase> _analogueConnectedDeviceFactory;
 
         //PMA Foundation for RPI I2C Registers
         //0x10 ~ 0x17: ADC raw data
@@ -28,7 +28,7 @@ namespace PiTopMakerArchitecture.Foundation
 
         public FoundationPlate(PiTopModule module) : base(module)
         {
-            _digitalDeviceFactory = new DeviceFactory<DigitalPort, DigitalPortDeviceBase>(deviceType =>
+            _digitalConnectedDeviceFactory = new ConnectedDeviceFactory<DigitalPort, DigitalPortDeviceBase>(deviceType =>
            {
                var ctorSignature = new[] { typeof(DigitalPort), typeof(IGpioControllerFactory) };
                var ctor = deviceType.GetConstructor(ctorSignature);
@@ -42,7 +42,7 @@ namespace PiTopMakerArchitecture.Foundation
                    $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
            });
 
-            _analogueDeviceFactory = new DeviceFactory<AnaloguePort, AnaloguePortDeviceBase>(
+            _analogueConnectedDeviceFactory = new ConnectedDeviceFactory<AnaloguePort, AnaloguePortDeviceBase>(
                 deviceType =>
                 {
                     var ctorSignature = new[] { typeof(AnaloguePort), typeof(int), typeof(II2CDeviceFactory) };
@@ -58,35 +58,35 @@ namespace PiTopMakerArchitecture.Foundation
                         $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
                 });
 
-            RegisterForDisposal(_digitalDeviceFactory);
-            RegisterForDisposal(_analogueDeviceFactory);
+            RegisterForDisposal(_digitalConnectedDeviceFactory);
+            RegisterForDisposal(_analogueConnectedDeviceFactory);
         }
 
-        public IEnumerable<DigitalPortDeviceBase> DigitalDevices => _digitalDeviceFactory.Devices;
+        public IEnumerable<DigitalPortDeviceBase> DigitalDevices => _digitalConnectedDeviceFactory.Devices;
 
         public IEnumerable<AnaloguePortDeviceBase> AnalogueDevices =>
-            _analogueDeviceFactory.Devices;
+            _analogueConnectedDeviceFactory.Devices;
 
-        public override IEnumerable<IPiTopConnectedDevice> Devices => DigitalDevices.Cast<IPiTopConnectedDevice>().Concat(AnalogueDevices);
+        public override IEnumerable<IConnectedDevice> Devices => DigitalDevices.Cast<IConnectedDevice>().Concat(AnalogueDevices);
 
         public T GetOrCreateDevice<T>(DigitalPort port, Func<DigitalPort, IGpioControllerFactory, T> factory) where T : DigitalPortDeviceBase
         {
-            return _digitalDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, Module));
+            return _digitalConnectedDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, Module));
         }
 
         public T GetOrCreateDevice<T>(DigitalPort port) where T : DigitalPortDeviceBase
         {
-            return _digitalDeviceFactory.GetOrCreateDevice<T>(port);
+            return _digitalConnectedDeviceFactory.GetOrCreateDevice<T>(port);
         }
 
         public T GetOrCreateDevice<T>(AnaloguePort port, Func<AnaloguePort, int, II2CDeviceFactory, T> factory, int deviceAddress = DefaultI2CAddress) where T : AnaloguePortDeviceBase
         {
-            return _analogueDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, deviceAddress, Module));
+            return _analogueConnectedDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, deviceAddress, Module));
         }
 
         public T GetOrCreateDevice<T>(AnaloguePort port) where T : AnaloguePortDeviceBase
         {
-            return _analogueDeviceFactory.GetOrCreateDevice<T>(port);
+            return _analogueConnectedDeviceFactory.GetOrCreateDevice<T>(port);
         }
     }
 }

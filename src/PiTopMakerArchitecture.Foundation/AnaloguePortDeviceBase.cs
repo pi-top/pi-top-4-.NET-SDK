@@ -6,7 +6,7 @@ using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation
 {
-    public abstract class AnaloguePortDeviceBase : IPiTopConnectedDevice
+    public abstract class AnaloguePortDeviceBase : IConnectedDevice
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 

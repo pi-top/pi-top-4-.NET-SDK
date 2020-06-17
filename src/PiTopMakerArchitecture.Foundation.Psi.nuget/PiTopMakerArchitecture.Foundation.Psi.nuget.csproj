@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
 
-    <PackageId>piTop.FoundationKit.PSI</PackageId>
+    <PackageId>piTop.FoundationKit.Psi</PackageId>
     <IsPackable>true</IsPackable>
     <PackageDescription>PSI components for PiTop Foundation Kit module.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -15,21 +15,21 @@
     <PackageReference Include="NetMQ" Version="4.0.0.207" />
     <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20153.1" />
     <PackageReference Include="System.Reactive" Version="4.3.2" />
-    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.11.82.2-beta" />
+    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.12.53.2-beta" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.PSI\PiTopMakerArchitecture.Foundation.PSI.csproj">
+    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.Psi\PiTopMakerArchitecture.Foundation.Psi.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension\PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension.csproj">
+    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension\PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="../PiTopMakerArchitecture.Foundation.PSI/bin/$(Configuration)/$(TargetFramework)/PiTopMakerArchitecture.Foundation.PSI.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
-    <None Include="../PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension/bin/$(Configuration)/$(TargetFramework)/PiTopMakerArchitecture.Foundation.PSI.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
+    <None Include="../PiTopMakerArchitecture.Foundation.Psi/bin/$(Configuration)/$(TargetFramework)/PiTopMakerArchitecture.Foundation.Psi.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
+    <None Include="../PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension/bin/$(Configuration)/$(TargetFramework)/PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
   </ItemGroup>
 
 </Project>

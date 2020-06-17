@@ -11,8 +11,9 @@
     <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.20316.2" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj" />
+    <ProjectReference Include="..\PiTop.Camera.Psi\PiTop.Camera.Psi.csproj" />
   </ItemGroup>
 
 </Project>

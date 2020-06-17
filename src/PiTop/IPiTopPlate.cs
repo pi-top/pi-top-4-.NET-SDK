@@ -8,7 +8,7 @@ namespace PiTop
     {
         protected PiTopModule Module { get; }
 
-        public abstract IEnumerable<IPiTopConnectedDevice> Devices { get; }
+        public abstract IEnumerable<IConnectedDevice> Devices { get; }
 
         protected PiTopPlate(PiTopModule module)
         {
