@@ -1,6 +1,7 @@
 ﻿using System;
-
+using System.Runtime.InteropServices.WindowsRuntime;
 using PiTop;
+using UnitsNet;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
 {
@@ -23,11 +24,24 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             AddToDisposables(_adc);
         }
 
-        public double Value => ReadValue();
+        public double Value => ReadValue(_normalizeValue);
 
-        private double ReadValue()
+        public Level Level
         {
-            var value = _adc.ReadSample(peakDetection: true) / 2.0;
+            get
+            {
+                var db = 20 * Math.Log10(ReadValue(true));
+                return Level.FromDecibels(db);
+            }
+        }
+
+        private double ReadValue(bool normalize)
+        {
+            var value = _adc.ReadSample(peakDetection: true) ;
+            if (normalize)
+            {
+                value /= ushort.MaxValue;
+            }
             return Math.Round(value);
         }
     }
