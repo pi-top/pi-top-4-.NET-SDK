@@ -6,7 +6,7 @@ namespace PiTop.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension
     {
-        public Task OnLoadAsync(IKernel kernel)
+        public Task OnLoadAsync(Kernel kernel)
         {
             return Task.CompletedTask;
         }

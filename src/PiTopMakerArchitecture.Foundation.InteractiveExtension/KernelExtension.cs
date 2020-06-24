@@ -1,7 +1,10 @@
 ﻿using System.Threading.Tasks;
+
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Formatting;
+
 using Newtonsoft.Json;
+
 using PiTopMakerArchitecture.Foundation.Components;
 using PiTopMakerArchitecture.Foundation.Sensors;
 
@@ -9,7 +12,7 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension
     {
-        public Task OnLoadAsync(IKernel kernel)
+        public Task OnLoadAsync(Kernel kernel)
         {
             Formatter<FoundationPlate>.Register((plate, writer) =>
             {
@@ -77,6 +80,6 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
             return Task.CompletedTask;
         }
 
-  
+
     }
 }
