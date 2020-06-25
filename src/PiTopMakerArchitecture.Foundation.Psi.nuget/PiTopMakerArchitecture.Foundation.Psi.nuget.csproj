@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="NetMQ" Version="4.0.0.207" />
-    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20153.1" />
+    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20276.1" />
     <PackageReference Include="System.Reactive" Version="4.3.2" />
     <PackageReference Include="Microsoft.Psi.Runtime" Version="0.12.53.2-beta" />
   </ItemGroup>
