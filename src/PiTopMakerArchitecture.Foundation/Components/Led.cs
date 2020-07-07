@@ -21,22 +21,25 @@ namespace PiTopMakerArchitecture.Foundation.Components
             Controller.Write(_ledPin, PinValue.Low);
         }
 
-        public void On()
+        public Led On()
         {
             if (!_isOn)
             {
                 _isOn = true;
                 Controller.Write(_ledPin, PinValue.High);
             }
+
+            return this;
         }
 
-        public void Off()
+        public Led Off()
         {
             if (_isOn)
             {
                 _isOn = false;
                 Controller.Write(_ledPin, PinValue.Low);
             }
+            return this;
         }
 
         public bool IsOn
@@ -55,9 +58,10 @@ namespace PiTopMakerArchitecture.Foundation.Components
             }
         }
 
-        public void Toggle()
+        public Led Toggle()
         {
             IsOn = !IsOn;
+            return this;
         }
     }
 }
