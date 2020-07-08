@@ -71,6 +71,12 @@ namespace PiTop
         }
 
         public IEnumerable<TDevice> Devices => _devices.Select(e => e.Value);
+        public void DisposeDevice<T>(T device) where T : TDevice
+        {
+            var key = _devices.FirstOrDefault(e => ReferenceEquals(e.Value,device)).Key;
+            _devices.Remove(key);
+            device.Dispose();
+        }
 
         public void Dispose()
         {

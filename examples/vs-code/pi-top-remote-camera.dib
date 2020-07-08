@@ -1,0 +1,105 @@
+#!markdown
+
+# Remote execution on piTop
+## Use the ```#!connect``` command to connect to .NET interactive running on your piTop
+
+#!csharp
+
+#!connect signalr --kernel-name piTop --hub-url http://10.0.0.252:1024/kernelhub
+
+#!markdown
+
+## Add a local nuget source and load the piTop packages
+
+#!csharp
+
+#!piTop
+#i "nuget:/home/pi/localNuget"
+
+#!csharp
+
+#!piTop
+#r "nuget:piTop"
+#r "nuget:piTop.FoundationKit"
+#r "nuget:piTop.Camera"
+
+#!csharp
+
+#!piTop
+using PiTop;
+using PiTopMakerArchitecture.Foundation;
+using PiTopMakerArchitecture.Foundation.Components;
+using PiTopMakerArchitecture.Foundation.Sensors;
+using PiTop.Camera;
+using OpenCvSharp;
+
+#!markdown
+
+Create a module and load the camera extensions
+
+#!csharp
+
+#!piTop
+var module = new PiTopModule().UseCamera();
+OpenCvCamera.GetCameraCount()
+
+#!markdown
+
+Create a camera
+
+#!csharp
+
+#!piTop
+var camera = module.GetOrCreateCamera<OpenCvCamera>(0);
+
+#!markdown
+
+Display the plate to check the wiring
+
+#!csharp
+
+#!piTop
+camera.Initialize();
+camera.GetFrame(out Mat frame);
+
+frame
+
+#!csharp
+
+#!piTop
+greenLed.On()
+
+#!markdown
+
+Let's add a ```Potentiometer``` and an ```Ultrasound``` sensor. Note that the ```Ultrasound.Distance``` is not just a number, but a Lentgh type and it is measured in cm. This is because the sensor measures distances and we use the [UnitsNet](https://github.com/angularsen/UnitsNet)
+
+#!csharp
+
+#!piTop
+var ultraSound = plate.GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D3);
+var pot = plate.GetOrCreateDevice<Potentiometer>(AnaloguePort.A0);
+
+display(ultraSound);
+display(pot);
+
+#!csharp
+
+#!piTop
+var distances = new List<double>(){0};
+
+async Task readDistance(int count = 10){   
+    for (var i = 0; i < count; i++){        
+        if(distances.Count > 5){
+            distances.RemoveAt(0);
+        }
+        distances.Add(ultraSound.Distance.Value);
+        await Task.Delay(500);
+    }
+}
+
+#!csharp
+
+#!piTop
+await readDistance(5);
+
+distances

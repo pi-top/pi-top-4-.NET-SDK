@@ -31,5 +31,12 @@ namespace PiTop.Camera
             var factory = module.GetDeviceFactory<int, ICamera>();
             return factory.GetOrCreateDevice<T>(index);
         }
+
+        public static void DisposeDevice<T>(this PiTopModule module, T device)
+            where T : ICamera
+        {
+            var factory = module.GetDeviceFactory<int, ICamera>();
+            factory.DisposeDevice(device);
+        }
     }
 }

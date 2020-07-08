@@ -88,5 +88,18 @@ namespace PiTopMakerArchitecture.Foundation
         {
             return _analogueConnectedDeviceFactory.GetOrCreateDevice<T>(port);
         }
+
+        public void DisposeDevice<T>(T device) where T : IConnectedDevice
+        {
+            switch (device)
+            {
+                case AnaloguePortDeviceBase analogueDevice:
+                    _analogueConnectedDeviceFactory.DisposeDevice(analogueDevice);
+                    break;
+                case DigitalPortDeviceBase digitalDevice:
+                    _digitalConnectedDeviceFactory.DisposeDevice(digitalDevice);
+                    break;
+            }
+        }
     }
 }

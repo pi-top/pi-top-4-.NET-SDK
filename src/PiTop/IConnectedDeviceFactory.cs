@@ -10,5 +10,7 @@ namespace PiTop
         T GetOrCreateDevice<T>(TConnectionConfiguration connectionConfiguration) where T : TDevice;
         T GetOrCreateDevice<T>(TConnectionConfiguration connectionConfiguration, Func<TConnectionConfiguration, TDevice> deviceFactory) where T : TDevice;
         IEnumerable<TDevice> Devices { get;  }
+
+        void DisposeDevice<T>(T device) where T : TDevice;
     }
 }
