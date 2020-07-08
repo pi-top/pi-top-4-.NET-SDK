@@ -23,6 +23,8 @@ namespace PiTop.Camera.App
               
             frame.SaveImage(file.FullName);
 
+            module.DisposeDevice(camera);
+
             Console.WriteLine($"Dumping frame at {file.FullName}");
         }
     }
