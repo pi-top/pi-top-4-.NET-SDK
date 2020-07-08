@@ -1,0 +1,1 @@
+Start-Process -PassThru dotnet "interactive [vscode] http --http-port 1024"
