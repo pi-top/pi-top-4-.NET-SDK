@@ -5,7 +5,7 @@
 
 #!csharp
 
-#!connect signalr --kernel-name piTop --hub-url http://[your pitop ip address]/kernelhub
+#!connect signalr --kernel-name piTop --hub-url http://[your pitop url]/kernelhub
 
 #!markdown
 

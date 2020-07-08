@@ -5,7 +5,7 @@
 
 #!csharp
 
-#!connect signalr --kernel-name piTop --hub-url http://10.0.0.252:1024/kernelhub
+#!connect signalr --kernel-name piTop --hub-url http://[your pitop url]/kernelhub
 
 #!markdown
 
@@ -49,7 +49,7 @@ Create a camera
 #!csharp
 
 #!piTop
-var camera = module.GetOrCreateCamera<OpenCvCamera>(1);
+var camera = module.GetOrCreateCamera<OpenCvCamera>(0);
 
 #!markdown
 
