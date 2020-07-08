@@ -3,7 +3,7 @@
 
 The src directory contains the code for libraries you can use to create .NET core app for the amazing [pi-top4 platform](https://www.pi-top.com/products/pi-top-4). Get one and get creative.
 
-Requires [.NET Core sdk 3.1 LTS for ARM32](https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.201-linux-arm32-binaries)
+Requires [.NET Core sdk 3.1 LTS for ARM32](./docs/install-dotnet-sdk.md)
 
 The libraries comes along with [dotnet interactive](https://github.com/dotnet/interactive/) intergration so you can use notebooks to explore the power of pi-top.
 
