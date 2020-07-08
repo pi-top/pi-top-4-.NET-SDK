@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.3.0.20200524" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PiTop.Camera\PiTop.Camera.csproj" />
     <ProjectReference Include="..\PiTop\PiTop.csproj" />
   </ItemGroup>

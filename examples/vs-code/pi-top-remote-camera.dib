@@ -41,7 +41,6 @@ Create a module and load the camera extensions
 
 #!piTop
 var module = new PiTopModule().UseCamera();
-OpenCvCamera.GetCameraCount()
 
 #!markdown
 
@@ -50,7 +49,7 @@ Create a camera
 #!csharp
 
 #!piTop
-var camera = module.GetOrCreateCamera<OpenCvCamera>(0);
+var camera = module.GetOrCreateCamera<OpenCvCamera>(1);
 
 #!markdown
 
@@ -59,47 +58,6 @@ Display the plate to check the wiring
 #!csharp
 
 #!piTop
-camera.Initialize();
 camera.GetFrame(out Mat frame);
 
 frame
-
-#!csharp
-
-#!piTop
-greenLed.On()
-
-#!markdown
-
-Let's add a ```Potentiometer``` and an ```Ultrasound``` sensor. Note that the ```Ultrasound.Distance``` is not just a number, but a Lentgh type and it is measured in cm. This is because the sensor measures distances and we use the [UnitsNet](https://github.com/angularsen/UnitsNet)
-
-#!csharp
-
-#!piTop
-var ultraSound = plate.GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D3);
-var pot = plate.GetOrCreateDevice<Potentiometer>(AnaloguePort.A0);
-
-display(ultraSound);
-display(pot);
-
-#!csharp
-
-#!piTop
-var distances = new List<double>(){0};
-
-async Task readDistance(int count = 10){   
-    for (var i = 0; i < count; i++){        
-        if(distances.Count > 5){
-            distances.RemoveAt(0);
-        }
-        distances.Add(ultraSound.Distance.Value);
-        await Task.Delay(500);
-    }
-}
-
-#!csharp
-
-#!piTop
-await readDistance(5);
-
-distances
