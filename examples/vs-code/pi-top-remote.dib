@@ -1,0 +1,111 @@
+#!markdown
+
+# Remote execution on piTop
+## Use the ```#!connect``` command to connect to .NET interactive running on your piTop
+
+#!csharp
+
+#!connect signalr --kernel-name piTop --hub-url http://[your pitop ip address]/kernelhub
+
+#!markdown
+
+## Add a local nuget source and load the piTop packages
+
+#!csharp
+
+#!piTop
+#i "nuget:/home/pi/localNuget"
+
+#!csharp
+
+#!piTop
+#r "nuget:piTop"
+#r "nuget:piTop.FoundationKit"
+
+#!csharp
+
+#!piTop
+using PiTop;
+using PiTopMakerArchitecture.Foundation;
+using PiTopMakerArchitecture.Foundation.Components;
+using PiTopMakerArchitecture.Foundation.Sensors;
+
+#!markdown
+
+Create a module and use it to create an instance of ```FoundationPlate```
+
+#!csharp
+
+#!piTop
+var module = new PiTopModule();
+var plate = module.GetOrCreatePlate<FoundationPlate>();
+plate
+
+#!markdown
+
+Create Leds and turn them off
+
+#!csharp
+
+#!piTop
+var greenLed = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
+greenLed.DisplayProperties.Add(new NamedCssColor("green"));
+
+var amberLed = plate.GetOrCreateDevice<Led>(DigitalPort.D1);
+amberLed.DisplayProperties.Add(new NamedCssColor("gold"));
+
+var redLed = plate.GetOrCreateDevice<Led>(DigitalPort.D2);
+redLed.DisplayProperties.Add(new NamedCssColor("red"));
+
+greenLed.Off();
+amberLed.Off();
+redLed.Off();
+
+#!markdown
+
+Display the plate to check the wiring
+
+#!csharp
+
+#!piTop
+plate
+
+#!csharp
+
+#!piTop
+greenLed.On()
+
+#!markdown
+
+Let's add a ```Potentiometer``` and an ```Ultrasound``` sensor. Note that the ```Ultrasound.Distance``` is not just a number, but a Lentgh type and it is measured in cm. This is because the sensor measures distances and we use the [UnitsNet](https://github.com/angularsen/UnitsNet)
+
+#!csharp
+
+#!piTop
+var ultraSound = plate.GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D3);
+var pot = plate.GetOrCreateDevice<Potentiometer>(AnaloguePort.A0);
+
+display(ultraSound);
+display(pot);
+
+#!csharp
+
+#!piTop
+var distances = new List<double>(){0};
+
+async Task readDistance(int count = 10){   
+    for (var i = 0; i < count; i++){        
+        if(distances.Count > 5){
+            distances.RemoveAt(0);
+        }
+        distances.Add(ultraSound.Distance.Value);
+        await Task.Delay(500);
+    }
+}
+
+#!csharp
+
+#!piTop
+await readDistance(5);
+
+distances
