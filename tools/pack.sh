@@ -1,4 +1,5 @@
 #!/bin/bash
+dotnet build ../src
 projects=$(find ../src/ -path "*.nuget.csproj" ) 
 for project in $projects
 do
