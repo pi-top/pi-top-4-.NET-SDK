@@ -41,8 +41,11 @@ namespace PiTop.Camera
                 image = new Mat();
                 _capture.Read(image);
             }
+            else
+            {
 
-            throw new InvalidOperationException("Camera not initialized");
+                throw new InvalidOperationException("Camera not initialized");
+            }
         }
 
         public void Dispose() {
