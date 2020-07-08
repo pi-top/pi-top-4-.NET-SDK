@@ -11,11 +11,12 @@ To use the notebook sample you will need jupyter and the dotnet interactive tool
 
  * install the dotnet interactive tool as shown [here](https://github.com/dotnet/interactive/)
  * [install jupyter and jupyter lab module](./docs/install-jupyter.md)
+ * install [Camera library dependencies](./docs/install-camera-depednencies.md)
 
 Build the libraries and packages
 
  * build the project ```>dotnet build```
- * create folder ```/home/pi/localNuget```
+ * if you do not have it, create the folder ```/home/pi/localNuget```
  * pack the proejcts with ```> dotnet pack /p:PackageVersion=1.1.1 -o /home/pi/localNuget```
   
 
