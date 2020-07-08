@@ -9,12 +9,10 @@ The libraries comes along with [dotnet interactive](https://github.com/dotnet/in
 
 To use the notebook sample you will need jupyter and the dotnet interactive tool installed, if you don't have them follow this instructions
 
- * create and activate a virtual environment 
- * install jupyter and jupyter lab module in the environment using pip
  * install the dotnet interactive tool as shown [here](https://github.com/dotnet/interactive/)
- * install the dotnet interactive kernels with the command ```dotnet interactive jupyter install --http-port-range STARTPORT-ENDPORT``` 
+ * [install jupyter and jupyter lab module](./docs/install-jupyter.md)
 
-Now to use the notebook
+Build the libraries and packages
 
  * build the project ```>dotnet build```
  * create folder ```/home/pi/localNuget```
