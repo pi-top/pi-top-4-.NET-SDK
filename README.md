@@ -17,7 +17,7 @@ Build the libraries and packages
 
  * build the project ```>dotnet build```
  * if you do not have it, create the folder ```/home/pi/localNuget```
- * pack the proejcts with ```> dotnet pack /p:PackageVersion=1.1.1 -o /home/pi/localNuget```
+ * pack the proejcts with ```>sh tools/pack.sh 1.1.1``` it will package the project into the ```/home/pi/localnuget``` using version 1.1.1
   
 
 Look at this example.
