@@ -7,11 +7,14 @@ Requires [.NET Core sdk 3.1 LTS for ARM32](./docs/install-dotnet-sdk.md)
 
 The libraries comes along with [dotnet interactive](https://github.com/dotnet/interactive/) intergration so you can use notebooks to explore the power of pi-top.
 
-To use the notebook sample you will need jupyter and the dotnet interactive tool installed, if you don't have them follow this instructions
-
- * install the dotnet interactive tool as shown [here](https://github.com/dotnet/interactive/)
- * [install jupyter and jupyter lab module](./docs/install-jupyter.md)
+ * install the dotnet interactive tool as shown [here](./docs/install-dotnet-interactive.md) 
  * install [Camera library dependencies](./docs/install-camera-dependencies.md)
+
+To use the notebook samples in the folder ```samples/notebooks``` you will need jupyter lab 
+* [install jupyter and jupyter lab module](./docs/install-jupyter.md)
+
+To use the notebook sampples in the folder ```samples/vs-code``` you will need vs-code and vs-code extension on your local machine
+* [vscode extension instructions](./docs/vscode-extension.md)
 
 Build the libraries and packages
 

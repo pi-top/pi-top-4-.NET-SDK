@@ -21,3 +21,5 @@ And later on update
 ```sh
  pi@pi-top:~ dotnet tool update -g --add-source "https://dotnet.myget.org/F/dotnet-try/api/v3/index.json" Microsoft.dotnet-interactive
 ```
+
+You cans use the ```install-global-tool.sh``` and ```update-global-tool.sh``` contained in the ```tools``` folder of the repo
