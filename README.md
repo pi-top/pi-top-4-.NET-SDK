@@ -10,10 +10,10 @@ The libraries comes along with [dotnet interactive](https://github.com/dotnet/in
  * install the dotnet interactive tool as shown [here](./docs/install-dotnet-interactive.md) 
  * install [Camera library dependencies](./docs/install-camera-dependencies.md)
 
-To use the notebook samples in the folder ```samples/notebooks``` you will need jupyter lab 
+To use the notebook examples in the folder ```examples/notebooks``` you will need jupyter lab 
 * install [jupyter and jupyter lab modules](./docs/install-jupyter.md)
 
-To use the notebook sampples in the folder ```samples/vs-code``` you will need vs-code and vs-code extension on your local machine
+To use the notebook sampples in the folder ```examples/vs-code``` you will need vs-code and vs-code extension on your local machine
 * install [vscode extension](./docs/vscode-extension.md)
 
 Build the libraries and packages
