@@ -4,7 +4,7 @@
 ### Install System.Drawing dependencies and virtualenv ###
 ##########################################################
 echo "Installing dependencies..."
-sudo apt install -y libc6-dev libgdiplus virtualenv
+sudo apt install -y libgdiplus virtualenv
 echo ""
 
 
@@ -24,11 +24,15 @@ export PATH=${PATH}:/home/pi/.dotnet/tools
 export DOTNET_ROOT=/home/pi/.dotnet
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
 EOF
-  source "/home/pi/.bashrc"
 fi
+export PATH=${PATH}:/home/pi/.dotnet
+export PATH=${PATH}:/home/pi/.dotnet/tools
+export DOTNET_ROOT=/home/pi/.dotnet
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
 echo ""
 
 
+echo "Installing NuGet sources..."
 nugetListSource="$(dotnet nuget list source)"
 
 add_nuget_src() {
@@ -42,7 +46,6 @@ add_nuget_src() {
   fi
 }
 
-echo "Installing NuGet sources..."
 mkdir -p "/home/pi/localNuget"
 add_nuget_src "/home/pi/localNuget" local
 add_nuget_src https://api.nuget.org/v3/index.json nuget.org
@@ -78,7 +81,9 @@ echo ""
 ### Install .NET OpenCVSharp ###
 ################################
 echo "Installing .NET OpenCVSharp..."
+echo ".NET OpenCVSharp: Extracting..."
 sudo tar -xzf ../libs/opencv_opencvsharp_libs.tar.gz -C /usr/local/lib/
+echo ".NET OpenCVSharp: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
 
