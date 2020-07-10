@@ -7,6 +7,9 @@ Setup all by running this from your pitop
 pi@pi-top:~ curl -L https://raw.githubusercontent.com/colombod/pi-top/master/setup-device.sh | bash -e
 ```
 
+
+## Manual installation steps
+
 The src directory contains the code for libraries you can use to create .NET core app for the amazing [pi-top4 platform](https://www.pi-top.com/products/pi-top-4). Get one and get creative.
 
 Requires [.NET Core sdk 3.1 LTS for ARM32](./docs/install-dotnet-sdk.md)

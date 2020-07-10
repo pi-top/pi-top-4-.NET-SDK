@@ -6,24 +6,24 @@ To install Jupyter notebooks and Jupyter lab without affecting your environment 
 
 1. Install the virtualend module 
 ```sh
-pi@pi-top:~ pip install virtualenv
+pi@pi-top:~ sudo apt install virtualenv -y
 ```
 2.  Create a new virtual environment
 ```sh
-pi@pi-top:~ virtualenv pi-top
+pi@pi-top:~ virtualenv .jupyter_venv -p python3
 ```
 3.  activate the environment
 ```sh
-pi@pi-top:~ source pi-top/bin/activate
+pi@pi-top:~ source .jupyter_venv/bin/activate
 ```
 
 ## Install jupyter notebook and jupyter lab
 
 1. activate your virtual environment
 ```sh
-pi@pi-top:~ source pi-top/bin/activate
+pi@pi-top:~ source .jupyter_venv/bin/activate
 ```
-2. install jupyter and hten jupyter lab
+2. install jupyter and then jupyter lab
 ```sh
 (pi-top) pi@pi-top:~ pip install jupyter
 (pi-top) pi@pi-top:~ pip install jupyterlab
