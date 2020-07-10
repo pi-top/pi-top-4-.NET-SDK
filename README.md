@@ -6,7 +6,20 @@ Setup all by running this from your pitop
 ```sh
 pi@pi-top:~ curl -L https://raw.githubusercontent.com/colombod/pi-top/master/setup-device.sh | bash -e
 ```
+Once executed you will have this repo checked out at
+```sh
+/home/pi/pi-top-net-api
+```
 
+The code is compiled and the NuGet pacakges version 1.1.1 are located at 
+```sh
+/home/pi/localNuget
+```
+
+You can activate the python environment using the command
+```sh
+pi@pi-top:~ source .jupyter_venv/bin/activate
+```
 
 ## Manual installation steps
 
