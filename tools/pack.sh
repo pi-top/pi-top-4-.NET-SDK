@@ -4,6 +4,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 root="$(dirname "${DIR}")"
 
+# Default to using version 1.1.1 and installing in /home/pi/localNuget
 version="${1:-1.1.1}"
 localNugetPath="${2:-/home/pi/localNuget}"
 
