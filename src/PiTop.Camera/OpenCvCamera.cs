@@ -54,7 +54,7 @@ namespace PiTop.Camera
             _capture.Dispose();
         }
 
-        public void Initialize()
+        public void Connect()
         {
             _capture.Open(_index);
         }

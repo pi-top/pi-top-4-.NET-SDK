@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Device.Gpio;
 using System.Device.I2c;
 using System.Linq;
 using System.Reactive.Disposables;
 
-using NetMQ;
+
 
 namespace PiTop
 {
@@ -16,7 +15,7 @@ namespace PiTop
         private readonly ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
         private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
         private readonly Client _client;
-        private readonly GpioController _controller;
+        private readonly IGpioController _controller;
         private readonly Dictionary<Type, object> _deviceFactories = new Dictionary<Type, object>();
 
         private const int I2CBusId = 1;
@@ -28,7 +27,7 @@ namespace PiTop
 
         public PiTopModule()
         {
-            _controller = new GpioController();
+            _controller = new GpioControllerWrapper();
             _client = new Client();
             _client.MessageReceived += _client_MessageReceived;
             _disposables.Add(Disposable.Create(() =>
@@ -224,7 +223,7 @@ namespace PiTop
             _disposables.Dispose();
         }
 
-        public GpioController GetOrCreateController()
+        public IGpioController GetOrCreateController()
         {
             return _controller;
         }

@@ -4,6 +4,6 @@ namespace PiTop
 {
     public interface IConnectedDevice : IDisposable
     {
-        void Initialize();
+        void Connect();
     }
 }

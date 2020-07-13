@@ -39,7 +39,7 @@ namespace PiTopMakerArchitecture.Foundation
             _disposables.Dispose();
         }
 
-        public void Initialize()
+        public void Connect()
         {
             OnInitialize();
         }

@@ -4,6 +4,6 @@ namespace PiTop
 {
     public interface IGpioControllerFactory
     {
-        GpioController GetOrCreateController();
+        IGpioController GetOrCreateController();
     }
 }

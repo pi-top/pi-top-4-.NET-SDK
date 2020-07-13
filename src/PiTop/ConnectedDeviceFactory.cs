@@ -20,7 +20,7 @@ namespace PiTop
                 var ctor = deviceType.GetConstructor(ctorSignature);
                 if (ctor != null)
                 {
-                    return devicePort => (TDevice)Activator.CreateInstance(deviceType, devicePort)!;
+                    return connectionConfiguration => (TDevice)Activator.CreateInstance(deviceType, connectionConfiguration)!;
                 }
 
                 throw new InvalidOperationException(
@@ -63,7 +63,7 @@ namespace PiTop
             {
                 device = deviceFactory(connectionConfiguration);
                 _devices[connectionConfiguration] = device;
-                device.Initialize();
+                device.Connect();
             }
 
             return (T)device;
