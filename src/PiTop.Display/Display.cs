@@ -3,20 +3,21 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Reactive.Disposables;
+using PiTop.Luma;
 
 namespace PiTop
 {
     public class Display : IDisposable
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
-        private readonly OLEDDisplay _device;
+        private readonly Sh1106 _device;
         private readonly  Bitmap _image;
         private int _width;
         private int _height;
 
         public Display(IGpioControllerFactory controllerFactory)
         {
-          _device = new OLEDDisplay(controllerFactory);
+          _device = new Sh1106(Sh1106.DefaultSpiConnectionSettings, controllerFactory);
           
           _image = new Bitmap(_width, _height, PixelFormat.Format16bppGrayScale);
           _disposables.Add(_image);

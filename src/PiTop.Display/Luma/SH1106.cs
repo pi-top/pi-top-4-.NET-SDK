@@ -2,10 +2,26 @@ using System;
 using System.Device.Gpio;
 using System.Device.Spi;
 
-namespace PiTop
+namespace PiTop.Luma
 {
-    internal class OLEDDisplay : IDisposable
+    public interface ISerialInterface
     {
+
+    }
+    public class SpiInterface : ISerialInterface
+    {
+
+    }
+    public class Sh1106 : IDisposable
+    {
+        public static SpiConnectionSettings DefaultSpiConnectionSettings => new SpiConnectionSettings(spi_device, spi_port)
+        {
+            ClockFrequency = spi_bus_speed_hz,
+            DataBitLength = spi_transfer_size,
+            Mode = SpiMode.Mode0,
+            ChipSelectLineActiveState = spi_cs_high
+        };
+
         private enum Command
         {
             DISPLAYOFF = 0xAE,
@@ -19,7 +35,6 @@ namespace PiTop
             SETCONTRAST = 0x81,
         }
 
-
         private readonly GpioController _controller;
         private readonly SpiDevice _device;
         private const int spi_port = 1;
@@ -32,15 +47,18 @@ namespace PiTop
         private const int gpio_command_mode = 0;
         private const int gpio_data_mode = 1;
 
-        public OLEDDisplay(IGpioControllerFactory controllerFactory)
+        public Sh1106(SpiConnectionSettings connectionSettings, IGpioControllerFactory controllerFactory)
         {
-            var connectionSettings = new SpiConnectionSettings(spi_device, spi_port)
+            if (connectionSettings == null)
             {
-                ClockFrequency = spi_bus_speed_hz,
-                DataBitLength = spi_transfer_size,
-                Mode = SpiMode.Mode0,
-                ChipSelectLineActiveState = spi_cs_high
-            };
+                throw new ArgumentNullException(nameof(connectionSettings));
+            }
+
+            if (controllerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(controllerFactory));
+            }
+
 
             _device = SpiDevice.Create(connectionSettings);
             _controller = controllerFactory.GetOrCreateController();
