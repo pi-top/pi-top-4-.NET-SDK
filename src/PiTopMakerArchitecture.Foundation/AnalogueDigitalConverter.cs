@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers.Binary;
 using System.Device.I2c;
+using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation
 {
@@ -64,11 +65,10 @@ namespace PiTopMakerArchitecture.Foundation
 
 
 
-        private int ReadRegister(byte register, I2cDevice device)
+        private int ReadRegister(byte registerAddress, I2cDevice device)
         {
-            device.WriteByte(register);
             var word = new byte[2];
-            device.Read(word);
+            device.ReadAtRegisterAddress(registerAddress, word);
             return BitConverter.IsLittleEndian ? BinaryPrimitives.ReadInt16LittleEndian(word) : BinaryPrimitives.ReadInt16BigEndian(word);
         }
 

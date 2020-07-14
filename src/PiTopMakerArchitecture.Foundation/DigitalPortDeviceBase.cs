@@ -11,7 +11,7 @@ namespace PiTopMakerArchitecture.Foundation
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         public DigitalPort Port { get; }
-        protected IGpioController Controller { get; }
+        protected GpioController Controller { get; }
 
         public ICollection<DisplayPropertyBase> DisplayProperties { get; }
 

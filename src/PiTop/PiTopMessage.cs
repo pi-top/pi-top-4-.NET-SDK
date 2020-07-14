@@ -22,8 +22,18 @@ namespace PiTop
         public static PiTopMessage Parse(string message)
         {
             var parts = message.Split(new[] {'|'}, StringSplitOptions.None);
+            if (parts.Length < 1)
+            {
+                throw new InvalidOperationException("Invalid message, must have at least id.");
+            }
 
-            var id = Enum.Parse<PiTopMessageId>(parts[0]);
+            if (!int.TryParse(parts[0], out var parsedId))
+            {
+                throw new InvalidOperationException("Invalid message, id must be a valid integer");
+            }
+            
+            
+            var id = (PiTopMessageId)parsedId;
 
             return new PiTopMessage(id, parts.Skip(1));
         }

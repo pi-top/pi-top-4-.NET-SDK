@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Device.Gpio;
 using System.Device.I2c;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -15,7 +16,7 @@ namespace PiTop
         private readonly ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
         private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
         private readonly Client _client;
-        private readonly IGpioController _controller;
+        private readonly GpioController _controller;
         private readonly Dictionary<Type, object> _deviceFactories = new Dictionary<Type, object>();
 
         private const int I2CBusId = 1;
@@ -25,9 +26,11 @@ namespace PiTop
         public PiTopButton SelectButton { get; } = new PiTopButton();
         public PiTopButton CancelButton { get; } = new PiTopButton();
 
+        public event EventHandler<BatteryState>? BatteryStateChanged;
+
         public PiTopModule()
         {
-            _controller = new GpioControllerWrapper();
+            _controller = new GpioController();
             _client = new Client();
             _client.MessageReceived += _client_MessageReceived;
             _disposables.Add(Disposable.Create(() =>
@@ -155,8 +158,10 @@ namespace PiTop
                 case PiTopMessageId.PUB_SCREEN_UNBLANKED:
                     break;
                 case PiTopMessageId.PUB_LOW_BATTERY_WARNING:
+                    BatteryStateChanged?.Invoke(this, BatteryState.Low);
                     break;
                 case PiTopMessageId.PUB_CRITICAL_BATTERY_WARNING:
+                    BatteryStateChanged?.Invoke(this, BatteryState.Critical);
                     break;
                 case PiTopMessageId.PUB_LID_CLOSED:
                     break;
@@ -223,7 +228,7 @@ namespace PiTop
             _disposables.Dispose();
         }
 
-        public IGpioController GetOrCreateController()
+        public GpioController GetOrCreateController()
         {
             return _controller;
         }
