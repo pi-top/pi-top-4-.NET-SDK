@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.Psi.nuget", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Psi.nuget", "PiTopMakerArchitecture.Foundation.Psi.nuget\PiTopMakerArchitecture.Foundation.Psi.nuget.csproj", "{69ADCBFD-CA7F-4B89-A2D9-A39629B4B08F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.Display", "PiTop.Display\PiTop.Display.csproj", "{62783A37-DBE5-4998-AC14-23B5BFADE73C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,10 @@ Global
 		{69ADCBFD-CA7F-4B89-A2D9-A39629B4B08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69ADCBFD-CA7F-4B89-A2D9-A39629B4B08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69ADCBFD-CA7F-4B89-A2D9-A39629B4B08F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62783A37-DBE5-4998-AC14-23B5BFADE73C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62783A37-DBE5-4998-AC14-23B5BFADE73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62783A37-DBE5-4998-AC14-23B5BFADE73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62783A37-DBE5-4998-AC14-23B5BFADE73C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +154,7 @@ Global
 		{8A5A51A5-EDBB-428F-94D0-E2A38CB6D99C} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
 		{4F6D165F-1B06-4C06-AF38-926FA15D20BB} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
 		{69ADCBFD-CA7F-4B89-A2D9-A39629B4B08F} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
+		{62783A37-DBE5-4998-AC14-23B5BFADE73C} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98E1ADF8-88DF-4B1F-B486-650F4F9CC573}

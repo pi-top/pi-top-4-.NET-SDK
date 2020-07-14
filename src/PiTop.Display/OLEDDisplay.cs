@@ -2,7 +2,7 @@ using System;
 using System.Device.Gpio;
 using System.Device.Spi;
 
-namespace PiTop
+namespace PiTop.Display
 {
     internal class OLEDDisplay : IDisposable
     {
