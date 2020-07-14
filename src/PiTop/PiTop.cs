@@ -9,11 +9,6 @@ using System.Reactive.Disposables;
 
 namespace PiTop
 {
-    public enum BatteryState
-    {
-        Low,
-        Critical
-    }
     public class PiTopModule : IDisposable, II2CDeviceFactory, IGpioControllerFactory
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
