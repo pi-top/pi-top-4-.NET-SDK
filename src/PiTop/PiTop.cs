@@ -9,6 +9,11 @@ using System.Reactive.Disposables;
 
 namespace PiTop
 {
+    public enum BatteryState
+    {
+        Low,
+        Critical
+    }
     public class PiTopModule : IDisposable, II2CDeviceFactory, IGpioControllerFactory
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
@@ -24,6 +29,8 @@ namespace PiTop
         public PiTopButton DownButton { get; } = new PiTopButton();
         public PiTopButton SelectButton { get; } = new PiTopButton();
         public PiTopButton CancelButton { get; } = new PiTopButton();
+
+        public event EventHandler<BatteryState>? BatteryStateChanged;
 
         public PiTopModule()
         {
@@ -155,8 +162,10 @@ namespace PiTop
                 case PiTopMessageId.PUB_SCREEN_UNBLANKED:
                     break;
                 case PiTopMessageId.PUB_LOW_BATTERY_WARNING:
+                    BatteryStateChanged?.Invoke(this, BatteryState.Low);
                     break;
                 case PiTopMessageId.PUB_CRITICAL_BATTERY_WARNING:
+                    BatteryStateChanged?.Invoke(this, BatteryState.Critical);
                     break;
                 case PiTopMessageId.PUB_LID_CLOSED:
                     break;

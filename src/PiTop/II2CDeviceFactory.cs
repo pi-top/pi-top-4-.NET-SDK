@@ -1,4 +1,5 @@
 ﻿using System.Device.I2c;
+using System.Runtime.CompilerServices;
 
 namespace PiTop
 {
