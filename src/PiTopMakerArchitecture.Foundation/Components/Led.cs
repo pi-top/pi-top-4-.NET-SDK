@@ -1,5 +1,5 @@
 ﻿using System.Device.Gpio;
-
+using System.Reactive.Disposables;
 using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Components
@@ -12,6 +12,10 @@ namespace PiTopMakerArchitecture.Foundation.Components
         public Led(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             (_ledPin, _) = Port.ToPinPair();
+            AddToDisposables(Disposable.Create(() =>
+            {
+                Controller.ClosePin(_ledPin);
+            }));
         }
 
         protected override void OnInitialise()

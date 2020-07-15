@@ -28,9 +28,14 @@ namespace PiTop
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
-        public PiTopModule()
+        public PiTopModule(): this(new GpioController())
         {
-            _controller = new GpioController();
+
+        }
+
+        public PiTopModule(GpioController controller)
+        {
+            _controller = controller ?? throw new ArgumentNullException(nameof(controller));
             _client = new Client();
             _client.MessageReceived += _client_MessageReceived;
             _disposables.Add(Disposable.Create(() =>

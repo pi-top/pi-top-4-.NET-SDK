@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Diagnostics;
+using System.Reactive.Disposables;
 using System.Threading;
 
 using PiTop;
@@ -27,6 +28,12 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             Controller.OpenPin(_triggerPin, PinMode.Output);
             Controller.Write(_triggerPin, PinValue.Low);
             Controller.Read(_echoPin);
+
+            AddToDisposables(Disposable.Create(() =>
+            {
+                Controller.ClosePin(_echoPin);
+                Controller.ClosePin(_triggerPin);
+            }));
         }
 
         public Length Distance => GetDistance();

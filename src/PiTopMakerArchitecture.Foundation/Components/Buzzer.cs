@@ -1,5 +1,5 @@
 ﻿using System.Device.Gpio;
-
+using System.Reactive.Disposables;
 using PiTop;
 
 namespace PiTopMakerArchitecture.Foundation.Components
@@ -13,6 +13,10 @@ namespace PiTopMakerArchitecture.Foundation.Components
         {
             (_buzzPin, _) = Port.ToPinPair();
             Controller.OpenPin(_buzzPin, PinMode.Output);
+            AddToDisposables(Disposable.Create(() =>
+            {
+                Controller.ClosePin(_buzzPin);
+            }));
         }
 
         public void On()
