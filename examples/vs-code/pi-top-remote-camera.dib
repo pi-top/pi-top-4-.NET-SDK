@@ -58,6 +58,5 @@ Display the plate to check the wiring
 #!csharp
 
 #!piTop
-camera.GetFrame(out Mat frame);
-
+var frame = camera.GetFrameAsMat();
 frame
