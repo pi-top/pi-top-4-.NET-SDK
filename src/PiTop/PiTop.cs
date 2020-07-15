@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Device.I2c;
+using System.Device.Spi;
 using System.Linq;
 using System.Reactive.Disposables;
 
@@ -10,11 +11,16 @@ using System.Reactive.Disposables;
 
 namespace PiTop
 {
-    public class PiTopModule : IDisposable, II2CDeviceFactory, IGpioControllerFactory
+    public class PiTopModule : 
+        IDisposable, 
+        II2CDeviceFactory, 
+        IGpioControllerFactory,
+        ISPiDeviceFactory
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         private readonly ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
         private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
+        private readonly ConcurrentDictionary<SpiConnectionSettings, SpiDevice> _spiDevices = new ConcurrentDictionary<SpiConnectionSettings, SpiDevice>();
         private readonly Client _client;
         private readonly GpioController _controller;
         private readonly Dictionary<Type, object> _deviceFactories = new Dictionary<Type, object>();
@@ -41,17 +47,21 @@ namespace PiTop
             _disposables.Add(Disposable.Create(() =>
             {
                 var plates = _plates.Values.ToList();
-
                 foreach (var piTopPlate in plates)
                 {
                     piTopPlate.Dispose();
                 }
 
                 var busses = _i2cBusses.Values.ToList();
-
                 foreach (var i2CDevice in busses)
                 {
                     i2CDevice.Dispose();
+                }
+
+                var spiDevices = _spiDevices.Values.ToList();
+                foreach (var spiDevice in spiDevices)
+                {
+                    spiDevice.Dispose();
                 }
             }));
             _client.Start();
@@ -227,6 +237,11 @@ namespace PiTop
             return _i2cBusses.GetOrAdd(deviceAddress, address => I2cDevice.Create(new I2cConnectionSettings(I2CBusId, deviceAddress)));
         }
 
+        public SpiDevice GetOrCreateSpiDevice(SpiConnectionSettings connectionSettings)
+        {
+            return _spiDevices.GetOrAdd(connectionSettings, settings => SpiDevice.Create(settings));
+        }
+
         public void Dispose()
         {
             _client.MessageReceived -= _client_MessageReceived;
@@ -265,5 +280,7 @@ namespace PiTop
             var deviceFactory = new ConnectedDeviceFactory<TConnectionConfiguration, TDevice>(defaultDeviceFactoryGenerator);
             AddDeviceFactory(deviceFactory);
         }
+
+       
     }
 }

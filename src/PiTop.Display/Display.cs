@@ -1,12 +1,32 @@
 using System;
+using System.Device.Spi;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Reactive.Disposables;
-using PiTop.Luma;
+using PiTop.OledDevice;
 
 namespace PiTop
 {
+    public class DisplaySpiConnectionSettings
+    {
+        public SpiConnectionSettings SpiConnectionSettings { get; set; }
+        public int RstPin { get; set; }
+        public int DcPin { get; set; }
+
+        public static DisplaySpiConnectionSettings Default => new DisplaySpiConnectionSettings
+        {
+            DcPin = 17,
+            RstPin = 27,
+            SpiConnectionSettings = new SpiConnectionSettings(0,1)
+            {
+                ClockFrequency = 8000000,
+                DataBitLength = 4096,
+                Mode = SpiMode.Mode0,
+                ChipSelectLineActiveState = 0
+            }
+        };
+    }
     public class Display : IDisposable
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
@@ -15,9 +35,9 @@ namespace PiTop
         private int _width;
         private int _height;
 
-        public Display(IGpioControllerFactory controllerFactory)
+        public Display(DisplaySpiConnectionSettings settings, IGpioControllerFactory controllerFactory, ISPiDeviceFactory spiDeviceFactory)
         {
-          _device = new Sh1106(Sh1106.DefaultSpiConnectionSettings, controllerFactory);
+          _device = new Sh1106(settings.SpiConnectionSettings, settings.DcPin, settings.RstPin, spiDeviceFactory, controllerFactory);
           
           _image = new Bitmap(_width, _height, PixelFormat.Format16bppGrayScale);
           _disposables.Add(_image);
@@ -32,11 +52,6 @@ namespace PiTop
         public void Hide()
         {
             _device.Hide();
-        }
-
-        public void Reset()
-        {
-            _device.Reset();
         }
 
         public void Draw(Action<Graphics> drawingAction)
