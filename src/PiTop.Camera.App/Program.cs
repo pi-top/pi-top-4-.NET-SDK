@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using OpenCvSharp;
 
 namespace PiTop.Camera.App
 {
@@ -19,7 +18,7 @@ namespace PiTop.Camera.App
 
             var file = new FileInfo("./test.png");
 
-            camera.GetFrame(out Mat frame);
+            var frame = camera.GetFrameAsMat();
               
             frame.SaveImage(file.FullName);
 

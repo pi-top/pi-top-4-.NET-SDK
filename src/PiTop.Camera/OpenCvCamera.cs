@@ -1,11 +1,38 @@
 ﻿using System;
 using System.Drawing;
-
+using System.IO;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 
 namespace PiTop.Camera
 {
+    public class FileSystemCamera: ICamera
+    {
+        private readonly DirectoryInfo _imageLocation;
+
+        public FileSystemCamera(DirectoryInfo imageLocation)
+        {
+            _imageLocation = imageLocation ?? throw new ArgumentNullException(nameof(imageLocation));
+        }
+        public void Dispose()
+        {
+            
+        }
+
+        public void Connect()
+        {
+            if (!_imageLocation.Exists)
+            {
+                throw new DirectoryNotFoundException($"Cannot open {_imageLocation.FullName}");
+            }
+        }
+
+        public Bitmap GetFrame()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class OpenCvCamera : ICamera
     {
         private readonly int _index;
@@ -34,12 +61,13 @@ namespace PiTop.Camera
             _capture = new VideoCapture();
         }
 
-        public void GetFrame(out Mat image)
+        public Mat GetFrameAsMat()
         {
             if (_capture.IsOpened())
             {
-                image = new Mat();
+                var image = new Mat();
                 _capture.Read(image);
+                return image;
             }
             else
             {
@@ -59,10 +87,11 @@ namespace PiTop.Camera
             _capture.Open(_index);
         }
 
-        public  void GetFrame(out Bitmap frame)
+        public Bitmap GetFrame()
         {
-            GetFrame(out Mat raw);
-            frame = raw.ToBitmap();
+            var raw = GetFrameAsMat();
+            var frame = raw.ToBitmap();
+            return frame;
         }
     }
 }

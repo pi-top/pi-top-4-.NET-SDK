@@ -10,20 +10,20 @@ namespace PiTop.Camera.Psi
     {
         public static IProducer<Mat> CreateComponent(this OpenCvCamera camera, Pipeline pipeline, TimeSpan samplingInterval)
         {
-            camera.GetFrame(out Mat initialFrame);
+            var initialFrame =  camera.GetFrameAsMat();
             return Generators.Sequence(pipeline, initialFrame, _ =>
             {
-                camera.GetFrame(out Mat frame);
+                var frame = camera.GetFrameAsMat();
                 return frame;
             }, samplingInterval);
         }
 
         public static IProducer<Bitmap> CreateComponent(this ICamera camera, Pipeline pipeline, TimeSpan samplingInterval)
         {
-            camera.GetFrame(out var initialFrame);
+            var initialFrame = camera.GetFrame();
             return Generators.Sequence(pipeline, initialFrame, _ =>
             {
-                camera.GetFrame(out var frame);
+                var frame = camera.GetFrame();
                 return frame;
             }, samplingInterval);
         }
