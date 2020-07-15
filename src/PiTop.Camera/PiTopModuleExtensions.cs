@@ -23,9 +23,9 @@ namespace PiTop.Camera
                     $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
             });
 
-            module.AddDeviceFactory<DirectoryInfo, FileSystemCamera>(deviceType =>
+            module.AddDeviceFactory<FileSystemCameraSettings, FileSystemCamera>(deviceType =>
             {
-                return directory => new FileSystemCamera(directory);
+                return settings => new FileSystemCamera(settings);
             });
 
             return module;
@@ -39,12 +39,19 @@ namespace PiTop.Camera
             return factory.GetOrCreateDevice<T>(index);
         }
 
-        private static void AssertFactory(IConnectedDeviceFactory<int, ICamera> factory)
+        public static FileSystemCamera GetOrCreateCamera(this PiTopModule module, DirectoryInfo directory, string imageFileSearchPattern = "*.png")
+        {
+            var factory = module.GetDeviceFactory<FileSystemCameraSettings, FileSystemCamera>();
+            AssertFactory(factory);
+            return factory.GetOrCreateDevice<FileSystemCamera>(new FileSystemCameraSettings(directory, imageFileSearchPattern));
+        }
+
+        private static void AssertFactory<T>(T factory)
         {
    
             if (factory == null)
             {
-                throw new NullReferenceException($"Cannot find a factory if type IConnectedDeviceFactory<int, ICamera>, make sure to configure the module calling {nameof(UseCamera)} first.");
+                throw new NullReferenceException($"Cannot find a factory if type {typeof(T).Name}, make sure to configure the module calling {nameof(UseCamera)} first.");
             }
         }
 
@@ -52,6 +59,13 @@ namespace PiTop.Camera
             where T : ICamera
         {
             var factory = module.GetDeviceFactory<int, ICamera>();
+            AssertFactory(factory);
+            factory.DisposeDevice(device);
+        }
+
+        public static void DisposeDevice(this PiTopModule module, FileSystemCamera device)
+        {
+            var factory = module.GetDeviceFactory<FileSystemCameraSettings, FileSystemCamera>();
             AssertFactory(factory);
             factory.DisposeDevice(device);
         }
