@@ -5,7 +5,9 @@ using OpenCvSharp.Extensions;
 
 namespace PiTop.Camera
 {
-    public class OpenCvCamera : ICamera
+    public class OpenCvCamera : 
+        ICamera,
+        IFrameSource<Mat>
     {
         private readonly int _index;
         private readonly VideoCapture _capture;
@@ -61,6 +63,11 @@ namespace PiTop.Camera
             var raw = GetFrameAsMat();
             var frame = raw.ToBitmap();
             return frame;
+        }
+
+        Mat IFrameSource<Mat>.GetFrame()
+        {
+            return GetFrameAsMat();
         }
     }
 }

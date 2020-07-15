@@ -2,8 +2,15 @@
 
 namespace PiTop.Camera
 {
-    public interface ICamera : IConnectedDevice
+    public interface ICamera : 
+        IConnectedDevice, 
+        IFrameSource<Bitmap>
     {
-        Bitmap GetFrame();
+        
+    }
+
+    public interface IFrameSource<out T>
+    {
+        T GetFrame();
     }
 }
