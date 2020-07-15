@@ -18,7 +18,7 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
             AddToDisposables(Disposable.Create(() =>
             {
                 Controller.UnregisterCallbackForPinValueChangedEvent(buttonPin, Callback);
-                Controller.Dispose();
+                Controller.ClosePin(buttonPin);
             }));
 
             Controller.OpenPin(buttonPin, PinMode.Input);
