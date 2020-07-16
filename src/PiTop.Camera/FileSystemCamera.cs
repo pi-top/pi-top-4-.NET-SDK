@@ -19,7 +19,9 @@ namespace PiTop.Camera
 
         public DirectoryInfo ImageLocation { get; }
         public string ImageSearchPattern { get; }
+
     }
+
     public class FileSystemCamera: ICamera
     {
         private readonly DirectoryInfo _imageLocation;

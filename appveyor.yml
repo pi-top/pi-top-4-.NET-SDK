@@ -1,16 +1,16 @@
-version: '1.0.{build}'
+version: "1.0.{build}"
 image: Visual Studio 2019
 dotnet_csproj:
-    patch: true
-    file: '**\*.csproj'
-    version: '{version}'
-    package_version: '{version}'
-    assembly_version: '{version}'
-    file_version: '{version}'
-    informational_version: '{version}'
+  patch: true
+  file: '**\*.csproj'
+  version: "{version}"
+  package_version: "{version}"
+  assembly_version: "{version}"
+  file_version: "{version}"
+  informational_version: "{version}"
 branches:
   only:
-  - master
+    - master
 init:
   # Good practise, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
@@ -19,7 +19,7 @@ install:
 before_build:
   - cmd: dotnet --version
   - cmd: dotnet restore src/pi-top.sln --verbosity q
-build_script:  
+build_script:
   - cmd: dotnet build src/pi-top.sln
 after_build:
   # For once the build has completed
@@ -29,19 +29,19 @@ after_build:
   - cmd: dotnet pack src/PiTop.Camera.Psi.nuget/PiTop.Camera.Psi.nuget.csproj -o pacakges
   - cmd: dotnet pack src/PiTop.Camera.nuget/PiTop.Camera.nuget.csproj -o pacakges
 artifacts:
- - path: 'pacakges/**/*.nupkg'
-   name: NugetPacakges
+  - path: "pacakges/**/*.nupkg"
+    name: NugetPacakges
 
 clone_depth: 1
 test_script:
-    # test
-on_finish :
-    # any cleanup in here
+    - cmd: dotnet test src/pi-top.sln
+on_finish:
+  # any cleanup in here
 deploy:
- - provider: NuGet        
-   api_key:
-    secure: WHzXeG9l31Aali6liLT52JlhQ0sPqfZvkNaF/1pbvKIrAxglAgZXI51M6qVFfN3A
-   skip_symbols: false
-   artifact: /.*(\.|\.s)nupkg/
-   on:
-    branch: master
+  - provider: NuGet
+    api_key:
+      secure: WHzXeG9l31Aali6liLT52JlhQ0sPqfZvkNaF/1pbvKIrAxglAgZXI51M6qVFfN3A
+    skip_symbols: false
+    artifact: /.*(\.|\.s)nupkg/
+    on:
+      branch: master
