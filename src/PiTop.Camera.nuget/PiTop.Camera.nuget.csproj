@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
-
+    <PackageVersion>0.0.1</PackageVersion>
     <PackageId>piTop.Camera</PackageId>
     <IsPackable>true</IsPackable>
     <PackageDescription>piTop Camera module module.</PackageDescription>

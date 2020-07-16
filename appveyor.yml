@@ -18,20 +18,20 @@ install:
   # Install repo specific stuff here
 before_build:
   - cmd: dotnet --version
-  - cmd: dotnet restore ./src/pi-top.sln
+  - cmd: dotnet restore src/pi-top.sln --verbosity q
 build_script:  
-  - cmd: dotnet build ./src/pi-top.sln
+  - cmd: dotnet build src/pi-top.sln
 after_build:
   # For once the build has completed
-  - cmd: dotnet pack ./src/PiTopMakerArchitecture.Foundation.nuget/PiTopMakerArchitecture.Foundation.nuget.csproj -o /pacakges
-  - cmd: dotnet pack ./src/PiTopMakerArchitecture.Foundation.Psi.nuget/PiTopMakerArchitecture.Foundation.Psi.nuget.csproj -o /pacakges
-  - cmd: dotnet pack ./src/PiTop.nuget/PiTop.nuget.csproj -o /pacakges
-  - cmd: dotnet pack ./src/PiTop.Camera.Psi.nuget/PiTop.Camera.Psi.nuget.csproj -o /pacakges
-  - cmd: dotnet pack ./src/PiTop.Camera.nuget/PiTop.Camera.nuget.csproj -o /pacakges
+  - cmd: dotnet pack src/PiTopMakerArchitecture.Foundation.nuget/PiTopMakerArchitecture.Foundation.nuget.csproj -o pacakges
+  - cmd: dotnet pack src/PiTopMakerArchitecture.Foundation.Psi.nuget/PiTopMakerArchitecture.Foundation.Psi.nuget.csproj -o pacakges
+  - cmd: dotnet pack src/PiTop.nuget/PiTop.nuget.csproj -o pacakges
+  - cmd: dotnet pack src/PiTop.Camera.Psi.nuget/PiTop.Camera.Psi.nuget.csproj -o pacakges
+  - cmd: dotnet pack src/PiTop.Camera.nuget/PiTop.Camera.nuget.csproj -o pacakges
 artifacts:
- - path: '/pacakges'
+ - path: 'pacakges/**/*.nupkg'
    name: NugetPacakges
-   type: NugetPacakge
+
 clone_depth: 1
 test_script:
     # test
