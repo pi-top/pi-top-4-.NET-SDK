@@ -42,6 +42,6 @@ deploy:
    api_key:
     secure: WHzXeG9l31Aali6liLT52JlhQ0sPqfZvkNaF/1pbvKIrAxglAgZXI51M6qVFfN3A
    skip_symbols: false
-   artifact: pacakges/**/.*(\.|\.s)nupkg/
+   artifact: /.*(\.|\.s)nupkg/
    on:
     branch: master
