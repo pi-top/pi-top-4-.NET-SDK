@@ -38,12 +38,10 @@ test_script:
 on_finish :
     # any cleanup in here
 deploy:
-    provider: NuGet
-        server:                  # remove to push to NuGet.org
-        api_key:
-            secure: WHzXeG9l31Aali6liLT52JlhQ0sPqfZvkNaF/1pbvKIrAxglAgZXI51M6qVFfN3A
-        skip_symbols: false
-        symbol_server:           # remove to push symbols to SymbolSource.org
-        artifact: pacakges/**/.*(\.|\.s)nupkg/
-    on:
-        branch: master
+ - provider: NuGet        
+   api_key:
+    secure: WHzXeG9l31Aali6liLT52JlhQ0sPqfZvkNaF/1pbvKIrAxglAgZXI51M6qVFfN3A
+   skip_symbols: false
+   artifact: pacakges/**/.*(\.|\.s)nupkg/
+   on:
+    branch: master
