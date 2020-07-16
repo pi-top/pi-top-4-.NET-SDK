@@ -2,7 +2,6 @@
 
 .NET Core API for [pi-top4](https://www.pi-top.com/products/pi-top-4)
 
-
 [![Build status](https://ci.appveyor.com/api/projects/status/85dvsfxd4lw4xp2c/branch/master?svg=true)](https://ci.appveyor.com/project/colombod/pi-top/branch/master)
 
 ## Experimental!!
