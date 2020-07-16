@@ -37,4 +37,13 @@ test_script:
     # test
 on_finish :
     # any cleanup in here
-deploy: off
+deploy:
+    provider: NuGet
+    server:                  # remove to push to NuGet.org
+    api_key:
+        secure: WHzXeG9l31Aali6liLT52JlhQ0sPqfZvkNaF/1pbvKIrAxglAgZXI51M6qVFfN3A
+    skip_symbols: false
+    symbol_server:           # remove to push symbols to SymbolSource.org
+    artifact: pacakges/**/.*(\.|\.s)nupkg/
+        on:
+        branch: master
