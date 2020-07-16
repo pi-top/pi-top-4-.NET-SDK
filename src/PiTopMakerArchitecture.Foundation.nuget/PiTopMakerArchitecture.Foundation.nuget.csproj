@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj" />
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

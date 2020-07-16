@@ -18,12 +18,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTop.Camera.nuget\PiTop.Camera.nuget.csproj" />
     <ProjectReference Include="..\PiTop.Camera.Psi\PiTop.Camera.Psi.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\PiTop.Camera.Psi.InteractiveExtension\PiTop.Camera.Psi.InteractiveExtension.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj" />
   </ItemGroup>
 
   <ItemGroup>
