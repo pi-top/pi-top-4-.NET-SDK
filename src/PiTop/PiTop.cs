@@ -22,7 +22,7 @@ namespace PiTop
         private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
         private readonly ConcurrentDictionary<SpiConnectionSettings, SpiDevice> _spiDevices = new ConcurrentDictionary<SpiConnectionSettings, SpiDevice>();
         private readonly Client _client;
-        private readonly GpioController _controller;
+        private readonly IGpioController _controller;
         private readonly Dictionary<Type, object> _deviceFactories = new Dictionary<Type, object>();
 
         private const int I2CBusId = 1;
@@ -34,12 +34,12 @@ namespace PiTop
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
-        public PiTopModule(): this(new GpioController())
+        public PiTopModule(): this(new GpioController().AsManaged())
         {
 
         }
 
-        public PiTopModule(GpioController controller)
+        public PiTopModule(IGpioController controller)
         {
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
             _client = new Client();
@@ -248,9 +248,9 @@ namespace PiTop
             _disposables.Dispose();
         }
 
-        public GpioController GetOrCreateController()
+        public IGpioController GetOrCreateController()
         {
-            return _controller;
+            return _controller.Share();
         }
 
         public IConnectedDeviceFactory<TConnectionConfiguration, TDevice> GetDeviceFactory<TConnectionConfiguration, TDevice>()
