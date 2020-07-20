@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PiTop.Tests
 {
-    internal class DummyGpioController : IGpioController
+    public class DummyGpioController : IGpioController
     {
         private readonly List<int> _openPins = new List<int>();
         public ICollection<int> OpenPins => _openPins;

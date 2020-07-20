@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace PiTop.Camera
 {
@@ -34,24 +36,53 @@ namespace PiTop.Camera
         public static T GetOrCreateCamera<T>(this PiTopModule module, int index)
          where T : ICamera
         {
-            var factory = module.GetDeviceFactory<int, ICamera>();
+            
+            IConnectedDeviceFactory<int, ICamera> factory = null!;
+            try
+            {
+                factory = module.GetDeviceFactory<int, ICamera>();
+            }
+            catch (KeyNotFoundException
+
+            )
+            {
+
+            }
+
             AssertFactory(factory);
             return factory.GetOrCreateDevice<T>(index);
         }
 
-        public static FileSystemCamera GetOrCreateCamera(this PiTopModule module, DirectoryInfo directory, string imageFileSearchPattern = "*.png")
+        public static T GetOrCreateCamera<T>(this PiTopModule module, DirectoryInfo directory, string imageFileSearchPattern = "*.png") where T : FileSystemCamera
         {
-            var factory = module.GetDeviceFactory<FileSystemCameraSettings, FileSystemCamera>();
+            return module.GetOrCreateCamera<T>(
+                new FileSystemCameraSettings(directory, imageFileSearchPattern));
+        }
+
+        public static T GetOrCreateCamera<T>(this PiTopModule module, FileSystemCameraSettings settings) where T : FileSystemCamera
+        {
+            IConnectedDeviceFactory<FileSystemCameraSettings, FileSystemCamera> factory = null!; 
+            try
+            {
+                
+                factory = module.GetDeviceFactory<FileSystemCameraSettings, FileSystemCamera>();
+            }
+            catch (KeyNotFoundException
+
+                )
+            {
+               
+            }
+
             AssertFactory(factory);
-            return factory.GetOrCreateDevice<FileSystemCamera>(new FileSystemCameraSettings(directory, imageFileSearchPattern));
+            return factory.GetOrCreateDevice<T>(settings);
         }
 
         private static void AssertFactory<T>(T factory)
         {
-   
             if (factory == null)
             {
-                throw new NullReferenceException($"Cannot find a factory if type {typeof(T).Name}, make sure to configure the module calling {nameof(UseCamera)} first.");
+                throw new InvalidOperationException($"Cannot find a factory if type {typeof(T).ToDisplayName()}, make sure to configure the module calling {nameof(UseCamera)} first.");
             }
         }
 
