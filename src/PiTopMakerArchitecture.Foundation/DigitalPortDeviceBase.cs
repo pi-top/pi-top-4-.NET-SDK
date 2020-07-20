@@ -43,10 +43,16 @@ namespace PiTopMakerArchitecture.Foundation
 
         public void Connect()
         {
-            OnInitialise();
+            if (!IsConnected)
+            {
+                IsConnected = true;
+                OnConnection();
+            }
         }
 
-        protected virtual void OnInitialise()
+        public bool IsConnected { get; private set; }
+
+        protected virtual void OnConnection()
         {
 
         }

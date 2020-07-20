@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Diagnostics;
-using System.Reactive.Disposables;
 using System.Threading;
 
 using PiTop;
@@ -23,20 +22,18 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         public UltrasonicSensor(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             (_echoPin, _triggerPin) = port.ToPinPair();
-
-            Controller.OpenPin(_echoPin, PinMode.Input);
-            Controller.OpenPin(_triggerPin, PinMode.Output);
-            Controller.Write(_triggerPin, PinValue.Low);
-            Controller.Read(_echoPin);
-
-            AddToDisposables(Disposable.Create(() =>
-            {
-                Controller.ClosePin(_echoPin);
-                Controller.ClosePin(_triggerPin);
-            }));
         }
 
         public Length Distance => GetDistance();
+
+        protected override void OnConnection()
+        {
+            base.OnConnection();
+            AddToDisposables(Controller.OpenPin(_echoPin, PinMode.Input));
+            AddToDisposables(Controller.OpenPin(_triggerPin, PinMode.Output));
+            Controller.Write(_triggerPin, PinValue.Low);
+            Controller.Read(_echoPin);
+        }
 
         private Length GetDistance()
         {

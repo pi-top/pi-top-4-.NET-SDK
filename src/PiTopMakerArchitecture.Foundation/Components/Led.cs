@@ -12,16 +12,12 @@ namespace PiTopMakerArchitecture.Foundation.Components
         public Led(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             (_ledPin, _) = Port.ToPinPair();
-            AddToDisposables(Disposable.Create(() =>
-            {
-                Controller.ClosePin(_ledPin);
-            }));
         }
 
-        protected override void OnInitialise()
+        protected override void OnConnection()
         {
             _isOn = false;
-            Controller.OpenPin(_ledPin, PinMode.Output);
+            AddToDisposables(Controller.OpenPin(_ledPin, PinMode.Output));
             Controller.Write(_ledPin, PinValue.Low);
         }
 
