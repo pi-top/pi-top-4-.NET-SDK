@@ -10,7 +10,7 @@ namespace PiTop
     internal class Client : IDisposable
     {
         private readonly SubscriberSocket _socket;
-        private NetMQPoller _poller;
+        private readonly NetMQPoller _poller;
         private readonly CancellationTokenSource _cancellationSource;
         public event EventHandler<PiTopMessage>? MessageReceived;
 
@@ -45,12 +45,9 @@ namespace PiTop
             {
                 _poller.Stop();
             }
-            _poller.Remove(_socket);
-            _poller.Dispose();
-
-            _socket.Disconnect("tcp://127.0.0.1:3781");
-            _socket.Dispose();
             
+            _socket.Disconnect("tcp://127.0.0.1:3781");
+            _poller.RemoveAndDispose(_socket);
         }
     }
 }
