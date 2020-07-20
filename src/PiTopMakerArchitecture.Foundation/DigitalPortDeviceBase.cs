@@ -24,7 +24,7 @@ namespace PiTopMakerArchitecture.Foundation
             DisplayProperties = new List<DisplayPropertyBase>();
             Port = port;
             Controller = controllerFactory.GetOrCreateController();
-            AddToDisposables(Controller);
+
         }
 
         protected void AddToDisposables(IDisposable disposable)
@@ -39,6 +39,7 @@ namespace PiTopMakerArchitecture.Foundation
         public void Dispose()
         {
             _disposables.Dispose();
+            Controller.Dispose();
         }
 
         public void Connect()

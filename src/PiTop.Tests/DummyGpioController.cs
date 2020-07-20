@@ -4,6 +4,7 @@ using System.Device.Gpio;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
+using Xunit.Sdk;
 
 namespace PiTop.Tests
 {
@@ -11,6 +12,8 @@ namespace PiTop.Tests
     {
         private readonly List<int> _openPins = new List<int>();
         public ICollection<int> OpenPins => _openPins;
+        private readonly Dictionary<int, List<PinValue>> _writtenData = new Dictionary<int, List<PinValue>>();
+        private readonly Dictionary<int, PinMode> _pinMode = new Dictionary<int, PinMode>();
 
         public void Dispose()
         {
@@ -28,6 +31,7 @@ namespace PiTop.Tests
         public IDisposable OpenPin(int pinNumber, PinMode mode)
         {
             OpenPins.Add(pinNumber);
+            SetPinMode(pinNumber, mode);
             return Disposable.Create(() => ClosePin(pinNumber));
         }
 
@@ -38,12 +42,12 @@ namespace PiTop.Tests
 
         public void SetPinMode(int pinNumber, PinMode mode)
         {
-            
+            _pinMode[pinNumber] = mode;
         }
 
         public PinMode GetPinMode(int pinNumber)
         {
-            throw new NotImplementedException();
+            return _pinMode[pinNumber];
         }
 
         public bool IsPinOpen(int pinNumber)
@@ -63,7 +67,13 @@ namespace PiTop.Tests
 
         public void Write(int pinNumber, PinValue value)
         {
-            throw new NotImplementedException();
+            if (!_writtenData.TryGetValue(pinNumber, out var data))
+            {
+                data = new List<PinValue>();
+                _writtenData[pinNumber] = data;
+            }
+
+            data.Add(value);
         }
 
         public WaitForEventResult WaitForEvent(int pinNumber, PinEventTypes eventTypes, TimeSpan timeout)
