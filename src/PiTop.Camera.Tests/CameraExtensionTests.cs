@@ -20,7 +20,7 @@ namespace PiTop.Camera.Tests
                 .Which
                 .Message
                 .Should()
-                .Match("Cannot find a factory if type PiTop.IConnectedDeviceFactory<FileSystemCameraSettings, FileSystemCamera>, make sure to configure the module calling UseCamera first.");
+                .Match("Cannot find a factory if type PiTop.IConnectedDeviceFactory<PiTop.Camera.FileSystemCameraSettings, PiTop.Camera.FileSystemCamera>, make sure to configure the module calling UseCamera first.");
         }
     }
 }
