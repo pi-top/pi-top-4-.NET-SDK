@@ -26,7 +26,7 @@ namespace PiTop.Camera
     {
         private readonly DirectoryInfo _imageLocation;
         private readonly string _imageSearchPattern;
-        private FileSystemInfo[] _images;
+        private FileInfo[] _images;
         private int _currentIndex;
         private Bitmap _currentFrame;
 
@@ -36,19 +36,23 @@ namespace PiTop.Camera
             _imageLocation = settings.ImageLocation;
             _imageSearchPattern = settings.ImageSearchPattern;
         }
+
+        public object FrameCount => _images.Length;
+
         public void Dispose()
         {
-            _currentFrame?.Dispose();   
+           
         }
 
         public void Connect()
         {
+            _imageLocation.Refresh();
             if (!_imageLocation.Exists)
             {
                 throw new DirectoryNotFoundException($"Cannot open {_imageLocation.FullName}");
             }
 
-            _images = _imageLocation.GetFileSystemInfos(_imageSearchPattern).OrderBy(f => f.Name).ToArray();
+            _images = _imageLocation.GetFiles(_imageSearchPattern).OrderBy(f => f.Name).ToArray();
             _currentIndex = 0;
         }
 
@@ -57,9 +61,10 @@ namespace PiTop.Camera
             LoadFrame(0);
         }
 
+        public FileInfo CurrentFrameSource => _images[_currentIndex];
+
         private void LoadFrame(int index)
         {
-            _currentFrame.Dispose();
             _currentFrame = new Bitmap(_images[index].FullName);
         }
 

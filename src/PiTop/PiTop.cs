@@ -21,7 +21,7 @@ namespace PiTop
         private readonly ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
         private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
         private readonly ConcurrentDictionary<SpiConnectionSettings, SpiDevice> _spiDevices = new ConcurrentDictionary<SpiConnectionSettings, SpiDevice>();
-        private readonly Client _client;
+        private readonly ModuleDriverClient _moduleDriverClient;
         private readonly IGpioController _controller;
         private readonly Dictionary<Type, object> _deviceFactories = new Dictionary<Type, object>();
 
@@ -42,8 +42,8 @@ namespace PiTop
         public PiTopModule(IGpioController controller)
         {
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
-            _client = new Client();
-            _client.MessageReceived += _client_MessageReceived;
+            _moduleDriverClient = new ModuleDriverClient();
+            _moduleDriverClient.MessageReceived += ModuleDriverClientMessageReceived;
             _disposables.Add(Disposable.Create(() =>
             {
                 var plates = _plates.Values.ToList();
@@ -64,8 +64,8 @@ namespace PiTop
                     spiDevice.Dispose();
                 }
             }));
-            _client.Start();
-            _disposables.Add(_client);
+            _moduleDriverClient.Start();
+            _disposables.Add(_moduleDriverClient);
             _disposables.Add(_controller);
         }
 
@@ -82,7 +82,7 @@ namespace PiTop
             return (plate as T)!;
         }
 
-        private void _client_MessageReceived(object? sender, PiTopMessage message)
+        private void ModuleDriverClientMessageReceived(object? sender, PiTopMessage message)
         {
             switch (message.Id)
             {
@@ -244,7 +244,7 @@ namespace PiTop
 
         public void Dispose()
         {
-            _client.MessageReceived -= _client_MessageReceived;
+            _moduleDriverClient.MessageReceived -= ModuleDriverClientMessageReceived;
             _disposables.Dispose();
         }
 
