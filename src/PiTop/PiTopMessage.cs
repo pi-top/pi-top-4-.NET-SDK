@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PiTop
 {
-    internal class PiTopMessage {
+    public class PiTopMessage {
         public PiTopMessage(PiTopMessageId messageId, params string[] parameters)
         {
             Id = messageId;

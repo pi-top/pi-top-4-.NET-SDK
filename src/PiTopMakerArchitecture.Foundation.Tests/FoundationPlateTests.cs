@@ -1,10 +1,11 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 
 using PiTop;
 using PiTop.Tests;
 
 using PiTopMakerArchitecture.Foundation.Components;
-
+using PiTopMakerArchitecture.Foundation.Sensors;
 using Xunit;
 
 namespace PiTopMakerArchitecture.Foundation.Tests
@@ -44,6 +45,26 @@ namespace PiTopMakerArchitecture.Foundation.Tests
             var led2 = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
 
             led2.Should().BeSameAs(led1);
+        }
+
+        [Fact]
+        public void cannot_create_a_different_device_on_allocated_pins()
+        {
+            using var module = new PiTopModule(new DummyGpioController());
+
+            using var plate = module.GetOrCreatePlate<FoundationPlate>();
+
+           plate.GetOrCreateDevice<Led>(DigitalPort.D0);
+
+            var action = new Action(() =>
+            {
+               plate.GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D0);
+            });
+
+            action.Should().Throw<InvalidOperationException>()
+                .Which
+                .Message
+                .Should().Match("Connection D0 is already used by PiTopMakerArchitecture.Foundation.Components.Led device");
         }
     }
 }

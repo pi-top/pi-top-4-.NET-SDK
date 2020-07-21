@@ -1,6 +1,6 @@
 ﻿namespace PiTop
 {
-    internal enum PiTopMessageId
+    public enum PiTopMessageId
     {
         //Requests
         REQ_PING = 110,

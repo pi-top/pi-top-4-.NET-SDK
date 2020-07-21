@@ -7,14 +7,20 @@ using NetMQ.Sockets;
 
 namespace PiTop
 {
-    internal class Client : IDisposable
+    public interface IModuleDriverClient : IDisposable
+    {
+        event EventHandler<PiTopMessage>? MessageReceived;
+        void Start();
+    }
+
+    internal class ModuleDriverClient : IModuleDriverClient
     {
         private readonly SubscriberSocket _socket;
         private readonly NetMQPoller _poller;
         private readonly CancellationTokenSource _cancellationSource;
         public event EventHandler<PiTopMessage>? MessageReceived;
 
-        public Client()
+        public ModuleDriverClient()
         {
             _socket = new SubscriberSocket();
             _cancellationSource = new CancellationTokenSource();

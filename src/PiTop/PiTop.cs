@@ -280,7 +280,5 @@ namespace PiTop
             var deviceFactory = new ConnectedDeviceFactory<TConnectionConfiguration, TDevice>(defaultDeviceFactoryGenerator);
             AddDeviceFactory(deviceFactory);
         }
-
-       
     }
 }

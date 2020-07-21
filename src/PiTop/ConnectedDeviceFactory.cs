@@ -5,7 +5,7 @@ using System.Linq;
 namespace PiTop
 {
     public class ConnectedDeviceFactory<TConnectionConfiguration, TDevice> : IConnectedDeviceFactory<TConnectionConfiguration, TDevice>
-        where TConnectionConfiguration: notnull
+        where TConnectionConfiguration : notnull
         where TDevice : IConnectedDevice
     {
         private readonly Dictionary<TConnectionConfiguration, TDevice> _devices = new Dictionary<TConnectionConfiguration, TDevice>();
@@ -65,6 +65,15 @@ namespace PiTop
                 _devices[connectionConfiguration] = device;
                 device.Connect();
             }
+            else
+            {
+                if (device.GetType() != typeof(T))
+                {
+                    throw new InvalidOperationException($"Connection {connectionConfiguration} is already used by {device.GetType().ToDisplayName()} device");
+                }
+            }
+
+
 
             return (T)device;
 
@@ -73,7 +82,7 @@ namespace PiTop
         public IEnumerable<TDevice> Devices => _devices.Select(e => e.Value);
         public void DisposeDevice<T>(T device) where T : TDevice
         {
-            var key = _devices.FirstOrDefault(e => ReferenceEquals(e.Value,device)).Key;
+            var key = _devices.FirstOrDefault(e => ReferenceEquals(e.Value, device)).Key;
             _devices.Remove(key);
             device.Dispose();
         }
