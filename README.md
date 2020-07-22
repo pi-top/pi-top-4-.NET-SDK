@@ -1,5 +1,5 @@
 # pi-top
-.NET Core API for [pi-top4](https://www.pi-top.com/products/pi-top-4)
+.NET Core API for [pi-top4](https://www.pi-top.com/products/pi-top-4), check out the [dotnet/iot](https://github.com/dotnet/iot) repo for loads of device bindings!
 
 [![Build status](https://ci.appveyor.com/api/projects/status/85dvsfxd4lw4xp2c?svg=true)](https://ci.appveyor.com/project/colombod/pi-top/branch/master)
 
