@@ -23,9 +23,7 @@
     <ProjectReference Include="..\PiTop.Camera.InteractiveExtension\PiTop.Camera.InteractiveExtension.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
+    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj"/>
   </ItemGroup>
 
   <ItemGroup>

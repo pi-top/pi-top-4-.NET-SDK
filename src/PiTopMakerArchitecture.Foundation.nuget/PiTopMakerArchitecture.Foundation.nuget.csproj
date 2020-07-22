@@ -12,15 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.InteractiveExtension\PiTopMakerArchitecture.Foundation.InteractiveExtension.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
