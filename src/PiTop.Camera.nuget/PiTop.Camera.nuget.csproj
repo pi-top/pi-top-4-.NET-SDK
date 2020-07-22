@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="OpenCvSharp4" Version="4.3.0.20200701" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +23,9 @@
     <ProjectReference Include="..\PiTop.Camera.InteractiveExtension\PiTop.Camera.InteractiveExtension.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj" />
+    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

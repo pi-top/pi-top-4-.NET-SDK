@@ -14,18 +14,21 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Psi.Imaging" Version="0.12.53.2-beta" />
     <PackageReference Include="Microsoft.Psi.Runtime" Version="0.12.53.2-beta" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PiTop.Camera.nuget\PiTop.Camera.nuget.csproj" />
+    <ProjectReference Include="..\PiTop.Camera.nuget\PiTop.Camera.nuget.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="..\PiTop.Camera.Psi\PiTop.Camera.Psi.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\PiTop.Camera.Psi.InteractiveExtension\PiTop.Camera.Psi.InteractiveExtension.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj" />
+    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
