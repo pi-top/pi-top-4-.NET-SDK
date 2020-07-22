@@ -68,7 +68,7 @@ cd pi-top-net-api/tools
 dotnetToolList="$(dotnet tool list -g)"
 
 if echo "${dotnetToolList}" | grep -q "microsoft.dotnet-interactive"; then
-  echo ".NET Interactive installation not found - updating..."
+  echo ".NET Interactive installation found - updating..."
   bash -ex ./update-global-tool.sh
 else
   echo ".NET Interactive installation not found - installing..."
