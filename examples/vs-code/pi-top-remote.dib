@@ -5,7 +5,7 @@
 
 #!csharp
 
-#!connect signalr --kernel-name piTop --hub-url http://pitop-interactive.ngrok.io/kernelhub 
+#!connect signalr --kernel-name piTop --hub-url http://pitop-diego.ngrok.io/kernelhub 
 
 #!markdown
 
@@ -39,7 +39,6 @@ Create a module and use it to create an instance of ```FoundationPlate```
 #!piTop
 var module = new PiTopModule();
 var plate = module.GetOrCreatePlate<FoundationPlate>();
-plate
 
 #!markdown
 
@@ -98,12 +97,43 @@ ultraSound.Distance.ToString()
 #!piTop
 var distances = new List<double>(){0};
 
+void ScanForDanger(System.Threading.CancellationToken cancellationToken){
+    greenLed.Off();
+    amberLed.Off();
+    redLed.Off();
+    Task.Run(async () => {
+        while (!cancellationToken.IsCancellationRequested){
+            var distance = ultraSound.Distance;
+            greenLed.On();
+            if(distance > UnitsNet.Length.FromCentimeters(20)){
+                amberLed.Off();
+                redLed.Off();
+            }
+
+            if(distance < UnitsNet.Length.FromCentimeters(15)){
+                amberLed.On();
+                redLed.Off();
+            }
+
+            if(distance < UnitsNet.Length.FromCentimeters(10)){            
+                redLed.On();
+            }
+            await Task.Delay(500, cancellationToken);
+        }
+        greenLed.Off();
+        amberLed.Off();
+        redLed.Off();
+    });
+}
+
+
 async Task readDistance(int count = 10){   
     for (var i = 0; i < count; i++){        
         if(distances.Count > 5){
             distances.RemoveAt(0);
         }
-        distances.Add(ultraSound.Distance.Value);
+        var distance = ultraSound.Distance;
+        distances.Add(distance.Value);
         await Task.Delay(500);
     }
 }
@@ -114,3 +144,20 @@ async Task readDistance(int count = 10){
 await readDistance(5);
 
 distances
+
+#!csharp
+
+#!piTop
+var source = new System.Threading.CancellationTokenSource();
+ScanForDanger(source.Token);
+
+#!csharp
+
+#!piTop
+source?.Cancel();
+source?.Dispose();
+source = null;
+
+greenLed.Off();
+amberLed.Off();
+redLed.Off();

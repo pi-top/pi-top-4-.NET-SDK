@@ -26,9 +26,9 @@ namespace PiTop.Camera
     {
         private readonly DirectoryInfo _imageLocation;
         private readonly string _imageSearchPattern;
-        private FileInfo[] _images;
+        private FileInfo[] _images = Array.Empty<FileInfo>();
         private int _currentIndex;
-        private Bitmap _currentFrame;
+        private Bitmap? _currentFrame;
 
         public FileSystemCamera(FileSystemCameraSettings settings)
         {
@@ -54,6 +54,7 @@ namespace PiTop.Camera
 
             _images = _imageLocation.GetFiles(_imageSearchPattern).OrderBy(f => f.Name).ToArray();
             _currentIndex = 0;
+            LoadFrame(0);
         }
 
         public void Reset()
