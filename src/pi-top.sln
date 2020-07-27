@@ -49,13 +49,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Display", "PiTop.Display\PiTop.Display.csproj", "{62783A37-DBE5-4998-AC14-23B5BFADE73C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{246885B4-382F-47A8-8F4F-BD41C7ED16CF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{246885B4-382F-47A8-8F4F-BD41C7ED16CF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Tests", "PiTop.Tests\PiTop.Tests.csproj", "{415E81AE-834F-466C-A9E4-45C8A0FDB1C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTopMakerArchitecture.Foundation.Tests", "PiTopMakerArchitecture.Foundation.Tests\PiTopMakerArchitecture.Foundation.Tests.csproj", "{B2D8BE0A-0241-4B5E-A75E-63820900425D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Tests", "PiTopMakerArchitecture.Foundation.Tests\PiTopMakerArchitecture.Foundation.Tests.csproj", "{B2D8BE0A-0241-4B5E-A75E-63820900425D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.Camera.Tests", "PiTop.Camera.Tests\PiTop.Camera.Tests.csproj", "{E2513B57-C3B6-4382-870C-52F926AA3B0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.Tests", "PiTop.Camera.Tests\PiTop.Camera.Tests.csproj", "{E2513B57-C3B6-4382-870C-52F926AA3B0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
