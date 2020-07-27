@@ -76,6 +76,22 @@ else
 fi
 echo ""
 
+##########################
+### Install PowerShell ###
+##########################
+
+cd ~/pi-top-net-api/tools
+
+dotnetToolList="$(dotnet tool list -g)"
+
+if echo "${dotnetToolList}" | grep -q "powershell"; then
+  echo "PowerShell installation found - updating..."
+  bash -ex ./update-powershell.sh
+else
+  echo "PowerShell installation not found - installing..."
+  bash -ex ./install-powershell.sh
+fi
+echo ""
 
 ################################
 ### Install .NET OpenCVSharp ###
