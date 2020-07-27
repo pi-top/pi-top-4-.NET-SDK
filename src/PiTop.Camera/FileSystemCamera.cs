@@ -66,7 +66,10 @@ namespace PiTop.Camera
 
         private void LoadFrame(int index)
         {
-            _currentFrame = new Bitmap(_images[index].FullName);
+            if (index >= 0 && index < _images.Length)
+            {
+                _currentFrame = new Bitmap(_images[index].FullName);
+            }
         }
 
         public void Advance()
