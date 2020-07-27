@@ -53,7 +53,9 @@ namespace PiTop.OledDevice
             _serialInterface = new I2cInterface(bus);
             
         }
-      
+
+        public static int Width => 0;
+        public static int Height => 0;
 
         public void Show()
         {

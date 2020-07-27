@@ -2,7 +2,7 @@
 {
     public enum PiTopButtonState
     {
-        Pressed,
-        Released
+        Released = 0,
+        Pressed
     }
 }

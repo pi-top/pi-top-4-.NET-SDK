@@ -31,6 +31,7 @@ namespace PiTop
         public PiTopButton DownButton { get; } = new PiTopButton();
         public PiTopButton SelectButton { get; } = new PiTopButton();
         public PiTopButton CancelButton { get; } = new PiTopButton();
+        public Display Display { get; set; }
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
