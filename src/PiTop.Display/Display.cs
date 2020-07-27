@@ -1,10 +1,11 @@
 using System;
 using System.Device.Spi;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Reactive.Disposables;
-
+using System.Threading.Tasks;
 using PiTop.OledDevice;
 
 namespace PiTop
@@ -47,11 +48,13 @@ namespace PiTop
 
         public void Show()
         {
+            // grab device
             _device.Show();
         }
 
         public void Hide()
         {
+            // give back to OS
             _device.Hide();
         }
 
@@ -70,6 +73,11 @@ namespace PiTop
 
         private void CommitBuffer()
         {
+            // save to file
+            // execute python to load and show on pitop display
+
+            var imgPath = "/tmp/img_039482348294382934238423942384329483234923872349.png";
+            Process.Start("python3", $"--show-image {imgPath}");
             throw new NotImplementedException();
         }
 
@@ -84,6 +92,7 @@ namespace PiTop
 
         public void Dispose()
         {
+            // on dispose give control back to os
             _disposables.Dispose();
         }
     }
