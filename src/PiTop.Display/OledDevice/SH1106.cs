@@ -13,25 +13,27 @@ namespace PiTop.OledDevice
             public const byte DISPLAYOFF = 0xAE;
             public const byte DISPLAYON = 0xAF;
             public const byte DISPLAYALLON = 0xA5;
-            public const byte DISPLAYALLON_RESUME = 0xA4;
+            public const byte DISPLAYALLOFF = 0xA4;
             public const byte NORMALDISPLAY = 0xA6;
-            public const byte MEMORYMODE = 0x20;
             public const byte INVERTDISPLAY = 0xA7;
             public const byte SETREMAP = 0xA0;
             public const byte SETMULTIPLEX = 0xA8;
             public const byte SETCONTRAST = 0x81;
-            public const byte SETHIGHCOLUMN = 0x10;
-            public const byte SETLOWCOLUMN = 0x00;
-            public const byte SETSEGMENTREMAP = 0xA1;           
+            public const byte SETHIGHCOLUMN = 0x10; // + high niblle
+            public const byte SETLOWCOLUMN = 0x00; // + low nibble
+            public const byte SETSEGMENTREMAP = 0xA1;
+            public const byte SETCOMSCANASC = 0xC0; // scan lines in ascending order
+            public const byte SETCOMSCANDESC = 0xC8; // scan lines in descending order  
+            public const byte SETDISPLAYSTARTLINE = 0x40; // + start line number
             public const byte SETDISPLAYOFFSET = 0xD3;
             public const byte SETDISPLAYCLOCKDIV = 0xD5;
             public const byte SETPRECHARGE = 0xD9;
             public const byte SETCOMPINS = 0xDA;
-            public const byte SETVCOMDETECT = 0xDB;
-            public const byte CHARGEPUMP = 0x8D;
+            public const byte SETVCOMDESELECT = 0xDB;
+            public const byte SETPAGEADDRESS = 0xB0; // + page number
         }
 
-        public Sh1106(SpiConnectionSettings connectionSettings, int dcPin, int rstPin, ISPiDeviceFactory sPiDeviceFactory, IGpioControllerFactory controllerFactory )
+        public Sh1106(SpiConnectionSettings connectionSettings, int dcPin, int rstPin, ISPiDeviceFactory sPiDeviceFactory, IGpioControllerFactory controllerFactory)
         {
             if (connectionSettings == null)
             {
@@ -62,7 +64,7 @@ namespace PiTop.OledDevice
             }
             var bus = i2CDeviceFactory.GetOrCreateI2CDevice(deviceAddress);
             _serialInterface = new I2cInterface(bus);
-            
+
         }
 
         public static int Width => 0;
@@ -72,19 +74,20 @@ namespace PiTop.OledDevice
         {
             _serialInterface.Command(
                 Command.DISPLAYOFF,
-                Command.MEMORYMODE,
-                Command.SETHIGHCOLUMN, 0xB0, 0xC8,
-                Command.SETLOWCOLUMN, 0x10, 0x40,
-                Command.SETSEGMENTREMAP,
+                Command.SETHIGHCOLUMN,
+                Command.SETLOWCOLUMN,
+                Command.SETDISPLAYSTARTLINE,
+                Command.SETPAGEADDRESS,
+                Command.SETCOMSCANDESC, // device dependent, 
+                Command.SETSEGMENTREMAP, // columns from left to right
                 Command.NORMALDISPLAY,
                 Command.SETMULTIPLEX, 0,
-                Command.DISPLAYALLON_RESUME,
+                Command.DISPLAYALLOFF,
                 Command.SETDISPLAYOFFSET, 0,
-                Command.SETDISPLAYCLOCKDIV, 0xF0,
-                Command.SETPRECHARGE, 0x22,
-                Command.SETCOMPINS, 0x12,
-                Command.SETVCOMDETECT, 0x20,
-                Command.CHARGEPUMP, 0x14
+                Command.SETDISPLAYCLOCKDIV, 0xF0, // +50% Fosc
+                Command.SETPRECHARGE, 0x22, // 2 DCLKs (POR)
+                Command.SETCOMPINS, 0x12, // sequential COM order
+                Command.SETVCOMDESELECT, 0x20 // .635 x Vref (sets contrast?)
             );
         }
         public void Dispose()
@@ -94,8 +97,8 @@ namespace PiTop.OledDevice
 
         public void Hide()
         {
-              _serialInterface.Command(
-                Command.DISPLAYOFF);
+            _serialInterface.Command(
+              Command.DISPLAYOFF);
         }
     }
 }
