@@ -15,42 +15,45 @@ namespace PiTop
 
     internal class ModuleDriverClient : IModuleDriverClient
     {
-        private readonly SubscriberSocket _socket;
+        private readonly SubscriberSocket _reponseSocket;
         private readonly NetMQPoller _poller;
         private readonly CancellationTokenSource _cancellationSource;
+        private readonly RequestSocket _requestSocket;
         public event EventHandler<PiTopMessage>? MessageReceived;
 
         public ModuleDriverClient()
         {
-            _socket = new SubscriberSocket();
+            _requestSocket = new RequestSocket();
+            _reponseSocket = new SubscriberSocket();
             _cancellationSource = new CancellationTokenSource();
-            _socket.ReceiveReady += SocketOnReceiveReady;
+            _reponseSocket.ReceiveReady += ResponseSocketOnReceiveReady;
             _poller = new NetMQPoller
             {
-                _socket
+                _reponseSocket
             };
         }
 
         public void AcquireDisplay()
         {
             var request = new PiTopMessage(PiTopMessageId.REQ_SET_OLED_CONTROL, "1");
-            _socket.SendFrame(request.ToString());
+            _requestSocket.SendFrame(request.ToString());
         }
 
         public void ReleaseDisplay()
         {
             var request = new PiTopMessage(PiTopMessageId.REQ_SET_OLED_CONTROL, "0");
-            _socket.SendFrame(request.ToString());
+            _requestSocket.SendFrame(request.ToString());
         }
 
         public void Start()
         {
-            _socket.Connect("tcp://127.0.0.1:3781");
-            _socket.Subscribe("");
+            _requestSocket.Connect("tcp://127.0.0.1:3782");
+            _reponseSocket.Connect("tcp://127.0.0.1:3781");
+            _reponseSocket.Subscribe("");
             Task.Run(() => { _poller.Run(); }, _cancellationSource.Token);
         }
 
-        private void SocketOnReceiveReady(object? sender, NetMQSocketEventArgs e)
+        private void ResponseSocketOnReceiveReady(object? sender, NetMQSocketEventArgs e)
         {
             var message = PiTopMessage.Parse(e.Socket.ReceiveFrameString());
             MessageReceived?.Invoke(this, message);
@@ -64,8 +67,10 @@ namespace PiTop
                 _poller.Stop();
             }
             
-            _socket.Disconnect("tcp://127.0.0.1:3781");
-            _poller.RemoveAndDispose(_socket);
+            _reponseSocket.Disconnect("tcp://127.0.0.1:3781");
+            _requestSocket.Disconnect("tcp://127.0.0.1:3782");
+            _requestSocket.Dispose();
+            _poller.RemoveAndDispose(_reponseSocket);
         }
     }
 }

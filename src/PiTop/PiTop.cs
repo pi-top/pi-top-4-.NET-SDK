@@ -37,7 +37,15 @@ namespace PiTop
         {
             get
             {
-                return _display??= new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
+                if (_display == null)
+                {
+                    _display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
+                    _moduleDriverClient.AcquireDisplay();
+                    _disposables.Add(Disposable.Create(() => _moduleDriverClient.ReleaseDisplay()));
+                    _disposables.Add(Disposable.Create(() => _display?.Dispose()));
+                }
+
+                return _display;
             }
         }
 
@@ -76,9 +84,6 @@ namespace PiTop
             }));
             
             _moduleDriverClient.Start();
-            _moduleDriverClient.AcquireDisplay();
-            _disposables.Add(Disposable.Create(() => _moduleDriverClient.ReleaseDisplay()));
-            _disposables.Add(Disposable.Create(() => _display?.Dispose()));
             _disposables.Add(_moduleDriverClient);
             _disposables.Add(_controller);
         }
