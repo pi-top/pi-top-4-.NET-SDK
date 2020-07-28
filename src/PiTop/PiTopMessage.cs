@@ -19,6 +19,11 @@ namespace PiTop
 
         }
 
+        public override string ToString()
+        {
+            return  string.Join("|", new List<string> { Id.ToString() }.Concat(Parameters));
+        }
+
         public static PiTopMessage Parse(string message)
         {
             var parts = message.Split(new[] {'|'}, StringSplitOptions.None);

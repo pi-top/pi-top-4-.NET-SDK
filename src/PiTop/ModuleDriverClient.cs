@@ -31,6 +31,18 @@ namespace PiTop
             };
         }
 
+        public void AcquireDisplay()
+        {
+            var request = new PiTopMessage(PiTopMessageId.REQ_SET_OLED_CONTROL, "1");
+            _socket.SendFrame(request.ToString());
+        }
+
+        public void ReleaseDisplay()
+        {
+            var request = new PiTopMessage(PiTopMessageId.REQ_SET_OLED_CONTROL, "0");
+            _socket.SendFrame(request.ToString());
+        }
+
         public void Start()
         {
             _socket.Connect("tcp://127.0.0.1:3781");

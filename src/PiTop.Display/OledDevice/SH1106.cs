@@ -1,5 +1,6 @@
 using System;
 using System.Device.Spi;
+
 using PiTop.Abstractions;
 
 namespace PiTop.OledDevice
@@ -67,8 +68,8 @@ namespace PiTop.OledDevice
 
         }
 
-        public static int Width => 0;
-        public static int Height => 0;
+        public static int Width => 128;
+        public static int Height => 64;
 
         public void Show()
         {

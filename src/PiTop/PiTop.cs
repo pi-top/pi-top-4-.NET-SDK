@@ -31,7 +31,7 @@ namespace PiTop
         public PiTopButton DownButton { get; } = new PiTopButton();
         public PiTopButton SelectButton { get; } = new PiTopButton();
         public PiTopButton CancelButton { get; } = new PiTopButton();
-        public Display? Display { get; set; }
+        public Display Display { get;  }
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
@@ -42,6 +42,7 @@ namespace PiTop
 
         public PiTopModule(IGpioController controller)
         {
+            
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
             _moduleDriverClient = new ModuleDriverClient();
             _moduleDriverClient.MessageReceived += ModuleDriverClientMessageReceived;
@@ -66,6 +67,11 @@ namespace PiTop
                 }
             }));
             _moduleDriverClient.Start();
+            
+            Display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
+            _moduleDriverClient.AcquireDisplay();
+            _disposables.Add(Disposable.Create(() => _moduleDriverClient.ReleaseDisplay()));
+            _disposables.Add(Display);
             _disposables.Add(_moduleDriverClient);
             _disposables.Add(_controller);
         }
