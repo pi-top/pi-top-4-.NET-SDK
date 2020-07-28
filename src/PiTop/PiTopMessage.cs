@@ -21,7 +21,7 @@ namespace PiTop
 
         public override string ToString()
         {
-            return  string.Join("|", new List<string> { Id.ToString() }.Concat(Parameters));
+            return  string.Join("|", new List<string> { ((int)Id).ToString() }.Concat(Parameters));
         }
 
         public static PiTopMessage Parse(string message)
