@@ -11,9 +11,9 @@ using PiTop.Abstractions;
 
 namespace PiTop
 {
-    public class PiTopModule : 
-        IDisposable, 
-        II2CDeviceFactory, 
+    public class PiTopModule :
+        IDisposable,
+        II2CDeviceFactory,
         IGpioControllerFactory,
         ISPiDeviceFactory
     {
@@ -41,7 +41,6 @@ namespace PiTop
                 {
                     _moduleDriverClient.AcquireDisplay();
                     _display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
-                    _disposables.Add(Disposable.Create(() => _moduleDriverClient.ReleaseDisplay()));
                     _disposables.Add(Disposable.Create(() => _display?.Dispose()));
                 }
 
@@ -51,14 +50,14 @@ namespace PiTop
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
-        public PiTopModule(): this(new GpioController().AsManaged())
+        public PiTopModule() : this(new GpioController().AsManaged())
         {
 
         }
 
         public PiTopModule(IGpioController controller)
         {
-            
+
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
             _moduleDriverClient = new ModuleDriverClient();
             _moduleDriverClient.MessageReceived += ModuleDriverClientMessageReceived;
@@ -82,7 +81,8 @@ namespace PiTop
                     spiDevice.Dispose();
                 }
             }));
-            
+
+            _disposables.Add(Disposable.Create(() => _moduleDriverClient.ReleaseDisplay()));
             _moduleDriverClient.Start();
             _disposables.Add(_moduleDriverClient);
             _disposables.Add(_controller);
@@ -93,7 +93,7 @@ namespace PiTop
             var key = typeof(T);
             var plate = _plates.GetOrAdd(key, plateType =>
            {
-               var newPlate =( Activator.CreateInstance(plateType, args: new object[] { this }) as T)!;
+               var newPlate = (Activator.CreateInstance(plateType, args: new object[] { this }) as T)!;
                newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
                return newPlate;
            });
@@ -276,7 +276,7 @@ namespace PiTop
             where TConnectionConfiguration : notnull
             where TDevice : IConnectedDevice
         {
-            return (IConnectedDeviceFactory<TConnectionConfiguration, TDevice>) _deviceFactories[typeof(IConnectedDeviceFactory<TConnectionConfiguration, TDevice>)];
+            return (IConnectedDeviceFactory<TConnectionConfiguration, TDevice>)_deviceFactories[typeof(IConnectedDeviceFactory<TConnectionConfiguration, TDevice>)];
         }
 
         public void AddDeviceFactory<TConnectionConfiguration, TDevice>(IConnectedDeviceFactory<TConnectionConfiguration, TDevice> connectedDeviceFactory)

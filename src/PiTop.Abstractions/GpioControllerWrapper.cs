@@ -38,7 +38,10 @@ namespace PiTop.Abstractions
 
         public void ClosePin(int pinNumber)
         {
-            _controller.ClosePin(pinNumber);
+            if (_controller.IsPinOpen(pinNumber))
+            {
+                _controller.ClosePin(pinNumber);
+            }
         }
 
         public void SetPinMode(int pinNumber, PinMode mode)
