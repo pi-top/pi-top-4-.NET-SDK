@@ -39,8 +39,8 @@ namespace PiTop
             {
                 if (_display == null)
                 {
-                    _display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
                     _moduleDriverClient.AcquireDisplay();
+                    _display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
                     _disposables.Add(Disposable.Create(() => _moduleDriverClient.ReleaseDisplay()));
                     _disposables.Add(Disposable.Create(() => _display?.Dispose()));
                 }
