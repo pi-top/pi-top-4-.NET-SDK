@@ -39,9 +39,9 @@ namespace PiTop.OledDevice
             _device.Write(cmds);
         }
         
-        public void Data(byte data){
+        public void Data(params byte[] data){
             _controller.Write(_dcPin, PinValue.High); // Data Mode
-            _device.WriteByte(data);
+            _device.Write(data);
         }     
     }
 }

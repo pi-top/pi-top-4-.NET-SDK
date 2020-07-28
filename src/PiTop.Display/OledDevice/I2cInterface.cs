@@ -22,7 +22,7 @@ namespace PiTop.OledDevice
             throw new NotImplementedException();
         }
         
-        public void Data(byte data){
+        public void Data(params byte[] data){
             throw new NotImplementedException();
         }
     }
