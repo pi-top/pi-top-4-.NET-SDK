@@ -31,7 +31,15 @@ namespace PiTop
         public PiTopButton DownButton { get; } = new PiTopButton();
         public PiTopButton SelectButton { get; } = new PiTopButton();
         public PiTopButton CancelButton { get; } = new PiTopButton();
-        public Display Display { get;  }
+        private Display _display;
+
+        public Display Display
+        {
+            get
+            {
+                return _display??= new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
+            }
+        }
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
@@ -66,12 +74,11 @@ namespace PiTop
                     spiDevice.Dispose();
                 }
             }));
-            _moduleDriverClient.Start();
             
-            Display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
+            _moduleDriverClient.Start();
             _moduleDriverClient.AcquireDisplay();
             _disposables.Add(Disposable.Create(() => _moduleDriverClient.ReleaseDisplay()));
-            _disposables.Add(Display);
+            _disposables.Add(Disposable.Create(() => _display?.Dispose()));
             _disposables.Add(_moduleDriverClient);
             _disposables.Add(_controller);
         }
