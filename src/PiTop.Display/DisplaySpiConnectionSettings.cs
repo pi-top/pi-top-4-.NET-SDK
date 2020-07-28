@@ -11,7 +11,7 @@ namespace PiTop
         {
             DcPin = 17,
             RstPin = 27,
-            SpiConnectionSettings = new SpiConnectionSettings(0, 1)
+            SpiConnectionSettings = new SpiConnectionSettings(1, 0)
             {
                 ClockFrequency = 8000000,
                 DataBitLength = 4096,
