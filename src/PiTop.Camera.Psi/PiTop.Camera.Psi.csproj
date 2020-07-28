@@ -8,6 +8,7 @@
     <PackageReference Include="Microsoft.Psi.Imaging" Version="0.12.53.2-beta" />
     <PackageReference Include="Microsoft.Psi.Runtime" Version="0.12.53.2-beta" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0010" />
   </ItemGroup>
 
   <ItemGroup>

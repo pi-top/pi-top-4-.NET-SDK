@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
+
+using SixLabors.ImageSharp;
 
 namespace PiTop.Camera
 {
@@ -22,13 +23,13 @@ namespace PiTop.Camera
 
     }
 
-    public class FileSystemCamera: ICamera
+    public class FileSystemCamera : ICamera
     {
         private readonly DirectoryInfo _imageLocation;
         private readonly string _imageSearchPattern;
         private FileInfo[] _images = Array.Empty<FileInfo>();
         private int _currentIndex;
-        private Bitmap? _currentFrame;
+        private Image? _currentImage;
 
         public FileSystemCamera(FileSystemCameraSettings settings)
         {
@@ -41,7 +42,7 @@ namespace PiTop.Camera
 
         public void Dispose()
         {
-           
+
         }
 
         public void Connect()
@@ -68,26 +69,26 @@ namespace PiTop.Camera
         {
             if (index >= 0 && index < _images.Length)
             {
-                _currentFrame = new Bitmap(_images[index].FullName);
+                _currentImage = Image.Load(_images[_currentIndex].FullName);
             }
         }
 
         public void Advance()
         {
             var index = Math.Min(_currentIndex + 1, _images.Length - 1);
-            
+
             if (index == _currentIndex)
             {
                 return;
             }
-            
+
             _currentIndex = index;
             LoadFrame(_currentIndex);
         }
 
-        public Bitmap GetFrame()
+        public Image GetFrame()
         {
-          return _currentFrame??= new Bitmap(_images[_currentIndex].FullName);
+            return _currentImage ??= Image.Load(_images[_currentIndex].FullName);
         }
     }
 }

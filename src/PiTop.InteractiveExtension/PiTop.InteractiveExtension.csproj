@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.20377.1" />
     <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.20377.1" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0010" />
   </ItemGroup>
 
   <ItemGroup>

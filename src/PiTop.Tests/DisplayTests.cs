@@ -1,8 +1,5 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-
-using FluentAssertions;
-
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using Xunit;
 
 namespace PiTop.Tests
@@ -16,20 +13,15 @@ namespace PiTop.Tests
 
             display.Clear(Color.Black);
             
-            var screen = display.Capture();
-            var pixel = screen.GetPixel(25, 25);
+            var screen = display.Capture().CloneAs<Rgba32>();
 
-            pixel
-                .Should()
-                .Be(Color.FromArgb(255, 0, 0, 0));
-
+            screen.ShouldAllPixelBe(Color.Black);
 
             display.Clear(Color.Aqua);
-            screen = display.Capture();
-            pixel = screen.GetPixel(25, 25);
-            pixel
-                .Should()
-                .Be(Color.FromArgb(255, Color.Aqua.R, Color.Aqua.G, Color.Aqua.B));
+
+            screen = display.Capture().CloneAs<Rgba32>();
+
+            screen.ShouldAllPixelBe(Color.Aqua);
         }
     }
 }

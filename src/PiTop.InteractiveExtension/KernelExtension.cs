@@ -7,7 +7,8 @@ using Internal.Utilities.StructuredFormat;
 
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Formatting;
-
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 namespace PiTop.InteractiveExtension
 {
@@ -24,7 +25,7 @@ namespace PiTop.InteractiveExtension
                             var id = Guid.NewGuid().ToString("N");
                             using var stream = new MemoryStream();
                             using var bitmapImage = display.Capture();
-                            bitmapImage.Save(stream, ImageFormat.Png);
+                            bitmapImage.SaveAsPng(stream);
                             stream.Flush();
                             var data = stream.ToArray();
                             var imgTag = CreateImgTag(data, id, bitmapImage.Height, bitmapImage.Width);

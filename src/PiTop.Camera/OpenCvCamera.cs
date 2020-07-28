@@ -1,13 +1,16 @@
 ﻿using System;
-using System.Drawing;
+
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 
+using SixLabors.ImageSharp;
+
 namespace PiTop.Camera
 {
-    public class OpenCvCamera : 
+    public class OpenCvCamera :
         ICamera,
-        IFrameSource<Mat>
+        IFrameSource<Mat>,
+        IFrameSource<System.Drawing.Bitmap>
     {
         private readonly int _index;
         private readonly VideoCapture _capture;
@@ -47,7 +50,8 @@ namespace PiTop.Camera
             throw new InvalidOperationException("Camera not initialized");
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
 
             _capture.Release();
             _capture.Dispose();
@@ -58,7 +62,7 @@ namespace PiTop.Camera
             _capture.Open(_index);
         }
 
-        public Bitmap GetFrame()
+        System.Drawing.Bitmap IFrameSource<System.Drawing.Bitmap>.GetFrame()
         {
             var raw = GetFrameAsMat();
             var frame = raw.ToBitmap();
@@ -68,6 +72,11 @@ namespace PiTop.Camera
         Mat IFrameSource<Mat>.GetFrame()
         {
             return GetFrameAsMat();
+        }
+
+        public Image GetFrame()
+        {
+            return GetFrameAsMat().ToImage();
         }
     }
 }

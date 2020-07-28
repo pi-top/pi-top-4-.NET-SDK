@@ -1,16 +1,15 @@
-using System.Threading;
+using System.IO;
 using PiTop.OledDevice;
+using SixLabors.ImageSharp;
 
 namespace PiTop
 {
-    public class Sh1106Display : Display
+    public class Sh1106DisplayHack : Display
     {
         private readonly Sh1106 _device;
 
-        public Sh1106Display(DisplaySpiConnectionSettings settings, IGpioControllerFactory controllerFactory, ISPiDeviceFactory spiDeviceFactory) : base(Sh1106.Width, Sh1106.Height)
+        public Sh1106DisplayHack(DisplaySpiConnectionSettings settings, IGpioControllerFactory controllerFactory, ISPiDeviceFactory spiDeviceFactory) : base(Sh1106.Width, Sh1106.Height)
         {
-            
-            _device = new Sh1106(settings.SpiConnectionSettings, settings.DcPin, settings.RstPin, spiDeviceFactory, controllerFactory);
             AcquireDevice();
 
             RegisterForDisposal(ReleaseDevice);
@@ -39,8 +38,18 @@ namespace PiTop
 
         protected override void CommitBuffer()
         {
+            WriteViaPython();
             // save to file
             // execute python to load and show on pitop display
+        }
+
+        private void WriteViaPython()
+        {
+            var imgPath = "";
+            var file = File.Create(imgPath);
+            Capture().SaveAsBmp(file);
+
+            // run code
         }
     }
 }

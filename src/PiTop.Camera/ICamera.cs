@@ -1,12 +1,12 @@
-﻿using System.Drawing;
+﻿using SixLabors.ImageSharp;
 
 namespace PiTop.Camera
 {
-    public interface ICamera : 
-        IConnectedDevice, 
-        IFrameSource<Bitmap>
+    public interface ICamera :
+        IConnectedDevice,
+        IFrameSource<Image>
     {
-        
+
     }
 
     public interface IFrameSource<out T>
