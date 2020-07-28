@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
-
-using Internal.Utilities.StructuredFormat;
-
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Formatting;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Png;
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 using Display = PiTop.Abstractions.Display;
 
