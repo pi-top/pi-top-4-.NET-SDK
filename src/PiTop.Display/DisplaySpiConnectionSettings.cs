@@ -1,8 +1,7 @@
 using System.Device.Spi;
 
 namespace PiTop
-{
-    public class DisplaySpiConnectionSettings
+{    public class DisplaySpiConnectionSettings
     {
         public SpiConnectionSettings SpiConnectionSettings { get; set; }
         public int RstPin { get; set; }

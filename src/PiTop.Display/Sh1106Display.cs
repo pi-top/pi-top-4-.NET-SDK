@@ -1,4 +1,3 @@
-using System.Drawing.Imaging;
 using PiTop.OledDevice;
 
 namespace PiTop
@@ -7,7 +6,7 @@ namespace PiTop
     {
         private readonly Sh1106 _device;
 
-        public Sh1106Display(DisplaySpiConnectionSettings settings, IGpioControllerFactory controllerFactory, ISPiDeviceFactory spiDeviceFactory) : base(Sh1106.Width, Sh1106.Height, PixelFormat.Format16bppGrayScale)
+        public Sh1106Display(DisplaySpiConnectionSettings settings, IGpioControllerFactory controllerFactory, ISPiDeviceFactory spiDeviceFactory) : base(Sh1106.Width, Sh1106.Height)
         {
             _device = new Sh1106(settings.SpiConnectionSettings, settings.DcPin, settings.RstPin, spiDeviceFactory, controllerFactory);
 

@@ -10,34 +10,44 @@ namespace PiTop
     {
         public int Width { get; }
         public int Height { get; }
-        public PixelFormat PixelFormat { get; }
+
+        protected Bitmap InternalBitmap => _image;
 
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         private readonly Bitmap _image;
 
-        protected Display(int width, int height, PixelFormat pixelFormat)
+        protected Display(int width, int height)
         {
             Width = width;
             Height = height;
-            PixelFormat = pixelFormat;
             ClearColor = Color.Black;
-
-            _image = new Bitmap(Width, Height, PixelFormat);
+            _image = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
             RegisterForDisposal(_image);
         }
 
         protected Color ClearColor { get; set; }
 
+        public Bitmap Capture()
+        {
+            return _image.Clone(new Rectangle(0, 0, _image.Width, _image.Height), _image.PixelFormat);
+        }
+
         protected void RegisterForDisposal(IDisposable disposable)
         {
-            if (disposable == null) throw new ArgumentNullException(nameof(disposable));
+            if (disposable == null)
+            {
+                throw new ArgumentNullException(nameof(disposable));
+            }
             _disposables.Add(disposable);
         }
 
-        protected internal void RegisterForDisposal(Action dispose)
+        protected void RegisterForDisposal(Action dispose)
         {
-            if (dispose == null) throw new ArgumentNullException(nameof(dispose));
-            _disposables.Add(Disposable.Create(dispose));
+            if (dispose == null)
+            {
+                throw new ArgumentNullException(nameof(dispose));
+            }
+            RegisterForDisposal(Disposable.Create(dispose));
         }
         public abstract void Show();
         public abstract void Hide();
@@ -48,21 +58,27 @@ namespace PiTop
             {
                 throw new ArgumentNullException(nameof(drawingAction));
             }
-            using var graphics = Graphics.FromImage(_image);
-            drawingAction(graphics);
-            graphics.Flush(FlushIntention.Flush);
+
+            using (var graphics = Graphics.FromImage(_image))
+            {
+                drawingAction(graphics);
+                graphics.Flush(FlushIntention.Flush);
+                graphics.Save();
+            }
 
             CommitBuffer();
         }
 
+
+
         protected abstract void CommitBuffer();
 
-        public void Clear()
+        public void Clear(Color? clearColor = null)
         {
-            using var context = Graphics.FromImage(_image);
-            context.Clear(ClearColor);
-            context.Flush(FlushIntention.Flush);
-            CommitBuffer();
+            Draw(context =>
+            {
+                context.Clear(clearColor ?? ClearColor);
+            });
         }
         public void Dispose()
         {
