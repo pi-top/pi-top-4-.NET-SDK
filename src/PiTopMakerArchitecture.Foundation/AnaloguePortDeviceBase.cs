@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Disposables;
 
 using PiTop;
+using PiTop.Abstractions;
 
 namespace PiTopMakerArchitecture.Foundation
 {

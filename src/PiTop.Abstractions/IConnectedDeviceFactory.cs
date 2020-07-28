@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PiTop
+namespace PiTop.Abstractions
 {
     public interface IConnectedDeviceFactory<TConnectionConfiguration, TDevice> : IDisposable
         where TConnectionConfiguration : notnull

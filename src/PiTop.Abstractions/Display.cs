@@ -2,11 +2,10 @@
 using System.Reactive.Disposables;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
-using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace PiTop
+namespace PiTop.Abstractions
 {
     public abstract class Display : IDisposable
     {
@@ -23,7 +22,7 @@ namespace PiTop
             Width = width;
             Height = height;
             ClearColor = Color.Black;
-            _image = new Image<Rgba32>(Width,Height,ClearColor);
+            _image = new Image<Rgba32>(Width, Height, ClearColor);
             RegisterForDisposal(_image);
         }
 

@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTop.Display\PiTop.Display.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="..\PiTop\PiTop.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
@@ -30,6 +33,7 @@
 
   <ItemGroup>
     <None Include="../PiTop/bin/$(Configuration)/$(TargetFramework)/PiTop.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
+    <None Include="../PiTop.Display/bin/$(Configuration)/$(TargetFramework)/PiTop.Display.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
     <None Include="../PiTop.InteractiveExtension/bin/$(Configuration)/$(TargetFramework)/PiTop.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
   </ItemGroup>
 

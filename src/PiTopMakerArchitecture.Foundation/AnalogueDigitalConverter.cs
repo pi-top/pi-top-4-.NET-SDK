@@ -2,6 +2,7 @@
 using System.Buffers.Binary;
 using System.Device.I2c;
 using PiTop;
+using PiTop.Abstractions;
 
 namespace PiTopMakerArchitecture.Foundation
 {

@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp;
+﻿using PiTop.Abstractions;
+using SixLabors.ImageSharp;
 
 namespace PiTop.Camera
 {

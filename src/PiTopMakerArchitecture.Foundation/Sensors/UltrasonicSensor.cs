@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 
 using PiTop;
-
+using PiTop.Abstractions;
 using UnitsNet;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PiTop
+namespace PiTop.Abstractions
 {
     public interface IConnectedDevice : IDisposable
     {

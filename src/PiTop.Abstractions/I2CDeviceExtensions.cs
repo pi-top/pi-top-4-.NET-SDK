@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Device.I2c;
 
-namespace PiTop
+namespace PiTop.Abstractions
 {
     public static class I2CDeviceExtensions
     {

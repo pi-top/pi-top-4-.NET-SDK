@@ -3,7 +3,7 @@ using System.Device.Gpio;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PiTop
+namespace PiTop.Abstractions
 {
     public interface IGpioController : IDisposable
     {

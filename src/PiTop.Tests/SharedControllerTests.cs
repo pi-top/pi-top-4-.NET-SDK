@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Execution;
+using PiTop.Abstractions;
 using Xunit;
 
 namespace PiTop.Tests

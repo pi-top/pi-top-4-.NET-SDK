@@ -6,7 +6,7 @@ using System.Device.I2c;
 using System.Device.Spi;
 using System.Linq;
 using System.Reactive.Disposables;
-
+using PiTop.Abstractions;
 
 
 namespace PiTop
@@ -31,7 +31,7 @@ namespace PiTop
         public PiTopButton DownButton { get; } = new PiTopButton();
         public PiTopButton SelectButton { get; } = new PiTopButton();
         public PiTopButton CancelButton { get; } = new PiTopButton();
-        public Display Display { get; set; }
+        public Display? Display { get; set; }
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 

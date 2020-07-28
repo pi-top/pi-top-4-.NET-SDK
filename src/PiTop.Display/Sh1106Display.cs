@@ -1,4 +1,5 @@
 using System.Threading;
+using PiTop.Abstractions;
 using PiTop.OledDevice;
 
 namespace PiTop

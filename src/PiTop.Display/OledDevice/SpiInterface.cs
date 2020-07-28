@@ -2,6 +2,7 @@ using System;
 using System.Device.Gpio;
 using System.Device.Spi;
 using System.Reactive.Disposables;
+using PiTop.Abstractions;
 
 namespace PiTop.OledDevice
 {

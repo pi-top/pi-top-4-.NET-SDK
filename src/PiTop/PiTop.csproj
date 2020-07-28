@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="NetMQ" Version="4.0.0.207" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0010" />
     <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20276.1" />
     <PackageReference Include="System.Reactive" Version="4.3.2" />
     <PackageReference Include="UnitsNet" Version="4.68.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PiTop.Abstractions\PiTop.Abstractions.csproj" />
+    <ProjectReference Include="..\PiTop.Display\PiTop.Display.csproj" />
   </ItemGroup>
 
 </Project>

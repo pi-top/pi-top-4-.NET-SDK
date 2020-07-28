@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
+using PiTop.Abstractions;
 using Xunit;
 
 namespace PiTop.Tests

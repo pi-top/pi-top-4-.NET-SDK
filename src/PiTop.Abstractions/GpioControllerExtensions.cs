@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Device.Gpio;
 
-namespace PiTop
+namespace PiTop.Abstractions
 {
     public static class GpioControllerExtensions
     {

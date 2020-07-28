@@ -10,6 +10,8 @@ using Microsoft.DotNet.Interactive.Formatting;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
+using Display = PiTop.Abstractions.Display;
+
 namespace PiTop.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension

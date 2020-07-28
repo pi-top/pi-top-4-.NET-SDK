@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTop.Display\PiTop.Display.csproj" />
     <ProjectReference Include="..\PiTop\PiTop.csproj" />
   </ItemGroup>
 

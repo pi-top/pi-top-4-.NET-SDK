@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-
+using PiTop.Abstractions;
 using PiTop.OledDevice;
 
 using SixLabors.ImageSharp;

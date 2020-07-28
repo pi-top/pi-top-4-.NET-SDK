@@ -5,7 +5,7 @@ using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PiTop
+namespace PiTop.Abstractions
 {
     internal class SharedGpioController : IGpioController
     {

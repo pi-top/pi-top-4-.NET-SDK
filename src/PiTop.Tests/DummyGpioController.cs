@@ -4,6 +4,7 @@ using System.Device.Gpio;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
+using PiTop.Abstractions;
 using Xunit.Sdk;
 
 namespace PiTop.Tests

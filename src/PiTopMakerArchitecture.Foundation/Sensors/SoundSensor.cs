@@ -1,7 +1,7 @@
 ﻿using System;
 
 using PiTop;
-
+using PiTop.Abstractions;
 using UnitsNet;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors

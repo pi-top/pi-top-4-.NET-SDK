@@ -1,5 +1,6 @@
 using System;
 using System.Device.Spi;
+using PiTop.Abstractions;
 
 namespace PiTop.OledDevice
 {

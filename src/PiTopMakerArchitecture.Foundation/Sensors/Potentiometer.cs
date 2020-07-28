@@ -1,6 +1,7 @@
 ﻿using System;
 
 using PiTop;
+using PiTop.Abstractions;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
 {
