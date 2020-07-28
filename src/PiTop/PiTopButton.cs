@@ -4,7 +4,7 @@ namespace PiTop
 {
     public class PiTopButton
     {
-        private PiTopButtonState _state;
+        private PiTopButtonState _state = PiTopButtonState.Released;
         public event EventHandler<bool>? PressedChanged;
         public event EventHandler<EventArgs>? Pressed;
         public event EventHandler<EventArgs>? Released;
