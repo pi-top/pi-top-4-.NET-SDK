@@ -33,9 +33,9 @@ namespace PiTop.OledDevice
             _disposables.Dispose();
         }
 
-        public void Command(byte cmd){
+        public void Command(params byte[] cmds){
             _controller.Write(_dcPin, PinValue.Low); // Command Mode
-            _device.WriteByte(cmd);
+            _device.Write(cmds);
         }
         
         public void Data(byte data){

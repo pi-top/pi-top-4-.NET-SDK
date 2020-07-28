@@ -4,7 +4,7 @@ namespace PiTop.OledDevice
 {
     public interface ISerialInterface: IDisposable
     {
-        void Command(byte cmd);
+        void Command(params byte[] cmds);
         void Data(byte data);
     }
 }

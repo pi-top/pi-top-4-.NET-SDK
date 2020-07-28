@@ -18,12 +18,12 @@ namespace PiTop.OledDevice
             throw new NotImplementedException();
         }
 
-        public void Command(byte cmd){
+        public void Command(params byte[] cmds){
             throw new NotImplementedException();
         }
         
         public void Data(byte data){
             throw new NotImplementedException();
-        }     
+        }
     }
 }
