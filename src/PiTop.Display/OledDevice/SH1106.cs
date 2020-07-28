@@ -100,5 +100,15 @@ namespace PiTop.OledDevice
             _serialInterface.Command(
               Command.DISPLAYOFF);
         }
+
+        public void WritePage(int page, byte[] scan)
+        {
+            _serialInterface.Command(
+                Command.SETHIGHCOLUMN,
+                Command.SETLOWCOLUMN + 2, // SH1106 is made for 132x64, but usually only has 128x64 connected to it
+                (byte)(Command.SETPAGEADDRESS | page));
+            _serialInterface.Data(scan);
+        }
+
     }
 }
