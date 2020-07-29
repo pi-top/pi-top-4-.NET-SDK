@@ -45,15 +45,23 @@ namespace PiTop
                 var dst = 0;
                 for (var y = 0; y < 8; y++)
                 {
-                    
-                     // row scan inside page
-                     var luminance = luminanceSource.GetPixelRowMemory(y + pageAddress).ToArray();
+
+                    // row scan inside page
+                    var luminance = luminanceSource.GetPixelRowMemory(y + pageAddress).ToArray();
                     for (var x = 0; x < Width; x++)
                     {
-                        
-                       
-                        if (y == 0) scan[x] = 0;
-                        if (luminance[x].PackedValue >= 128) scan[dst/8] |= (byte)(0x80 >> shiftAmount);
+
+
+                        if (y == 0)
+                        {
+                            scan[x] = 0;
+                        }
+
+                        if (luminance[x].PackedValue >= 128)
+                        {
+                            scan[dst / 8] |= (byte)(0x80 >> y);
+                        }
+
                         shiftAmount--;
                         if (shiftAmount < 0)
                         {
