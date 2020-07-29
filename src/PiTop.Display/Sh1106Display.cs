@@ -42,7 +42,7 @@ namespace PiTop
 
                 for (var y = 0; y < 8; y++)
                 {
-                    var shiftAmount = 8 - y;
+                    var shiftAmount = y;
                     // row scan inside page
                     var luminance = luminanceSource.GetPixelRowMemory(y + pageAddress).ToArray();
                     for (var x = 0; x < Width; x++)
