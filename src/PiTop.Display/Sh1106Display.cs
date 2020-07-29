@@ -28,39 +28,12 @@ namespace PiTop
             _device.Hide();
         }
 
-        //protected override void CommitBuffer()
-        //{
-        //    InternalBitmap.Mutate(c => c.BlackWhite());
-
-        //    var luminanceSource = InternalBitmap.CloneAs<L8>();
-        //    luminanceSource.Mutate(c => c.Rotate(RotateMode.Rotate180));
-
-        //    for (var page = 0; page < Height / 8; page++)
-        //    {
-        //        var scan = new byte[Width]; // each byte represents 8 pixels in column
-
-        //        for (var y = 0; y < 8; y++)
-        //        {
-        //            var luminance = luminanceSource.GetPixelRowMemory(y + page * 8).ToArray();
-        //            for (var x = 0; x < Width; x++)
-        //            {
-        //                if (y == 0) scan[x] = 0; // initialize on the first pixel row of the scan
-
-        //                if (luminance[x].PackedValue >= 128) scan[x] |= (byte)(0x80 >> y);
-        //            }
-        //        }
-        //        _device.WritePage(page, scan);
-        //    }
-        //}
-
         protected override void CommitBuffer()
         {
             InternalBitmap.Mutate(c => c.Dither().BlackWhite());
 
             var luminanceSource = InternalBitmap.Clone(c => c
-                .Rotate(RotateMode.Rotate180)
-                .Flip(FlipMode.Horizontal)
-                .Flip(FlipMode.Vertical))
+                .Rotate(RotateMode.Rotate180))
                 .CloneAs<L8>();
 
             var pages = Height / 8;
@@ -71,13 +44,16 @@ namespace PiTop
 
                 for (var y = 0; y < 8; y++)
                 {
-                    var shiftAmount = 8 - y;
-                    // row scan inside page
-                    var luminance = luminanceSource.GetPixelRowMemory(y + pageAddress).ToArray();
+                    var i = 0;
+                     // row scan inside page
+                     var luminance = luminanceSource.GetPixelRowMemory(y + pageAddress).ToArray();
                     for (var x = 0; x < Width; x++)
                     {
+                        var shiftAmount = 8 - i;
+                       
                         if (y == 0) scan[x] = 0;
                         if (luminance[x].PackedValue >= 128) scan[x] |= (byte)(0x80 >> shiftAmount);
+                        i = (i + 1) % 8;
                     }
                 }
                 _device.WritePage(pageAddress, scan);
