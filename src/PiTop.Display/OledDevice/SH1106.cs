@@ -71,7 +71,7 @@ namespace PiTop.OledDevice
             var bus = i2CDeviceFactory.GetOrCreateI2CDevice(deviceAddress);
             _serialInterface = new I2cInterface(bus);
 
-           
+
 
         }
 
@@ -84,7 +84,8 @@ namespace PiTop.OledDevice
                 Command.DISPLAYOFF,
                 Command.MEMORYMODE,
                 Command.SETLOWCOLUMN,
-                Command.SETHIGHCOLUMN, 0xB0, 0xC0,
+                Command.SETHIGHCOLUMN, 0xB0, 
+                Command.COMSCANDEC,
                 Command.SETLOWCOLUMN, 0x10, 0x40,
                 Command.SETSEGMENTREMAP,
                 Command.NORMALDISPLAY,
@@ -125,7 +126,7 @@ namespace PiTop.OledDevice
         {
             const byte setPageAddress = 0xB0;
             _serialInterface.Command(
-                (byte)(setPageAddress | page), 0x02, 0x10
+                (byte)(setPageAddress + page), 0x02, 0x10
                 );
             _serialInterface.Data(scan);
         }
