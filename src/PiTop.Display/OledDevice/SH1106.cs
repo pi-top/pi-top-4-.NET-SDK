@@ -102,7 +102,7 @@ namespace PiTop.OledDevice
         }
         public void Show()
         {
-            _serialInterface.Command(Command.DISPLAYALLON);
+            _serialInterface.Command(Command.DISPLAYON);
 
         }
         public void Dispose()
