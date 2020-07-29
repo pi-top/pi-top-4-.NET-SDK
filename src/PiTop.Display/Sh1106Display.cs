@@ -2,6 +2,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Advanced;
 using PiTop.Abstractions;
 using PiTop.OledDevice;
+using SixLabors.ImageSharp.Processing;
 
 namespace PiTop
 {
@@ -27,6 +28,8 @@ namespace PiTop
 
         protected override void CommitBuffer()
         {
+            InternalBitmap.Mutate(c => c.BlackWhite());
+
             var luminanceSource = InternalBitmap.CloneAs<L8>();
 
             for (var page = 0; page < Height / 8; page++)
