@@ -17,7 +17,7 @@ namespace PiTop
             _device.SetContrast(255);
             RegisterForDisposal(_device);
         }
-        
+
         public override void Show()
         {
             _device.Show();
@@ -56,8 +56,12 @@ namespace PiTop
         protected override void CommitBuffer()
         {
             InternalBitmap.Mutate(c => c.Dither().BlackWhite());
-            
-            var luminanceSource = InternalBitmap.Clone(c => c.RotateFlip(RotateMode.Rotate180, FlipMode.None)).CloneAs<L8>();
+
+            var luminanceSource = InternalBitmap.Clone(c => c
+                .Rotate(RotateMode.Rotate180)
+                .Flip(FlipMode.Horizontal)
+                .Flip(FlipMode.Vertical))
+                .CloneAs<L8>();
 
             var pages = Height / 8;
 
