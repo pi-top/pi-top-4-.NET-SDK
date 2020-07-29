@@ -84,7 +84,7 @@ namespace PiTop.OledDevice
                 Command.DISPLAYOFF,
                 Command.MEMORYMODE,
                 Command.SETLOWCOLUMN,
-                Command.SETHIGHCOLUMN, 0xB0, 0xC8,
+                Command.SETHIGHCOLUMN, 0xB0, 0xC0,
                 Command.SETLOWCOLUMN, 0x10, 0x40,
                 Command.SETSEGMENTREMAP,
                 Command.NORMALDISPLAY,
