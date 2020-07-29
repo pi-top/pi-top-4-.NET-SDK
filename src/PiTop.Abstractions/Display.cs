@@ -53,14 +53,14 @@ namespace PiTop.Abstractions
         public abstract void Show();
         public abstract void Hide();
 
-        public void Draw(Action<IImageProcessingContext> drawingAction)
+        public void Draw(Action<IImageProcessingContext, Rectangle> drawingAction)
         {
             if (drawingAction == null)
             {
                 throw new ArgumentNullException(nameof(drawingAction));
             }
 
-            _image.Mutate(drawingAction);
+            _image.Mutate(c => drawingAction(c, new Rectangle(0,0,Width, Height)));
 
             CommitBuffer();
         }
@@ -71,7 +71,7 @@ namespace PiTop.Abstractions
 
         public void Clear(Color? clearColor = null)
         {
-            Draw(context =>
+            Draw((context,_) =>
             {
                 context.Clear(clearColor ?? ClearColor);
             });

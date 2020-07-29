@@ -13,6 +13,8 @@ namespace PiTop
         public Sh1106Display(DisplaySpiConnectionSettings settings, IGpioControllerFactory controllerFactory, ISPiDeviceFactory spiDeviceFactory) : base(Sh1106.Width, Sh1106.Height)
         {
             _device = new Sh1106(settings.SpiConnectionSettings, settings.DcPin, settings.RstPin, spiDeviceFactory, controllerFactory);
+            _device.Init();
+            _device.SetContrast(255);
             RegisterForDisposal(_device);
         }
         
@@ -29,24 +31,27 @@ namespace PiTop
         protected override void CommitBuffer()
         {
             InternalBitmap.Mutate(c => c.BlackWhite());
-
             var luminanceSource = InternalBitmap.CloneAs<L8>();
+            luminanceSource.Mutate(c => c.Rotate(RotateMode.Rotate180));
 
-            for (var page = 0; page < Height / 8; page++)
+            var pages = Height / 8;
+
+            for (var pageAddress = 0; pageAddress < pages; pageAddress++)
             {
                 var scan = new byte[Width]; // each byte represents 8 pixels in column
 
                 for (var y = 0; y < 8; y++)
                 {
-                    var luminance = luminanceSource.GetPixelRowMemory(y + page * 8).ToArray();
+                    var shiftAmount = 8 - y;
+                    // row scan inside page
+                    var luminance = luminanceSource.GetPixelRowMemory(y + pageAddress).ToArray();
                     for (var x = 0; x < Width; x++)
                     {
-                        if (y == 0) scan[x] = 0; // initialize on the first pixel row of the scan
 
-                        if (luminance[x].PackedValue >= 128) scan[x] |= (byte)(0x80 >> y);
+                        if (luminance[x].PackedValue >= 128) scan[x] |= (byte)(0x80 >> shiftAmount);
                     }
                 }
-                _device.WritePage(page, scan);
+                _device.WritePage(pageAddress, scan);
             }
         }
     }
