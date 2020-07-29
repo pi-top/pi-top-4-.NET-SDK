@@ -40,13 +40,13 @@ var builtinDisplay = module.Display;
 #!csharp
 
 #!piTop
-var font =  SystemFonts.Collection.Find("Roboto").CreateFont(16);
+var font =  SystemFonts.Collection.Find("Roboto").CreateFont(10);
 module.Display.Draw((context) => {
                         context.Clear(Color.Black);
                         var rect = TextMeasurer.Measure("Diego was here", new RendererOptions(font));
                         var x = (module.Display.Width - rect.Width) / 2;
-                        var y = (module.Display.Height - (rect.Height + 16)) / 2;
-                        context.DrawText("Diego was here", font, Color.White, new PointF(x, y));
+                        var y = (module.Display.Height + (rect.Height)) / 2;
+                        context.DrawText("Hello\nWorld",font, Color.White, new PointF(0,0));
                     });
 
 #!csharp
@@ -59,7 +59,13 @@ display(builtinDisplay, "text/html");
 #!piTop
  module.Display.Draw(d =>
             {
-                var square = new RectangularPolygon( module.Display.Width / 4,  module.Display.Height / 4,  module.Display.Width/2,  module.Display.Height/2);
+                d.Clear(Color.Black);
+                var square = new RectangularPolygon( 0,  0,  module.Display.Width/2,  module.Display.Height/2);
      
                 d.Fill(Color.White, square);
             });
+
+#!csharp
+
+#!piTop
+module.Dispose();
