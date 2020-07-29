@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Device.I2c;
 using System.Device.Spi;
+using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Threading;
 using PiTop.Abstractions;
 
 
@@ -40,6 +42,7 @@ namespace PiTop
                 if (_display == null)
                 {
                     _moduleDriverClient.AcquireDisplay();
+                    _disposables.Add(File.Open("/tmp/pt-oled.lock", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None));
                     _display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
                     _disposables.Add(Disposable.Create(() => _display?.Dispose()));
                 }

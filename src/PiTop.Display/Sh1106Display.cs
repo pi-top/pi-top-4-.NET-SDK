@@ -47,7 +47,7 @@ namespace PiTop
                     var luminance = luminanceSource.GetPixelRowMemory(y + pageAddress).ToArray();
                     for (var x = 0; x < Width; x++)
                     {
-
+                        if (y == 0) scan[x] = 0;
                         if (luminance[x].PackedValue >= 128) scan[x] |= (byte)(0x80 >> shiftAmount);
                     }
                 }
