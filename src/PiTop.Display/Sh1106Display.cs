@@ -28,6 +28,7 @@ namespace PiTop
         protected override void CommitBuffer()
         {
             var luminanceSource = InternalBitmap.CloneAs<L8>();
+
             for (var page = 0; page < Height / 8; page++)
             {
                 var scan = new byte[Width]; // each byte represents 8 pixels in column

@@ -1,0 +1,65 @@
+#!markdown
+
+# Hello we will be building things
+
+#!csharp
+
+#!connect signalr --kernel-name piTop --hub-url http://pitop-diego.ngrok.io/kernelhub
+
+#!csharp
+
+#!piTop
+#r "nuget:piTop"
+#r "nuget:piTop.FoundationKit"
+#r "nuget:SixLabors.Fonts,1.0.0-beta0010"
+
+#!csharp
+
+#!piTop
+using PiTop;
+using PiTopMakerArchitecture.Foundation;
+using PiTopMakerArchitecture.Foundation.Components;
+using PiTopMakerArchitecture.Foundation.Sensors;
+
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.Fonts;
+
+#!csharp
+
+#!piTop
+var module = new PiTopModule();
+var plate = module.GetOrCreatePlate<FoundationPlate>();
+
+#!csharp
+
+#!piTop
+var builtinDisplay = module.Display;
+
+#!csharp
+
+#!piTop
+var font =  SystemFonts.Collection.Find("Roboto").CreateFont(16);
+module.Display.Draw((context) => {
+                        context.Clear(Color.Black);
+                        var rect = TextMeasurer.Measure("Diego was here", new RendererOptions(font));
+                        var x = (module.Display.Width - rect.Width) / 2;
+                        var y = (module.Display.Height - (rect.Height + 16)) / 2;
+                        context.DrawText("Diego was here", font, Color.White, new PointF(x, y));
+                    });
+
+#!csharp
+
+#!piTop
+display(builtinDisplay, "text/html");
+
+#!csharp
+
+#!piTop
+ module.Display.Draw(d =>
+            {
+                var square = new RectangularPolygon( module.Display.Width / 4,  module.Display.Height / 4,  module.Display.Width/2,  module.Display.Height/2);
+     
+                d.Fill(Color.White, square);
+            });
