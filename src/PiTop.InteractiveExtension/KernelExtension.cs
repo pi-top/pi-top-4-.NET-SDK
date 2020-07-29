@@ -5,7 +5,6 @@ using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Formatting;
 using SixLabors.ImageSharp;
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
-using Display = PiTop.Abstractions.Display;
 
 namespace PiTop.InteractiveExtension
 {
@@ -13,32 +12,17 @@ namespace PiTop.InteractiveExtension
     {
         public Task OnLoadAsync(Kernel kernel)
         {
-            Formatter.Register(typeof(Display), (d, writer) =>
+            Formatter<Sh1106Display>.Register((d, w) =>
             {
-                switch (d)
+                using (MemoryStream s = new MemoryStream())
                 {
-                    case Display display:
-                        {
-                            var id = Guid.NewGuid().ToString("N");
-                            using var stream = new MemoryStream();
-                            using var bitmapImage = display.Capture();
-                            bitmapImage.SaveAsPng(stream);
-                            stream.Flush();
-                            var data = stream.ToArray();
-                            var imgTag = CreateImgTag(data, id, bitmapImage.Height, bitmapImage.Width);
-                        }
-                        break;
+                    d.Capture().SaveAsPng(s);
+                    PocketView view = img[src: @"data:image/png;base64, " + System.Convert.ToBase64String(s.ToArray())];
+                    w.Write(view);
                 }
-            }, HtmlFormatter.MimeType);
+            }, "text/html");
+
             return Task.CompletedTask;
         }
-
-        private static PocketView CreateImgTag(byte[] data, string id, int height, int width)
-        {
-            var imageSource = $"data:image/png;base64, {Convert.ToBase64String(data)}";
-            PocketView imgTag = img[id: id, src: imageSource, height: height, width: width]();
-            return imgTag;
-        }
-
     }
 }
