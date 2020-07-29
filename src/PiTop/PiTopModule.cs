@@ -44,6 +44,7 @@ namespace PiTop
                     _moduleDriverClient.AcquireDisplay();
                     _disposables.Add(File.Open("/tmp/pt-oled.lock", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None));
                     _display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
+                    _display.Show();
                     _disposables.Add(Disposable.Create(() => _display?.Dispose()));
                 }
 
