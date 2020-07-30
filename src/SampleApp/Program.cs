@@ -7,6 +7,7 @@ using PiTop;
 using PiTopMakerArchitecture.Foundation;
 using PiTopMakerArchitecture.Foundation.Components;
 using PiTopMakerArchitecture.Foundation.Sensors;
+using SixLabors.ImageSharp;
 
 namespace SampleApp
 {
@@ -134,12 +135,10 @@ namespace SampleApp
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
-            var greenLed = plate.GetOrCreateDevice<Led>(greenLedPort);
-            greenLed.DisplayProperties.Add(new NamedCssColor("green"));
-            var yellowLed = plate.GetOrCreateDevice<Led>(yellowLedPort);
-            yellowLed.DisplayProperties.Add(new NamedCssColor("yellow"));
-            var redLed = plate.GetOrCreateDevice<Led>(redLedPort);
-            redLed.DisplayProperties.Add(new NamedCssColor("red"));
+            var greenLed = plate.GetOrCreateLed(greenLedPort, Color.Green);
+            var yellowLed = plate.GetOrCreateLed(yellowLedPort, Color.Yellow);
+            var redLed = plate.GetOrCreateLed(redLedPort,Color.Red);
+
             ClearLeds();
             Task.Run(() =>
             {
