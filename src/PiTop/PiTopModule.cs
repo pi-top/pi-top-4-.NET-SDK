@@ -34,19 +34,28 @@ namespace PiTop
         public PiTopButton DownButton { get; } = new PiTopButton();
         public PiTopButton SelectButton { get; } = new PiTopButton();
         public PiTopButton CancelButton { get; } = new PiTopButton();
-        private Display _display;
+        private Display? _display;
 
         public Display Display
         {
             get
             {
-                if (_display == null)
+                try
                 {
-                    _moduleDriverClient.AcquireDisplay();
-                    _disposables.Add(File.Open("/tmp/pt-oled.lock", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None));
-                    _display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
-                    _display.Show();
-                    _disposables.Add(Disposable.Create(() => _display?.Dispose()));
+                    if (_display == null)
+                    {
+                        _moduleDriverClient.AcquireDisplay();
+                        _disposables.Add(File.Open("/tmp/pt-oled.lock", FileMode.OpenOrCreate, FileAccess.Write,
+                            FileShare.None));
+                        _display = new Sh1106Display(DisplaySpiConnectionSettings.Default, this, this);
+                        _display.Show();
+                        _disposables.Add(Disposable.Create(() => _display?.Dispose()));
+                    }
+                }
+                catch (Exception e)
+                {
+                    _display = null;
+                    throw new DisplayAcquisitionException(e);
                 }
 
                 return _display;
