@@ -54,9 +54,14 @@ namespace PiTop
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
-        public PiTopModule() : this(new GpioController().AsManaged())
-        {
-
+        private static PiTopModule _instance;
+        public static PiTopModule Instance {
+            get {
+                if (_instance == null){
+                    _instance = new PiTopModule(new GpioController().AsManaged());
+                }
+            return _instance;
+            }
         }
 
         public PiTopModule(IGpioController controller)

@@ -54,7 +54,7 @@ namespace SampleApp
         {
             var cancellationSource = new CancellationTokenSource();
             
-            var module = new PiTopModule();
+            var module = PiTopModule.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
            
             Task.Run(() =>
@@ -80,7 +80,7 @@ namespace SampleApp
         private static Task TestButton(DigitalPort buttonPort, DigitalPort[] ledPorts)
         {
             var cancellationSource = new CancellationTokenSource();
-            var module = new PiTopModule();
+            var module = PiTopModule.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             Task.Run(() =>
@@ -130,7 +130,7 @@ namespace SampleApp
 
         private static Task TestSemaphore(DigitalPort ultrasonicSensorPort, DigitalPort greenLedPort, DigitalPort yellowLedPort, DigitalPort redLedPort, int greenThreshold, int yellowThreshold, int redThreshold)
         {
-            var module = new PiTopModule();
+            var module = PiTopModule.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
@@ -196,7 +196,7 @@ namespace SampleApp
 
         private static Task TestUltrasoundSensor()
         {
-            var module = new PiTopModule();
+            var module = PiTopModule.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
@@ -221,7 +221,7 @@ namespace SampleApp
 
         private static async Task TestLed01()
         {
-            var module = new PiTopModule();
+            var module = PiTopModule.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var ports = DigitalPort.D0.GetDigitalPortRange(3);

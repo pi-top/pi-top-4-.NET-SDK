@@ -29,7 +29,7 @@ using SixLabors.Fonts;
 #!csharp
 
 #!piTop
-var module = new PiTopModule();
+var module = PiTopModule.Instance;
 var plate = module.GetOrCreatePlate<FoundationPlate>();
 
 #!csharp
