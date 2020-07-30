@@ -1,20 +1,29 @@
-﻿using System.Drawing;
+﻿using System;
 using System.IO;
+
 using FluentAssertions;
+
 using PiTop.Tests;
+
 using Xunit;
 
 namespace PiTop.Camera.Tests
 {
-    public class FileSystemCameraTests
+    public class FileSystemCameraTests : IDisposable
     {
+        private readonly PiTopModule _module;
+
+        public FileSystemCameraTests()
+        {
+
+            PiTopModule.Configure(new DummyGpioController());
+            _module = PiTopModule.Instance;
+        }
         [Fact]
         public void can_be_created_via_factory()
         {
-            
-            using var module = new PiTopModule(new DummyGpioController());
-            module.UseCamera();
-            using var camera = module.GetOrCreateCamera<FileSystemCamera>(new DirectoryInfo(Path.GetTempPath()));
+            _module.UseCamera();
+            using var camera = _module.GetOrCreateCamera<FileSystemCamera>(new DirectoryInfo(Path.GetTempPath()));
 
             camera.Should()
                 .NotBeNull();
@@ -24,9 +33,8 @@ namespace PiTop.Camera.Tests
         public void can_load_images()
         {
             using var dir = DisposableDirectory.CreateTemp();
-            using var module = new PiTopModule(new DummyGpioController());
-            module.UseCamera();
-            using var camera = module.GetOrCreateCamera<FileSystemCamera>(dir.Root);
+            _module.UseCamera();
+            using var camera = _module.GetOrCreateCamera<FileSystemCamera>(dir.Root);
 
             camera.FrameCount.Should()
                 .Be(3);
@@ -36,15 +44,19 @@ namespace PiTop.Camera.Tests
         public void can_scan_images()
         {
             using var dir = DisposableDirectory.CreateTemp();
-            using var module = new PiTopModule(new DummyGpioController());
-            module.UseCamera();
-            using var camera = module.GetOrCreateCamera<FileSystemCamera>(dir.Root);
+            _module.UseCamera();
+            using var camera = _module.GetOrCreateCamera<FileSystemCamera>(dir.Root);
 
             var source1 = camera.CurrentFrameSource;
             camera.Advance();
             var source2 = camera.CurrentFrameSource;
             source2.Name.Should().NotBe(source1.Name);
 
+        }
+
+        public void Dispose()
+        {
+            _module.Dispose();
         }
     }
 }

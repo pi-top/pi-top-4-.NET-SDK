@@ -11,7 +11,8 @@ namespace PiTop.Camera.Tests
         [Fact]
         public void cannot_use_factory_if_is_not_initialised()
         {
-            using var module = new PiTopModule(new DummyGpioController());
+            PiTopModule.Configure(new DummyGpioController());
+            using var module = PiTopModule.Instance;
             var action = new Action(() =>
                 module.GetOrCreateCamera<FileSystemCamera>(new DirectoryInfo(Path.GetTempPath()))
             );

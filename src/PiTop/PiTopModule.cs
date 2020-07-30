@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Device.I2c;
 using System.Device.Spi;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -54,17 +55,22 @@ namespace PiTop
 
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
-        private static PiTopModule _instance;
-        public static PiTopModule Instance {
-            get {
-                if (_instance == null){
-                    _instance = new PiTopModule(new GpioController().AsManaged());
-                }
-            return _instance;
-            }
-        }
+        private static PiTopModule? _instance;
+        private static IGpioController? _defaultController;
 
-        public PiTopModule(IGpioController controller)
+        public static void Configure(IGpioController controller)
+        {
+            
+            if (_instance != null)
+            {
+                throw new InvalidOperationException("cannot change configuration with an existing instance");
+            }
+
+            _defaultController = controller;
+        }
+        public static PiTopModule Instance => _instance ??= new PiTopModule(_defaultController??=new GpioController().AsManaged());
+
+        private PiTopModule(IGpioController controller)
         {
 
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
@@ -274,6 +280,7 @@ namespace PiTop
         {
             _moduleDriverClient.MessageReceived -= ModuleDriverClientMessageReceived;
             _disposables.Dispose();
+            _instance = null;
         }
 
         public IGpioController GetOrCreateController()

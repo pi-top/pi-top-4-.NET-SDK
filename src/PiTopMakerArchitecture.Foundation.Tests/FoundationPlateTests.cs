@@ -10,14 +10,19 @@ using Xunit;
 
 namespace PiTopMakerArchitecture.Foundation.Tests
 {
-    public class FoundationPlateTests
+    public class FoundationPlateTests: IDisposable
     {
+        private readonly PiTopModule _module;
+
+        public FoundationPlateTests()
+        {
+            PiTopModule.Configure(new DummyGpioController());
+            _module = PiTopModule.Instance;
+        }
         [Fact]
         public void can_obtain_plate_from_module()
         {
-            using var module = new PiTopModule(new DummyGpioController());
-
-            using var plate = module.GetOrCreatePlate<FoundationPlate>();
+            using var plate = _module.GetOrCreatePlate<FoundationPlate>();
 
             plate.Should().NotBeNull();
         }
@@ -25,9 +30,7 @@ namespace PiTopMakerArchitecture.Foundation.Tests
         [Fact]
         public void plate_can_create_led()
         {
-            using var module = new PiTopModule(new DummyGpioController());
-
-            using var plate = module.GetOrCreatePlate<FoundationPlate>();
+            using var plate = _module.GetOrCreatePlate<FoundationPlate>();
 
             using var led = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
 
@@ -37,9 +40,7 @@ namespace PiTopMakerArchitecture.Foundation.Tests
         [Fact]
         public void plate_returns_previously_created_devices()
         {
-            using var module = new PiTopModule(new DummyGpioController());
-
-            using var plate = module.GetOrCreatePlate<FoundationPlate>();
+            using var plate = _module.GetOrCreatePlate<FoundationPlate>();
 
             var led1 = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
             var led2 = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
@@ -50,9 +51,7 @@ namespace PiTopMakerArchitecture.Foundation.Tests
         [Fact]
         public void cannot_create_a_different_device_on_allocated_pins()
         {
-            using var module = new PiTopModule(new DummyGpioController());
-
-            using var plate = module.GetOrCreatePlate<FoundationPlate>();
+            using var plate = _module.GetOrCreatePlate<FoundationPlate>();
 
            plate.GetOrCreateDevice<Led>(DigitalPort.D0);
 
@@ -65,6 +64,11 @@ namespace PiTopMakerArchitecture.Foundation.Tests
                 .Which
                 .Message
                 .Should().Match("Connection D0 is already used by PiTopMakerArchitecture.Foundation.Components.Led device");
+        }
+
+        public void Dispose()
+        {
+            _module.Dispose();
         }
     }
 }

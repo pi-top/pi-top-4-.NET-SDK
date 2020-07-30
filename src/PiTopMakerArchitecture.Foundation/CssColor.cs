@@ -22,9 +22,9 @@ namespace PiTopMakerArchitecture.Foundation
 
     public class RgbaCssColor : CssColor
     {
-        public RgbaCssColor(double r, double g, double b, double a)
+        public RgbaCssColor(byte r, byte g, byte b, double a)
         {
-            Value = $"rgba({r}, {g}, {b}, {a})";
+            Value = $"rgba({r}, {g}, {b}, {a:0.0})";
         }
     }
 }
