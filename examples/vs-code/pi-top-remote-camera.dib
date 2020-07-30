@@ -40,7 +40,7 @@ Create a module and load the camera extensions
 #!csharp
 
 #!piTop
-var module = new PiTopModule().UseCamera();
+var module = PiTopModule.Instance.UseCamera();
 
 #!markdown
 

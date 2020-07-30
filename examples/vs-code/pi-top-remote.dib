@@ -37,7 +37,7 @@ Create a module and use it to create an instance of ```FoundationPlate```
 #!csharp
 
 #!piTop
-var module = new PiTopModule();
+var module = PiTopModule.Instance;
 var plate = module.GetOrCreatePlate<FoundationPlate>();
 
 #!markdown
