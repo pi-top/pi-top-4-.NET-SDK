@@ -44,4 +44,4 @@ deploy:
     skip_symbols: false
     artifact: /.*(\.|\.s)nupkg/
     on:
-      branch: master
+      branch: main
