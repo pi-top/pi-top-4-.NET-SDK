@@ -6,7 +6,7 @@
 ## Experimental!!
 Set up all by running this from your pitop
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/colombod/pi-top/master/setup-device.sh | bash -e
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/colombod/pi-top/main/setup-device.sh | bash -e
 ```
 Once executed you will have this repo cloned at
 ```sh
