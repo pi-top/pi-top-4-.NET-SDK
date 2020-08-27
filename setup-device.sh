@@ -108,7 +108,7 @@ echo ""
 ### Build pi-top .NET API ###
 #############################
 echo "Building pi-top .NET API..."
-bash -ex ./pack.sh 1.1.1 "/home/pi/localNuget"
+bash -ex ./pack.sh 0.0.1 "/home/pi/localNuget"
 echo ""
 
 
