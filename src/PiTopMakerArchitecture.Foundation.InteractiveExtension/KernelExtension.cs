@@ -14,55 +14,55 @@ namespace PiTopMakerArchitecture.Foundation.InteractiveExtension
     {
         public Task OnLoadAsync(Kernel kernel)
         {
-            Formatter<FoundationPlate>.Register((plate, writer) =>
+            Formatter.Register<FoundationPlate>((plate, writer) =>
             {
                 var root = plate.ToJObject();
                 writer.Write(root.ToString(Formatting.Indented));
             }, JsonFormatter.MimeType);
 
-            Formatter<FoundationPlate>.Register((plate, writer) =>
+            Formatter.Register<FoundationPlate>((plate, writer) =>
             {
                 var svg = plate.DrawSvg();
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter<Led>.Register((device, writer) =>
+            Formatter.Register<Led>((device, writer) =>
             {
                 var svg = device.DrawSvg();
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter<UltrasonicSensor>.Register((device, writer) =>
+            Formatter.Register<UltrasonicSensor>((device, writer) =>
             {
                 var svg = device.DrawSvg();
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter<SoundSensor>.Register((device, writer) =>
+            Formatter.Register<SoundSensor>((device, writer) =>
             {
                 var svg = device.DrawSvg();
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter<LightSensor>.Register((device, writer) =>
+            Formatter.Register<LightSensor>((device, writer) =>
             {
                 var svg = device.DrawSvg();
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter<Button>.Register((device, writer) =>
+            Formatter.Register<Button>((device, writer) =>
             {
                 var svg = device.DrawSvg();
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter<Potentiometer>.Register((device, writer) =>
+            Formatter.Register<Potentiometer>((device, writer) =>
             {
                 var svg = device.DrawSvg();
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter<Buzzer>.Register((device, writer) =>
+            Formatter.Register<Buzzer>((device, writer) =>
             {
                 var svg = device.DrawSvg();
                 writer.Write(svg);

@@ -18,7 +18,7 @@ namespace PiTopMakerArchitecture.Foundation.Components
         protected override void OnConnection()
         {
             _isOn = false;
-            AddToDisposables(Controller.OpenPin(_ledPin, PinMode.Output));
+            AddToDisposables(Controller.OpenPinAsDisposable(_ledPin, PinMode.Output));
             Controller.Write(_ledPin, PinValue.Low);
         }
 

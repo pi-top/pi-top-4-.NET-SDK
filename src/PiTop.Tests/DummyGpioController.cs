@@ -23,17 +23,15 @@ namespace PiTop.Tests
 
         public PinNumberingScheme NumberingScheme { get; }
         public int PinCount { get; }
-        public IDisposable OpenPin(int pinNumber)
+        public void OpenPin(int pinNumber)
         {
             OpenPins.Add(pinNumber);
-            return Disposable.Create(() => ClosePin(pinNumber));
         }
 
-        public IDisposable OpenPin(int pinNumber, PinMode mode)
+        public void OpenPin(int pinNumber, PinMode mode)
         {
             OpenPins.Add(pinNumber);
             SetPinMode(pinNumber, mode);
-            return Disposable.Create(() => ClosePin(pinNumber));
         }
 
         public void ClosePin(int pinNumber)

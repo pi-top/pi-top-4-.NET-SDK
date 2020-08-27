@@ -22,14 +22,14 @@ namespace PiTop.Abstractions
         /// Opens a pin in order for it to be ready to use.
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
-        public IDisposable OpenPin(int pinNumber);
+        public void OpenPin(int pinNumber);
 
         /// <summary>
         /// Opens a pin and sets it to a specific mode.
         /// </summary>
         /// <param name="pinNumber">The pin number in the controller's numbering scheme.</param>
         /// <param name="mode">The mode to be set.</param>
-        public IDisposable OpenPin(int pinNumber, PinMode mode);
+        public void OpenPin(int pinNumber, PinMode mode);
 
         /// <summary>
         /// Closes an open pin.

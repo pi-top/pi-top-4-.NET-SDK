@@ -29,8 +29,8 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         protected override void OnConnection()
         {
             base.OnConnection();
-            AddToDisposables(Controller.OpenPin(_echoPin, PinMode.Input));
-            AddToDisposables(Controller.OpenPin(_triggerPin, PinMode.Output));
+            AddToDisposables(Controller.OpenPinAsDisposable(_echoPin, PinMode.Input));
+            AddToDisposables(Controller.OpenPinAsDisposable(_triggerPin, PinMode.Output));
             Controller.Write(_triggerPin, PinValue.Low);
             Controller.Read(_echoPin);
         }

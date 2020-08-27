@@ -30,18 +30,16 @@ namespace PiTop.Abstractions
 
         public int PinCount => _controller.PinCount;
 
-        public IDisposable OpenPin(int pinNumber)
+        public void OpenPin(int pinNumber)
         {
             _controller.OpenPin(pinNumber);
             _openPins.Add(pinNumber);
-            return Disposable.Create(() => ClosePin(pinNumber));
         }
 
-        public IDisposable OpenPin(int pinNumber, PinMode mode)
+        public void OpenPin(int pinNumber, PinMode mode)
         {
             _controller.OpenPin(pinNumber, mode);
             _openPins.Add(pinNumber);
-            return Disposable.Create(() => ClosePin(pinNumber));
         }
 
         public void ClosePin(int pinNumber)

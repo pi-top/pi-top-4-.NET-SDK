@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Device.Gpio;
-using System.Reactive.Disposables;
 
-using PiTop;
 using PiTop.Abstractions;
 
 namespace PiTopMakerArchitecture.Foundation.Sensors
@@ -15,14 +13,11 @@ namespace PiTopMakerArchitecture.Foundation.Sensors
         public Button(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             var (buttonPin, _) = Port.ToPinPair();
+            var openPinAsDisposable = Controller.OpenPinAsDisposable(buttonPin, PinMode.Input);
+            var registerCallbackForPinValueChangedEventAsDisposable = Controller.RegisterCallbackForPinValueChangedEventAsDisposable(buttonPin, PinEventTypes.Falling | PinEventTypes.Rising, Callback);
 
-            AddToDisposables(Disposable.Create(() =>
-            {
-                Controller.UnregisterCallbackForPinValueChangedEvent(buttonPin, Callback);
-            }));
-
-            AddToDisposables(Controller.OpenPin(buttonPin, PinMode.Input));
-            Controller.RegisterCallbackForPinValueChangedEvent(buttonPin, PinEventTypes.Falling | PinEventTypes.Rising, Callback);
+            AddToDisposables(registerCallbackForPinValueChangedEventAsDisposable);
+            AddToDisposables(openPinAsDisposable);
 
             IsPressed = Controller.Read(buttonPin) == PinValue.Low;
         }

@@ -21,8 +21,8 @@ namespace PiTop.OledDevice
             _dcPin = dcPin;
             _rstPin = rstPin;
 
-            _disposables.Add(_controller.OpenPin(_dcPin, PinMode.Output));
-            _disposables.Add(_controller.OpenPin(_rstPin, PinMode.Output));
+            _disposables.Add(_controller.OpenPinAsDisposable(_dcPin, PinMode.Output));
+            _disposables.Add(_controller.OpenPinAsDisposable(_rstPin, PinMode.Output));
 
             // Reset device
             _controller.Write(_rstPin, PinValue.Low);

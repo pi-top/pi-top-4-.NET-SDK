@@ -13,7 +13,7 @@ namespace PiTopMakerArchitecture.Foundation.Components
         public Buzzer(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
             (_buzzPin, _) = Port.ToPinPair();
-            AddToDisposables(Controller.OpenPin(_buzzPin, PinMode.Output));
+            AddToDisposables(Controller.OpenPinAsDisposable(_buzzPin, PinMode.Output));
         }
 
         public void On()
