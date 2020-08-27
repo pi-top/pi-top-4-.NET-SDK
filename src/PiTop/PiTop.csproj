@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="NetMQ" Version="4.0.0.207" />
-    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20276.1" />
+    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20421.3" />
     <PackageReference Include="System.Reactive" Version="4.3.2" />
     <PackageReference Include="UnitsNet" Version="4.69.0" />
   </ItemGroup>
