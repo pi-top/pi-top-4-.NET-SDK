@@ -87,7 +87,6 @@ namespace PiTop
         private void ResponseSocketOnReceiveReady(object? sender, NetMQSocketEventArgs e)
         {
             var messageString = e.Socket.ReceiveFrameString();
-            Console.WriteLine($"--- ZMQ message [{messageString}]");
             var message = PiTopMessage.Parse(messageString);
             MessageReceived?.Invoke(this, message);
         }

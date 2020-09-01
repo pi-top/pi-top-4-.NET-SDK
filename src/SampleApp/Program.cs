@@ -3,10 +3,13 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using PiTop;
+
 using PiTopMakerArchitecture.Foundation;
 using PiTopMakerArchitecture.Foundation.Components;
 using PiTopMakerArchitecture.Foundation.Sensors;
+
 using SixLabors.ImageSharp;
 
 namespace SampleApp
@@ -62,12 +65,10 @@ namespace SampleApp
             var board = PiTop4Board.Instance;
 
             board.BatteryStateChanged += BoardOnBatteryStateChanged;
-            board.RefreshBatteryState();
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
-                PrintBatteryState(board.BatteryState);
-
+                await board.RefreshBatteryState();
                 Console.WriteLine("press enter key to exit");
             }, cancellationSource.Token);
 
@@ -96,10 +97,10 @@ namespace SampleApp
         private static Task TestPotentiometer(AnaloguePort port)
         {
             var cancellationSource = new CancellationTokenSource();
-            
+
             var board = PiTop4Board.Instance;
             var plate = board.GetOrCreatePlate<FoundationPlate>();
-           
+
             Task.Run(() =>
             {
                 var potentiometer = plate.GetOrCreatePotentiometer(port);
@@ -108,7 +109,7 @@ namespace SampleApp
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Select(_ => potentiometer.Position)
                     .Subscribe(Console.WriteLine);
-             
+
                 Console.WriteLine("press enter key to exit");
             }, cancellationSource.Token);
 
@@ -130,7 +131,7 @@ namespace SampleApp
             {
 
                 var button = plate.GetOrCreateButton(buttonPort);
-                
+
                 foreach (var digitalPort in ledPorts)
                 {
                     plate.GetOrCreateLed(digitalPort);
