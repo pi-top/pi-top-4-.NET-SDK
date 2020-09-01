@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PiTop
@@ -6,6 +7,25 @@ namespace PiTop
     
     public class BatteryState
     {
+        private sealed class BatteryStateEqualityComparer : IEqualityComparer<BatteryState>
+        {
+            public bool Equals(BatteryState x, BatteryState y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (ReferenceEquals(x, null)) return false;
+                if (ReferenceEquals(y, null)) return false;
+                if (x.GetType() != y.GetType()) return false;
+                return x.ChargingState == y.ChargingState && x.Capacity.Equals(y.Capacity) && x.TimeRemaining.Equals(y.TimeRemaining) && x.Wattage.Equals(y.Wattage);
+            }
+
+            public int GetHashCode(BatteryState obj)
+            {
+                return HashCode.Combine((int) obj.ChargingState, obj.Capacity, obj.TimeRemaining, obj.Wattage);
+            }
+        }
+
+        public static IEqualityComparer<BatteryState> BatteryStateComparer { get; } = new BatteryStateEqualityComparer();
+
         public static BatteryState FromMessage(PiTopMessage message)
         {
             var args = message.Parameters.ToArray();

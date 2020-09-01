@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
+
 using PiTop.Abstractions;
 
 
@@ -244,9 +245,11 @@ namespace PiTop
         private void ProcessBatteryState(PiTopMessage message)
         {
             var newState = BatteryState.FromMessage(message);
-            BatteryState = newState;
-
-            BatteryStateChanged?.Invoke(this, newState);
+            if (!BatteryState.BatteryStateComparer.Equals(BatteryState, newState))
+            {
+                BatteryState = newState;
+                BatteryStateChanged?.Invoke(this, newState);
+            }
         }
 
         public I2cDevice GetOrCreateI2CDevice(int deviceAddress)
@@ -301,7 +304,7 @@ namespace PiTop
 
         public Task RefreshBatteryState()
         {
-           return  _moduleDriverClient.RequestBatteryState();
+            return _moduleDriverClient.RequestBatteryState();
         }
     }
 }
