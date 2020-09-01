@@ -59,7 +59,10 @@ namespace SampleApp
         {
             using var board = PiTop4Board.Instance;
 
-            Console.WriteLine(board.BatteryState);
+            Console.WriteLine(board.BatteryState.ChargingState);
+            Console.WriteLine(board.BatteryState.Capacity);
+            Console.WriteLine(board.BatteryState.TimeRemaining);
+            Console.WriteLine(board.BatteryState.Wattage);
 
             return  Task.CompletedTask;
         }
