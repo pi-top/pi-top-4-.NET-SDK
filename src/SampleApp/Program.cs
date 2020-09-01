@@ -55,16 +55,45 @@ namespace SampleApp
             Console.WriteLine("done");
         }
 
-        private static async Task TestBoard()
+        private static Task TestBoard()
         {
-            using var board = PiTop4Board.Instance;
+            var cancellationSource = new CancellationTokenSource();
+            var board = PiTop4Board.Instance;
+
+            board.BatteryStateChanged += BoardOnBatteryStateChanged;
 
             Console.WriteLine(board.BatteryState.ChargingState);
             Console.WriteLine(board.BatteryState.Capacity);
             Console.WriteLine(board.BatteryState.TimeRemaining);
             Console.WriteLine(board.BatteryState.Wattage);
 
-            await Task.Delay(3000);
+            Task.Run(() =>
+            {
+                PrintBatteryState(board.BatteryState);
+
+                Console.WriteLine("press enter key to exit");
+            }, cancellationSource.Token);
+
+            return Task.Run(() =>
+            {
+                Console.ReadLine();
+                board.BatteryStateChanged -= BoardOnBatteryStateChanged;
+                board.Dispose();
+                cancellationSource.Cancel(false);
+            }, cancellationSource.Token);
+        }
+
+        private static void BoardOnBatteryStateChanged(object? sender, BatteryState state)
+        {
+            PrintBatteryState(state);
+        }
+
+        private static void PrintBatteryState(BatteryState state)
+        {
+            Console.WriteLine(state.ChargingState);
+            Console.WriteLine(state.Capacity);
+            Console.WriteLine(state.TimeRemaining);
+            Console.WriteLine(state.Wattage);
         }
 
         private static Task TestPotentiometer(AnaloguePort port)
