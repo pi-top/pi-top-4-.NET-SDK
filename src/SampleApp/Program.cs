@@ -30,7 +30,7 @@ namespace SampleApp
             switch (read.KeyChar)
             {
                 case '0':
-                    await TestModule();
+                    await TestBoard();
                     break;
                 case '1':
                     await TestPotentiometer(AnaloguePort.A0);
@@ -55,13 +55,11 @@ namespace SampleApp
             Console.WriteLine("done");
         }
 
-        private static Task TestModule()
+        private static Task TestBoard()
         {
-            var cancellationSource = new CancellationTokenSource();
+            using var board = PiTop4Board.Instance;
 
-            using var module = PiTop4Board.Instance;
-
-            Console.WriteLine(module.BatteryState);
+            Console.WriteLine(board.BatteryState);
 
             return  Task.CompletedTask;
         }
@@ -70,8 +68,8 @@ namespace SampleApp
         {
             var cancellationSource = new CancellationTokenSource();
             
-            var module = PiTop4Board.Instance;
-            var plate = module.GetOrCreatePlate<FoundationPlate>();
+            var board = PiTop4Board.Instance;
+            var plate = board.GetOrCreatePlate<FoundationPlate>();
            
             Task.Run(() =>
             {
@@ -88,7 +86,7 @@ namespace SampleApp
             return Task.Run(() =>
             {
                 Console.ReadLine();
-                module.Dispose();
+                board.Dispose();
                 cancellationSource.Cancel(false);
             }, cancellationSource.Token);
         }
@@ -96,8 +94,8 @@ namespace SampleApp
         private static Task TestButton(DigitalPort buttonPort, DigitalPort[] ledPorts)
         {
             var cancellationSource = new CancellationTokenSource();
-            var module = PiTop4Board.Instance;
-            var plate = module.GetOrCreatePlate<FoundationPlate>();
+            var board = PiTop4Board.Instance;
+            var plate = board.GetOrCreatePlate<FoundationPlate>();
 
             Task.Run(() =>
             {
@@ -138,7 +136,7 @@ namespace SampleApp
             return Task.Run(() =>
             {
                 Console.ReadLine();
-                module.Dispose();
+                board.Dispose();
                 cancellationSource.Cancel(false);
             }, cancellationSource.Token);
 
@@ -146,8 +144,8 @@ namespace SampleApp
 
         private static Task TestSemaphore(DigitalPort ultrasonicSensorPort, DigitalPort greenLedPort, DigitalPort yellowLedPort, DigitalPort redLedPort, int greenThreshold, int yellowThreshold, int redThreshold)
         {
-            var module = PiTop4Board.Instance;
-            var plate = module.GetOrCreatePlate<FoundationPlate>();
+            var board = PiTop4Board.Instance;
+            var plate = board.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
             var greenLed = plate.GetOrCreateLed(greenLedPort, Color.Green);
@@ -195,7 +193,7 @@ namespace SampleApp
             return Task.Run(() =>
             {
                 Console.ReadLine();
-                module.Dispose();
+                board.Dispose();
                 ClearLeds();
                 cancellationSource.Cancel(false);
             }, cancellationSource.Token);
@@ -210,8 +208,8 @@ namespace SampleApp
 
         private static Task TestUltrasoundSensor()
         {
-            var module = PiTop4Board.Instance;
-            var plate = module.GetOrCreatePlate<FoundationPlate>();
+            var board = PiTop4Board.Instance;
+            var plate = board.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
             Task.Run(() =>
@@ -228,7 +226,7 @@ namespace SampleApp
             return Task.Run(() =>
                 {
                     Console.ReadLine();
-                    module.Dispose();
+                    board.Dispose();
                     cancellationSource.Cancel(false);
                 }, cancellationSource.Token);
         }
