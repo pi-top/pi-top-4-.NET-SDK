@@ -17,7 +17,7 @@ namespace PiTop.Camera.InteractiveExtension
     {
         public Task OnLoadAsync(Kernel kernel)
         {
-            Formatter<Mat>.Register((openCvImage, writer) =>
+            Formatter.Register<Mat>((openCvImage, writer) =>
             {
                 var id = Guid.NewGuid().ToString("N");
                 var data = openCvImage.ImEncode(".png");
@@ -25,7 +25,7 @@ namespace PiTop.Camera.InteractiveExtension
                 writer.Write(imgTag);
             }, HtmlFormatter.MimeType);
 
-            Formatter<Bitmap>.Register((bitmapImage, writer) =>
+            Formatter.Register<Bitmap>((bitmapImage, writer) =>
             {
                 var id = Guid.NewGuid().ToString("N");
                 using var stream = new MemoryStream();

@@ -12,7 +12,7 @@ namespace PiTop.InteractiveExtension
     {
         public Task OnLoadAsync(Kernel kernel)
         {
-            Formatter<Sh1106Display>.Register((d, w) =>
+            Formatter.Register<Sh1106Display>((d, w) =>
             {
                 using (MemoryStream s = new MemoryStream())
                 {
