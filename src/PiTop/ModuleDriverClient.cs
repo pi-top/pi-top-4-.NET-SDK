@@ -43,12 +43,18 @@ namespace PiTop
 
         public void RequestBatteryState()
         {
-            using (var requestSocket = new RequestSocket())
+            var requestSocket = new RequestSocket();
+
+            requestSocket.Connect("tcp://127.0.0.1:3782");
+            var request = new PiTopMessage(PiTop4MessageId.REQ_GET_BATTERY_STATE);
+            requestSocket.SendFrame(request.ToString());
+            Task.Run(() =>
             {
-                requestSocket.Connect("tcp://127.0.0.1:3782");
-                var request = new PiTopMessage(PiTop4MessageId.REQ_GET_BATTERY_STATE);
-                requestSocket.SendFrame(request.ToString());
-            }
+                var messageString = requestSocket.ReceiveFrameString();
+                requestSocket.Dispose();
+                var message = PiTopMessage.Parse(messageString);
+                MessageReceived?.Invoke(this, message);
+            });
         }
 
         public void RequestDeviceId()
