@@ -81,7 +81,7 @@ namespace SampleApp
             }, cancellationSource.Token);
         }
 
-        private static void BoardOnBatteryStateChanged(object? sender, BatteryState state)
+        private static void BoardOnBatteryStateChanged(object sender, BatteryState state)
         {
             PrintBatteryState(state);
         }

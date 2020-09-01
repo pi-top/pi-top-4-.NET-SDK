@@ -9,8 +9,9 @@ namespace PiTop
     {
         private sealed class BatteryStateEqualityComparer : IEqualityComparer<BatteryState>
         {
-            public bool Equals(BatteryState x, BatteryState y)
+            public bool Equals(BatteryState? x, BatteryState? y)
             {
+                if (x == null) throw new ArgumentNullException(nameof(x));
                 if (ReferenceEquals(x, y)) return true;
                 if (ReferenceEquals(x, null)) return false;
                 if (ReferenceEquals(y, null)) return false;
