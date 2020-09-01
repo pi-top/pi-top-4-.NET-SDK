@@ -80,7 +80,9 @@ namespace PiTop
 
         private void ResponseSocketOnReceiveReady(object? sender, NetMQSocketEventArgs e)
         {
-            var message = PiTopMessage.Parse(e.Socket.ReceiveFrameString());
+            var messageString = e.Socket.ReceiveFrameString();
+            Console.WriteLine($"---{messageString}");
+            var message = PiTopMessage.Parse(messageString);
             MessageReceived?.Invoke(this, message);
         }
 

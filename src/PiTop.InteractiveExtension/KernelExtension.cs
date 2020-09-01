@@ -1,9 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
+
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Formatting;
+
 using SixLabors.ImageSharp;
+
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 
 namespace PiTop.InteractiveExtension

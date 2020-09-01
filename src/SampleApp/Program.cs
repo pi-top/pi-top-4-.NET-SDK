@@ -26,7 +26,8 @@ namespace SampleApp
 5 semaphore test");
 
             var read = Console.ReadKey();
-
+            Console.WriteLine();
+            Console.WriteLine();
             switch (read.KeyChar)
             {
                 case '0':
