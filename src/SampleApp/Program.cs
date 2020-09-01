@@ -55,7 +55,7 @@ namespace SampleApp
             Console.WriteLine("done");
         }
 
-        private static Task TestBoard()
+        private static async Task TestBoard()
         {
             using var board = PiTop4Board.Instance;
 
@@ -64,7 +64,7 @@ namespace SampleApp
             Console.WriteLine(board.BatteryState.TimeRemaining);
             Console.WriteLine(board.BatteryState.Wattage);
 
-            return  Task.CompletedTask;
+            await Task.Delay(3000);
         }
 
         private static Task TestPotentiometer(AnaloguePort port)
