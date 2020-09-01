@@ -15,7 +15,7 @@ namespace PiTop
             var timeRemaining = TimeSpan.FromMinutes(int.Parse(args[2]));
             var wattage = double.Parse(args[3]);
             var state = new BatteryState(chargingState, capacity, timeRemaining, wattage);
-            return state
+            return state;
         }
 
         public BatteryState(BatteryChargingState chargingState, double capacity, TimeSpan timeRemaining, double wattage)
