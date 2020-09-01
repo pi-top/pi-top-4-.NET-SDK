@@ -62,11 +62,7 @@ namespace SampleApp
             var board = PiTop4Board.Instance;
 
             board.BatteryStateChanged += BoardOnBatteryStateChanged;
-
-            Console.WriteLine(board.BatteryState.ChargingState);
-            Console.WriteLine(board.BatteryState.Capacity);
-            Console.WriteLine(board.BatteryState.TimeRemaining);
-            Console.WriteLine(board.BatteryState.Wattage);
+            board.RefreshBatteryState();
 
             Task.Run(() =>
             {

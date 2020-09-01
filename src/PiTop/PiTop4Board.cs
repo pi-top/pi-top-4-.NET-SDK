@@ -298,5 +298,10 @@ namespace PiTop
             var deviceFactory = new ConnectedDeviceFactory<TConnectionConfiguration, TDevice>(defaultDeviceFactoryGenerator);
             AddDeviceFactory(deviceFactory);
         }
+
+        public void RefreshBatteryState()
+        {
+            _moduleDriverClient.RequestBatteryState();
+        }
     }
 }
