@@ -18,6 +18,7 @@ namespace SampleApp
             Console.WriteLine("ready");
 
             Console.WriteLine(@"Select one of the options
+0 module test
 1 potentiometer test
 2 button test
 3 led test
@@ -28,6 +29,9 @@ namespace SampleApp
 
             switch (read.KeyChar)
             {
+                case '0':
+                    await TestModule();
+                    break;
                 case '1':
                     await TestPotentiometer(AnaloguePort.A0);
                     break;
@@ -51,11 +55,22 @@ namespace SampleApp
             Console.WriteLine("done");
         }
 
+        private static Task TestModule()
+        {
+            var cancellationSource = new CancellationTokenSource();
+
+            using var module = PiTop4Board.Instance;
+
+            Console.WriteLine(module.BatteryState);
+
+            return  Task.CompletedTask;
+        }
+
         private static Task TestPotentiometer(AnaloguePort port)
         {
             var cancellationSource = new CancellationTokenSource();
             
-            var module = PiTopModule.Instance;
+            var module = PiTop4Board.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
            
             Task.Run(() =>
@@ -81,7 +96,7 @@ namespace SampleApp
         private static Task TestButton(DigitalPort buttonPort, DigitalPort[] ledPorts)
         {
             var cancellationSource = new CancellationTokenSource();
-            var module = PiTopModule.Instance;
+            var module = PiTop4Board.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             Task.Run(() =>
@@ -131,7 +146,7 @@ namespace SampleApp
 
         private static Task TestSemaphore(DigitalPort ultrasonicSensorPort, DigitalPort greenLedPort, DigitalPort yellowLedPort, DigitalPort redLedPort, int greenThreshold, int yellowThreshold, int redThreshold)
         {
-            var module = PiTopModule.Instance;
+            var module = PiTop4Board.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
@@ -195,14 +210,14 @@ namespace SampleApp
 
         private static Task TestUltrasoundSensor()
         {
-            var module = PiTopModule.Instance;
+            var module = PiTop4Board.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var cancellationSource = new CancellationTokenSource();
             Task.Run(() =>
             {
                 var sensor =
-                    plate.GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D3, (dp,c) => new UltrasonicSensor(dp,c));
+                    plate.GetOrCreateDevice(DigitalPort.D3, (dp,c) => new UltrasonicSensor(dp,c));
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Subscribe(_ => { Console.WriteLine(sensor.Distance); });
@@ -220,7 +235,7 @@ namespace SampleApp
 
         private static async Task TestLed01()
         {
-            var module = PiTopModule.Instance;
+            var module = PiTop4Board.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var ports = DigitalPort.D0.GetDigitalPortRange(3);
@@ -234,7 +249,7 @@ namespace SampleApp
             }
 
             var pos = 0;
-            for (var i = 0; i < (leds.Length * 10); i++)
+            for (var i = 0; i < leds.Length * 10; i++)
             {
                 leds[pos].Toggle();
                 pos = (pos + 1) % 3;

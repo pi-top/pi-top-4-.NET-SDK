@@ -5,14 +5,14 @@ using System.Linq;
 namespace PiTop
 {
     public class PiTopMessage {
-        public PiTopMessage(PiTopMessageId messageId, params string[] parameters)
+        public PiTopMessage(PiTop4MessageId messageId, params string[] parameters)
         {
             Id = messageId;
             Parameters = parameters ?? Enumerable.Empty<string>();
 
         }
 
-        public PiTopMessage(PiTopMessageId messageId, IEnumerable<string> parameters)
+        public PiTopMessage(PiTop4MessageId messageId, IEnumerable<string> parameters)
         {
             Id = messageId;
             Parameters = parameters ?? Enumerable.Empty<string>();
@@ -38,13 +38,13 @@ namespace PiTop
             }
             
             
-            var id = (PiTopMessageId)parsedId;
+            var id = (PiTop4MessageId)parsedId;
 
             return new PiTopMessage(id, parts.Skip(1));
         }
 
         public IEnumerable<string> Parameters { get;  }
 
-        public PiTopMessageId Id { get;  }
+        public PiTop4MessageId Id { get;  }
     }
 }

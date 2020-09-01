@@ -15,19 +15,19 @@ namespace PiTop
 
     internal class ModuleDriverClient : IModuleDriverClient
     {
-        private readonly SubscriberSocket _reponseSocket;
+        private readonly SubscriberSocket _responseSocket;
         private readonly NetMQPoller _poller;
         private readonly CancellationTokenSource _cancellationSource;
         public event EventHandler<PiTopMessage>? MessageReceived;
 
         public ModuleDriverClient()
         {
-            _reponseSocket = new SubscriberSocket();
+            _responseSocket = new SubscriberSocket();
             _cancellationSource = new CancellationTokenSource();
-            _reponseSocket.ReceiveReady += ResponseSocketOnReceiveReady;
+            _responseSocket.ReceiveReady += ResponseSocketOnReceiveReady;
             _poller = new NetMQPoller
             {
-                _reponseSocket
+                _responseSocket
             };
         }
 
@@ -36,7 +36,27 @@ namespace PiTop
             using (var requestSocket = new RequestSocket())
             {
                 requestSocket.Connect("tcp://127.0.0.1:3782");
-                var request = new PiTopMessage(PiTopMessageId.REQ_SET_OLED_CONTROL, "1");
+                var request = new PiTopMessage(PiTop4MessageId.REQ_SET_OLED_CONTROL, "1");
+                requestSocket.SendFrame(request.ToString());
+            }
+        }
+
+        public void RequestBatteryState()
+        {
+            using (var requestSocket = new RequestSocket())
+            {
+                requestSocket.Connect("tcp://127.0.0.1:3782");
+                var request = new PiTopMessage(PiTop4MessageId.REQ_GET_BATTERY_STATE);
+                requestSocket.SendFrame(request.ToString());
+            }
+        }
+
+        public void RequestDeviceId()
+        {
+            using (var requestSocket = new RequestSocket())
+            {
+                requestSocket.Connect("tcp://127.0.0.1:3782");
+                var request = new PiTopMessage(PiTop4MessageId.REQ_GET_DEVICE_ID);
                 requestSocket.SendFrame(request.ToString());
             }
         }
@@ -46,15 +66,15 @@ namespace PiTop
             using (var requestSocket = new RequestSocket())
             {
                 requestSocket.Connect("tcp://127.0.0.1:3782");
-                var request = new PiTopMessage(PiTopMessageId.REQ_SET_OLED_CONTROL, "0");
+                var request = new PiTopMessage(PiTop4MessageId.REQ_SET_OLED_CONTROL, "0");
                 requestSocket.SendFrame(request.ToString());
             }
         }
 
         public void Start()
         {
-            _reponseSocket.Connect("tcp://127.0.0.1:3781");
-            _reponseSocket.Subscribe("");
+            _responseSocket.Connect("tcp://127.0.0.1:3781");
+            _responseSocket.Subscribe("");
             Task.Run(() => { _poller.Run(); }, _cancellationSource.Token);
         }
 
@@ -72,8 +92,8 @@ namespace PiTop
                 _poller.Stop();
             }
 
-            _reponseSocket.Disconnect("tcp://127.0.0.1:3781");
-            _poller.RemoveAndDispose(_reponseSocket);
+            _responseSocket.Disconnect("tcp://127.0.0.1:3781");
+            _poller.RemoveAndDispose(_responseSocket);
         }
     }
 }

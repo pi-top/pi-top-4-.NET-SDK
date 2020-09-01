@@ -12,12 +12,12 @@ namespace PiTopMakerArchitecture.Foundation.Tests
 {
     public class FoundationPlateTests: IDisposable
     {
-        private readonly PiTopModule _module;
+        private readonly PiTop4Board _module;
 
         public FoundationPlateTests()
         {
-            PiTopModule.Configure(new DummyGpioController());
-            _module = PiTopModule.Instance;
+            PiTop4Board.Configure(new DummyGpioController());
+            _module = PiTop4Board.Instance;
         }
         [Fact]
         public void can_obtain_plate_from_module()

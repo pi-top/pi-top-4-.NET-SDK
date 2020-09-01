@@ -7,11 +7,11 @@ namespace PiTop
 {
     public abstract class PiTopPlate : IDisposable
     {
-        protected PiTopModule Module { get; }
+        protected PiTop4Board Module { get; }
 
         public abstract IEnumerable<IConnectedDevice> Devices { get; }
 
-        protected PiTopPlate(PiTopModule module)
+        protected PiTopPlate(PiTop4Board module)
         {
             Module = module ?? throw new ArgumentNullException(nameof(module));
         }

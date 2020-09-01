@@ -7,7 +7,7 @@ namespace PiTop.Camera.App
     {
         static void Main(string[] args)
         {
-            using var module = PiTopModule.Instance
+            using var module = PiTop4Board.Instance
                 .UseCamera();
 
             var count = OpenCvCamera.GetCameraCount();

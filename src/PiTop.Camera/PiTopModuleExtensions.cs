@@ -8,7 +8,7 @@ namespace PiTop.Camera
 {
     public static class PiTopModuleExtensions
     {
-        public static PiTopModule UseCamera(this PiTopModule module)
+        public static PiTop4Board UseCamera(this PiTop4Board module)
         {
             module.AddDeviceFactory<int, ICamera>(deviceType =>
             {
@@ -34,7 +34,7 @@ namespace PiTop.Camera
             return module;
         }
 
-        public static T GetOrCreateCamera<T>(this PiTopModule module, int index)
+        public static T GetOrCreateCamera<T>(this PiTop4Board module, int index)
          where T : ICamera
         {
             
@@ -54,13 +54,13 @@ namespace PiTop.Camera
             return factory.GetOrCreateDevice<T>(index);
         }
 
-        public static T GetOrCreateCamera<T>(this PiTopModule module, DirectoryInfo directory, string imageFileSearchPattern = "*.png") where T : FileSystemCamera
+        public static T GetOrCreateCamera<T>(this PiTop4Board module, DirectoryInfo directory, string imageFileSearchPattern = "*.png") where T : FileSystemCamera
         {
             return module.GetOrCreateCamera<T>(
                 new FileSystemCameraSettings(directory, imageFileSearchPattern));
         }
 
-        public static T GetOrCreateCamera<T>(this PiTopModule module, FileSystemCameraSettings settings) where T : FileSystemCamera
+        public static T GetOrCreateCamera<T>(this PiTop4Board module, FileSystemCameraSettings settings) where T : FileSystemCamera
         {
             IConnectedDeviceFactory<FileSystemCameraSettings, FileSystemCamera> factory = null!; 
             try
@@ -87,7 +87,7 @@ namespace PiTop.Camera
             }
         }
 
-        public static void DisposeDevice<T>(this PiTopModule module, T device)
+        public static void DisposeDevice<T>(this PiTop4Board module, T device)
             where T : ICamera
         {
             var factory = module.GetDeviceFactory<int, ICamera>();
@@ -95,7 +95,7 @@ namespace PiTop.Camera
             factory.DisposeDevice(device);
         }
 
-        public static void DisposeDevice(this PiTopModule module, FileSystemCamera device)
+        public static void DisposeDevice(this PiTop4Board module, FileSystemCamera device)
         {
             var factory = module.GetDeviceFactory<FileSystemCameraSettings, FileSystemCamera>();
             AssertFactory(factory);

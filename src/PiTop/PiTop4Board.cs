@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Device.I2c;
 using System.Device.Spi;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
-using System.Threading;
+
 using PiTop.Abstractions;
 
 
 namespace PiTop
 {
-    public class PiTopModule :
+    public class PiTop4Board :
         IDisposable,
         II2CDeviceFactory,
         IGpioControllerFactory,
@@ -62,14 +61,17 @@ namespace PiTop
             }
         }
 
+        public event EventHandler<BatteryWarningLevel>? BatteryWarning;
         public event EventHandler<BatteryState>? BatteryStateChanged;
 
-        private static PiTopModule? _instance;
+        public BatteryState BatteryState { get; private set; }
+
+        private static PiTop4Board? _instance;
         private static IGpioController? _defaultController;
 
         public static void Configure(IGpioController controller)
         {
-            
+
             if (_instance != null)
             {
                 throw new InvalidOperationException("cannot change configuration with an existing instance");
@@ -77,11 +79,11 @@ namespace PiTop
 
             _defaultController = controller;
         }
-        public static PiTopModule Instance => _instance ??= new PiTopModule(_defaultController??=new GpioController().AsManaged());
+        public static PiTop4Board Instance => _instance ??= new PiTop4Board(_defaultController ??= new GpioController().AsManaged());
 
-        private PiTopModule(IGpioController controller)
+        private PiTop4Board(IGpioController controller)
         {
-
+            BatteryState = BatteryState.Empty;
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
             _moduleDriverClient = new ModuleDriverClient();
             _moduleDriverClient.MessageReceived += ModuleDriverClientMessageReceived;
@@ -110,6 +112,8 @@ namespace PiTop
             _moduleDriverClient.Start();
             _disposables.Add(_moduleDriverClient);
             _disposables.Add(_controller);
+
+            _moduleDriverClient.RequestBatteryState();
         }
 
         public T GetOrCreatePlate<T>() where T : PiTopPlate
@@ -129,150 +133,120 @@ namespace PiTop
         {
             switch (message.Id)
             {
-                case PiTopMessageId.REQ_PING:
+                case PiTop4MessageId.RSP_ERR_SERVER:
                     break;
-                case PiTopMessageId.REQ_GET_DEVICE_ID:
+                case PiTop4MessageId.RSP_ERR_MALFORMED:
                     break;
-                case PiTopMessageId.REQ_GET_BRIGHTNESS:
+                case PiTop4MessageId.RSP_ERR_UNSUPPORTED:
                     break;
-                case PiTopMessageId.REQ_SET_BRIGHTNESS:
+                case PiTop4MessageId.RSP_PING:
                     break;
-                case PiTopMessageId.REQ_INCREMENT_BRIGHTNESS:
+                case PiTop4MessageId.RSP_GET_DEVICE_ID:
                     break;
-                case PiTopMessageId.REQ_DECREMENT_BRIGHTNESS:
+                case PiTop4MessageId.RSP_GET_BRIGHTNESS:
                     break;
-                case PiTopMessageId.REQ_BLANK_SCREEN:
+                case PiTop4MessageId.RSP_SET_BRIGHTNESS:
                     break;
-                case PiTopMessageId.REQ_UNBLANK_SCREEN:
+                case PiTop4MessageId.RSP_INCREMENT_BRIGHTNESS:
                     break;
-                case PiTopMessageId.REQ_GET_BATTERY_STATE:
+                case PiTop4MessageId.RSP_DECREMENT_BRIGHTNESS:
                     break;
-                case PiTopMessageId.REQ_GET_PERIPHERAL_ENABLED:
+                case PiTop4MessageId.RSP_GET_BATTERY_STATE:
+                    ProcessBatteryState(message);
                     break;
-                case PiTopMessageId.REQ_GET_SCREEN_BLANKING_TIMEOUT:
+                case PiTop4MessageId.RSP_GET_PERIPHERAL_ENABLED:
                     break;
-                case PiTopMessageId.REQ_SET_SCREEN_BLANKING_TIMEOUT:
+                case PiTop4MessageId.RSP_GET_SCREEN_BLANKING_TIMEOUT:
                     break;
-                case PiTopMessageId.REQ_GET_LID_OPEN_STATE:
+                case PiTop4MessageId.RSP_SET_SCREEN_BLANKING_TIMEOUT:
                     break;
-                case PiTopMessageId.REQ_GET_SCREEN_BACKLIGHT_STATE:
+                case PiTop4MessageId.RSP_GET_SCREEN_BACKLIGHT_STATE:
                     break;
-                case PiTopMessageId.REQ_SET_SCREEN_BACKLIGHT_STATE:
+                case PiTop4MessageId.RSP_SET_SCREEN_BACKLIGHT_STATE:
                     break;
-                case PiTopMessageId.REQ_GET_OLED_CONTROL:
+                case PiTop4MessageId.RSP_GET_OLED_CONTROL:
                     break;
-                case PiTopMessageId.REQ_SET_OLED_CONTROL:
+                case PiTop4MessageId.RSP_SET_OLED_CONTROL:
                     break;
-                case PiTopMessageId.RSP_ERR_SERVER:
+                case PiTop4MessageId.PUB_BRIGHTNESS_CHANGED:
                     break;
-                case PiTopMessageId.RSP_ERR_MALFORMED:
+                case PiTop4MessageId.PUB_PERIPHERAL_CONNECTED:
                     break;
-                case PiTopMessageId.RSP_ERR_UNSUPPORTED:
+                case PiTop4MessageId.PUB_PERIPHERAL_DISCONNECTED:
                     break;
-                case PiTopMessageId.RSP_PING:
+                case PiTop4MessageId.PUB_SHUTDOWN_REQUESTED:
                     break;
-                case PiTopMessageId.RSP_GET_DEVICE_ID:
+                case PiTop4MessageId.PUB_REBOOT_REQUIRED:
                     break;
-                case PiTopMessageId.RSP_GET_BRIGHTNESS:
+                case PiTop4MessageId.PUB_BATTERY_STATE_CHANGED:
+                    ProcessBatteryState(message);
                     break;
-                case PiTopMessageId.RSP_SET_BRIGHTNESS:
+                case PiTop4MessageId.PUB_SCREEN_BLANKED:
                     break;
-                case PiTopMessageId.RSP_INCREMENT_BRIGHTNESS:
+                case PiTop4MessageId.PUB_SCREEN_UNBLANKED:
                     break;
-                case PiTopMessageId.RSP_DECREMENT_BRIGHTNESS:
+                case PiTop4MessageId.PUB_LOW_BATTERY_WARNING:
+                    BatteryWarning?.Invoke(this, BatteryWarningLevel.Low);
                     break;
-                case PiTopMessageId.RSP_GET_BATTERY_STATE:
+                case PiTop4MessageId.PUB_CRITICAL_BATTERY_WARNING:
+                    BatteryWarning?.Invoke(this, BatteryWarningLevel.Critical);
                     break;
-                case PiTopMessageId.RSP_GET_PERIPHERAL_ENABLED:
+                case PiTop4MessageId.PUB_UNSUPPORTED_HARDWARE:
                     break;
-                case PiTopMessageId.RSP_GET_SCREEN_BLANKING_TIMEOUT:
-                    break;
-                case PiTopMessageId.RSP_SET_SCREEN_BLANKING_TIMEOUT:
-                    break;
-                case PiTopMessageId.RSP_GET_LID_OPEN_STATE:
-                    break;
-                case PiTopMessageId.RSP_GET_SCREEN_BACKLIGHT_STATE:
-                    break;
-                case PiTopMessageId.RSP_SET_SCREEN_BACKLIGHT_STATE:
-                    break;
-                case PiTopMessageId.RSP_GET_OLED_CONTROL:
-                    break;
-                case PiTopMessageId.RSP_SET_OLED_CONTROL:
-                    break;
-                case PiTopMessageId.PUB_BRIGHTNESS_CHANGED:
-                    break;
-                case PiTopMessageId.PUB_PERIPHERAL_CONNECTED:
-                    break;
-                case PiTopMessageId.PUB_PERIPHERAL_DISCONNECTED:
-                    break;
-                case PiTopMessageId.PUB_SHUTDOWN_REQUESTED:
-                    break;
-                case PiTopMessageId.PUB_REBOOT_REQUIRED:
-                    break;
-                case PiTopMessageId.PUB_BATTERY_STATE_CHANGED:
-                    break;
-                case PiTopMessageId.PUB_SCREEN_BLANKED:
-                    break;
-                case PiTopMessageId.PUB_SCREEN_UNBLANKED:
-                    break;
-                case PiTopMessageId.PUB_LOW_BATTERY_WARNING:
-                    BatteryStateChanged?.Invoke(this, BatteryState.Low);
-                    break;
-                case PiTopMessageId.PUB_CRITICAL_BATTERY_WARNING:
-                    BatteryStateChanged?.Invoke(this, BatteryState.Critical);
-                    break;
-                case PiTopMessageId.PUB_LID_CLOSED:
-                    break;
-                case PiTopMessageId.PUB_LID_OPENED:
-                    break;
-                case PiTopMessageId.PUB_UNSUPPORTED_HARDWARE:
-                    break;
-                case PiTopMessageId.PUB_V3_BUTTON_UP_PRESSED:
+                case PiTop4MessageId.PUB_V3_BUTTON_UP_PRESSED:
                     UpButton.State = PiTopButtonState.Pressed;
                     break;
-                case PiTopMessageId.PUB_V3_BUTTON_UP_RELEASED:
+                case PiTop4MessageId.PUB_V3_BUTTON_UP_RELEASED:
                     UpButton.State = PiTopButtonState.Released;
                     break;
-                case PiTopMessageId.PUB_V3_BUTTON_DOWN_PRESSED:
+                case PiTop4MessageId.PUB_V3_BUTTON_DOWN_PRESSED:
                     DownButton.State = PiTopButtonState.Pressed;
                     break;
-                case PiTopMessageId.PUB_V3_BUTTON_DOWN_RELEASED:
+                case PiTop4MessageId.PUB_V3_BUTTON_DOWN_RELEASED:
                     DownButton.State = PiTopButtonState.Released;
                     break;
-                case PiTopMessageId.PUB_V3_BUTTON_SELECT_PRESSED:
+                case PiTop4MessageId.PUB_V3_BUTTON_SELECT_PRESSED:
                     SelectButton.State = PiTopButtonState.Pressed;
                     break;
-                case PiTopMessageId.PUB_V3_BUTTON_SELECT_RELEASED:
+                case PiTop4MessageId.PUB_V3_BUTTON_SELECT_RELEASED:
                     SelectButton.State = PiTopButtonState.Released;
                     break;
-                case PiTopMessageId.PUB_V3_BUTTON_CANCEL_PRESSED:
+                case PiTop4MessageId.PUB_V3_BUTTON_CANCEL_PRESSED:
                     CancelButton.State = PiTopButtonState.Pressed;
                     break;
-                case PiTopMessageId.PUB_V3_BUTTON_CANCEL_RELEASED:
+                case PiTop4MessageId.PUB_V3_BUTTON_CANCEL_RELEASED:
                     CancelButton.State = PiTopButtonState.Released;
                     break;
-                case PiTopMessageId.PUB_KEYBOARD_DOCKED:
+                case PiTop4MessageId.PUB_KEYBOARD_DOCKED:
                     break;
-                case PiTopMessageId.PUB_KEYBOARD_UNDOCKED:
+                case PiTop4MessageId.PUB_KEYBOARD_UNDOCKED:
                     break;
-                case PiTopMessageId.PUB_KEYBOARD_CONNECTED:
+                case PiTop4MessageId.PUB_KEYBOARD_CONNECTED:
                     break;
-                case PiTopMessageId.PUB_FAILED_KEYBOARD_CONNECT:
+                case PiTop4MessageId.PUB_FAILED_KEYBOARD_CONNECT:
                     break;
-                case PiTopMessageId.PUB_OLED_CONTROL_CHANGED:
+                case PiTop4MessageId.PUB_OLED_CONTROL_CHANGED:
                     break;
-                case PiTopMessageId.PUB_NATIVE_DISPLAY_CONNECTED:
+                case PiTop4MessageId.PUB_NATIVE_DISPLAY_CONNECTED:
                     break;
-                case PiTopMessageId.PUB_NATIVE_DISPLAY_DISCONNECTED:
+                case PiTop4MessageId.PUB_NATIVE_DISPLAY_DISCONNECTED:
                     break;
-                case PiTopMessageId.PUB_EXTERNAL_DISPLAY_CONNECTED:
+                case PiTop4MessageId.PUB_EXTERNAL_DISPLAY_CONNECTED:
                     break;
-                case PiTopMessageId.PUB_EXTERNAL_DISPLAY_DISCONNECTED:
+                case PiTop4MessageId.PUB_EXTERNAL_DISPLAY_DISCONNECTED:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
+        }
+
+        private void ProcessBatteryState(PiTopMessage message)
+        {
+            var newState = BatteryState.FromMessage(message);
+            BatteryState = newState;
+
+            BatteryStateChanged?.Invoke(this, newState);
         }
 
         public I2cDevice GetOrCreateI2CDevice(int deviceAddress)

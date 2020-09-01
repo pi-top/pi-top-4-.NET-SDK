@@ -10,7 +10,7 @@ namespace PiTop.Display.App
     {
         static void Main(string[] args)
         {
-            using var module = PiTopModule.Instance;
+            using var module = PiTop4Board.Instance;
 
             var display = module.Display;
 

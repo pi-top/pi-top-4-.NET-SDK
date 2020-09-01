@@ -10,7 +10,7 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public static class FoundationExtensions
     {
-        public static FoundationPlate GetOrCreateFoundationPlate(this PiTopModule module)
+        public static FoundationPlate GetOrCreateFoundationPlate(this PiTop4Board module)
         {
             return module.GetOrCreatePlate<FoundationPlate>();
         }

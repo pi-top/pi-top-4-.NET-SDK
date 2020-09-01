@@ -11,13 +11,13 @@ namespace PiTop.Camera.Tests
 {
     public class FileSystemCameraTests : IDisposable
     {
-        private readonly PiTopModule _module;
+        private readonly PiTop4Board _module;
 
         public FileSystemCameraTests()
         {
 
-            PiTopModule.Configure(new DummyGpioController());
-            _module = PiTopModule.Instance;
+            PiTop4Board.Configure(new DummyGpioController());
+            _module = PiTop4Board.Instance;
         }
         [Fact]
         public void can_be_created_via_factory()

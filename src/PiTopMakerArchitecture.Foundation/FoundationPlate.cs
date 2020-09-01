@@ -27,7 +27,7 @@ namespace PiTopMakerArchitecture.Foundation
         private const string RpiFoundationName = "PI-TOP Foundation Base RPI";
         private const string RpiZeroFoundationName = "PI-TOP Foundation Base  RPi Zero";
 
-        public FoundationPlate(PiTopModule module) : base(module)
+        public FoundationPlate(PiTop4Board module) : base(module)
         {
             _digitalConnectedDeviceFactory = new ConnectedDeviceFactory<DigitalPort, DigitalPortDeviceBase>(deviceType =>
            {

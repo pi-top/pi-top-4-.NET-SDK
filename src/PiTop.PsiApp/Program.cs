@@ -14,7 +14,7 @@ namespace PiTop.PsiApp
         static void Main(string[] args)
         {
             using var pipeline = Pipeline.Create("PiTop", true);
-            using var module = PiTopModule.Instance;
+            using var module = PiTop4Board.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 
             var threshold = plate
