@@ -29,8 +29,8 @@ using SixLabors.Fonts;
 #!csharp
 
 #!piTop
-var module = PiTopModule.Instance;
-var plate = module.GetOrCreatePlate<FoundationPlate>();
+var board = PiTop4Board.Instance;
+var plate = board.GetOrCreatePlate<FoundationPlate>();
 
 #!csharp
 
@@ -41,11 +41,11 @@ var builtinDisplay = module.Display;
 
 #!piTop
 var font =  SystemFonts.Collection.Find("Roboto").CreateFont(10);
-module.Display.Draw((context) => {
+board.Display.Draw((context) => {
                         context.Clear(Color.Black);
                         var rect = TextMeasurer.Measure("Diego was here", new RendererOptions(font));
-                        var x = (module.Display.Width - rect.Width) / 2;
-                        var y = (module.Display.Height + (rect.Height)) / 2;
+                        var x = (board.Display.Width - rect.Width) / 2;
+                        var y = (board.Display.Height + (rect.Height)) / 2;
                         context.DrawText("Hello\nWorld",font, Color.White, new PointF(0,0));
                     });
 
@@ -57,10 +57,10 @@ display(builtinDisplay, "text/html");
 #!csharp
 
 #!piTop
- module.Display.Draw(d =>
+ board.Display.Draw(d =>
             {
                 d.Clear(Color.Black);
-                var square = new RectangularPolygon( 0,  0,  module.Display.Width/2,  module.Display.Height/2);
+                var square = new RectangularPolygon( 0,  0,  board.Display.Width/2,  board.Display.Height/2);
      
                 d.Fill(Color.White, square);
             });

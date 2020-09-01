@@ -29,6 +29,7 @@ using PiTop;
 using PiTopMakerArchitecture.Foundation;
 using PiTopMakerArchitecture.Foundation.Components;
 using PiTopMakerArchitecture.Foundation.Sensors;
+using SixLabors.ImageSharp;
 
 #!markdown
 
@@ -37,8 +38,8 @@ Create a module and use it to create an instance of ```FoundationPlate```
 #!csharp
 
 #!piTop
-var module = PiTopModule.Instance;
-var plate = module.GetOrCreatePlate<FoundationPlate>();
+var board = PiTop4Board.Instance;
+var plate = board.GetOrCreatePlate<FoundationPlate>();
 
 #!markdown
 
@@ -47,14 +48,9 @@ Create Leds and turn them off
 #!csharp
 
 #!piTop
-var greenLed = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
-greenLed.DisplayProperties.Add(new NamedCssColor("green"));
-
-var amberLed = plate.GetOrCreateDevice<Led>(DigitalPort.D1);
-amberLed.DisplayProperties.Add(new NamedCssColor("gold"));
-
-var redLed = plate.GetOrCreateDevice<Led>(DigitalPort.D2);
-redLed.DisplayProperties.Add(new NamedCssColor("red"));
+var greenLed = plate.GetOrCreateLed(DigitalPort.D0, Color.Green);
+var amberLed = plate.GetOrCreateLed(DigitalPort.D1, Color.Yellow);
+var redLed   = plate.GetOrCreateLed(DigitalPort.D2, Color.Red);
 
 greenLed.Off();
 amberLed.Off();
@@ -81,8 +77,8 @@ Let's add a ```Potentiometer``` and an ```Ultrasound``` sensor. Note that the ``
 #!csharp
 
 #!piTop
-var ultraSound = plate.GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D3);
-var pot = plate.GetOrCreateDevice<Potentiometer>(AnaloguePort.A0);
+var ultraSound = plate.GetOrCreateUltrasonicSensor(DigitalPort.D3);
+var pot = plate.GetOrCreatePotentiometer(AnaloguePort.A0);
 
 display(ultraSound);
 display(pot);

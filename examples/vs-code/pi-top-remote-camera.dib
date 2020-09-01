@@ -40,7 +40,7 @@ Create a module and load the camera extensions
 #!csharp
 
 #!piTop
-var module = PiTopModule.Instance.UseCamera();
+var board = PiTop4Board.Instance.UseCamera();
 
 #!markdown
 
@@ -49,7 +49,7 @@ Create a camera
 #!csharp
 
 #!piTop
-var camera = module.GetOrCreateCamera<OpenCvCamera>(0);
+var camera = board.GetOrCreateCamera<OpenCvCamera>(0);
 
 #!markdown
 

@@ -73,7 +73,7 @@ namespace SampleApp
            
             Task.Run(() =>
             {
-                var potentiometer = plate.GetOrCreateDevice<Potentiometer>(port);
+                var potentiometer = plate.GetOrCreatePotentiometer(port);
 
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
@@ -100,11 +100,11 @@ namespace SampleApp
             Task.Run(() =>
             {
 
-                var button = plate.GetOrCreateDevice<Button>(buttonPort);
+                var button = plate.GetOrCreateButton(buttonPort);
                 
                 foreach (var digitalPort in ledPorts)
                 {
-                    plate.GetOrCreateDevice<Led>(digitalPort);
+                    plate.GetOrCreateLed(digitalPort);
                 }
 
                 var leds = plate.DigitalDevices.OfType<Led>().ToArray();
@@ -150,12 +150,12 @@ namespace SampleApp
             var cancellationSource = new CancellationTokenSource();
             var greenLed = plate.GetOrCreateLed(greenLedPort, Color.Green);
             var yellowLed = plate.GetOrCreateLed(yellowLedPort, Color.Yellow);
-            var redLed = plate.GetOrCreateLed(redLedPort,Color.Red);
+            var redLed = plate.GetOrCreateLed(redLedPort, Color.Red);
 
             ClearLeds();
             Task.Run(() =>
             {
-                var sensor = plate.GetOrCreateDevice<UltrasonicSensor>(ultrasonicSensorPort);
+                var sensor = plate.GetOrCreateUltrasonicSensor(ultrasonicSensorPort);
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Subscribe(_ =>
@@ -215,7 +215,7 @@ namespace SampleApp
             Task.Run(() =>
             {
                 var sensor =
-                    plate.GetOrCreateDevice(DigitalPort.D3, (dp,c) => new UltrasonicSensor(dp,c));
+                    plate.GetOrCreateUltrasonicSensor(DigitalPort.D3);
                 Observable
                     .Interval(TimeSpan.FromSeconds(0.5))
                     .Subscribe(_ => { Console.WriteLine(sensor.Distance); });
@@ -238,7 +238,7 @@ namespace SampleApp
 
             var ports = DigitalPort.D0.GetDigitalPortRange(3);
             var leds = ports
-                .Select(p => plate.GetOrCreateDevice(p, (dp,c) => new Led(dp,c)))
+                .Select(p => plate.GetOrCreateLed(p))
                 .ToArray();
 
             foreach (var led in leds)
