@@ -7,7 +7,7 @@ using System.Device.Spi;
 using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
-
+using System.Threading.Tasks;
 using PiTop.Abstractions;
 
 
@@ -299,9 +299,9 @@ namespace PiTop
             AddDeviceFactory(deviceFactory);
         }
 
-        public void RefreshBatteryState()
+        public Task RefreshBatteryState()
         {
-            _moduleDriverClient.RequestBatteryState();
+           return  _moduleDriverClient.RequestBatteryState();
         }
     }
 }
