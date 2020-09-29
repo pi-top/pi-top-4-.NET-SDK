@@ -28,7 +28,7 @@ Later on can just update using the command
 pi@pi-top:~ curl -L https://raw.githubusercontent.com/colombod/pi-top/master/update-device.sh | bash -e
 ```
 
-## running vscode insiders and the .NET Interactive ntoebook extension on the device
+## Running Visual Studio Code Insiders and the .NET Interactive ntoebook extension on the device
 
 You can install vscode insider ARM builds using the command
 ```sh
