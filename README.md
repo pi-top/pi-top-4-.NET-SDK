@@ -1,9 +1,8 @@
-# pi-top
+# .NET Core API for [pi-top \[4\]](https://www.pi-top.com/products/pi-top-4)
 
-## .NET Core API for [pi-top \[4\]](https://www.pi-top.com/products/pi-top-4)
+Check out [dotnet/iot](https://github.com/dotnet/iot) for loads of device bindings!
 
-Check out the [dotnet/iot](https://github.com/dotnet/iot) repo for loads of device bindings!
-
+[![Build status](https://ci.appveyor.com/api/projects/status/dcv5pwhl9n1vt8pi/branch/master?svg=true)](https://ci.appveyor.com/project/pi-top/pi-top-4-net-core-api/branch/master)
 
 ## NOTE: Experimental!!
 Set up everything  by running this from your pi-top:
