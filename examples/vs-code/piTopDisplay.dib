@@ -57,7 +57,7 @@ display(builtinDisplay, "text/html");
 #!csharp
 
 #!piTop
- board.Display.Draw(d =>
+ board.Display.Draw((d, _) =>
             {
                 d.Clear(Color.Black);
                 var square = new RectangularPolygon( 0,  0,  board.Display.Width/2,  board.Display.Height/2);
