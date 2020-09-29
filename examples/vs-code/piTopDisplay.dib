@@ -35,13 +35,13 @@ var plate = board.GetOrCreatePlate<FoundationPlate>();
 #!csharp
 
 #!piTop
-var builtinDisplay = module.Display;
+var builtinDisplay = board.Display;
 
 #!csharp
 
 #!piTop
 var font =  SystemFonts.Collection.Find("Roboto").CreateFont(10);
-board.Display.Draw((context) => {
+board.Display.Draw((context, _) => {
                         context.Clear(Color.Black);
                         var rect = TextMeasurer.Measure("Diego was here", new RendererOptions(font));
                         var x = (board.Display.Width - rect.Width) / 2;
