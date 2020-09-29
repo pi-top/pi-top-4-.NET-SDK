@@ -23,10 +23,19 @@ You can activate the Python environment using the command
 pi@pi-top:~ source .jupyter_venv/bin/activate
 ```
 
-Later on can jsut update using the command
+Later on can just update using the command
 ```sh
 pi@pi-top:~ curl -L https://raw.githubusercontent.com/colombod/pi-top/master/update-device.sh | bash -e
 ```
+
+## running vscode insiders and the .NET Interactive ntoebook extension on the device
+
+You can install vscode insider ARM builds using the command
+```sh
+pi@pi-top:~ wget https://update.code.visualstudio.com/latest/linux-deb-armhf/insider -O code-insiders_1.50.0-1601271790_armhf.deb
+pi@pi-top:~ sudo dpkg -i code-insiders_1.50.0-1601271790_armhf.deb
+```
+Then add the [.NET interactive extension](https://github.com/dotnet/interactive#visual-studio-code) and now you can use .NET Interactive notebooks directly on you piTop board.
 
 ## Manual installation steps
 
