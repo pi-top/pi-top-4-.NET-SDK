@@ -61,7 +61,7 @@ echo ""
 ################################
 cd
 rm -rf pi-top-net-api || true
-git clone https://github.com/colombod/pi-top.git pi-top-net-api
+git clone https://github.com/pi-top/pi-top-4-.NET-Core-API.git pi-top-net-api
 echo ""
 cd pi-top-net-api/tools
 

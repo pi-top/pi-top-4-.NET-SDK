@@ -1,14 +1,17 @@
 # pi-top
-.NET Core API for [pi-top4](https://www.pi-top.com/products/pi-top-4), check out the [dotnet/iot](https://github.com/dotnet/iot) repo for loads of device bindings!
 
-[![Build status](https://ci.appveyor.com/api/projects/status/85dvsfxd4lw4xp2c?svg=true)](//ci.appveyor.com/project/colombod/pi-top/branch/main) [![Join the chat at https://gitter.im/pi-top-dotnet/community](https://badges.gitter.im/pi-top-dotnet/community.svg)](https://gitter.im/pi-top-dotnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+## .NET Core API for [pi-top \[4\]](https://www.pi-top.com/products/pi-top-4)
 
-## Experimental!!
-Set up all by running this from your pitop
+Check out the [dotnet/iot](https://github.com/dotnet/iot) repo for loads of device bindings!
+
+
+## NOTE: Experimental!!
+Set up everything  by running this from your pi-top:
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/colombod/pi-top/main/setup-device.sh | bash -e
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup-device.sh | bash -e
 ```
-Once executed you will have this repo cloned at
+
+Once executed, you will have this repo cloned at
 ```sh
 /home/pi/pi-top-net-api
 ```
@@ -18,24 +21,24 @@ The code is compiled and the NuGet packages version 1.1.1 are located at
 /home/pi/localNuget
 ```
 
-You can activate the Python environment using the command
+You can activate the Python environment using the command:
 ```sh
 pi@pi-top:~ source .jupyter_venv/bin/activate
 ```
 
-Later on can just update using the command
+Later on, you can just update using the command:
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/colombod/pi-top/master/update-device.sh | bash -e
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/update-device.sh | bash -e
 ```
 
-## Running Visual Studio Code Insiders and the .NET Interactive ntoebook extension on the device
+## Running Visual Studio Code Insiders and the .NET Interactive notebook extension on the device
 
-You can install vscode insider ARM builds using the command
+You can install VS Code Insiders on your pi-top:
 ```sh
 pi@pi-top:~ wget https://update.code.visualstudio.com/latest/linux-deb-armhf/insider -O code-insiders_1.50.0-1601271790_armhf.deb
 pi@pi-top:~ sudo dpkg -i code-insiders_1.50.0-1601271790_armhf.deb
 ```
-Then add the [.NET interactive extension](https://github.com/dotnet/interactive#visual-studio-code) and now you can use .NET Interactive notebooks directly on you piTop board.
+Then add the [.NET interactive extension](https://github.com/dotnet/interactive#visual-studio-code) and now you can use .NET Interactive notebooks directly on your pi-top.
 
 ## Manual installation steps
 
@@ -61,6 +64,6 @@ Build the libraries and packages
  * pack the projects with `> sh tools/pack.sh 1.1.1` it will package the project into the `/home/pi/localnuget` using version 1.1.1
 
 
-Look at this example.
-  
+## Example
+
 ![image](https://user-images.githubusercontent.com/375556/80700336-71322400-8ad5-11ea-8eb1-6122c9cac554.png)
