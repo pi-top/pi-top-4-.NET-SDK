@@ -9,6 +9,7 @@
     <IsPackable>true</IsPackable>
     <PackageDescription>PiTop Foundation Kit module.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIcon>pitop_icon.jpg</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,6 +30,10 @@
   <ItemGroup>
     <None Include="../PiTopMakerArchitecture.Foundation/bin/$(Configuration)/$(TargetFramework)/PiTopMakerArchitecture.Foundation.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
     <None Include="../PiTopMakerArchitecture.Foundation.InteractiveExtension/bin/$(Configuration)/$(TargetFramework)/PiTopMakerArchitecture.Foundation.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
+    <None Include="../pitop_icon.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
