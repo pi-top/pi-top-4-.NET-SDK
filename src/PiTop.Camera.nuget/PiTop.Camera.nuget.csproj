@@ -9,7 +9,7 @@
     <IsPackable>true</IsPackable>
     <PackageDescription>piTop Camera module module.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIcon>pitop_icon.jpg</PackageIcon>
+    <PackageIcon>pi-top_logo.jpg</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +31,7 @@
   <ItemGroup>
     <None Include="../PiTop.Camera/bin/$(Configuration)/$(TargetFramework)/PiTop.Camera.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
     <None Include="../PiTop.Camera.InteractiveExtension/bin/$(Configuration)/$(TargetFramework)/PiTop.Camera.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
-    <None Include="../pitop_icon.jpg">
+    <None Include="../pi-top_logo.jpg">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
