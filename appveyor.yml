@@ -40,7 +40,7 @@ on_finish:
 deploy:
   - provider: NuGet
     api_key:
-      secure: WHzXeG9l31Aali6liLT52JlhQ0sPqfZvkNaF/1pbvKIrAxglAgZXI51M6qVFfN3A
+      secure: 24Oeuj2/0Xf8+RmwFnwP6Vx2sgYauPfuQWtk8+yY8zqpIC9+PHNP9heZg3rGT1bA
     skip_symbols: false
     artifact: /.*(\.|\.s)nupkg/
     on:
