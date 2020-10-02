@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="4.3.2" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0010" />
+    <PackageReference Include="UnitsNet" Version="4.71.0" />
   </ItemGroup>
 
   <ItemGroup>
