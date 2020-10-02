@@ -29,7 +29,7 @@ namespace PiTopMakerArchitecture.Foundation.Tests
         {
             using var plate = _module.GetOrCreatePlate<MmkPlate>();
 
-            using var led = plate.GetOrCreateDevice<EncodedServo>(EncodedServoPort.S1);
+            using var led = plate.GetOrCreateDevice<ServoMotor>(ServoMotorPort.S1);
 
             led.Should().NotBeNull();
         }
@@ -39,7 +39,7 @@ namespace PiTopMakerArchitecture.Foundation.Tests
         {
             using var plate = _module.GetOrCreatePlate<MmkPlate>();
 
-            using var led = plate.GetOrCreateDevice<Motor>(MotorPort.M1);
+            using var led = plate.GetOrCreateDevice<EncoderMotor>(EncoderMotorPort.M1);
 
             led.Should().NotBeNull();
         }

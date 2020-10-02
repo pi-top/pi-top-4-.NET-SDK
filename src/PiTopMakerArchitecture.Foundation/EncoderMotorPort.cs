@@ -1,6 +1,6 @@
 ﻿namespace PiTopMakerArchitecture.Foundation
 {
-    public enum MotorPort
+    public enum EncoderMotorPort
     {
         M1,
         M2,

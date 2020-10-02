@@ -9,14 +9,14 @@ namespace PiTopMakerArchitecture.Foundation
             return module.GetOrCreatePlate<MmkPlate>();
         }
 
-        public static EncodedServo GetOrCreateEncodedServo(this MmkPlate plate, EncodedServoPort port)
+        public static ServoMotor GetOrCreateServoMotor(this MmkPlate plate, ServoMotorPort motorPort)
         {
-            return plate.GetOrCreateDevice<EncodedServo>(port);
+            return plate.GetOrCreateDevice<ServoMotor>(motorPort);
         }
 
-        public static Motor GetOrCreateMotor(this MmkPlate plate, MotorPort port)
+        public static EncoderMotor GetOrCreateEncoderMotor(this MmkPlate plate, EncoderMotorPort port)
         {
-            return plate.GetOrCreateDevice<Motor>(port);
+            return plate.GetOrCreateDevice<EncoderMotor>(port);
         }
     }
 }

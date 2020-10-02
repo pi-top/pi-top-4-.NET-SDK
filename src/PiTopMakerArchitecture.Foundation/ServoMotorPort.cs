@@ -1,6 +1,6 @@
 ﻿namespace PiTopMakerArchitecture.Foundation
 {
-    public enum EncodedServoPort
+    public enum ServoMotorPort
     {
         S1,
         S2,

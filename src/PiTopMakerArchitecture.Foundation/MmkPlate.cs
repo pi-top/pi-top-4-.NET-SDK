@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Device.I2c;
 
 using PiTop;
-using PiTop.Abstractions;
 
 using UnitsNet;
 
@@ -9,8 +9,8 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public class MmkPlate : FoundationPlate
     {
-        private readonly ConnectedDeviceFactory<EncodedServoPort, EncodedServo> _encodedServoFactory;
-        private readonly ConnectedDeviceFactory<MotorPort, Motor> _motorFactory;
+        private readonly ConnectedDeviceFactory<ServoMotorPort, ServoMotor> _encodedServoFactory;
+        private readonly ConnectedDeviceFactory<EncoderMotorPort, EncoderMotor> _motorFactory;
 
         public RotationalSpeed3D AngularVelocity => GetAngularVelocity();
 
@@ -26,18 +26,32 @@ namespace PiTopMakerArchitecture.Foundation
 
         public MmkPlate(PiTop4Board module) : base(module)
         {
-            _encodedServoFactory = new ConnectedDeviceFactory<EncodedServoPort, EncodedServo>(deviceType =>
+            _encodedServoFactory = new ConnectedDeviceFactory<ServoMotorPort, ServoMotor>(deviceType =>
             {
-                var ctorSignature = new[] { typeof(EncodedServoPort), typeof(IGpioControllerFactory) };
+                var ctorSignature = new[] { typeof(ServoMotorPort), typeof(I2cDevice) };
+                var ctor = deviceType.GetConstructor(ctorSignature);
+                if (ctor != null)
+                {
+                    return devicePort =>
+                        (ServoMotor)Activator.CreateInstance(deviceType, devicePort, GetOrCreateMCU())!;
+
+                }
                 throw new InvalidOperationException(
                     $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
             });
 
-            _motorFactory = new ConnectedDeviceFactory<MotorPort, Motor>(
+            _motorFactory = new ConnectedDeviceFactory<EncoderMotorPort, EncoderMotor>(
                 deviceType =>
                 {
 
-                    var ctorSignature = new[] { typeof(MotorPort), typeof(IGpioControllerFactory) };
+                    var ctorSignature = new[] { typeof(EncoderMotorPort), typeof(I2cDevice) };
+                    var ctor = deviceType.GetConstructor(ctorSignature);
+                    if (ctor != null)
+                    {
+                        return devicePort =>
+                            (EncoderMotor)Activator.CreateInstance(deviceType, devicePort, GetOrCreateMCU())!;
+
+                    }
                     throw new InvalidOperationException(
                         $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
                 });
@@ -46,12 +60,17 @@ namespace PiTopMakerArchitecture.Foundation
             RegisterForDisposal(_motorFactory);
         }
 
-        public T GetOrCreateDevice<T>(EncodedServoPort port) where T : EncodedServo
+        private I2cDevice GetOrCreateMCU()
         {
-            return _encodedServoFactory.GetOrCreateDevice<T>(port);
+            throw new NotImplementedException();
         }
 
-        public T GetOrCreateDevice<T>(MotorPort port) where T : Motor
+        public T GetOrCreateDevice<T>(ServoMotorPort motorPort) where T : ServoMotor
+        {
+            return _encodedServoFactory.GetOrCreateDevice<T>(motorPort);
+        }
+
+        public T GetOrCreateDevice<T>(EncoderMotorPort port) where T : EncoderMotor
         {
             return _motorFactory.GetOrCreateDevice<T>(port);
         }
