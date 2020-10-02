@@ -22,7 +22,7 @@ namespace PiTopMakerArchitecture.Foundation
 
         public Orientation3D Orientation => GetOrientation();
 
-
+        private const int I2C_ADDRESS_PLATE_MCU = 0x04;
 
         public MmkPlate(PiTop4Board module) : base(module)
         {
