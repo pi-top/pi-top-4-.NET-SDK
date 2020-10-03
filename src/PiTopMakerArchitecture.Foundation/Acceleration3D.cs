@@ -9,9 +9,9 @@ namespace PiTopMakerArchitecture.Foundation
     {
         public Acceleration3D(Acceleration x, Acceleration y, Acceleration z)
         {
-            X = x.ToUnit(AccelerationUnit.MeterPerSecondSquared);
-            Y = y.ToUnit(AccelerationUnit.MeterPerSecondSquared);
-            Z = z.ToUnit(AccelerationUnit.MeterPerSecondSquared);
+            X = x.Unit == AccelerationUnit.MeterPerSecondSquared ? x : x.ToUnit(AccelerationUnit.MeterPerSecondSquared);
+            Y = y.Unit == AccelerationUnit.MeterPerSecondSquared ? y : y.ToUnit(AccelerationUnit.MeterPerSecondSquared);
+            Z = z.Unit == AccelerationUnit.MeterPerSecondSquared ? z : z.ToUnit(AccelerationUnit.MeterPerSecondSquared);
         }
 
         public Acceleration X { get; }

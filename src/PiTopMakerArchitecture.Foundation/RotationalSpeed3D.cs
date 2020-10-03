@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+
 using UnitsNet;
 using UnitsNet.Units;
 
@@ -8,14 +9,14 @@ namespace PiTopMakerArchitecture.Foundation
     {
         public RotationalSpeed3D(RotationalSpeed x, RotationalSpeed y, RotationalSpeed z)
         {
-            X = x.ToUnit(RotationalSpeedUnit.DegreePerSecond);
-            Y = y.ToUnit(RotationalSpeedUnit.DegreePerSecond);
-            Z = z.ToUnit(RotationalSpeedUnit.DegreePerSecond);
+            X = x.Unit == RotationalSpeedUnit.DegreePerSecond ? x : x.ToUnit(RotationalSpeedUnit.DegreePerSecond);
+            Y = y.Unit == RotationalSpeedUnit.DegreePerSecond ? y : y.ToUnit(RotationalSpeedUnit.DegreePerSecond);
+            Z = z.Unit == RotationalSpeedUnit.DegreePerSecond ? z : z.ToUnit(RotationalSpeedUnit.DegreePerSecond);
         }
 
         public RotationalSpeed X { get; }
         public RotationalSpeed Y { get; }
-        public RotationalSpeed Z { get;  }
+        public RotationalSpeed Z { get; }
 
         public static RotationalSpeed3D FromVector(Vector3 vector, RotationalSpeedUnit unit)
         {

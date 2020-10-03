@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+
 using UnitsNet;
 using UnitsNet.Units;
 
@@ -8,9 +9,9 @@ namespace PiTopMakerArchitecture.Foundation
     {
         public MagneticField3D(MagneticField x, MagneticField y, MagneticField z)
         {
-            X = x.ToUnit(MagneticFieldUnit.Microtesla);
-            Y = y.ToUnit(MagneticFieldUnit.Microtesla);
-            Z = z.ToUnit(MagneticFieldUnit.Microtesla);
+            X = x.Unit == MagneticFieldUnit.Microtesla ? x : x.ToUnit(MagneticFieldUnit.Microtesla);
+            Y = y.Unit == MagneticFieldUnit.Microtesla ? y : y.ToUnit(MagneticFieldUnit.Microtesla);
+            Z = z.Unit == MagneticFieldUnit.Microtesla ? z : z.ToUnit(MagneticFieldUnit.Microtesla);
         }
 
         public MagneticField X { get; }
