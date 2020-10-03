@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Device.I2c;
+using Iot.Device.Imu;
 
 using PiTop;
 
 using UnitsNet;
+using UnitsNet.Units;
 
 namespace PiTopMakerArchitecture.Foundation
 {
@@ -11,6 +13,8 @@ namespace PiTopMakerArchitecture.Foundation
     {
         private readonly ConnectedDeviceFactory<ServoMotorPort, ServoMotor> _encodedServoFactory;
         private readonly ConnectedDeviceFactory<EncoderMotorPort, EncoderMotor> _motorFactory;
+        private I2cDevice? _mcu;
+        private Mpu9250? _imu;
 
         public RotationalSpeed3D AngularVelocity => GetAngularVelocity();
 
@@ -33,7 +37,7 @@ namespace PiTopMakerArchitecture.Foundation
                 if (ctor != null)
                 {
                     return devicePort =>
-                        (ServoMotor)Activator.CreateInstance(deviceType, devicePort, GetOrCreateMCU())!;
+                        (ServoMotor)Activator.CreateInstance(deviceType, devicePort, GetOrCreateMcu())!;
 
                 }
                 throw new InvalidOperationException(
@@ -49,7 +53,7 @@ namespace PiTopMakerArchitecture.Foundation
                     if (ctor != null)
                     {
                         return devicePort =>
-                            (EncoderMotor)Activator.CreateInstance(deviceType, devicePort, GetOrCreateMCU())!;
+                            (EncoderMotor)Activator.CreateInstance(deviceType, devicePort, GetOrCreateMcu())!;
 
                     }
                     throw new InvalidOperationException(
@@ -58,11 +62,16 @@ namespace PiTopMakerArchitecture.Foundation
 
             RegisterForDisposal(_encodedServoFactory);
             RegisterForDisposal(_motorFactory);
+            RegisterForDisposal(() =>
+            {
+                _imu?.Dispose();
+                _mcu?.Dispose();
+            });
         }
 
-        private I2cDevice GetOrCreateMCU()
+        protected I2cDevice GetOrCreateMcu()
         {
-            throw new NotImplementedException();
+            return _mcu ??= PiTop4Board.GetOrCreateI2CDevice(I2C_ADDRESS_PLATE_MCU);
         }
 
         public T GetOrCreateDevice<T>(ServoMotorPort motorPort) where T : ServoMotor
@@ -77,7 +86,26 @@ namespace PiTopMakerArchitecture.Foundation
 
         private Orientation3D GetOrientation()
         {
-            throw new NotImplementedException();
+            var imu = GetOrCreateMPU9250();
+            var reading = imu.GetGyroscopeReading();
+            return new Orientation3D(
+                Angle.From(reading.X, AngleUnit.Degree),
+            Angle.From(reading.Y, AngleUnit.Degree),
+            Angle.From(reading.Z, AngleUnit.Degree));
+        }
+
+        private Mpu9250 GetOrCreateMPU9250()
+        {
+            return _imu ??= CreateAndCalibrate(GetOrCreateMcu());
+            
+
+            Mpu9250 CreateAndCalibrate(I2cDevice i2cBus)
+            {
+                var device = new Mpu9250(i2cBus);
+                device.CalibrateMagnetometer();
+                device.CalibrateGyroscopeAccelerometer();
+                return device;
+            }
         }
 
         private Angle GetAngle()
@@ -87,12 +115,18 @@ namespace PiTopMakerArchitecture.Foundation
 
         private Temperature GetTemperature()
         {
-            throw new NotImplementedException();
+            var imu = GetOrCreateMPU9250();
+            return imu.GetTemperature();
         }
 
         private Acceleration3D GetAcceleration()
         {
-            throw new NotImplementedException();
+            var imu = GetOrCreateMPU9250();
+            var reading = imu.GetAccelerometer();
+            return new Acceleration3D(
+                UnitsNet.Acceleration.From(reading.X, AccelerationUnit.StandardGravity),
+                UnitsNet.Acceleration.From(reading.Y, AccelerationUnit.StandardGravity),
+                UnitsNet.Acceleration.From(reading.Z, AccelerationUnit.StandardGravity));
         }
 
         private RotationalSpeed3D GetAngularVelocity()

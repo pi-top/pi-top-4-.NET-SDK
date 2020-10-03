@@ -72,7 +72,7 @@ namespace PiTopMakerArchitecture.Foundation
 
         public T GetOrCreateDevice<T>(DigitalPort port, Func<DigitalPort, IGpioControllerFactory, T> factory) where T : DigitalPortDeviceBase
         {
-            return _digitalConnectedDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, Module));
+            return _digitalConnectedDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, PiTop4Board));
         }
 
         public T GetOrCreateDevice<T>(DigitalPort port) where T : DigitalPortDeviceBase
@@ -82,7 +82,7 @@ namespace PiTopMakerArchitecture.Foundation
 
         public T GetOrCreateDevice<T>(AnaloguePort port, Func<AnaloguePort, int, II2CDeviceFactory, T> factory, int deviceAddress = DefaultI2CAddress) where T : AnaloguePortDeviceBase
         {
-            return _analogueConnectedDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, deviceAddress, Module));
+            return _analogueConnectedDeviceFactory.GetOrCreateDevice<T>(port, (p) => factory(p, deviceAddress, PiTop4Board));
         }
 
         public T GetOrCreateDevice<T>(AnaloguePort port) where T : AnaloguePortDeviceBase
