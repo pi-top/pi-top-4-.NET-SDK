@@ -7,11 +7,18 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public class RotationalSpeed3D
     {
+        private const RotationalSpeedUnit UNIT = RotationalSpeedUnit.DegreePerSecond;
+
         public RotationalSpeed3D(RotationalSpeed x, RotationalSpeed y, RotationalSpeed z)
         {
-            X = x.Unit == RotationalSpeedUnit.DegreePerSecond ? x : x.ToUnit(RotationalSpeedUnit.DegreePerSecond);
-            Y = y.Unit == RotationalSpeedUnit.DegreePerSecond ? y : y.ToUnit(RotationalSpeedUnit.DegreePerSecond);
-            Z = z.Unit == RotationalSpeedUnit.DegreePerSecond ? z : z.ToUnit(RotationalSpeedUnit.DegreePerSecond);
+            X = ConvertIfNeeded(x);
+            Y = ConvertIfNeeded(y);
+            Z = ConvertIfNeeded(z);
+
+            static RotationalSpeed ConvertIfNeeded(RotationalSpeed rs)
+            {
+                return rs.Unit == UNIT ? rs : rs.ToUnit(UNIT);
+            }
         }
 
         public RotationalSpeed X { get; }

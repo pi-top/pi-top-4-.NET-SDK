@@ -7,11 +7,18 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public class Acceleration3D
     {
+        private const AccelerationUnit UNIT = AccelerationUnit.MeterPerSecondSquared;
+
         public Acceleration3D(Acceleration x, Acceleration y, Acceleration z)
         {
-            X = x.Unit == AccelerationUnit.MeterPerSecondSquared ? x : x.ToUnit(AccelerationUnit.MeterPerSecondSquared);
-            Y = y.Unit == AccelerationUnit.MeterPerSecondSquared ? y : y.ToUnit(AccelerationUnit.MeterPerSecondSquared);
-            Z = z.Unit == AccelerationUnit.MeterPerSecondSquared ? z : z.ToUnit(AccelerationUnit.MeterPerSecondSquared);
+            X = ConvertIfNeeded(x);
+            Y = ConvertIfNeeded(y);
+            Z = ConvertIfNeeded(z);
+
+            static Acceleration ConvertIfNeeded(Acceleration a)
+            {
+                return a.Unit == UNIT ? a : a.ToUnit(UNIT);
+            }
         }
 
         public Acceleration X { get; }

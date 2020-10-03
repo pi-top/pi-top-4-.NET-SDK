@@ -7,11 +7,18 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public class Orientation3D
     {
+        private const AngleUnit UNIT = AngleUnit.Degree;
+
         public Orientation3D(Angle roll, Angle pitch, Angle yaw)
         {
-            Roll = roll.Unit == AngleUnit.Degree ? roll : roll.ToUnit(AngleUnit.Degree);
-            Pitch = pitch.Unit == AngleUnit.Degree ? pitch : pitch.ToUnit(AngleUnit.Degree);
-            Yaw = yaw.Unit == AngleUnit.Degree ? yaw : yaw.ToUnit(AngleUnit.Degree);
+            Roll = ConvertIfNeeded(roll);
+            Pitch = ConvertIfNeeded(pitch);
+            Yaw = ConvertIfNeeded(yaw);
+
+            static Angle ConvertIfNeeded(Angle a)
+            {
+                return a.Unit == UNIT ? a : a.ToUnit(UNIT);
+            }
         }
 
         public Angle Roll { get; }

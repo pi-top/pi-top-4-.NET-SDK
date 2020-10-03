@@ -7,11 +7,17 @@ namespace PiTopMakerArchitecture.Foundation
 {
     public class MagneticField3D
     {
+        private const MagneticFieldUnit UNIT = MagneticFieldUnit.Microtesla;
         public MagneticField3D(MagneticField x, MagneticField y, MagneticField z)
         {
-            X = x.Unit == MagneticFieldUnit.Microtesla ? x : x.ToUnit(MagneticFieldUnit.Microtesla);
-            Y = y.Unit == MagneticFieldUnit.Microtesla ? y : y.ToUnit(MagneticFieldUnit.Microtesla);
-            Z = z.Unit == MagneticFieldUnit.Microtesla ? z : z.ToUnit(MagneticFieldUnit.Microtesla);
+            X = ConvertIfNeeded(x);
+            Y = ConvertIfNeeded(y);
+            Z = ConvertIfNeeded(z);
+
+            static MagneticField ConvertIfNeeded(MagneticField mf)
+            {
+                return mf.Unit == UNIT ? mf : mf.ToUnit(UNIT);
+            }
         }
 
         public MagneticField X { get; }
