@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+
 using UnitsNet;
 using UnitsNet.Units;
 
@@ -13,7 +14,7 @@ namespace PiTopMakerArchitecture.Foundation
             Z = z.ToUnit(AccelerationUnit.MeterPerSecondSquared);
         }
 
-        public Acceleration X { get;  }
+        public Acceleration X { get; }
         public Acceleration Y { get; }
         public Acceleration Z { get; }
 
