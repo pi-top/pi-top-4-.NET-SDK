@@ -1,4 +1,5 @@
-﻿using UnitsNet;
+﻿using System.Numerics;
+using UnitsNet;
 using UnitsNet.Units;
 
 namespace PiTopMakerArchitecture.Foundation
@@ -15,5 +16,13 @@ namespace PiTopMakerArchitecture.Foundation
         public RotationalSpeed X { get; }
         public RotationalSpeed Y { get; }
         public RotationalSpeed Z { get;  }
+
+        public static RotationalSpeed3D FromVector(Vector3 vector, RotationalSpeedUnit unit)
+        {
+            return new RotationalSpeed3D(
+                RotationalSpeed.From(vector.X, unit),
+                RotationalSpeed.From(vector.Y, unit),
+                RotationalSpeed.From(vector.Z, unit));
+        }
     }
 }

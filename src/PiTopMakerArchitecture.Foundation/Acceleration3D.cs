@@ -1,4 +1,5 @@
-﻿using UnitsNet;
+﻿using System.Numerics;
+using UnitsNet;
 using UnitsNet.Units;
 
 namespace PiTopMakerArchitecture.Foundation
@@ -15,5 +16,13 @@ namespace PiTopMakerArchitecture.Foundation
         public Acceleration X { get;  }
         public Acceleration Y { get; }
         public Acceleration Z { get; }
+
+        public static Acceleration3D FromVector(Vector3 vector, AccelerationUnit unit)
+        {
+            return new Acceleration3D(
+                UnitsNet.Acceleration.From(vector.X, unit),
+                UnitsNet.Acceleration.From(vector.Y, unit),
+                UnitsNet.Acceleration.From(vector.Z, unit));
+        }
     }
 }

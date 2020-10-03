@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Device.I2c;
+
 using Iot.Device.Imu;
 
 using PiTop;
@@ -22,7 +23,9 @@ namespace PiTopMakerArchitecture.Foundation
 
         public Temperature Temperature => GetTemperature();
 
-        public Angle Heading => GetAngle();
+        public Angle Heading => GetHeading();
+
+        public MagneticField3D MagneticField => GetMagneticField();
 
         public Orientation3D Orientation => GetOrientation();
 
@@ -86,31 +89,38 @@ namespace PiTopMakerArchitecture.Foundation
 
         private Orientation3D GetOrientation()
         {
-            var imu = GetOrCreateMPU9250();
-            var reading = imu.GetGyroscopeReading();
+            var acceleration = GetAcceleration();
+            var x = acceleration.X.StandardGravity;
+            var y = acceleration.Y.StandardGravity;
+            var z = acceleration.Z.StandardGravity;
+
+            var xSquare = x * x;
+            var ySquare = y * y;
+            var zSquare = z * z;
             return new Orientation3D(
-                Angle.From(reading.X, AngleUnit.Degree),
-            Angle.From(reading.Y, AngleUnit.Degree),
-            Angle.From(reading.Z, AngleUnit.Degree));
+                 Angle.FromRadians(Math.Atan(x / Math.Sqrt(ySquare + zSquare))),
+            Angle.FromRadians(Math.Atan(y / Math.Sqrt(xSquare + zSquare))),
+            Angle.FromRadians(Math.Atan(z / Math.Sqrt(xSquare + ySquare)))
+                );
         }
 
         private Mpu9250 GetOrCreateMPU9250()
         {
-            return _imu ??= CreateAndCalibrate(GetOrCreateMcu());
-            
+            return _imu ??= CreateAndCalibrate();
 
-            Mpu9250 CreateAndCalibrate(I2cDevice i2cBus)
+            Mpu9250 CreateAndCalibrate()
             {
-                var device = new Mpu9250(i2cBus);
+                var device = new Mpu9250(GetOrCreateMcu());
                 device.CalibrateMagnetometer();
                 device.CalibrateGyroscopeAccelerometer();
                 return device;
             }
         }
 
-        private Angle GetAngle()
+        private Angle GetHeading()
         {
-            throw new NotImplementedException();
+            var magneticField = GetMagneticField();
+            return Angle.FromRadians(Math.Atan2(magneticField.Y.Microteslas, magneticField.X.Microteslas));
         }
 
         private Temperature GetTemperature()
@@ -123,15 +133,22 @@ namespace PiTopMakerArchitecture.Foundation
         {
             var imu = GetOrCreateMPU9250();
             var reading = imu.GetAccelerometer();
-            return new Acceleration3D(
-                UnitsNet.Acceleration.From(reading.X, AccelerationUnit.StandardGravity),
-                UnitsNet.Acceleration.From(reading.Y, AccelerationUnit.StandardGravity),
-                UnitsNet.Acceleration.From(reading.Z, AccelerationUnit.StandardGravity));
+            return Acceleration3D.FromVector(reading, AccelerationUnit.StandardGravity);
+        }
+
+        private MagneticField3D GetMagneticField()
+        {
+            var imu = GetOrCreateMPU9250();
+            var reading = imu.ReadMagnetometer();
+            return MagneticField3D.FromVector(reading, MagneticFieldUnit.Microtesla);
         }
 
         private RotationalSpeed3D GetAngularVelocity()
         {
-            throw new NotImplementedException();
+            var imu = GetOrCreateMPU9250();
+            var reading = imu.GetGyroscopeReading();
+            return RotationalSpeed3D.FromVector(reading, RotationalSpeedUnit.DegreePerSecond);
+
         }
     }
 }
