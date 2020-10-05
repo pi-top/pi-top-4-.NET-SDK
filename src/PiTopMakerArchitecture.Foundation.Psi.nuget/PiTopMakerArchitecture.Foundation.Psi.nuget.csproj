@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.12.53.2-beta" />
+    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.13.38.2-beta" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +23,7 @@
     <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension\PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.nuget\PiTopMakerArchitecture.Foundation.nuget.csproj"/>
+    <ProjectReference Include="..\PiTopMakerArchitecture.Foundation.nuget\PiTopMakerArchitecture.Foundation.nuget.csproj" />
   </ItemGroup>
 
   <ItemGroup>
