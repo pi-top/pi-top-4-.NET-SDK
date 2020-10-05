@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Device.I2c;
 using System.Linq;
+
 using Iot.Device.Imu;
-using PiTop;
 using PiTop.Abstractions;
 using PiTop.MakerArchitecture.Foundation;
+
 using UnitsNet;
 using UnitsNet.Units;
 

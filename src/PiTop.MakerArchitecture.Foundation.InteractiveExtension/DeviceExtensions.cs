@@ -1,8 +1,11 @@
 ﻿using System;
+
 using Microsoft.AspNetCore.Html;
 using Microsoft.DotNet.Interactive.Formatting;
+
 using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Sensors;
+
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 
 namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
@@ -13,14 +16,14 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
 
         public static PocketView CreatePath(string pathData, string? style = null)
         {
-            var path = _.path[d: pathData, style: style?? ""]();
+            var path = _.path[d: pathData, style: style ?? ""]();
             return path;
         }
     }
 
     public static class DeviceExtensions
     {
-       
+
         internal static IHtmlContent DrawSvg(this DigitalPortDeviceBase digitalDevice)
         {
             var id = "PiTop.MakerArchitecture.Foundation.InteractiveExtension" + Guid.NewGuid().ToString("N");

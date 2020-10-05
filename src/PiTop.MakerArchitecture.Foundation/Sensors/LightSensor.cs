@@ -1,6 +1,5 @@
 ﻿using System;
 
-using PiTop;
 using PiTop.Abstractions;
 
 namespace PiTop.MakerArchitecture.Foundation.Sensors

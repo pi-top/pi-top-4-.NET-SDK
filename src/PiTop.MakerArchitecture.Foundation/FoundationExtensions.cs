@@ -1,6 +1,4 @@
-﻿using PiTop;
-
-using PiTop.MakerArchitecture.Foundation.Components;
+﻿using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Sensors;
 
 using SixLabors.ImageSharp;

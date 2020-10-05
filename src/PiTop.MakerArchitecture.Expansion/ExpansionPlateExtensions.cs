@@ -1,7 +1,4 @@
-﻿using PiTop;
-using PiTop.MakerArchitecture.Foundation;
-
-namespace PiTop.MakerArchitecture.Expansion
+﻿namespace PiTop.MakerArchitecture.Expansion
 {
     public static class ExpansionPlateExtensions
     {

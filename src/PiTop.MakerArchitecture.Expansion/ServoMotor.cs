@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Device.I2c;
+
 using PiTop.Abstractions;
-using PiTop.MakerArchitecture.Foundation;
 
 namespace PiTop.MakerArchitecture.Expansion
 {

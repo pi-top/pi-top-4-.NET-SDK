@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+
 using Microsoft.DotNet.Interactive.Formatting;
+
 using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Sensors;
+
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 using static PiTop.MakerArchitecture.Foundation.InteractiveExtension.SvgUtilities;
 

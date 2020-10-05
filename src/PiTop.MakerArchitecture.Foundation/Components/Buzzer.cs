@@ -1,6 +1,5 @@
 ﻿using System.Device.Gpio;
-using System.Reactive.Disposables;
-using PiTop;
+
 using PiTop.Abstractions;
 
 namespace PiTop.MakerArchitecture.Foundation.Components

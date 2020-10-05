@@ -3,7 +3,6 @@ using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
 
-using PiTop;
 using PiTop.Abstractions;
 using UnitsNet;
 

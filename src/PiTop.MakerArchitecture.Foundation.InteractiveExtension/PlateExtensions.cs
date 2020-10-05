@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Microsoft.AspNetCore.Html;
 using Microsoft.DotNet.Interactive.Formatting;
+
 using Newtonsoft.Json.Linq;
+
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 
 namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
@@ -55,7 +58,7 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
         {
             var lineStyle = "fill:none;stroke:black;stroke-width:11px;stroke-linecap:square;";
             var svgWires = new List<PocketView>();
-            foreach (var digitalDevice in  plate.DigitalDevices)
+            foreach (var digitalDevice in plate.DigitalDevices)
             {
                 switch (digitalDevice.Port)
                 {
@@ -140,7 +143,7 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
         internal static PocketView GetDevicesSvg(this FoundationPlate plate)
         {
             var svgDevices = new List<PocketView>();
-            foreach (var  digitalDevice in plate.DigitalDevices)
+            foreach (var digitalDevice in plate.DigitalDevices)
             {
                 switch (digitalDevice.Port)
                 {
