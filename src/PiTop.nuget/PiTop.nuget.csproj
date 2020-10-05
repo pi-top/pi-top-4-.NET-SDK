@@ -5,9 +5,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageVersion>0.0.1</PackageVersion>
-    <PackageId>piTop</PackageId>
+    <PackageId>pi-top</PackageId>
     <IsPackable>true</IsPackable>
-    <PackageDescription>piTop module.</PackageDescription>
+    <PackageDescription>pi-top board.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>pi-top_logo.jpg</PackageIcon>
   </PropertyGroup>

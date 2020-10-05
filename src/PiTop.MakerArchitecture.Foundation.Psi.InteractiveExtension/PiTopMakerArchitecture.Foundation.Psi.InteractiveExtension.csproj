@@ -1,20 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.13.38.2-beta" />
+    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.20503.1" />
+    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.20503.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PiTop.Camera.Psi\PiTop.Camera.Psi.csproj" />
-    <ProjectReference Include="..\PiTop.Camera\PiTop.Camera.csproj" />
     <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation.Psi\PiTop.MakerArchitecture.Foundation.Psi.csproj" />
     <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation\PiTop.MakerArchitecture.Foundation.csproj" />
-    <ProjectReference Include="..\PiTop\PiTop.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,10 +2,10 @@
 
 using Microsoft.Psi;
 
-using PiTopMakerArchitecture.Foundation;
-using PiTopMakerArchitecture.Foundation.Components;
-using PiTopMakerArchitecture.Foundation.Psi;
-using PiTopMakerArchitecture.Foundation.Sensors;
+using PiTop.MakerArchitecture.Foundation;
+using PiTop.MakerArchitecture.Foundation.Components;
+using PiTop.MakerArchitecture.Foundation.Psi;
+using PiTop.MakerArchitecture.Foundation.Sensors;
 
 namespace PiTop.PsiApp
 {
@@ -13,7 +13,7 @@ namespace PiTop.PsiApp
     {
         static void Main(string[] args)
         {
-            using var pipeline = Pipeline.Create("PiTop", true);
+            using var pipeline = Pipeline.Create("PiTop", DeliveryPolicy.Unlimited);
             using var module = PiTop4Board.Instance;
             var plate = module.GetOrCreatePlate<FoundationPlate>();
 

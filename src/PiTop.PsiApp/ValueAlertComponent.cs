@@ -2,7 +2,7 @@
 
 using Microsoft.Psi;
 
-using PiTopMakerArchitecture.Foundation.Components;
+using PiTop.MakerArchitecture.Foundation.Components;
 
 namespace PiTop.PsiApp
 {

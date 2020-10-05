@@ -5,9 +5,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageVersion>0.0.1</PackageVersion>
-    <PackageId>piTop.Camera.Psi</PackageId>
+    <PackageId>pi-top.Camera.Psi</PackageId>
     <IsPackable>true</IsPackable>
-    <PackageDescription>piTop Camera module module.</PackageDescription>
+    <PackageDescription>pi-top Camera module module with PSI support.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>pi-top_logo.jpg</PackageIcon>
   </PropertyGroup>

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using PiTop;
 
-using PiTopMakerArchitecture.Foundation;
-using PiTopMakerArchitecture.Foundation.Components;
-using PiTopMakerArchitecture.Foundation.Sensors;
+using PiTop.MakerArchitecture.Foundation;
+using PiTop.MakerArchitecture.Foundation.Components;
+using PiTop.MakerArchitecture.Foundation.Sensors;
 
 using SixLabors.ImageSharp;
 
