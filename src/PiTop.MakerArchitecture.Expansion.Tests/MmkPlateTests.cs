@@ -2,10 +2,7 @@
 
 using FluentAssertions;
 
-using PiTop;
 using PiTop.Tests;
-
-using PiTop.MakerArchitecture.Foundation;
 
 using Xunit;
 
@@ -29,7 +26,7 @@ namespace PiTop.MakerArchitecture.Expansion.Tests
         }
 
         [Fact]
-        public void plate_can_servo()
+        public void plate_can_create_servo()
         {
             using var plate = _module.GetOrCreatePlate<ExpansionPlate>();
 
@@ -39,7 +36,7 @@ namespace PiTop.MakerArchitecture.Expansion.Tests
         }
 
         [Fact]
-        public void plate_can_motor()
+        public void plate_can_create_motor()
         {
             using var plate = _module.GetOrCreatePlate<ExpansionPlate>();
 
