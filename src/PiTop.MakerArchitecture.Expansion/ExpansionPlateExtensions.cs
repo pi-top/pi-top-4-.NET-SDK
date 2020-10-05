@@ -7,12 +7,12 @@
             return module.GetOrCreatePlate<ExpansionPlate>();
         }
 
-        public static ServoMotor GetOrCreateServoMotor(this ExpansionPlate plate, ServoMotorPort motorPort)
+        public static ServoMotor GetOrCreateServoMotor(this IExpansionPlate plate, ServoMotorPort motorPort)
         {
             return plate.GetOrCreateDevice<ServoMotor>(motorPort);
         }
 
-        public static EncoderMotor GetOrCreateEncoderMotor(this ExpansionPlate plate, EncoderMotorPort port)
+        public static EncoderMotor GetOrCreateEncoderMotor(this IExpansionPlate plate, EncoderMotorPort port)
         {
             return plate.GetOrCreateDevice<EncoderMotor>(port);
         }

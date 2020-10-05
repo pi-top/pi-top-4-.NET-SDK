@@ -13,42 +13,42 @@ namespace PiTop.MakerArchitecture.Foundation
             return module.GetOrCreatePlate<FoundationPlate>();
         }
 
-        public static SoundSensor GetOrCreateSoundSensor(this FoundationPlate plate, AnaloguePort port)
+        public static SoundSensor GetOrCreateSoundSensor(this IFoundationPlate plate, AnaloguePort port)
         {
             return plate.GetOrCreateDevice<SoundSensor>(port);
         }
 
-        public static LightSensor GetOrCreateLightSensor(this FoundationPlate plate, AnaloguePort port)
+        public static LightSensor GetOrCreateLightSensor(this IFoundationPlate plate, AnaloguePort port)
         {
             return plate.GetOrCreateDevice<LightSensor>(port);
         }
 
-        public static Potentiometer GetOrCreatePotentiometer(this FoundationPlate plate, AnaloguePort port)
+        public static Potentiometer GetOrCreatePotentiometer(this IFoundationPlate plate, AnaloguePort port)
         {
             return plate.GetOrCreateDevice<Potentiometer>(port);
         }
 
-        public static Button GetOrCreateButton(this FoundationPlate plate, DigitalPort port)
+        public static Button GetOrCreateButton(this IFoundationPlate plate, DigitalPort port)
         {
             return plate.GetOrCreateDevice<Button>(port);
         }
 
-        public static Buzzer GetOrCreateBuzzer(this FoundationPlate plate, DigitalPort port)
+        public static Buzzer GetOrCreateBuzzer(this IFoundationPlate plate, DigitalPort port)
         {
             return plate.GetOrCreateDevice<Buzzer>(port);
         }
 
-        public static UltrasonicSensor GetOrCreateUltrasonicSensor(this FoundationPlate plate, DigitalPort port)
+        public static UltrasonicSensor GetOrCreateUltrasonicSensor(this IFoundationPlate plate, DigitalPort port)
         {
             return plate.GetOrCreateDevice<UltrasonicSensor>(port);
         }
 
-        public static Led GetOrCreateLed(this FoundationPlate plate, DigitalPort port)
+        public static Led GetOrCreateLed(this IFoundationPlate plate, DigitalPort port)
         {
             return plate.GetOrCreateDevice<Led>(port);
         }
 
-        public static Led GetOrCreateLed(this FoundationPlate plate, DigitalPort port, Color displayColor)
+        public static Led GetOrCreateLed(this IFoundationPlate plate, DigitalPort port, Color displayColor)
         {
             var led = plate.GetOrCreateDevice<Led>(port);
             var p = displayColor.ToPixel<Argb32>();
