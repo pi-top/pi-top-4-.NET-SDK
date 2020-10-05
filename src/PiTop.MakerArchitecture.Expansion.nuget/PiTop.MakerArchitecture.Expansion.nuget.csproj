@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageVersion>0.0.1</PackageVersion>
-    <PackageId>pi-top.ExpansionKit</PackageId>
+    <PackageId>pi-top.MakerArchitecture.ExpansionKit</PackageId>
     <IsPackable>true</IsPackable>
     <PackageDescription>pi-top Expansion Kit module.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

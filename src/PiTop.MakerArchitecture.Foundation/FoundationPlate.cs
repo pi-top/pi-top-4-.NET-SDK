@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using PiTop;
 using PiTop.Abstractions;
 
 namespace PiTop.MakerArchitecture.Foundation
