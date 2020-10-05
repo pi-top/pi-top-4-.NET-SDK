@@ -1,12 +1,16 @@
 ﻿using System;
+
+using PiTop.Camera;
 using PiTop.MakerArchitecture.Foundation;
 using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Sensors;
+
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
 {
-    public class RoverRobot :IDisposable
+    public class RoverRobot : IDisposable
     {
         public PanTiltController TiltController { get; }
 
@@ -28,9 +32,12 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public ExpansionPlate ExpansionPlate { get; }
 
-        public RoverRobot(ExpansionPlate expansionPlate)
+        public IFrameSource<Image<Rgb24>> Camera { get; }
+
+        public RoverRobot(ExpansionPlate expansionPlate, IFrameSource<Image<Rgb24>> camera)
         {
             ExpansionPlate = expansionPlate ?? throw new ArgumentNullException(nameof(expansionPlate));
+            Camera = camera ?? throw new ArgumentNullException(nameof(camera));
 
             TiltController = new PanTiltController(
                 ExpansionPlate.GetOrCreateServoMotor(ServoMotorPort.S1),
@@ -57,6 +64,11 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             FrontLeftLed.Off();
             BackRightLed.Off();
             BackLeftLed.Off();
+        }
+
+        public RoverRobotState GetCurrentState()
+        {
+            throw new NotImplementedException();
         }
 
         public void Dispose()
