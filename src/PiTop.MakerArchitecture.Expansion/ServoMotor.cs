@@ -9,6 +9,10 @@ namespace PiTop.MakerArchitecture.Expansion
         private readonly SMBusDevice _bus;
         public ServoMotorPort Port { get; }
 
+        private byte RegisterControlMode=> (byte) (0x50 + Port);
+        private byte RegisterSpeed => (byte)(0x56 + Port);
+        private byte RegisterAngleAndSpeed => (byte)(0x5C + Port);
+
         public ServoMotor(ServoMotorPort port, SMBusDevice bus)
         {
             _bus = bus;
