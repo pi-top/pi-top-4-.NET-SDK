@@ -156,9 +156,10 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private RotationalSpeed ReadActualRpm()
         {
+            var rpm = MAX_DC_MOTOR_RPM;
             for (int i = 0; i < 3; i++) // retry reading a valid tachometer value a finite number of times
             {
-                var rpm = _controller.ReadWordSigned(RegisterTachometer);
+                rpm = _controller.ReadWordSigned(RegisterTachometer);
                 if (Math.Abs(rpm) <= MAX_DC_MOTOR_RPM)
                 {
                     var sign = (int)ForwardDirection;
