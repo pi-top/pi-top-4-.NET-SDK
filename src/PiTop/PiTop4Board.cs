@@ -22,7 +22,7 @@ namespace PiTop
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         private readonly ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
-        private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
+        private readonly ConcurrentDictionary<int, I2cDevice> _i2cDevices = new ConcurrentDictionary<int, I2cDevice>();
         private readonly ConcurrentDictionary<SpiConnectionSettings, SpiDevice> _spiDevices = new ConcurrentDictionary<SpiConnectionSettings, SpiDevice>();
         private readonly ModuleDriverClient _moduleDriverClient;
         private readonly IGpioController _controller;
@@ -106,7 +106,7 @@ namespace PiTop
                     piTopPlate.Dispose();
                 }
 
-                var busses = _i2cBusses.Values.ToList();
+                var busses = _i2cDevices.Values.ToList();
                 foreach (var i2CDevice in busses)
                 {
                     i2CDevice.Dispose();
@@ -264,7 +264,7 @@ namespace PiTop
 
         public I2cDevice GetOrCreateI2CDevice(int deviceAddress)
         {
-            return _i2cBusses.GetOrAdd(deviceAddress, address => _i2CDeviceFactory(new I2cConnectionSettings(I2CBusId, deviceAddress)));
+            return _i2cDevices.GetOrAdd(deviceAddress, address => _i2CDeviceFactory(new I2cConnectionSettings(I2CBusId, deviceAddress)));
         }
 
         public SpiDevice GetOrCreateSpiDevice(SpiConnectionSettings connectionSettings)
