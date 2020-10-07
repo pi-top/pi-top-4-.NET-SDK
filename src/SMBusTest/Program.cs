@@ -14,7 +14,7 @@ namespace SMBusTest
             using var motor = plate.GetOrCreateEncoderMotor(EncoderMotorPort.M2);
 
             // set power
-            motor.Power = 500;
+            motor.Power = 0.5;
 
             Console.ReadKey();
         }
