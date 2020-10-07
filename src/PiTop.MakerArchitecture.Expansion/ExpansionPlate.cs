@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Iot.Device.Imu;
+using PiTop.Abstractions;
+using PiTop.MakerArchitecture.Foundation;
+using System;
 using System.Collections.Generic;
 using System.Device.I2c;
 using System.Linq;
-
-using Iot.Device.Imu;
-using PiTop.Abstractions;
-using PiTop.MakerArchitecture.Foundation;
-
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using UnitsNet;
 using UnitsNet.Units;
 
@@ -16,7 +16,7 @@ namespace PiTop.MakerArchitecture.Expansion
     {
         private readonly ConnectedDeviceFactory<ServoMotorPort, ServoMotor> _servoMotorsFactory;
         private readonly ConnectedDeviceFactory<EncoderMotorPort, EncoderMotor> _encoderMotorFactory;
-        private I2cDevice? _mcu;
+        private SMBusDevice? _mcu;
         private Mpu9250? _imu;
         private readonly FoundationPlate _foundationPlate;
 
@@ -33,6 +33,9 @@ namespace PiTop.MakerArchitecture.Expansion
         public Orientation3D Orientation => GetOrientation();
 
         private const int I2C_ADDRESS_PLATE_MCU = 0x04;
+        private const byte REGISTER_HEARTBEAT = 0x40;
+        private static readonly TimeSpan HEARTBEAT_SEND_INTERVAL = TimeSpan.FromSeconds(0.5);
+        private const byte HEARTBEAT_SECONDS_BEFORE_SHUTDOWN = 2;
 
         public ExpansionPlate(PiTop4Board module) : base(module)
         {
@@ -68,18 +71,24 @@ namespace PiTop.MakerArchitecture.Expansion
                         $"Cannot find suitable constructor for type {deviceType}, looking for signature {ctorSignature}");
                 });
 
+            // set up heartbeat
+            RegisterForDisposal(Observable.Interval(HEARTBEAT_SEND_INTERVAL, TaskPoolScheduler.Default).Subscribe(_ =>
+            {
+                GetOrCreateMcu().WriteByte(REGISTER_HEARTBEAT, HEARTBEAT_SECONDS_BEFORE_SHUTDOWN);
+            }));
+
             RegisterForDisposal(_servoMotorsFactory);
             RegisterForDisposal(_encoderMotorFactory);
             RegisterForDisposal(() =>
             {
                 _imu?.Dispose();
-                _mcu?.Dispose();
+                _mcu?.I2c.Dispose();
             });
         }
 
-        protected I2cDevice GetOrCreateMcu()
+        protected SMBusDevice GetOrCreateMcu()
         {
-            return _mcu ??= PiTop4Board.GetOrCreateI2CDevice(I2C_ADDRESS_PLATE_MCU);
+            return _mcu ??= new SMBusDevice(PiTop4Board.GetOrCreateI2CDevice(I2C_ADDRESS_PLATE_MCU));
         }
 
         public T GetOrCreateDevice<T>(ServoMotorPort motorPort) where T : ServoMotor
@@ -115,7 +124,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
             Mpu9250 CreateAndCalibrate()
             {
-                var device = new Mpu9250(GetOrCreateMcu());
+                var device = new Mpu9250(GetOrCreateMcu().I2c);
                 device.CalibrateMagnetometer();
                 device.CalibrateGyroscopeAccelerometer();
                 return device;
