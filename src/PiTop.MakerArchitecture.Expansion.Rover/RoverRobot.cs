@@ -14,7 +14,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
     {
         public PanTiltController TiltController { get; }
 
-        public SteeringMotorController MotorController { get; }
+        public IMotionComponent MotionComponent { get; }
 
         public SoundSensor Sound { get; }
 
@@ -44,7 +44,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
                 ExpansionPlate.GetOrCreateServoMotor(ServoMotorPort.S2)
                 );
 
-            MotorController = new SteeringMotorController(
+            MotionComponent = new SteeringMotorController(
                 ExpansionPlate.GetOrCreateEncoderMotor(EncoderMotorPort.M3),
                 ExpansionPlate.GetOrCreateEncoderMotor(EncoderMotorPort.M1)
                 );
@@ -73,7 +73,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            (MotionComponent as IDisposable)?.Dispose();
         }
     }
 }

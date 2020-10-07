@@ -171,8 +171,9 @@ namespace PiTop.MakerArchitecture.Expansion
         }
 
         private RotationalSpeed ReadActualRpm()
-        {
-            var sign = (int)Direction;
+        {    
+            // todo: in the python code direction si also used but what is the point of having signed values, forward direction and direction ?
+            var sign = (int)ForwardDirection;
             var rpm = 99999;
             
             while (Math.Abs(rpm) > MAX_DC_MOTOR_RPM)
@@ -197,7 +198,8 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private ushort ToRpm(RotationalSpeed speed)
         {
-            var sign = (int)Direction;
+            // todo: in the python code direction si also used but what is the point of having signed values, forward direction and direction ?
+            var sign = (int)ForwardDirection;
 
             ushort rpm;
             unchecked
