@@ -1,14 +1,12 @@
 ﻿using PiTop.Abstractions;
 
 using System;
-
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion
 {
     public class EncoderMotor : IConnectedDevice
     {
-
         private const int MMK_STANDARD_GEAR_RATIO = 42;
         private const int MAX_DC_MOTOR_RPM = 6000;
         private readonly SMBusDevice _controller;
@@ -24,7 +22,6 @@ namespace PiTop.MakerArchitecture.Expansion
         private byte RegisterOdometer => (byte)(0x7A + Port);
         public ForwardDirection ForwardDirection { get; set; }
 
-        public Direction Direction { get; set; }
 
         public BrakingType BrakingType
         {
@@ -48,7 +45,6 @@ namespace PiTop.MakerArchitecture.Expansion
             }
         }
 
-
         public Speed MaxSpeed => Speed.FromMetersPerSecond(WheelCircumference.Meters * MaxRpm.RevolutionsPerSecond);
 
         public RotationalSpeed MaxRpm => RotationalSpeed.FromRevolutionsPerMinute(((double)MAX_DC_MOTOR_RPM) / MMK_STANDARD_GEAR_RATIO);
@@ -71,11 +67,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
         public Speed Speed
         {
-            get
-            {
-                var rpm = Rpm;
-                return Speed.Zero;
-            }
+            get => Speed.FromMetersPerSecond(Rpm.RevolutionsPerSecond * WheelCircumference.Meters);
             set => ReachSpeed(value);
         }
 
@@ -93,7 +85,6 @@ namespace PiTop.MakerArchitecture.Expansion
         {
             WheelDiameter = WheelDiameters.Standard;
             ForwardDirection = ForwardDirection.Clockwise;
-            Direction = Direction.Forward;
             _controller = controller;
             Port = port;
         }
@@ -133,11 +124,12 @@ namespace PiTop.MakerArchitecture.Expansion
             {
                 throw new ArgumentOutOfRangeException("Power", message: "Power values must be in the range [-1,1]");
             }
-            var sign = (int)ForwardDirection * (int)Direction;
+            var sign = (int)ForwardDirection;
 
             ushort power;
             unchecked
             {
+                // todo, review the write and read of signed values
                 power = (ushort)((int)Math.Round(value * 1000) * sign);
             }
 
@@ -146,13 +138,13 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private double MapMotorPower(ushort value)
         {
-            var sign = (int)ForwardDirection * (int)Direction;
+            var sign = (int)ForwardDirection;
             return value / 1000.0 * sign;
         }
 
         private RotationalSpeed ReadRpm()
         {
-            var sign = (int)Direction;
+            var sign = (int)ForwardDirection;
             var rpm = 0;
             switch (ControlMode)
             {
@@ -162,8 +154,8 @@ namespace PiTop.MakerArchitecture.Expansion
 
                 case 2:
                     var data = _controller.ReadBlock(RegisterMode2RpmWithRotations);
+                    // todo, review the write and read of signed values
                     rpm = BitConverter.ToUInt16(data.Slice(0, 2));
-                    throw new NotImplementedException();
                     break;
             }
             return RotationalSpeed.FromRevolutionsPerMinute(((double)rpm) / (MMK_STANDARD_GEAR_RATIO * sign));
@@ -171,8 +163,7 @@ namespace PiTop.MakerArchitecture.Expansion
         }
 
         private RotationalSpeed ReadActualRpm()
-        {    
-            // todo: in the python code direction si also used but what is the point of having signed values, forward direction and direction ?
+        {
             var sign = (int)ForwardDirection;
             var rpm = 99999;
             
@@ -198,12 +189,12 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private ushort ToRpm(RotationalSpeed speed)
         {
-            // todo: in the python code direction si also used but what is the point of having signed values, forward direction and direction ?
             var sign = (int)ForwardDirection;
 
             ushort rpm;
             unchecked
             {
+                // todo, review the write and read of signed values
                 rpm = (ushort)((int)Math.Round(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO)) * sign);
             }
 
