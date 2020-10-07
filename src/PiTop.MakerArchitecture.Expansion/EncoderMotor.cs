@@ -98,6 +98,18 @@ namespace PiTop.MakerArchitecture.Expansion
             Port = port;
         }
 
+        public double RotationCount
+        {
+            get
+            {
+                var data = _controller.ReadBlock(RegisterOdometer);
+                var count = BitConverter.ToInt32(data.Slice(0, 4)) * (int)ForwardDirection;
+                return Math.Round((double) count / MMK_STANDARD_GEAR_RATIO, 1);
+            }
+        }
+
+        public Length DistanceCount => Length.FromMeters(RotationCount * WheelCircumference.Meters);
+
         public void Stop()
         {
             switch (ControlMode)
