@@ -36,6 +36,11 @@ namespace PiTop.Abstractions
             I2c.Write(BitConverter.GetBytes(value).Prepend(commandCode).ToArray());
         }
 
+        public void WriteWord(byte commandCode, short value)
+        {
+            I2c.Write(BitConverter.GetBytes(value).Prepend(commandCode).ToArray());
+        }
+
         public ushort ReadWord(byte commandCode)
         {
             var data = new byte[2];
@@ -44,6 +49,16 @@ namespace PiTop.Abstractions
 
             return BitConverter.ToUInt16(data, 0);
         }
+
+        public short ReadWordSigned(byte commandCode)
+        {
+            var data = new byte[2];
+
+            I2c.WriteRead(new[] { commandCode }, data);
+
+            return BitConverter.ToInt16(data, 0);
+        }
+
 
         public ushort ProcessCall(byte commandCode, ushort value)
         {

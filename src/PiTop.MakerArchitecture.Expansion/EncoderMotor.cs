@@ -1,7 +1,7 @@
 ﻿using PiTop.Abstractions;
 
 using System;
-
+using System.IO;
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion
@@ -23,7 +23,6 @@ namespace PiTop.MakerArchitecture.Expansion
         private byte RegisterOdometer => (byte)(0x7A + Port);
         public ForwardDirection ForwardDirection { get; set; }
 
-
         public BrakingType BrakingType
         {
             get => (BrakingType)_controller.ReadByte(RegisterBrakeType);
@@ -38,7 +37,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
         public double Power
         {
-            get => ControlMode == 0 ? MapMotorPower(_controller.ReadWord(RegisterMode0Power)) : Double.NaN;
+            get => ControlMode == 0 ? MapMotorPower(_controller.ReadWordSigned(RegisterMode0Power)) : Double.NaN;
             set
             {
                 ControlMode = 0;
@@ -119,25 +118,18 @@ namespace PiTop.MakerArchitecture.Expansion
             }
         }
 
-        private ushort ToMotorPower(in double value)
+        private short ToMotorPower(in double value)
         {
             if (Math.Abs(value) > 1)
             {
                 throw new ArgumentOutOfRangeException("Power", message: "Power values must be in the range [-1,1]");
             }
-            var sign = (int)ForwardDirection;
+            var sign = (short)ForwardDirection;
 
-            ushort power;
-            unchecked
-            {
-                // todo, review the write and read of signed values
-                power = (ushort)((int)Math.Round(value * 1000) * sign);
-            }
-
-            return power;
+            return (short)(Math.Round(value * 1000) * sign);
         }
 
-        private double MapMotorPower(ushort value)
+        private double MapMotorPower(short value)
         {
             var sign = (int)ForwardDirection;
             return value / 1000.0 * sign;
@@ -146,17 +138,16 @@ namespace PiTop.MakerArchitecture.Expansion
         private RotationalSpeed ReadRpm()
         {
             var sign = (int)ForwardDirection;
-            var rpm = 0;
+            short rpm = 0;
             switch (ControlMode)
             {
                 case 1:
-                    rpm = _controller.ReadWord(RegisterMode1Rpm);
+                    rpm = _controller.ReadWordSigned(RegisterMode1Rpm);
                     break;
 
                 case 2:
                     var data = _controller.ReadBlock(RegisterMode2RpmWithRotations);
-                    // todo, review the write and read of signed values
-                    rpm = BitConverter.ToUInt16(data.Slice(0, 2));
+                    rpm = BitConverter.ToInt16(data.Slice(2, 2));
                     break;
             }
             return RotationalSpeed.FromRevolutionsPerMinute(((double)rpm) / (MMK_STANDARD_GEAR_RATIO * sign));
@@ -165,17 +156,19 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private RotationalSpeed ReadActualRpm()
         {
-            var sign = (int)ForwardDirection;
-            var rpm = 99999;
-
-            while (Math.Abs(rpm) > MAX_DC_MOTOR_RPM)
+            for (int i = 0; i < 3; i++) // retry reading a valid tachometer value a finite number of times
             {
-                rpm = _controller.ReadWord(RegisterTachometer);
+                var rpm = _controller.ReadWordSigned(RegisterTachometer);
+                if (Math.Abs(rpm) <= MAX_DC_MOTOR_RPM)
+                {
+                    var sign = (int)ForwardDirection;
+                    return RotationalSpeed.FromRevolutionsPerMinute(((double)rpm) / (MMK_STANDARD_GEAR_RATIO * sign));
+                }
             }
 
-            return RotationalSpeed.FromRevolutionsPerMinute(((double)rpm) / (MMK_STANDARD_GEAR_RATIO * sign));
-
+            throw new InvalidDataException($"Error reading tachometer, {rpm} is more RPM than the motor is capable of ({MAX_DC_MOTOR_RPM} RPM)");
         }
+
         private void ReachSpeed(Speed speed)
         {
             var rpm = 60.0 * (speed.MetersPerSecond / WheelCircumference.Meters);
@@ -188,18 +181,11 @@ namespace PiTop.MakerArchitecture.Expansion
             _controller.WriteWord(RegisterMode1Rpm, ToRpm(speed));
         }
 
-        private ushort ToRpm(RotationalSpeed speed)
+        private short ToRpm(RotationalSpeed speed)
         {
             var sign = (int)ForwardDirection;
 
-            ushort rpm;
-            unchecked
-            {
-                // todo, review the write and read of signed values
-                rpm = (ushort)((int)Math.Round(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO)) * sign);
-            }
-
-            return rpm;
+            return (short)(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO) * sign);
         }
 
         public void Dispose()

@@ -1,6 +1,7 @@
 ﻿using PiTop;
 using PiTop.MakerArchitecture.Expansion;
 using System;
+using System.Threading;
 
 namespace SMBusTest
 {
@@ -13,8 +14,14 @@ namespace SMBusTest
             var plate = module.GetOrCreatePlate<ExpansionPlate>();
             using var motor = plate.GetOrCreateEncoderMotor(EncoderMotorPort.M2);
 
-            // set power
-            motor.Power = 0.5;
+            var sign = 1;
+            while (!Console.KeyAvailable)
+            {
+                motor.Power += .1 * sign;
+                if (motor.Power == 1) sign = -1;
+                if (motor.Power == -1) sign = 1;
+                Thread.Sleep(200);
+            }
 
             Console.ReadKey();
         }
