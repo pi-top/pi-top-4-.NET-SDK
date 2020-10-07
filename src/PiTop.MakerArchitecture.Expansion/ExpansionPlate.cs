@@ -1,12 +1,15 @@
 ﻿using Iot.Device.Imu;
+
 using PiTop.Abstractions;
 using PiTop.MakerArchitecture.Foundation;
+
 using System;
 using System.Collections.Generic;
 using System.Device.I2c;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+
 using UnitsNet;
 using UnitsNet.Units;
 
@@ -43,7 +46,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
             _servoMotorsFactory = new ConnectedDeviceFactory<ServoMotorPort, ServoMotor>(deviceType =>
             {
-                var ctorSignature = new[] { typeof(ServoMotorPort), typeof(I2cDevice) };
+                var ctorSignature = new[] { typeof(ServoMotorPort), typeof(SMBusDevice) };
                 var ctor = deviceType.GetConstructor(ctorSignature);
                 if (ctor != null)
                 {
@@ -59,7 +62,7 @@ namespace PiTop.MakerArchitecture.Expansion
                 deviceType =>
                 {
 
-                    var ctorSignature = new[] { typeof(EncoderMotorPort), typeof(I2cDevice) };
+                    var ctorSignature = new[] { typeof(EncoderMotorPort), typeof(SMBusDevice) };
                     var ctor = deviceType.GetConstructor(ctorSignature);
                     if (ctor != null)
                     {

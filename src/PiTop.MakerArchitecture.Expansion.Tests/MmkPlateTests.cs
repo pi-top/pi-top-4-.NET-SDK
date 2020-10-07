@@ -13,7 +13,7 @@ namespace PiTop.MakerArchitecture.Expansion.Tests
         private readonly PiTop4Board _module;
         public MmkPlateTests()
         {
-            PiTop4Board.Configure(new DummyGpioController());
+            PiTop4Board.Configure(new DummyGpioController(), i2cDeviceFactory:settings => new DummyI2CDevice(settings));
             _module = PiTop4Board.Instance;
         }
 
@@ -30,9 +30,9 @@ namespace PiTop.MakerArchitecture.Expansion.Tests
         {
             using var plate = _module.GetOrCreatePlate<ExpansionPlate>();
 
-            using var led = plate.GetOrCreateDevice<ServoMotor>(ServoMotorPort.S1);
+            using var servoMotor = plate.GetOrCreateDevice<ServoMotor>(ServoMotorPort.S1);
 
-            led.Should().NotBeNull();
+            servoMotor.Should().NotBeNull();
         }
 
         [Fact]
@@ -40,9 +40,9 @@ namespace PiTop.MakerArchitecture.Expansion.Tests
         {
             using var plate = _module.GetOrCreatePlate<ExpansionPlate>();
 
-            using var led = plate.GetOrCreateDevice<EncoderMotor>(EncoderMotorPort.M1);
+            using var encoderMotor = plate.GetOrCreateDevice<EncoderMotor>(EncoderMotorPort.M1);
 
-            led.Should().NotBeNull();
+            encoderMotor.Should().NotBeNull();
         }
 
         public void Dispose()

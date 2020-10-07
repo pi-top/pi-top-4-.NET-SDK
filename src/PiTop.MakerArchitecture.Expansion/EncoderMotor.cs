@@ -1,4 +1,5 @@
 ﻿using PiTop.Abstractions;
+
 using System;
 
 namespace PiTop.MakerArchitecture.Expansion
@@ -9,7 +10,7 @@ namespace PiTop.MakerArchitecture.Expansion
         private BrakingType _brakingType;
 
         public EncoderMotorPort Port { get; }
-        private byte REGISTER_MODE_0_POWER { get { return (byte)(0x64 + Port); } }
+        private byte RegisterMode0Power => (byte)(0x64 + Port);
 
         public BrakingType BrakingType
         {
@@ -28,8 +29,8 @@ namespace PiTop.MakerArchitecture.Expansion
 
         public ushort Power
         {
-            get { return _controller.ReadWord((byte)(REGISTER_MODE_0_POWER)); }
-            set { _controller.WriteWord((byte)(REGISTER_MODE_0_POWER), value); }
+            get => _controller.ReadWord(RegisterMode0Power);
+            set => _controller.WriteWord(RegisterMode0Power, value);
         }
 
         public EncoderMotor(EncoderMotorPort port, SMBusDevice controller)
@@ -39,12 +40,12 @@ namespace PiTop.MakerArchitecture.Expansion
         }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Power = 0;
         }
 
         public void Connect()
         {
-            throw new NotImplementedException();
+            Power = 0;
         }
     }
 }
