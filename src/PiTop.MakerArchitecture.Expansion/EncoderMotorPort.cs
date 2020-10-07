@@ -1,10 +1,10 @@
 ﻿namespace PiTop.MakerArchitecture.Expansion
 {
-    public enum EncoderMotorPort
+    public enum EncoderMotorPort : byte
     {
-        M1,
-        M2,
-        M3,
-        M4
+        M1 = 0,
+        M2 = 1,
+        M3 = 2,
+        M4 = 3
     }
 }

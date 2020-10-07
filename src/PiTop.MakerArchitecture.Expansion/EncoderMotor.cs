@@ -1,15 +1,15 @@
-﻿using System;
-using System.Device.I2c;
-using PiTop.Abstractions;
+﻿using PiTop.Abstractions;
+using System;
 
 namespace PiTop.MakerArchitecture.Expansion
 {
     public class EncoderMotor : IConnectedDevice
     {
-        private readonly I2cDevice _bus;
+        private readonly SMBusDevice _controller;
         private BrakingType _brakingType;
 
         public EncoderMotorPort Port { get; }
+        private byte REGISTER_MODE_0_POWER { get { return (byte)(0x64 + Port); } }
 
         public BrakingType BrakingType
         {
@@ -26,9 +26,15 @@ namespace PiTop.MakerArchitecture.Expansion
             throw new NotImplementedException();
         }
 
-        public EncoderMotor(EncoderMotorPort port, I2cDevice bus)
+        public ushort Power
         {
-            _bus = bus;
+            get { return _controller.ReadWord((byte)(REGISTER_MODE_0_POWER)); }
+            set { _controller.WriteWord((byte)(REGISTER_MODE_0_POWER), value); }
+        }
+
+        public EncoderMotor(EncoderMotorPort port, SMBusDevice controller)
+        {
+            _controller = controller;
             Port = port;
         }
         public void Dispose()
