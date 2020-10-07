@@ -1,6 +1,7 @@
 ﻿using PiTop.Abstractions;
 
 using System;
+
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion
@@ -95,7 +96,7 @@ namespace PiTop.MakerArchitecture.Expansion
             {
                 var data = _controller.ReadBlock(RegisterOdometer);
                 var count = BitConverter.ToInt32(data.Slice(0, 4)) * (int)ForwardDirection;
-                return Math.Round((double) count / MMK_STANDARD_GEAR_RATIO, 1);
+                return Math.Round((double)count / MMK_STANDARD_GEAR_RATIO, 1);
             }
         }
 
@@ -166,14 +167,14 @@ namespace PiTop.MakerArchitecture.Expansion
         {
             var sign = (int)ForwardDirection;
             var rpm = 99999;
-            
+
             while (Math.Abs(rpm) > MAX_DC_MOTOR_RPM)
             {
                 rpm = _controller.ReadWord(RegisterTachometer);
             }
 
-            return RotationalSpeed.FromRevolutionsPerMinute(((double)rpm) /(MMK_STANDARD_GEAR_RATIO * sign));
-           
+            return RotationalSpeed.FromRevolutionsPerMinute(((double)rpm) / (MMK_STANDARD_GEAR_RATIO * sign));
+
         }
         private void ReachSpeed(Speed speed)
         {

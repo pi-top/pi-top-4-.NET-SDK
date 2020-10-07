@@ -1,21 +1,25 @@
 ﻿using System;
-using System.Device.I2c;
 
 using PiTop.Abstractions;
 
 namespace PiTop.MakerArchitecture.Expansion
 {
-    public abstract class ServoMotor : IConnectedDevice
+    public class ServoMotor : IConnectedDevice
     {
-        private readonly I2cDevice _bus;
+        private readonly SMBusDevice _bus;
         public ServoMotorPort Port { get; }
 
-        public ServoMotor(ServoMotorPort port, I2cDevice bus)
+        public ServoMotor(ServoMotorPort port, SMBusDevice bus)
         {
             _bus = bus;
             Port = port;
         }
         public void Dispose()
+        {
+            Stop();
+        }
+
+        private void Stop()
         {
             throw new NotImplementedException();
         }
