@@ -2,7 +2,7 @@
 {
     public static class ExpansionPlateExtensions
     {
-        public static ExpansionPlate GetOrCreateMmkPlate(this PiTop4Board module)
+        public static ExpansionPlate GetOrCreateExpansionPlate(this PiTop4Board module)
         {
             return module.GetOrCreatePlate<ExpansionPlate>();
         }

@@ -73,6 +73,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Exp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMBusTest", "SMBusTest\SMBusTest.csproj", "{C495F9E5-03D6-471D-B220-0A7E81636F11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.MakerArchitecture.Expansion.Rover.App", "PiTop.MakerArchitecture.Expansion.Rover.App\PiTop.MakerArchitecture.Expansion.Rover.App.csproj", "{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +201,10 @@ Global
 		{C495F9E5-03D6-471D-B220-0A7E81636F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C495F9E5-03D6-471D-B220-0A7E81636F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C495F9E5-03D6-471D-B220-0A7E81636F11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,6 +240,7 @@ Global
 		{94A9251A-D4A5-42B3-81F6-4A10C233E726} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
 		{08144ECA-2A07-4E42-86BA-B351206D5215} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 		{C495F9E5-03D6-471D-B220-0A7E81636F11} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98E1ADF8-88DF-4B1F-B486-650F4F9CC573}

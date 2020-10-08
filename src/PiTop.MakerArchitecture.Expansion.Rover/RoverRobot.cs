@@ -12,7 +12,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 {
     public class RoverRobot : IDisposable
     {
-        public PanTiltController TiltController { get; }
+        public IPanTiltController TiltController { get; }
 
         public IMotionComponent MotionComponent { get; }
 

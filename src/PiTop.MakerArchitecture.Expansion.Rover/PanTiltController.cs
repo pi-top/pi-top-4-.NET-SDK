@@ -2,7 +2,7 @@
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
 {
-    public class PanTiltController
+    public class PanTiltController : IPanTiltController
     {
         private readonly ServoMotor _panMotor;
         private readonly ServoMotor _tiltMotor;
@@ -17,15 +17,16 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public void Reset()
         {
-            SetPosition(Angle.FromDegrees(0), Angle.FromDegrees(0));
+            _tilt = Angle.FromDegrees(0);
+            _pan = Angle.FromDegrees(0);
+            SetServoToAngle(_tiltMotor, Angle.FromDegrees(0));
+            SetServoToAngle(_panMotor, Angle.FromDegrees(0));
         }
 
         private void SetPosition(Angle pan, Angle tilt)
         {
-
             Pan = pan;
             Tilt = tilt;
-
         }
 
         public Angle Tilt
@@ -56,7 +57,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         private void SetServoToAngle(ServoMotor servo, Angle angle)
         {
-            throw new System.NotImplementedException();
+            servo.GoToAngle(angle);
         }
     }
 }
