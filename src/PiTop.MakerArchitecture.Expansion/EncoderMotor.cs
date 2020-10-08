@@ -93,7 +93,7 @@ namespace PiTop.MakerArchitecture.Expansion
         {
             get
             {
-                var data = _controller.ReadBlock(RegisterOdometer);
+                var data = _controller.Read32(RegisterOdometer);
                 var count = BitConverter.ToInt32(data.Slice(0, 4)) * (int)ForwardDirection;
                 return Math.Round((double)count / MMK_STANDARD_GEAR_RATIO, 1);
             }
@@ -146,7 +146,7 @@ namespace PiTop.MakerArchitecture.Expansion
                     break;
 
                 case 2:
-                    var data = _controller.ReadBlock(RegisterMode2RpmWithRotations);
+                    var data = _controller.Read32(RegisterMode2RpmWithRotations);
                     rpm = BitConverter.ToInt16(data.Slice(2, 2));
                     break;
             }

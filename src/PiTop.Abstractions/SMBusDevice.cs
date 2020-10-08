@@ -75,8 +75,8 @@ namespace PiTop.Abstractions
             {
                 throw new ArgumentOutOfRangeException($"Parameter data is too long (${values.Length} > 32)");
             }
-
-            I2c.Write(values.ToArray().Prepend(Convert.ToByte(values.Length)).Prepend(commandCode).ToArray());
+            var data = values.ToArray().Prepend(Convert.ToByte(values.Length)).Prepend(commandCode).ToArray();
+            I2c.Write(data);
         }
 
         public ReadOnlySpan<byte> ReadBlock(byte commandCode)
@@ -85,6 +85,27 @@ namespace PiTop.Abstractions
             I2c.WriteRead(new[] { commandCode }, data);
 
             return data.AsSpan(1, data[0]);
+        }
+
+        public void Write32(byte commandCode, short b1, short b2)
+        {
+            Write32(commandCode, BitConverter.GetBytes(b1).Concat(BitConverter.GetBytes(b2)).ToArray());
+        }
+
+        public void Write32(byte commandCode, ReadOnlySpan<byte> data)
+        {
+            if (data.Length != 4)
+            {
+                throw new ArgumentOutOfRangeException($"Parameter data is needs to be length 4 (${data.Length} > 32)");
+            }
+            I2c.Write(data.ToArray().Prepend(commandCode).ToArray());
+        }
+
+        public ReadOnlySpan<byte> Read32(byte commandCode)
+        {
+            var data = new byte[4];
+            I2c.WriteRead(new[] { commandCode }, data);
+            return data;
         }
     }
 }

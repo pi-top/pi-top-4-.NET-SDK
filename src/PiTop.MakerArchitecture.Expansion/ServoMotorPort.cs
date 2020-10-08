@@ -1,10 +1,10 @@
 ﻿namespace PiTop.MakerArchitecture.Expansion
 {
-    public enum ServoMotorPort
+    public enum ServoMotorPort : byte
     {
-        S1,
-        S2,
-        S3,
-        S4
+        S1 = 0,
+        S2 = 1,
+        S3 = 2,
+        S4 = 3
     }
 }

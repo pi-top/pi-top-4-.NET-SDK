@@ -1,6 +1,6 @@
-﻿using System;
-
-using PiTop.Abstractions;
+﻿using PiTop.Abstractions;
+using System;
+using System.Linq;
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion
@@ -14,20 +14,23 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private const int ANGLE_RANGE = 180;
         private const int SPEED_RANGE = 100;
-        private const int MIN_PULSE_WIDTH_MICRO_S = 500;
-        private const int MAX_PULSE_WIDTH_MICRO_S = 2500;
+        private const short MIN_PULSE_WIDTH_MICRO_S = 500;
+        private const short MAX_PULSE_WIDTH_MICRO_S = 2500;
 
 
 
         private const byte REGISTER_MIN_PULSE_WIDTH = 0x4A;
         private const byte REGISTER_MAX_PULSE_WIDTH = 0x4B;
         private const byte REGISTER_PWM_FREQUENCY = 0x4C;
-        private const int PWM_FREQUENCY = 60;
+        private const byte PWM_FREQUENCY = 60;
         private const double PWM_PERIOD = 1.0 / PWM_FREQUENCY;
         private const int DUTY_REGISTER_RANGE = 4095;
 
+        // Calculate the upper and lower bounds for mapping angles to duty cycles
+        private readonly int SERVO_LOWER_DUTY = (int)Math.Round(DUTY_REGISTER_RANGE * ((MIN_PULSE_WIDTH_MICRO_S * 1e-6) / PWM_PERIOD));
+        private readonly int SERVO_UPPER_DUTY = (int)Math.Round(DUTY_REGISTER_RANGE * ((MAX_PULSE_WIDTH_MICRO_S * 1e-6) / PWM_PERIOD));
 
-        private byte RegisterControlMode=> (byte) (0x50 + Port);
+        private byte RegisterControlMode => (byte)(0x50 + Port);
         private byte RegisterSpeed => (byte)(0x56 + Port);
         private byte RegisterAngleAndSpeed => (byte)(0x5C + Port);
 
@@ -39,7 +42,17 @@ namespace PiTop.MakerArchitecture.Expansion
             _defaultSpeed = RotationalSpeed.FromDegreesPerSecond(50);
         }
 
-        private Angle ZeroPoint
+        /// <summary>
+        /// Set the control mode of the servo. In control mode 0, the servo will move at the provided speed until it reaches
+        /// a limit. In control mode 1, the servo will move at a provided speed to a provided angle.
+        /// </summary>
+        private byte ControlMode
+        {
+            get => _controller.ReadByte(RegisterControlMode);
+            set => _controller.WriteByte(RegisterControlMode, value);
+        }
+
+        public Angle ZeroPoint
         {
             get => _zeroPoint;
             set
@@ -49,7 +62,7 @@ namespace PiTop.MakerArchitecture.Expansion
                     throw new ArgumentOutOfRangeException(nameof(ZeroPoint), "ZeroPoint must be an angle between -90 and 90 degrees");
                 }
                 _zeroPoint = value;
-                
+
             }
         }
 
@@ -58,19 +71,55 @@ namespace PiTop.MakerArchitecture.Expansion
             GoToAngle(angle, _defaultSpeed);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <param name="speed"></param>
         public void GoToAngle(Angle angle, RotationalSpeed speed)
         {
-            if (Math.Abs(angle.Degrees) > ANGLE_RANGE)
+            if (Math.Abs((angle + ZeroPoint).Degrees) > ANGLE_RANGE / 2)
             {
-                throw new ArgumentOutOfRangeException(nameof(angle), $"Angle value must be in range [-{ANGLE_RANGE},{ANGLE_RANGE}] degrees.");
+                throw new ArgumentOutOfRangeException(nameof(angle), $"Angle value must be in range [-{ANGLE_RANGE},{ANGLE_RANGE}] degrees, taking into account the current ZeroPoint ({ZeroPoint.Degrees} degrees).");
             }
 
             if (Math.Abs(speed.DegreesPerSecond) > SPEED_RANGE)
             {
-                throw new ArgumentOutOfRangeException(nameof(speed), $"Angle value must be in range [-{SPEED_RANGE},{SPEED_RANGE}] degrees/second.");
+                throw new ArgumentOutOfRangeException(nameof(speed), $"Speed value must be in range [-{SPEED_RANGE},{SPEED_RANGE}] degrees/second.");
             }
 
-            throw new NotImplementedException();
+
+            var dutyCycle = (short)Math.Round(MathHelpers.Interpolate((angle + ZeroPoint).Degrees,
+                -ANGLE_RANGE / 2, ANGLE_RANGE / 2, SERVO_LOWER_DUTY, SERVO_UPPER_DUTY));
+            var s = (short)(Math.Round(speed.DegreesPerSecond * 10));
+
+            ControlMode = 1;
+
+            var data = BitConverter.GetBytes(dutyCycle).Concat(BitConverter.GetBytes(s)).ToArray();
+            Console.WriteLine($"Setting angle=${angle.Degrees} and speed=${speed.DegreesPerSecond}, by pushing {string.Join(",", data.Select(s => s.ToString("X")))}, to set the dutycycle to {dutyCycle} and speed to {s}");
+            _controller.Write32(RegisterAngleAndSpeed, dutyCycle, s);
+        }
+
+        /// <summary>
+        /// The speed with which to move to the limit of the servo motor, from -100.0 to 100.0
+        /// </summary>
+        public RotationalSpeed Speed
+        {
+            get
+            {
+                return RotationalSpeed.FromDegreesPerSecond(
+                    Math.Round((double)_controller.ReadWordSigned(RegisterSpeed) / 10, 1));
+            }
+            set
+            {
+                if (Math.Abs(value.DegreesPerSecond) > SPEED_RANGE)
+                    throw new ArgumentException("Servo speed must be between -100.0 and 100.0");
+
+                var speed = (short)Math.Round(value.DegreesPerSecond * 10, 0);
+
+                ControlMode = 0;
+                _controller.WriteWord(RegisterSpeed, speed);
+            }
         }
 
         public void Dispose()
@@ -80,15 +129,14 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private void Stop()
         {
-            throw new NotImplementedException();
+            Speed = RotationalSpeed.Zero;
         }
 
         public void Connect()
         {
             _controller.WriteWord(REGISTER_MIN_PULSE_WIDTH, MIN_PULSE_WIDTH_MICRO_S);
             _controller.WriteWord(REGISTER_MAX_PULSE_WIDTH, MAX_PULSE_WIDTH_MICRO_S);
-           _controller.WriteByte(REGISTER_PWM_FREQUENCY, PWM_FREQUENCY);
-
+            _controller.WriteByte(REGISTER_PWM_FREQUENCY, PWM_FREQUENCY);
         }
     }
 }
