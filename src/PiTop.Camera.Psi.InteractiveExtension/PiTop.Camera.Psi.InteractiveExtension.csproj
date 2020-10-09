@@ -7,8 +7,8 @@
 
 
   <ItemGroup>
-    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.20503.1" />
-    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.20503.1" />
+    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.20508.1" />
+    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.20508.1" />
   </ItemGroup>
 
 
