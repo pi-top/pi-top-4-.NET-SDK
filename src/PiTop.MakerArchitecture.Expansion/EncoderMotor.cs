@@ -1,12 +1,9 @@
 ﻿using PiTop.Abstractions;
-
+using Pocket;
 using System;
 using System.IO;
-
-using Pocket;
-using static Pocket.Logger;
-
 using UnitsNet;
+using static Pocket.Logger;
 
 namespace PiTop.MakerArchitecture.Expansion
 {
@@ -43,6 +40,9 @@ namespace PiTop.MakerArchitecture.Expansion
             }
         }
 
+        /// <summary>
+        /// Get or set the power value. Must be in the range [-1,1]
+        /// </summary>
         public double Power
         {
             get => ControlMode == 0 ? MapMotorPower(_controller.ReadWordSigned(RegisterMode0Power)) : double.NaN;
@@ -162,7 +162,7 @@ namespace PiTop.MakerArchitecture.Expansion
         private short ToRpm(RotationalSpeed speed)
         {
             using var operation = Log.OnExit();
-          
+
             var sign = (int)ForwardDirection;
 
             var value = (short)(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO, 2) * sign);
