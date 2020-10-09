@@ -109,11 +109,9 @@ namespace PiTop.MakerArchitecture.Expansion
         /// </summary>
         public RotationalSpeed Speed
         {
-            get
-            {
-                return RotationalSpeed.FromDegreesPerSecond(
+            get =>
+                RotationalSpeed.FromDegreesPerSecond(
                     Math.Round((double)_controller.ReadWordSigned(RegisterSpeed) / 10, 1));
-            }
             set
             {
                 if (Math.Abs(value.DegreesPerSecond) > SPEED_RANGE)

@@ -23,7 +23,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             SetServoToAngle(_panMotor, Angle.FromDegrees(0));
         }
 
-        private void SetPosition(Angle pan, Angle tilt)
+        public void SetAngle(Angle pan, Angle tilt)
         {
             Pan = pan;
             Tilt = tilt;
