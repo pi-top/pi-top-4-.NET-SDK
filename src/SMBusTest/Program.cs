@@ -50,7 +50,7 @@ namespace SMBusTest
             Console.WriteLine($"Connected to {js.Name}!");
             Console.WriteLine($"It has {js.NumAxes} axes!");
 
-           
+
             PiTop4Board.Instance.UseCamera();
             using var rover = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(), PiTop4Board.Instance.GetOrCreateCamera<OpenCvCamera>(0));
             var camControl = rover.TiltController;
