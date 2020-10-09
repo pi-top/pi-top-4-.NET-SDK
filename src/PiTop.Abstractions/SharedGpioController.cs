@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
-using System.Reactive.Disposables;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,14 +32,28 @@ namespace PiTop.Abstractions
 
         public void OpenPin(int pinNumber)
         {
-            _controller.OpenPin(pinNumber);
-            _openPins.Add(pinNumber);
+            try
+            {
+                _controller.OpenPin(pinNumber);
+                _openPins.Add(pinNumber);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"Error opening pin {pinNumber}: " + ex.Message, ex);
+            }
         }
 
         public void OpenPin(int pinNumber, PinMode mode)
         {
-            _controller.OpenPin(pinNumber, mode);
-            _openPins.Add(pinNumber);
+            try
+            {
+                _controller.OpenPin(pinNumber, mode);
+                _openPins.Add(pinNumber);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"Error opening pin {pinNumber} as {mode}: " + ex.Message, ex);
+            }
         }
 
         public void ClosePin(int pinNumber)
