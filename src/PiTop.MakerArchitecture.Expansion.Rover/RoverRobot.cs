@@ -5,6 +5,9 @@ using PiTop.MakerArchitecture.Foundation;
 using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Sensors;
 
+using Pocket;
+using static Pocket.Logger;
+
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -36,6 +39,9 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public RoverRobot(ExpansionPlate expansionPlate, IFrameSource<Image<Rgb24>> camera, RoverRobotConfiguration configuration)
         {
+            using var operation = Log.OnEnterAndConfirmOnExit();
+            operation.Info("configuring platform {configuration}", configuration);
+
             ExpansionPlate = expansionPlate ?? throw new ArgumentNullException(nameof(expansionPlate));
             Camera = camera ?? throw new ArgumentNullException(nameof(camera));
 

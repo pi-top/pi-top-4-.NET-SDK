@@ -3,6 +3,9 @@
 using System;
 using System.IO;
 
+using Pocket;
+using static Pocket.Logger;
+
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion
@@ -34,7 +37,8 @@ namespace PiTop.MakerArchitecture.Expansion
             get => _controller.ReadByte(RegisterControlMode);
             set
             {
-                Console.WriteLine($"controlmode={value}");
+                using var operation = Log.OnEnterAndConfirmOnExit();
+                operation.Info("controllerMode", value);
                 _controller.WriteByte(RegisterControlMode, value);
             }
         }
@@ -136,13 +140,13 @@ namespace PiTop.MakerArchitecture.Expansion
         private RotationalSpeed ReadActualRpm()
         {
             var rpm = MAX_DC_MOTOR_RPM;
-            for (int i = 0; i < 3; i++) // retry reading a valid tachometer value a finite number of times
+            for (var i = 0; i < 3; i++) // retry reading a valid tachometer value a finite number of times
             {
                 rpm = _controller.ReadWordSigned(RegisterTachometer);
                 if (Math.Abs(rpm) <= MAX_DC_MOTOR_RPM)
                 {
                     var sign = (int)ForwardDirection;
-                    return RotationalSpeed.FromRevolutionsPerMinute(((double)rpm) / (MMK_STANDARD_GEAR_RATIO * sign));
+                    return RotationalSpeed.FromRevolutionsPerMinute((double)rpm / (MMK_STANDARD_GEAR_RATIO * sign));
                 }
             }
 
@@ -157,10 +161,12 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private short ToRpm(RotationalSpeed speed)
         {
+            using var operation = Log.OnEnterAndConfirmOnExit();
+          
             var sign = (int)ForwardDirection;
 
-            var value = (short)(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO,2) * sign);
-            Console.WriteLine($"RPM={value}");
+            var value = (short)(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO, 2) * sign);
+            operation.Info("RPM", value);
             return value;
         }
 

@@ -1,7 +1,8 @@
 ﻿using System;
 
 using PiTop.Camera;
-
+using PiTop.MakerArchitecture.Foundation;
+using Pocket;
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover.App
@@ -10,6 +11,14 @@ namespace PiTop.MakerArchitecture.Expansion.Rover.App
     {
         static void Main(string[] args)
         {
+
+            LogEvents.Subscribe(i => Console.WriteLine(i.ToLogString()), new[]
+            {
+                typeof(PiTop4Board).Assembly,
+                typeof(FoundationPlate).Assembly,
+                typeof(ExpansionPlate).Assembly,
+                typeof(RoverRobot).Assembly,
+            });
             Console.WriteLine("Test Rover App");
             PiTop4Board.Instance.UseCamera();
             using var rover = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(), PiTop4Board.Instance.GetOrCreateCamera<OpenCvCamera>(0), RoverRobotConfiguration.Default);

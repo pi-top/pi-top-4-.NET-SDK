@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="NetMQ" Version="4.0.1.6" />
+    <PackageReference Include="PocketLogger" Version="0.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20474.3" />
     <PackageReference Include="System.Reactive" Version="4.3.2" />
     <PackageReference Include="UnitsNet" Version="4.72.0" />

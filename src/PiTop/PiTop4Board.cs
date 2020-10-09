@@ -8,7 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
-
+using Pocket;
+using static Pocket.Logger;
 using PiTop.Abstractions;
 
 
@@ -45,6 +46,10 @@ namespace PiTop
                 {
                     if (_display == null)
                     {
+                        using var operation = Log.OnEnterAndConfirmOnExit();
+
+                        operation.Info("acquiring oled display");
+
                         _moduleDriverClient.AcquireDisplay();
                         _disposables.Add(File.Open("/tmp/pt-oled.lock", FileMode.OpenOrCreate, FileAccess.Write,
                             FileShare.None));
@@ -100,6 +105,9 @@ namespace PiTop
             _moduleDriverClient.MessageReceived += ModuleDriverClientMessageReceived;
             _disposables.Add(Disposable.Create(() =>
             {
+                using var operation = Log.OnEnterAndConfirmOnExit();
+
+                operation.Info("disposing devices.");
                 var plates = _plates.Values.ToList();
                 foreach (var piTopPlate in plates)
                 {
@@ -129,13 +137,15 @@ namespace PiTop
 
         public T GetOrCreatePlate<T>() where T : PiTopPlate
         {
+            using var __ = Log.OnEnterAndConfirmOnExit();
             var key = typeof(T);
             var plate = _plates.GetOrAdd(key, plateType =>
-           {
-               var newPlate = (Activator.CreateInstance(plateType, args: new object[] { this }) as T)!;
-               newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
-               return newPlate;
-           });
+            {
+                using var operation = Log.OnEnterAndConfirmOnExit();
+                var newPlate = (Activator.CreateInstance(plateType, args: new object[] { this }) as T)!;
+                newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
+                return newPlate;
+            });
 
             return (plate as T)!;
         }
@@ -295,6 +305,7 @@ namespace PiTop
             where TConnectionConfiguration : notnull
             where TDevice : IConnectedDevice
         {
+            using var _ = Log.OnEnterAndConfirmOnExit();
             if (connectedDeviceFactory == null)
             {
                 throw new ArgumentNullException(nameof(connectedDeviceFactory));

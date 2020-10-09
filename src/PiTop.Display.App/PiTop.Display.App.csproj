@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PocketLogger" Version="0.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PiTop.Abstractions\PiTop.Abstractions.csproj" />
     <ProjectReference Include="..\PiTop.Display\PiTop.Display.csproj" />
     <ProjectReference Include="..\PiTop\PiTop.csproj" />

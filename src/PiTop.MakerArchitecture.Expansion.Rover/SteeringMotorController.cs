@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-
+using Pocket;
+using static Pocket.Logger;
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
@@ -46,10 +47,12 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
                 .Subscribe(
                 speeds =>
                 {
+                    using var operation = Log.OnEnterAndConfirmOnExit();
+
                     _leftMotor.Rpm = speeds.Item1;
-                    Console.WriteLine($"  _leftMotor.Rpm = {speeds.Item1.RevolutionsPerMinute}");
                     _rightMotor.Rpm = speeds.Item2;
-                    Console.WriteLine($" _rightMotor.Rpm = {speeds.Item2.RevolutionsPerMinute}");
+
+                    operation.Info("Motors = L[{_leftMotor.Rpm}] R[{_rightMotor.Rpm}]", _leftMotor.Rpm, _rightMotor.Rpm);
 
                 });
         }
