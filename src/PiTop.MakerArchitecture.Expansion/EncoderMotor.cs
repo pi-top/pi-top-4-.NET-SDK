@@ -32,7 +32,11 @@ namespace PiTop.MakerArchitecture.Expansion
         private byte ControlMode
         {
             get => _controller.ReadByte(RegisterControlMode);
-            set => _controller.WriteByte(RegisterControlMode, value);
+            set
+            {
+                Console.WriteLine($"controlmode={value}");
+                _controller.WriteByte(RegisterControlMode, value);
+            }
         }
 
         public double Power
@@ -186,7 +190,9 @@ namespace PiTop.MakerArchitecture.Expansion
         {
             var sign = (int)ForwardDirection;
 
-            return (short)(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO) * sign);
+            var value = (short)(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO) * sign);
+            Console.WriteLine($"RPM={value}");
+            return value;
         }
 
         public void Dispose()

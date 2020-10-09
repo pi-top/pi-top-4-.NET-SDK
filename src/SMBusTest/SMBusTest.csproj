@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PiTop.Abstractions\PiTop.Abstractions.csproj" />
+    <ProjectReference Include="..\PiTop.MakerArchitecture.Expansion.Rover\PiTop.MakerArchitecture.Expansion.Rover.csproj" />
     <ProjectReference Include="..\PiTop.MakerArchitecture.Expansion\PiTop.MakerArchitecture.Expansion.csproj" />
   </ItemGroup>
 

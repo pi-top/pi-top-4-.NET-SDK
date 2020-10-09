@@ -1,11 +1,10 @@
-﻿using System.Numerics;
-using UnitsNet;
+﻿using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
 {
     public interface IMotionComponent
     {
-        void SetSpeed(Speed speed, Vector2 direction);
+        void SetSpeedAndSteering(Speed speed, RotationalSpeed headingChange);
         public void Stop();
     }
 }
