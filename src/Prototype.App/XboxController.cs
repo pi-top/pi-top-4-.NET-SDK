@@ -14,7 +14,15 @@ namespace Prototype
 
         public XboxController(string device = "/dev/input/js0")
         {
-            _fs = File.OpenRead(device);
+            try
+            {
+                _fs = File.OpenRead(device);
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new ControllerNotConnectedExeption("Please connect the controller", ex);
+            }
+
             Events = Observable.Create<JoystickEvent>(async (subject, token) =>
               {
                   try
