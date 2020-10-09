@@ -2,7 +2,7 @@
 {
     public class RoverRobotConfiguration
     {
-        public static RoverRobotConfiguration Defaulf => new RoverRobotConfiguration(EncoderMotorPort.M4,
+        public static RoverRobotConfiguration Default => new RoverRobotConfiguration(EncoderMotorPort.M4,
             EncoderMotorPort.M1, ServoMotorPort.S1, ServoMotorPort.S2
         );
         public RoverRobotConfiguration(EncoderMotorPort leftMotorPort, EncoderMotorPort rightMotorPort, ServoMotorPort panMotorPort, ServoMotorPort tiltMotorPort)
@@ -16,7 +16,6 @@
         public EncoderMotorPort LeftMotorPort { get; }
 
         public EncoderMotorPort RightMotorPort { get; }
-
 
 
         public ServoMotorPort PanMotorPort { get; }
