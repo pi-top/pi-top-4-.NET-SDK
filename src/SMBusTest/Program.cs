@@ -2,6 +2,7 @@
 using PiTop.MakerArchitecture.Expansion;
 using PiTop.MakerArchitecture.Expansion.Rover;
 using System;
+using PiTop.Camera;
 using UnitsNet;
 
 namespace SMBusTest
@@ -11,12 +12,6 @@ namespace SMBusTest
 
         static void Main(string[] args)
         {
-            using var module = PiTop4Board.Instance;
-            var plate = module.GetOrCreatePlate<ExpansionPlate>();
-            using var leftMotor = plate.GetOrCreateEncoderMotor(EncoderMotorPort.M3);
-            using var rightMotor = plate.GetOrCreateEncoderMotor(EncoderMotorPort.M2);
-            rightMotor.ForwardDirection = ForwardDirection.CounterClockwise;
-
 
             //var sign = 1;
             //while (!Console.KeyAvailable)
@@ -54,11 +49,14 @@ namespace SMBusTest
             var js = new LinuxJoystick();
             Console.WriteLine($"Connected to {js.Name}!");
             Console.WriteLine($"It has {js.NumAxes} axes!");
-            var camControl = new PanTiltController(
-                plate.GetOrCreateServoMotor(ServoMotorPort.S1),
-                plate.GetOrCreateServoMotor(ServoMotorPort.S2));
-            var motorControl = new SteeringMotorController(leftMotor, rightMotor);
 
+           
+            PiTop4Board.Instance.UseCamera();
+            using var rover = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(), PiTop4Board.Instance.GetOrCreateCamera<OpenCvCamera>(0));
+            var camControl = rover.TiltController;
+            var motorControl = rover.MotionComponent as SteeringMotorController;
+
+            rover.AllLightsOn();
             while (!Console.KeyAvailable)
             {
                 var e = js.ReadEvent();
@@ -102,6 +100,7 @@ namespace SMBusTest
             }
 
             Console.ReadKey();
+            rover.AllLightsOff();
         }
     }
 }

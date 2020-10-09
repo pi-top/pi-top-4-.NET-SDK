@@ -75,5 +75,30 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
         {
             (MotionComponent as IDisposable)?.Dispose();
         }
+
+        public void AllLightsOn()
+        {
+            FrontRightLed.On();
+            FrontLeftLed.On();
+            BackRightLed.On();
+            BackLeftLed.On();
+        }
+
+        public void ToggleAllLights()
+        {
+            FrontRightLed.Toggle();
+            FrontLeftLed.Toggle();
+            BackRightLed.Toggle();
+            BackLeftLed.Toggle();
+        }
+
+        public void AllLightsOff()
+        {
+            FrontRightLed.Off();
+            FrontLeftLed.Off();
+            BackRightLed.Off();
+            BackLeftLed.Off();
+        }
+
     }
 }
