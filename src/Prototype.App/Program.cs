@@ -88,7 +88,7 @@ namespace Prototype.App
                 {
                     camControl.SetSpeeds(
                         RotationalSpeed.FromRadiansPerSecond(stick.X / 3),
-                        RotationalSpeed.FromRadiansPerSecond(stick.X / 3)
+                        RotationalSpeed.FromRadiansPerSecond(stick.Y / 3)
                         );
 
                 });
