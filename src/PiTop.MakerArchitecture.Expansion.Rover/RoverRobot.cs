@@ -1,15 +1,13 @@
-﻿using System;
-using System.Reactive.Linq;
-using PiTop.Camera;
+﻿using PiTop.Camera;
 using PiTop.MakerArchitecture.Foundation;
 using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Sensors;
-
 using Pocket;
-using static Pocket.Logger;
-
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using System;
+using System.Reactive.Linq;
+using static Pocket.Logger;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
 {
@@ -43,7 +41,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             operation.Info("configuring platform ", configuration.LeftMotorPort, configuration.RightMotorPort, configuration.PanMotorPort, configuration.TiltMotorPort);
 
             ExpansionPlate = expansionPlate ?? throw new ArgumentNullException(nameof(expansionPlate));
-            Camera = camera ?? throw new ArgumentNullException(nameof(camera));
+            Camera = camera;
 
             TiltController = new PanTiltController(
                 ExpansionPlate.GetOrCreateServoMotor(configuration.PanMotorPort),
