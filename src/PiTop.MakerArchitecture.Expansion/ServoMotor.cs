@@ -1,7 +1,9 @@
 ﻿using PiTop.Abstractions;
 using System;
 using System.Linq;
+using Pocket;
 using UnitsNet;
+using static Pocket.Logger;
 
 namespace PiTop.MakerArchitecture.Expansion
 {
@@ -78,6 +80,8 @@ namespace PiTop.MakerArchitecture.Expansion
         /// <param name="speed"></param>
         public void GoToAngle(Angle angle, RotationalSpeed speed)
         {
+
+            using var operation = Log.OnEnterAndConfirmOnExit();
             if (Math.Abs((angle + ZeroPoint).Degrees) > ANGLE_RANGE / 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(angle), $"Angle value must be in range [-{ANGLE_RANGE},{ANGLE_RANGE}] degrees, taking into account the current ZeroPoint ({ZeroPoint.Degrees} degrees).");
@@ -95,9 +99,9 @@ namespace PiTop.MakerArchitecture.Expansion
 
             ControlMode = 1;
 
-            var data = BitConverter.GetBytes(dutyCycle).Concat(BitConverter.GetBytes(s)).ToArray();
-            Console.WriteLine($"Setting angle=${angle.Degrees} and speed=${speed.DegreesPerSecond}, by pushing {string.Join(",", data.Select(s => s.ToString("X")))}, to set the dutycycle to {dutyCycle} and speed to {s}");
             _controller.Write32(RegisterAngleAndSpeed, dutyCycle, s);
+
+            operation.Info("Setting Servo angle to {angle} with speed {speed}, by pushing dutyCycle {dutyCycle} and speed {s} ", angle, speed, dutyCycle, s);
         }
 
         /// <summary>
@@ -113,7 +117,9 @@ namespace PiTop.MakerArchitecture.Expansion
             set
             {
                 if (Math.Abs(value.DegreesPerSecond) > SPEED_RANGE)
+                {
                     throw new ArgumentException("Servo speed must be between -100.0 and 100.0");
+                }
 
                 var speed = (short)Math.Round(value.DegreesPerSecond * 10, 0);
 

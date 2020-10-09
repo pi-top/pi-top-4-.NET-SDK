@@ -36,7 +36,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover.App
                 try
                 {
                     var e = js.ReadEvent();
-                    Console.WriteLine($"ts={e.timestamp}, v={e.value}, t={e.type}, n={e.number}");
+                   // Console.WriteLine($"ts={e.timestamp}, v={e.value}, t={e.type}, n={e.number}");
                     if (e.type == 1)
                     {
                         switch (e.number)
