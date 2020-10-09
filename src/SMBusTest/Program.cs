@@ -65,6 +65,22 @@ namespace SMBusTest
                 {
                     var e = js.ReadEvent();
                     Console.WriteLine($"ts={e.timestamp}, v={e.value}, t={e.type}, n={e.number}");
+                    if (e.type == 1)
+                    {
+                        switch (e.number)
+                        {
+                            case 0:
+                                if (e.value > 0)
+                                {
+                                    rover.AllLightsOn();
+                                }
+                                else
+                                {
+                                    rover.AllLightsOff();
+                                }
+                                break;
+                        }
+                    }
                     if (e.type == 2) // axis
                     {
                         switch (e.number)
