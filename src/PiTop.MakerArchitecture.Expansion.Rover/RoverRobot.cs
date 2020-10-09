@@ -45,7 +45,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
                 );
 
             MotionComponent = new SteeringMotorController(
-                ExpansionPlate.GetOrCreateEncoderMotor(EncoderMotorPort.M3),
+                ExpansionPlate.GetOrCreateEncoderMotor(EncoderMotorPort.M4),
                 ExpansionPlate.GetOrCreateEncoderMotor(EncoderMotorPort.M1)
                 );
 

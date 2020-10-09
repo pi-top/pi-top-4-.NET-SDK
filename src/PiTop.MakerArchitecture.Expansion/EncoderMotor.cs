@@ -105,7 +105,7 @@ namespace PiTop.MakerArchitecture.Expansion
             }
             var sign = (short)ForwardDirection;
 
-            return (short)(Math.Round(value * 1000) * sign);
+            return (short)(Math.Round(value * 1000, 2) * sign);
         }
 
         private double MapMotorPower(short value)
@@ -159,7 +159,7 @@ namespace PiTop.MakerArchitecture.Expansion
         {
             var sign = (int)ForwardDirection;
 
-            var value = (short)(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO) * sign);
+            var value = (short)(Math.Round(speed.RevolutionsPerMinute * MMK_STANDARD_GEAR_RATIO,2) * sign);
             Console.WriteLine($"RPM={value}");
             return value;
         }
