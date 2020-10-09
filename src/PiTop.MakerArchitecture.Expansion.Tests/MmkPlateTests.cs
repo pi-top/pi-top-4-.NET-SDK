@@ -63,24 +63,6 @@ namespace PiTop.MakerArchitecture.Expansion.Tests
                 .Message.Should().Be("Power values must be in the range [-1,1] (Parameter 'Power')");
         }
 
-        [Theory]
-        [InlineData(0)]
-        [InlineData(-100)]
-        public void encoderMotor_does_not_accept_wheel_diameters_out_of_range(int wheelDiameter)
-        {
-            using var plate = _module.GetOrCreatePlate<ExpansionPlate>();
-
-            using var encoderMotor = plate.GetOrCreateDevice<EncoderMotor>(EncoderMotorPort.M1);
-            var action = new Action(() =>
-            {
-                encoderMotor.WheelDiameter = Length.FromMeters(wheelDiameter);
-            });
-
-            action.Should().Throw<ArgumentException>()
-                .Which
-                .Message.Should().Be("Wheel Diameter cannot be 0 or negative (Parameter 'WheelDiameter')");
-        }
-
         public void Dispose()
         {
             _module.Dispose();

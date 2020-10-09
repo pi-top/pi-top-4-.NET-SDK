@@ -54,7 +54,7 @@ namespace SMBusTest
             var js = new LinuxJoystick();
             Console.WriteLine($"Connected to {js.Name}!");
             Console.WriteLine($"It has {js.NumAxes} axes!");
-            var camcontrol = new PanTiltController(
+            var camControl = new PanTiltController(
                 plate.GetOrCreateServoMotor(ServoMotorPort.S1),
                 plate.GetOrCreateServoMotor(ServoMotorPort.S2));
             var motorControl = new SteeringMotorController(leftMotor, rightMotor);
@@ -81,7 +81,7 @@ namespace SMBusTest
                             //    RotationalSpeed.FromDegreesPerSecond(MathHelpers.Interpolate(e.value, -motorControl.MaxSteering.DegreesPerSecond, motorControl.MaxSteering.DegreesPerSecond)));
                             break;
                         case 1: // throttle
-                            motorControl.Speed = Speed.FromMetersPerSecond(MathHelpers.Interpolate(e.value, leftMotor.MaxSpeed.MetersPerSecond, -leftMotor.MaxSpeed.MetersPerSecond) / 2);
+                            motorControl.Speed = Speed.FromMetersPerSecond(e.value.Interpolate(motorControl.MaxSpeed.MetersPerSecond, -motorControl.MaxSpeed.MetersPerSecond) / 2);
                             //motorControl.SetSpeedAndSteering(
                             //    Speed.FromMetersPerSecond(MathHelpers.Interpolate(e.value, leftMotor.MaxSpeed.MetersPerSecond, -leftMotor.MaxSpeed.MetersPerSecond)),
                             //    motorControl.Steering);
@@ -89,11 +89,11 @@ namespace SMBusTest
 
 
                         case 2: // pan
-                            camcontrol.Pan = Angle.FromDegrees(MathHelpers.Interpolate(e.value, 90, -90));
+                            camControl.Pan = Angle.FromDegrees(e.value.Interpolate(90, -90));
                             break;
                         case 3: // tilt
-                            camcontrol.Tilt = Angle.FromDegrees(
-                                Math.Max(-45, MathHelpers.Interpolate(e.value, 90, -90)));
+                            camControl.Tilt = Angle.FromDegrees(
+                                Math.Max(-45, e.value.Interpolate(90, -90)));
                             break;
 
 

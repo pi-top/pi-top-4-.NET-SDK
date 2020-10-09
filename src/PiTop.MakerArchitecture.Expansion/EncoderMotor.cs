@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion
@@ -11,7 +12,6 @@ namespace PiTop.MakerArchitecture.Expansion
         private const int MMK_STANDARD_GEAR_RATIO = 42;
         private const int MAX_DC_MOTOR_RPM = 6000;
         private readonly SMBusDevice _controller;
-        private Length _wheelDiameter;
 
         public EncoderMotorPort Port { get; }
         private byte RegisterControlMode => (byte)(0x60 + Port);
@@ -41,7 +41,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
         public double Power
         {
-            get => ControlMode == 0 ? MapMotorPower(_controller.ReadWordSigned(RegisterMode0Power)) : Double.NaN;
+            get => ControlMode == 0 ? MapMotorPower(_controller.ReadWordSigned(RegisterMode0Power)) : double.NaN;
             set
             {
                 ControlMode = 0;
@@ -49,31 +49,10 @@ namespace PiTop.MakerArchitecture.Expansion
             }
         }
 
-        public Speed MaxSpeed => Speed.FromMetersPerSecond(WheelCircumference.Meters * MaxRpm.RevolutionsPerSecond);
 
-        public RotationalSpeed MaxRpm => RotationalSpeed.FromRevolutionsPerMinute(((double)MAX_DC_MOTOR_RPM) / MMK_STANDARD_GEAR_RATIO);
+        public static RotationalSpeed MaxRpm => RotationalSpeed.FromRevolutionsPerMinute((double)MAX_DC_MOTOR_RPM / MMK_STANDARD_GEAR_RATIO);
 
-        public Length WheelDiameter
-        {
-            get => _wheelDiameter;
-            set
-            {
-                if (value.Meters <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(WheelDiameter), "Wheel Diameter cannot be 0 or negative");
-                }
-                _wheelDiameter = value;
-                WheelCircumference = Length.FromMeters(_wheelDiameter.Meters * Math.PI);
-            }
-        }
 
-        public Length WheelCircumference { get; private set; }
-
-        public Speed Speed
-        {
-            get => Speed.FromMetersPerSecond(Rpm.RevolutionsPerSecond * WheelCircumference.Meters);
-            set => ReachSpeed(value);
-        }
 
         public RotationalSpeed Rpm
         {
@@ -81,13 +60,10 @@ namespace PiTop.MakerArchitecture.Expansion
             set => ReachSpeed(value);
         }
 
-        public Speed ActualSpeed => Speed.FromMetersPerSecond(ActualRpm.RevolutionsPerSecond * WheelCircumference.Meters);
-
         public RotationalSpeed ActualRpm => ControlMode == 0 ? RotationalSpeed.Zero : ReadActualRpm();
 
         public EncoderMotor(EncoderMotorPort port, SMBusDevice controller)
         {
-            WheelDiameter = WheelDiameters.Standard;
             ForwardDirection = ForwardDirection.Clockwise;
             _controller = controller;
             Port = port;
@@ -103,7 +79,6 @@ namespace PiTop.MakerArchitecture.Expansion
             }
         }
 
-        public Length DistanceCount => Length.FromMeters(RotationCount * WheelCircumference.Meters);
 
         public void Stop()
         {
@@ -172,12 +147,6 @@ namespace PiTop.MakerArchitecture.Expansion
             }
 
             throw new InvalidDataException($"Error reading tachometer, {rpm} is more RPM than the motor is capable of ({MAX_DC_MOTOR_RPM} RPM)");
-        }
-
-        private void ReachSpeed(Speed speed)
-        {
-            var rpm = 60.0 * (speed.MetersPerSecond / WheelCircumference.Meters);
-            ReachSpeed(RotationalSpeed.FromRevolutionsPerMinute(rpm));
         }
 
         private void ReachSpeed(RotationalSpeed speed)

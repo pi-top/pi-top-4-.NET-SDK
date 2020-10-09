@@ -2,6 +2,7 @@
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using UnitsNet;
+using UnitsNet.Units;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
 {
@@ -13,31 +14,41 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
         private Length _wheelbase = Length.FromCentimeters(16);
         private Speed _speed;
         private RotationalSpeed _turnRate;
-        private Subject<(Speed, Speed)> _writeSpeed;
-        private IDisposable _disposable;
+        private readonly Subject<(RotationalSpeed, RotationalSpeed)> _writeSpeed;
+        private readonly IDisposable _disposable;
 
-        public SteeringMotorController(EncoderMotor leftMotor, EncoderMotor rightMotor)
+        public Speed MaxSpeed => Speed.FromMetersPerSecond(WheelCircumference.Meters * EncoderMotor.MaxRpm.RevolutionsPerSecond);
+
+        public SteeringMotorController(EncoderMotor leftMotor, EncoderMotor rightMotor): this(leftMotor,rightMotor, WheelDiameters.Standard)
+        {
+
+        }
+        public SteeringMotorController(EncoderMotor leftMotor, EncoderMotor rightMotor, Length wheelDiameter)
         {
             _leftMotor = leftMotor;
             _rightMotor = rightMotor;
+            WheelCircumference = Length.FromMeters(wheelDiameter.Meters * Math.PI);
+  
 
             // assuming motors have same max speed
-            MaxSteering = RotationalSpeed.FromRadiansPerSecond((_leftMotor.MaxSpeed.MetersPerSecond * 2) / _wheelbase.Meters);
+            MaxSteering = RotationalSpeed.FromRadiansPerSecond(MaxSpeed.MetersPerSecond * 2 / _wheelbase.Meters);
 
             _leftMotor.ForwardDirection = ForwardDirection.Clockwise;
             _rightMotor.ForwardDirection = ForwardDirection.CounterClockwise;
 
-            _writeSpeed = new Subject<(Speed left, Speed right)>();
+            _writeSpeed = new Subject<(RotationalSpeed left, RotationalSpeed right)>();
             _disposable = _writeSpeed.Sample(TimeSpan.FromMilliseconds(100)).Subscribe(
                 speeds =>
                 {
-                    _leftMotor.Speed = speeds.Item1;
-                    Console.WriteLine($"  _leftMotor.Speed = {(speeds.Item1).CentimetersPerSecond}");
-                    _rightMotor.Speed = speeds.Item2;
-                    Console.WriteLine($" _rightMotor.Speed = {(speeds.Item2).CentimetersPerSecond}");
+                    _leftMotor.Rpm = speeds.Item1;
+                    Console.WriteLine($"  _leftMotor.Rpm = {speeds.Item1.RevolutionsPerMinute}");
+                    _rightMotor.Rpm = speeds.Item2;
+                    Console.WriteLine($" _rightMotor.Rpm = {speeds.Item2.RevolutionsPerMinute}");
 
                 });
         }
+
+        public Length WheelCircumference { get; }
 
         public Speed Speed
         {
@@ -61,7 +72,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
         public RotationalSpeed MaxSteering { get; }
 
         /// <summary>
-        /// Set overall forward speed and turnrate
+        /// Set overall forward speed and turnRate
         /// </summary>
         /// <param name="speed">how fast are we going forward</param>
         /// <param name="turnRate">how fast are we turning right</param>
@@ -83,7 +94,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
             var diff = Speed.FromMetersPerSecond(_turnRate.RadiansPerSecond / 2 * _wheelbase.Meters);
 
-            _writeSpeed.OnNext((_speed + diff, _speed - diff));
+            _writeSpeed.OnNext(((_speed + diff).ToRotationalSpeedFromCircumference(WheelCircumference), (_speed - diff).ToRotationalSpeedFromCircumference(WheelCircumference)));
         }
 
         public void Stop()
