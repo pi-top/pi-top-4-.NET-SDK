@@ -7,5 +7,6 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
         void Reset();
         Angle Tilt { get; set; }
         Angle Pan { get; set; }
+        void SetSpeeds(RotationalSpeed panSpeed, RotationalSpeed tiltSpeed);
     }
 }

@@ -120,5 +120,11 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             _disposable.Dispose();
             Stop();
         }
+
+        public void SetPower(double rightMotorPower, double leftMotorPower)
+        {
+            _leftMotor.Power = leftMotorPower;
+            _rightMotor.Power = rightMotorPower;
+        }
     }
 }

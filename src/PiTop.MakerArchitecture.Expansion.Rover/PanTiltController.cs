@@ -4,23 +4,23 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 {
     public class PanTiltController : IPanTiltController
     {
-        private readonly ServoMotor _panMotor;
-        private readonly ServoMotor _tiltMotor;
+        private readonly ServoMotor _panServo;
+        private readonly ServoMotor _tiltServo;
         private Angle _tilt;
         private Angle _pan;
 
-        public PanTiltController(ServoMotor panMotor, ServoMotor tiltMotor)
+        public PanTiltController(ServoMotor panServo, ServoMotor tiltServo)
         {
-            _panMotor = panMotor;
-            _tiltMotor = tiltMotor;
+            _panServo = panServo;
+            _tiltServo = tiltServo;
         }
 
         public void Reset()
         {
             _tilt = Angle.FromDegrees(0);
             _pan = Angle.FromDegrees(0);
-            SetServoToAngle(_tiltMotor, Angle.FromDegrees(0));
-            SetServoToAngle(_panMotor, Angle.FromDegrees(0));
+            SetServoToAngle(_tiltServo, Angle.FromDegrees(0));
+            SetServoToAngle(_panServo, Angle.FromDegrees(0));
         }
 
         public void SetAngle(Angle pan, Angle tilt)
@@ -37,7 +37,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
                 if (_tilt != value)
                 {
                     _tilt = value;
-                    SetServoToAngle(_tiltMotor, _tilt);
+                    SetServoToAngle(_tiltServo, _tilt);
                 }
             }
         }
@@ -50,9 +50,15 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
                 if (_pan != value)
                 {
                     _pan = value;
-                    SetServoToAngle(_panMotor, _pan);
+                    SetServoToAngle(_panServo, _pan);
                 }
             }
+        }
+
+        public void SetSpeeds(RotationalSpeed panSpeed, RotationalSpeed tiltSpeed)
+        {
+            _panServo.Speed = panSpeed;
+            _tiltServo.Speed = tiltSpeed;
         }
 
         private void SetServoToAngle(ServoMotor servo, Angle angle)
