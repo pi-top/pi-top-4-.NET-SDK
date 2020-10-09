@@ -75,7 +75,7 @@ namespace SMBusTest
                         //    break;
 
                         case 0: // steer
-                            motorControl.Steering = RotationalSpeed.FromDegreesPerSecond(MathHelpers.Interpolate(e.value, -motorControl.MaxSteering.DegreesPerSecond, motorControl.MaxSteering.DegreesPerSecond) / 2);
+                            motorControl.Steering = RotationalSpeed.FromDegreesPerSecond(e.value.Interpolate(-motorControl.MaxSteering.DegreesPerSecond, motorControl.MaxSteering.DegreesPerSecond) / 2);
                             //motorControl.SetSpeedAndSteering(
                             //    motorControl.Speed,
                             //    RotationalSpeed.FromDegreesPerSecond(MathHelpers.Interpolate(e.value, -motorControl.MaxSteering.DegreesPerSecond, motorControl.MaxSteering.DegreesPerSecond)));
@@ -93,7 +93,7 @@ namespace SMBusTest
                             break;
                         case 3: // tilt
                             camControl.Tilt = Angle.FromDegrees(
-                                Math.Max(-45, e.value.Interpolate(90, -90)));
+                                Math.Min(45, e.value.Interpolate(90, -90)));
                             break;
 
 
