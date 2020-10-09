@@ -57,6 +57,8 @@ namespace SMBusTest
             var motorControl = rover.MotionComponent as SteeringMotorController;
 
             rover.AllLightsOn();
+            rover.BlinkAllLights();
+
             while (!Console.KeyAvailable)
             {
                 try

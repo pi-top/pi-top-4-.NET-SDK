@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Reactive.Linq;
 using PiTop.Camera;
 using PiTop.MakerArchitecture.Foundation;
 using PiTop.MakerArchitecture.Foundation.Components;
@@ -73,6 +73,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public void Dispose()
         {
+            AllLightsOff();
             (MotionComponent as IDisposable)?.Dispose();
         }
 
@@ -98,6 +99,17 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             FrontLeftLed.Off();
             BackRightLed.Off();
             BackLeftLed.Off();
+        }
+
+        public void BlinkAllLights(int blinkCount = 5)
+        {
+            Observable
+                .Interval(TimeSpan.FromSeconds(0.2))
+                .Take(blinkCount)
+                .Subscribe(_ =>
+            {
+                ToggleAllLights();
+            });
         }
 
     }
