@@ -34,19 +34,19 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public IFrameSource<Image<Rgb24>> Camera { get; }
 
-        public RoverRobot(ExpansionPlate expansionPlate, IFrameSource<Image<Rgb24>> camera)
+        public RoverRobot(ExpansionPlate expansionPlate, IFrameSource<Image<Rgb24>> camera, RoverRobotConfiguration configuration)
         {
             ExpansionPlate = expansionPlate ?? throw new ArgumentNullException(nameof(expansionPlate));
             Camera = camera ?? throw new ArgumentNullException(nameof(camera));
 
             TiltController = new PanTiltController(
-                ExpansionPlate.GetOrCreateServoMotor(ServoMotorPort.S1),
-                ExpansionPlate.GetOrCreateServoMotor(ServoMotorPort.S2)
+                ExpansionPlate.GetOrCreateServoMotor(configuration.PanMotorPort),
+                ExpansionPlate.GetOrCreateServoMotor(configuration.TiltMotorPort)
                 );
 
             MotionComponent = new SteeringMotorController(
-                ExpansionPlate.GetOrCreateEncoderMotor(EncoderMotorPort.M4),
-                ExpansionPlate.GetOrCreateEncoderMotor(EncoderMotorPort.M1)
+                ExpansionPlate.GetOrCreateEncoderMotor(configuration.LeftMotorPort),
+                ExpansionPlate.GetOrCreateEncoderMotor(configuration.RightMotorPort)
                 );
 
             FrontRightLed = ExpansionPlate.GetOrCreateLed(DigitalPort.D3, Color.Green);

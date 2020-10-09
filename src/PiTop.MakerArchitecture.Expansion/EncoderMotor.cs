@@ -129,7 +129,7 @@ namespace PiTop.MakerArchitecture.Expansion
                     rpm = BitConverter.ToInt16(data.Slice(2, 2));
                     break;
             }
-            return RotationalSpeed.FromRevolutionsPerMinute(((double)rpm) / (MMK_STANDARD_GEAR_RATIO * sign));
+            return RotationalSpeed.FromRevolutionsPerMinute((double)rpm / (MMK_STANDARD_GEAR_RATIO * sign));
 
         }
 

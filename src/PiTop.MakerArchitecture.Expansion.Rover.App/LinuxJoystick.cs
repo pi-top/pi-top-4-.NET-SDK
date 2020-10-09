@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover.App
 {
+    /// <summary>
+    /// See https://www.kernel.org/doc/Documentation/input/joystick-api.txt
+    /// </summary>
     class LinuxJoystick : IDisposable
     {
         private int _fd = -1;

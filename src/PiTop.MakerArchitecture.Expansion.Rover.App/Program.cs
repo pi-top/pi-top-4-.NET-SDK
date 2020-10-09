@@ -1,39 +1,88 @@
 ﻿using System;
-using System.Threading.Tasks;
+
 using PiTop.Camera;
+
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover.App
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             Console.WriteLine("Test Rover App");
             PiTop4Board.Instance.UseCamera();
-            using var rover = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(), PiTop4Board.Instance.GetOrCreateCamera<OpenCvCamera>(0));
+            using var rover = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(), PiTop4Board.Instance.GetOrCreateCamera<OpenCvCamera>(0), RoverRobotConfiguration.Defaulf);
 
+            var camControl = rover.TiltController;
+            var motorControl = rover.MotionComponent as SteeringMotorController;
+            var js = new LinuxJoystick();
+            rover.AllLightsOn();
+            rover.BlinkAllLights();
 
             Console.WriteLine("reset");
 
-            rover.MotionComponent.Stop();
-            rover.TiltController.Reset();
+            while (!Console.KeyAvailable)
+            {
+                try
+                {
+                    var e = js.ReadEvent();
+                    Console.WriteLine($"ts={e.timestamp}, v={e.value}, t={e.type}, n={e.number}");
+                    if (e.type == 1)
+                    {
+                        switch (e.number)
+                        {
+                            case 0:
+                                if (e.value > 0)
+                                {
+                                    rover.AllLightsOn();
+                                }
+                                else
+                                {
+                                    rover.AllLightsOff();
+                                }
+                                break;
+                        }
+                    }
+                    if (e.type == 2) // axis
+                    {
+                        switch (e.number)
+                        {
 
-            await Task.Delay(1000);
-            rover.TiltController.Pan = Angle.FromDegrees(45);
-            await Task.Delay(1000);
-            rover.TiltController.Pan = Angle.FromDegrees(-45);
-            await Task.Delay(1000);
-            rover.TiltController.Pan = Angle.FromDegrees(0);
+                            case 0: // steer
+                                motorControl.Steering = RotationalSpeed.FromDegreesPerSecond(
+                                    e.value.Interpolate(-motorControl.MaxSteering.DegreesPerSecond,
+                                        motorControl.MaxSteering.DegreesPerSecond) / 2);
+
+                                break;
+                            case 1: // throttle
+                                motorControl.Speed = Speed.FromMetersPerSecond(
+                                    e.value.Interpolate(motorControl.MaxSpeed.MetersPerSecond,
+                                        -motorControl.MaxSpeed.MetersPerSecond) / 2);
+
+                                break;
 
 
-            await Task.Delay(1000);
-            rover.TiltController.Tilt = Angle.FromDegrees(45);
-            await Task.Delay(1000);
-            rover.TiltController.Tilt = Angle.FromDegrees(-45);
-            await Task.Delay(1000);
-            rover.TiltController.Tilt = Angle.FromDegrees(0);
-            Console.WriteLine("reset");
+                            case 2: // pan
+                                camControl.Pan = Angle.FromDegrees(e.value.Interpolate(90, -90));
+                                break;
+                            case 3: // tilt
+                                camControl.Tilt = Angle.FromDegrees(
+                                    Math.Min(45, e.value.Interpolate(90, -90)));
+                                break;
+
+                        }
+                    }
+                }
+                catch
+                {
+                    motorControl.Stop();
+                    throw;
+                }
+            }
+
+            Console.ReadKey();
+            rover.AllLightsOff();
 
             Console.WriteLine("bye");
         }
