@@ -47,7 +47,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
                 .Subscribe(
                 speeds =>
                 {
-                    using var operation = Log.OnEnterAndConfirmOnExit();
+                    using var operation = Log.OnExit("SpeedStream");
 
                     _leftMotor.Rpm = speeds.Item1;
                     _rightMotor.Rpm = speeds.Item2;

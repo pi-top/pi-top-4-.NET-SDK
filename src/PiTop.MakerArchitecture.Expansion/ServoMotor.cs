@@ -80,34 +80,31 @@ namespace PiTop.MakerArchitecture.Expansion
         /// <param name="speed"></param>
         public void GoToAngle(Angle angle, RotationalSpeed speed)
         {
-
-            using (var operation = Log.OnEnterAndConfirmOnExit())
+            using var operation = Log.OnExit();
+            if (Math.Abs((angle + ZeroPoint).Degrees) > ANGLE_RANGE / 2)
             {
-                if (Math.Abs((angle + ZeroPoint).Degrees) > ANGLE_RANGE / 2)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(angle),
-                        $"Angle value must be in range [-{ANGLE_RANGE},{ANGLE_RANGE}] degrees, taking into account the current ZeroPoint ({ZeroPoint.Degrees} degrees).");
-                }
-
-                if (Math.Abs(speed.DegreesPerSecond) > SPEED_RANGE)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(speed),
-                        $"Speed value must be in range [-{SPEED_RANGE},{SPEED_RANGE}] degrees/second.");
-                }
-
-
-                var dutyCycle = (short) Math.Round(MathHelpers.Interpolate((angle + ZeroPoint).Degrees,
-                    -ANGLE_RANGE / 2, ANGLE_RANGE / 2, SERVO_LOWER_DUTY, SERVO_UPPER_DUTY));
-                var s = (short) (Math.Round(speed.DegreesPerSecond * 10));
-
-                ControlMode = 1;
-
-                _controller.Write32(RegisterAngleAndSpeed, dutyCycle, s);
-
-                operation.Info(
-                    "Setting Servo angle to {angle} with speed {speed}, by pushing dutyCycle {dutyCycle} and speed {s} ",
-                    angle, speed, dutyCycle, s);
+                throw new ArgumentOutOfRangeException(nameof(angle),
+                    $"Angle value must be in range [-{ANGLE_RANGE},{ANGLE_RANGE}] degrees, taking into account the current ZeroPoint ({ZeroPoint.Degrees} degrees).");
             }
+
+            if (Math.Abs(speed.DegreesPerSecond) > SPEED_RANGE)
+            {
+                throw new ArgumentOutOfRangeException(nameof(speed),
+                    $"Speed value must be in range [-{SPEED_RANGE},{SPEED_RANGE}] degrees/second.");
+            }
+
+
+            var dutyCycle = (short) Math.Round(MathHelpers.Interpolate((angle + ZeroPoint).Degrees,
+                -ANGLE_RANGE / 2, ANGLE_RANGE / 2, SERVO_LOWER_DUTY, SERVO_UPPER_DUTY));
+            var s = (short) (Math.Round(speed.DegreesPerSecond * 10));
+
+            ControlMode = 1;
+
+            _controller.Write32(RegisterAngleAndSpeed, dutyCycle, s);
+
+            operation.Info(
+                "Setting Servo angle to {angle} with speed {speed}, by pushing dutyCycle {dutyCycle} and speed {s} ",
+                angle, speed, dutyCycle, s);
         }
 
         /// <summary>

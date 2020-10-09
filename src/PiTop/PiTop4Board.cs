@@ -46,7 +46,7 @@ namespace PiTop
                 {
                     if (_display == null)
                     {
-                        using var operation = Log.OnEnterAndConfirmOnExit();
+                        using var operation = Log.OnEnterAndExit();
 
                         operation.Info("acquiring oled display");
 
@@ -105,7 +105,7 @@ namespace PiTop
             _moduleDriverClient.MessageReceived += ModuleDriverClientMessageReceived;
             _disposables.Add(Disposable.Create(() =>
             {
-                using var operation = Log.OnEnterAndConfirmOnExit();
+                using var operation = Log.OnEnterAndExit();
 
                 operation.Info("disposing devices.");
                 var plates = _plates.Values.ToList();
@@ -137,13 +137,13 @@ namespace PiTop
 
         public T GetOrCreatePlate<T>() where T : PiTopPlate
         {
-            using var __ = Log.OnEnterAndConfirmOnExit();
             var key = typeof(T);
             var plate = _plates.GetOrAdd(key, plateType =>
             {
                 using var operation = Log.OnEnterAndConfirmOnExit();
                 var newPlate = (Activator.CreateInstance(plateType, args: new object[] { this }) as T)!;
                 newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
+                operation.Succeed();
                 return newPlate;
             });
 
@@ -305,7 +305,7 @@ namespace PiTop
             where TConnectionConfiguration : notnull
             where TDevice : IConnectedDevice
         {
-            using var _ = Log.OnEnterAndConfirmOnExit();
+            using var operation = Log.OnEnterAndConfirmOnExit();
             if (connectedDeviceFactory == null)
             {
                 throw new ArgumentNullException(nameof(connectedDeviceFactory));
@@ -313,6 +313,7 @@ namespace PiTop
 
             _deviceFactories.Add(typeof(IConnectedDeviceFactory<TConnectionConfiguration, TDevice>), connectedDeviceFactory);
             _disposables.Add(connectedDeviceFactory);
+            operation.Succeed();
         }
 
         public void AddDeviceFactory<TConnectionConfiguration, TDevice>(Func<Type, Func<TConnectionConfiguration, TDevice>>? defaultDeviceFactoryGenerator = null)

@@ -39,7 +39,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public RoverRobot(ExpansionPlate expansionPlate, IFrameSource<Image<Rgb24>> camera, RoverRobotConfiguration configuration)
         {
-            using var operation = Log.OnEnterAndConfirmOnExit();
+            using var operation = Log.OnEnterAndExit();
             operation.Info("configuring platform ", configuration.LeftMotorPort, configuration.RightMotorPort, configuration.PanMotorPort, configuration.TiltMotorPort);
 
             ExpansionPlate = expansionPlate ?? throw new ArgumentNullException(nameof(expansionPlate));

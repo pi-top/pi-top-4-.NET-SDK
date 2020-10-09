@@ -37,7 +37,7 @@ namespace PiTop.MakerArchitecture.Expansion
             get => _controller.ReadByte(RegisterControlMode);
             set
             {
-                using var operation = Log.OnEnterAndConfirmOnExit();
+                using var operation = Log.OnEnterAndExit();
                 operation.Info("controllerMode", value);
                 _controller.WriteByte(RegisterControlMode, value);
             }
@@ -161,7 +161,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
         private short ToRpm(RotationalSpeed speed)
         {
-            using var operation = Log.OnEnterAndConfirmOnExit();
+            using var operation = Log.OnExit();
           
             var sign = (int)ForwardDirection;
 
