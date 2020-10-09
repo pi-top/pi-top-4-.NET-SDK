@@ -71,9 +71,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Exp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion.Rover", "PiTop.MakerArchitecture.Expansion.Rover\PiTop.MakerArchitecture.Expansion.Rover.csproj", "{08144ECA-2A07-4E42-86BA-B351206D5215}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMBusTest", "SMBusTest\SMBusTest.csproj", "{C495F9E5-03D6-471D-B220-0A7E81636F11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype.App", "Prototype.App\Prototype.App.csproj", "{C495F9E5-03D6-471D-B220-0A7E81636F11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.MakerArchitecture.Expansion.Rover.App", "PiTop.MakerArchitecture.Expansion.Rover.App\PiTop.MakerArchitecture.Expansion.Rover.App.csproj", "{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion.Rover.App", "PiTop.MakerArchitecture.Expansion.Rover.App\PiTop.MakerArchitecture.Expansion.Rover.App.csproj", "{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
