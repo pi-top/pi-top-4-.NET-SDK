@@ -78,7 +78,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
         public void Dispose()
         {
             AllLightsOff();
-            (MotionComponent as IDisposable)?.Dispose();
+            MotionComponent?.Dispose();
         }
 
         public void AllLightsOn()

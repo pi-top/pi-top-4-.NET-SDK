@@ -50,7 +50,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
                 }
             }
 
-            throw new InvalidOperationException("Could not get reading from the sensor");
+            throw new InvalidOperationException($"Could not get reading from the sensor on port {Port}");
         }
 
         private bool TryGetDistance(out double result)
