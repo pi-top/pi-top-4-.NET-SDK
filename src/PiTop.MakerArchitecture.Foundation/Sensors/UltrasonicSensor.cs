@@ -120,7 +120,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
             TimeSpan MaxWaitForEvent(long absoluteTimeTicks)
             {
-                return TimeSpan.FromMilliseconds(Math.Max(50, Math.Min(absoluteTimeTicks - Environment.TickCount, 1000)));
+                return TimeSpan.FromMilliseconds(Math.Max(50, Math.Min(absoluteTimeTicks - Environment.TickCount, 10000)));
             }
         }
     }
