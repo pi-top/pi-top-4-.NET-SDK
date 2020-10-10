@@ -13,6 +13,7 @@ using static Pocket.Logger;
 
 namespace PiTop.MakerArchitecture.Foundation.Sensors
 {
+    // todo: fix this as the gpiodevice lib seems to have issues for event waits
     public class UltrasonicSensor : DigitalPortDeviceBase
     {
         private const int MAX_DISTANCE = 400;

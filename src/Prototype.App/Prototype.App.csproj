@@ -23,7 +23,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20474.3" />
+    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20508.1" />
   </ItemGroup>
 
   <ItemGroup>
