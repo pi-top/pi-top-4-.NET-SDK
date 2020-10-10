@@ -75,32 +75,26 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             operation.Info("Trigger sent");
 
             // Wait until the echo pin is HIGH (that marks the beginning of the pulse length we want to measure)
-            while (Controller.Read(_echoPin) == PinValue.Low)
+            var wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Rising, TimeSpan.FromMilliseconds(hangTicks - Environment.TickCount));
+            _timer.Start();
+            if (wfer.TimedOut)
             {
-                if (Environment.TickCount - hangTicks > 0)
-                {
-                    _lastMeasurement = Environment.TickCount; // ensure that we wait 60ms, even if no pulse is received.
-                    result = default;
-                    return false;
-                }
+                _lastMeasurement = Environment.TickCount; // ensure that we wait 60ms, even if no pulse is received.
+                result = default;
+                return false;
             }
-            operation.Info("Echo starting");
 
+            operation.Info("Echo starting");
             _lastMeasurement = Environment.TickCount;
 
-            _timer.Start();
-
             // Wait until the pin is LOW again, (that marks the end of the pulse we are measuring)
-            while (Controller.Read(_echoPin) == PinValue.High)
-            {
-                if (Environment.TickCount - hangTicks > 0)
-                {
-                    result = default;
-                    return false;
-                }
-            }
-
+            wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Falling, TimeSpan.FromMilliseconds(hangTicks - Environment.TickCount));
             _timer.Stop();
+            if (wfer.TimedOut)
+            {
+                result = default;
+                return false;
+            }
 
             var elapsed = _timer.Elapsed;
             operation.Info("elapsed {0:F3} ms", elapsed.TotalMilliseconds);
