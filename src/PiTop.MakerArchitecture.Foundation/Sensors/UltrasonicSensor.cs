@@ -15,7 +15,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 {
     public class UltrasonicSensor : DigitalPortDeviceBase
     {
-        private const int MAX_DISTANCE = 300;
+        private const int MAX_DISTANCE = 400;
         private readonly int _echoPin;
         private readonly int _triggerPin;
         private readonly Stopwatch _timer = new Stopwatch();
@@ -52,7 +52,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
             throw new InvalidOperationException($"Could not get reading from the sensor on port {Port}");
         }
-
+        
         private bool TryGetDistance(out double result)
         {
             using var operation = Log.OnEnterAndConfirmOnExit();
@@ -72,34 +72,45 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             }
 
             operation.Info("Trigger starting");
+            
             // Trigger input for 10uS to start ranging
             Controller.Write(_triggerPin, PinValue.High);
             Thread.Sleep(TimeSpan.FromMilliseconds(0.01));
             Controller.Write(_triggerPin, PinValue.Low);
+            
             operation.Info("Trigger sent");
 
             // Wait until the echo pin is HIGH (that marks the beginning of the pulse length we want to measure)
-            var maxWaitForEvent = MaxWaitForEvent(hangTicks);
+            var maxWaitForEvent = TimeSpan.FromMilliseconds(100);
+            
             var wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Rising, maxWaitForEvent);
-            _timer.Start();
+
+            //var wfer = SpinWait(_echoPin, PinEventTypes.Rising, maxWaitForEvent);
+
             if (wfer.TimedOut)
             {
-                operation.Error($"Timeout waiting for {PinEventTypes.Rising} event, Timeout value {maxWaitForEvent} ms");
+                operation.Error($"Timeout waiting for {PinEventTypes.Rising} event, Timeout value {maxWaitForEvent.TotalMilliseconds} ms");
                 _lastMeasurement = Environment.TickCount; // ensure that we wait 60ms, even if no pulse is received.
                 result = default;
                 return false;
             }
 
             operation.Info("Echo starting");
+            _timer.Start();
             _lastMeasurement = Environment.TickCount;
 
-            maxWaitForEvent = MaxWaitForEvent(hangTicks);
+
             // Wait until the pin is LOW again, (that marks the end of the pulse we are measuring)
+            
+            maxWaitForEvent = TimeSpan.FromMilliseconds(40);
+
             wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Falling, maxWaitForEvent);
+
+            //wfer = SpinWait(_echoPin, PinEventTypes.Falling, maxWaitForEvent);
             _timer.Stop();
             if (wfer.TimedOut)
             {
-                operation.Error($"Timeout waiting for {PinEventTypes.Falling} event, Timeout value {maxWaitForEvent} ms");
+                operation.Error($"Timeout waiting for {PinEventTypes.Falling} event, Timeout value {maxWaitForEvent.TotalMilliseconds} ms");
                 result = default;
                 return false;
             }
@@ -108,7 +119,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             operation.Info($"elapsed {elapsed.TotalMilliseconds:F3} ms");
 
             // distance = (time / 2) × velocity of sound (34300 cm/s)
-            result = (elapsed.TotalMilliseconds / 2.0) * 34.3;
+            result = (elapsed.TotalSeconds / 2.0) * 34300.0;
             if (result > MAX_DISTANCE)
             {
                 // result is more than sensor supports
@@ -122,11 +133,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
             operation.Succeed();
             return true;
-
-            static TimeSpan MaxWaitForEvent(long absoluteTimeTicks)
-            {
-                return TimeSpan.FromMilliseconds(Math.Max(50, Math.Min(absoluteTimeTicks - Environment.TickCount, 10000)));
-            }
+           
         }
     }
 }
