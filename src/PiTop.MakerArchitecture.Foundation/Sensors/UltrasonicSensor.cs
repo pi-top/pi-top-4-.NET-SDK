@@ -101,7 +101,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             }
 
             var elapsed = _timer.Elapsed;
-            operation.Info("elapsed {0:F3} ms", elapsed.TotalMilliseconds);
+            operation.Info($"elapsed {elapsed.TotalMilliseconds:F3} ms");
 
             // distance = (time / 2) × velocity of sound (34300 cm/s)
             result = elapsed.TotalMilliseconds / 2.0 * 34.3;
