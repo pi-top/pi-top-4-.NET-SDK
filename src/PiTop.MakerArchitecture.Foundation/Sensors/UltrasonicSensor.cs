@@ -66,7 +66,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
             // Measurements should be 60ms apart, in order to prevent trigger signal mixing with echo signal
             // ref https://components101.com/sites/default/files/component_datasheet/HCSR04%20Datasheet.pdf
-            while (Environment.TickCount - _lastMeasurement < 60)
+            while ((Environment.TickCount - _lastMeasurement) < 60)
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(_lastMeasurement + 60 - Environment.TickCount));
             }
@@ -79,7 +79,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             operation.Info("Trigger sent");
 
             // Wait until the echo pin is HIGH (that marks the beginning of the pulse length we want to measure)
-            var wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Rising, TimeSpan.FromMilliseconds(hangTicks - Environment.TickCount));
+            var wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Rising, MaxWaitForEvent());
             _timer.Start();
             if (wfer.TimedOut)
             {
@@ -117,6 +117,11 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
             operation.Succeed();
             return true;
+
+            TimeSpan MaxWaitForEvent()
+            {
+                return TimeSpan.FromMilliseconds(Math.Max(50, Math.Min( hangTicks - Environment.TickCount, 80)));
+            }
         }
     }
 }
