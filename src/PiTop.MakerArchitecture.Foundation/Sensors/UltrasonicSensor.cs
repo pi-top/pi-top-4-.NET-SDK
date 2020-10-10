@@ -108,7 +108,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             operation.Info($"elapsed {elapsed.TotalMilliseconds:F3} ms");
 
             // distance = (time / 2) × velocity of sound (34300 cm/s)
-            result = elapsed.TotalMilliseconds / 2.0 * 34.3;
+            result = (elapsed.TotalMilliseconds / 2.0) * 34.3;
             if (result > MAX_DISTANCE)
             {
                 // result is more than sensor supports
