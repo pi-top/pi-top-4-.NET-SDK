@@ -75,6 +75,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype.App", "Prototype.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion.Rover.App", "PiTop.MakerArchitecture.Expansion.Rover.App\PiTop.MakerArchitecture.Expansion.Rover.App.csproj", "{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Algorithms", "PiTop.Algorithms\PiTop.Algorithms.csproj", "{6080FCBE-8E33-42AD-B787-5F72E69CD169}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -205,6 +207,10 @@ Global
 		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -241,6 +247,7 @@ Global
 		{08144ECA-2A07-4E42-86BA-B351206D5215} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 		{C495F9E5-03D6-471D-B220-0A7E81636F11} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 		{14819AC3-4EB5-474C-AF9C-D5FD4581CE11} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98E1ADF8-88DF-4B1F-B486-650F4F9CC573}

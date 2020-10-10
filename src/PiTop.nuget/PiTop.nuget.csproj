@@ -24,6 +24,9 @@
     <ProjectReference Include="..\PiTop.Abstractions\PiTop.Abstractions.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\PiTop.Algorithms\PiTop.Algorithms.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="..\PiTop.Display\PiTop.Display.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
@@ -36,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="../PiTop.Algorithms/bin/$(Configuration)/$(TargetFramework)/PiTop.Algorithms.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
     <None Include="../PiTop/bin/$(Configuration)/$(TargetFramework)/PiTop.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
     <None Include="../PiTop.Display/bin/$(Configuration)/$(TargetFramework)/PiTop.Display.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
     <None Include="../PiTop.Abstractions/bin/$(Configuration)/$(TargetFramework)/PiTop.Abstractions.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
