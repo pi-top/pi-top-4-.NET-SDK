@@ -2,6 +2,7 @@
 using PiTop.Camera;
 using PiTop.MakerArchitecture.Expansion;
 using PiTop.MakerArchitecture.Expansion.Rover;
+using PiTop.MakerArchitecture.Foundation.Sensors;
 using Pocket;
 
 using SixLabors.ImageSharp;
@@ -19,14 +20,18 @@ namespace Prototype.App
     {
         static void Main(string[] args)
         {
-            LogEvents.Subscribe(i => Console.WriteLine(i.ToLogString()), new[]
+            LogEvents.Subscribe(i =>
+            {
+                i.Operation.Id = "";
+                Console.WriteLine(i.ToLogString());
+            }, new[]
             {
                 //typeof(PiTop4Board).Assembly,
                 //typeof(FoundationPlate).Assembly,
                 //typeof(ExpansionPlate).Assembly,
                 //typeof(RoverRobot).Assembly,
                 //typeof(StreamingCamera).Assembly,
-                //typeof(UltrasonicSensor).Assembly,
+                typeof(UltrasonicSensor).Assembly,
                 typeof(Program).Assembly,
             });
 
