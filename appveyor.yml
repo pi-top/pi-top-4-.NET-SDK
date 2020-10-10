@@ -23,6 +23,7 @@ build_script:
   - cmd: dotnet build src/pi-top.sln
 after_build:
   # For once the build has completed
+  - cmd: dotnet pack src/PiTop.MakerArchitecture.Expansion.nuget/PiTop.MakerArchitecture.Expansion.nuget.csproj -o pacakges
   - cmd: dotnet pack src/PiTop.MakerArchitecture.Foundation.nuget/PiTop.MakerArchitecture.Foundation.nuget.csproj -o pacakges
   - cmd: dotnet pack src/PiTop.MakerArchitecture.Foundation.Psi.nuget/PiTop.MakerArchitecture.Foundation.Psi.nuget.csproj -o pacakges
   - cmd: dotnet pack src/PiTop.nuget/PiTop.nuget.csproj -o pacakges
