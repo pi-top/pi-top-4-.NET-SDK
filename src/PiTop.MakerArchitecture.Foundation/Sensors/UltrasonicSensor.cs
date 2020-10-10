@@ -79,11 +79,12 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             operation.Info("Trigger sent");
 
             // Wait until the echo pin is HIGH (that marks the beginning of the pulse length we want to measure)
-            var wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Rising, MaxWaitForEvent(hangTicks));
+            var maxWaitForEvent = MaxWaitForEvent(hangTicks);
+            var wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Rising, maxWaitForEvent);
             _timer.Start();
             if (wfer.TimedOut)
             {
-                operation.Error($"Timeout waiting for {PinEventTypes.Rising} event");
+                operation.Error($"Timeout waiting for {PinEventTypes.Rising} event, Timeout value {maxWaitForEvent} ms");
                 _lastMeasurement = Environment.TickCount; // ensure that we wait 60ms, even if no pulse is received.
                 result = default;
                 return false;
@@ -92,12 +93,13 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             operation.Info("Echo starting");
             _lastMeasurement = Environment.TickCount;
 
+            maxWaitForEvent = MaxWaitForEvent(hangTicks);
             // Wait until the pin is LOW again, (that marks the end of the pulse we are measuring)
-            wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Falling, MaxWaitForEvent(hangTicks));
+            wfer = Controller.WaitForEvent(_echoPin, PinEventTypes.Falling, maxWaitForEvent);
             _timer.Stop();
             if (wfer.TimedOut)
             {
-                operation.Error($"Timeout waiting for {PinEventTypes.Falling} event");
+                operation.Error($"Timeout waiting for {PinEventTypes.Falling} event, Timeout value {maxWaitForEvent} ms");
                 result = default;
                 return false;
             }
@@ -121,7 +123,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             operation.Succeed();
             return true;
 
-            TimeSpan MaxWaitForEvent(long absoluteTimeTicks)
+            static TimeSpan MaxWaitForEvent(long absoluteTimeTicks)
             {
                 return TimeSpan.FromMilliseconds(Math.Max(50, Math.Min(absoluteTimeTicks - Environment.TickCount, 10000)));
             }
