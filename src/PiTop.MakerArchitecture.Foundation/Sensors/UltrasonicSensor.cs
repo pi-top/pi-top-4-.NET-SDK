@@ -1,10 +1,11 @@
-﻿using System;
+﻿using PiTop.Abstractions;
+using Pocket;
+using System;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
-
-using PiTop.Abstractions;
 using UnitsNet;
+using static Pocket.Logger;
 
 namespace PiTop.MakerArchitecture.Foundation.Sensors
 {
@@ -36,7 +37,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
         private Length GetDistance()
         {
-            
+
             for (var i = 0; i < 10; i++)
             {
                 if (TryGetDistance(out var result))
@@ -50,6 +51,8 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
         private bool TryGetDistance(out double result)
         {
+            using var operation = Log.OnEnterAndConfirmOnExit();
+
             // Time when we give up on looping and declare that reading failed
             // 100ms was chosen because max measurement time for this sensor is around 24ms for 400cm
             // additionally we need to account 60ms max delay.
@@ -64,20 +67,24 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
                 Thread.Sleep(TimeSpan.FromMilliseconds(_lastMeasurement + 60 - Environment.TickCount));
             }
 
+            operation.Info("Trigger starting");
             // Trigger input for 10uS to start ranging
             Controller.Write(_triggerPin, PinValue.High);
             Thread.Sleep(TimeSpan.FromMilliseconds(0.01));
             Controller.Write(_triggerPin, PinValue.Low);
+            operation.Info("Trigger sent");
 
             // Wait until the echo pin is HIGH (that marks the beginning of the pulse length we want to measure)
             while (Controller.Read(_echoPin) == PinValue.Low)
             {
                 if (Environment.TickCount - hangTicks > 0)
                 {
+                    _lastMeasurement = Environment.TickCount; // ensure that we wait 60ms, even if no pulse is received.
                     result = default;
                     return false;
                 }
             }
+            operation.Info("Echo starting");
 
             _lastMeasurement = Environment.TickCount;
 
@@ -96,6 +103,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             _timer.Stop();
 
             var elapsed = _timer.Elapsed;
+            operation.Info("elapsed {0:F3} ms", elapsed.TotalMilliseconds);
 
             // distance = (time / 2) × velocity of sound (34300 cm/s)
             result = elapsed.TotalMilliseconds / 2.0 * 34.3;
@@ -107,6 +115,9 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
                 return false;
             }
 
+            operation.Info("distance {0:F1} cm", result);
+
+            operation.Succeed();
             return true;
         }
     }
