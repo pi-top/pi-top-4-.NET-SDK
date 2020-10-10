@@ -66,7 +66,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
             // Measurements should be 60ms apart, in order to prevent trigger signal mixing with echo signal
             // ref https://components101.com/sites/default/files/component_datasheet/HCSR04%20Datasheet.pdf
-            while ((Environment.TickCount - _lastMeasurement) < 60)
+            while (Environment.TickCount - _lastMeasurement < 60)
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(_lastMeasurement + 60 - Environment.TickCount));
             }
@@ -83,6 +83,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             _timer.Start();
             if (wfer.TimedOut)
             {
+                operation.Error($"Timeout waiting for {PinEventTypes.Rising} event");
                 _lastMeasurement = Environment.TickCount; // ensure that we wait 60ms, even if no pulse is received.
                 result = default;
                 return false;
@@ -96,6 +97,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             _timer.Stop();
             if (wfer.TimedOut)
             {
+                operation.Error($"Timeout waiting for {PinEventTypes.Falling} event");
                 result = default;
                 return false;
             }
@@ -109,11 +111,12 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             {
                 // result is more than sensor supports
                 // something went wrong
+                operation.Error($"Out of range reading : {result} is above threshold {MAX_DISTANCE}");
                 result = default;
                 return false;
             }
 
-            operation.Info("distance {0:F1} cm", result);
+            operation.Info($"distance {result:F1} cm");
 
             operation.Succeed();
             return true;
