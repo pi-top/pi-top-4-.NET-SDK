@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PiTop.Abstractions\PiTop.Abstractions.csproj" />
+    <ProjectReference Include="..\PiTop.Algorithms\PiTop.Algorithms.csproj" />
     <ProjectReference Include="..\PiTop.Display\PiTop.Display.csproj" />
   </ItemGroup>
 
