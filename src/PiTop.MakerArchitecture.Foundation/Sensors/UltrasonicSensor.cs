@@ -61,7 +61,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             // ref https://components101.com/sites/default/files/component_datasheet/HCSR04%20Datasheet.pdf
             while (Environment.TickCount - _lastMeasurement < 60)
             {
-                Thread.Sleep(TimeSpan.FromMilliseconds(Environment.TickCount - _lastMeasurement));
+                Thread.Sleep(TimeSpan.FromMilliseconds(_lastMeasurement + 60 - Environment.TickCount));
             }
 
             // Trigger input for 10uS to start ranging
