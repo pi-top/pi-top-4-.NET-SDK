@@ -1,17 +1,21 @@
 ﻿using PiTop.Abstractions;
+
 using Pocket;
+
 using System;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
+
 using UnitsNet;
+
 using static Pocket.Logger;
 
 namespace PiTop.MakerArchitecture.Foundation.Sensors
 {
     public class UltrasonicSensor : DigitalPortDeviceBase
     {
-        private const int MaxDistance = 300;
+        private const int MAX_DISTANCE = 300;
         private readonly int _echoPin;
         private readonly int _triggerPin;
         private readonly Stopwatch _timer = new Stopwatch();
@@ -101,7 +105,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
             // distance = (time / 2) × velocity of sound (34300 cm/s)
             result = elapsed.TotalMilliseconds / 2.0 * 34.3;
-            if (result > MaxDistance)
+            if (result > MAX_DISTANCE)
             {
                 // result is more than sensor supports
                 // something went wrong
