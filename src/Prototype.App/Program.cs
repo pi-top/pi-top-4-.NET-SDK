@@ -1,15 +1,15 @@
 ﻿using PiTop;
+using PiTop.Algorithms;
 using PiTop.Camera;
 using PiTop.MakerArchitecture.Expansion;
 using PiTop.MakerArchitecture.Expansion.Rover;
-using PiTop.MakerArchitecture.Foundation.Sensors;
 using Pocket;
 
 using SixLabors.ImageSharp;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 
 using UnitsNet;
@@ -31,7 +31,7 @@ namespace Prototype.App
                 //typeof(ExpansionPlate).Assembly,
                 //typeof(RoverRobot).Assembly,
                 //typeof(StreamingCamera).Assembly,
-                typeof(UltrasonicSensor).Assembly,
+                //typeof(UltrasonicSensor).Assembly,
                 typeof(Program).Assembly,
             });
 
@@ -97,20 +97,42 @@ namespace Prototype.App
                     camControl.Reset();
                 });
 
-            Observable.Interval(TimeSpan.FromMilliseconds(100))
-                .Select(_ =>
-                new Unit[10].Select(_ => rover.UltrasoundFront.Distance.Centimeters).ToArray())
-                .Subscribe(l =>
+            //Observable.Interval(TimeSpan.FromMilliseconds(100))
+            //    .Select(_ =>
+            //    new Unit[10].Select(_ => rover.UltrasoundFront.Distance.Centimeters).ToArray())
+            //    .Subscribe(l =>
+            //    {
+            //        var mean = l.Average();
+            //        var stddev = Math.Sqrt(l.Select(d => (d - mean) * (d - mean)).Average());
+            //        var maxrange = 1.5 * stddev;
+            //        var valid = l.Where(d => Math.Abs(d - mean) < maxrange).ToList();
+            //        if (valid.Count > 0)
+            //        {
+            //            Console.WriteLine($"Distance= {valid.Average():F1} cm ({valid.Count}: mean {mean:F1}, stddev {stddev:F1}, max {valid.Max():F1}, min {valid.Min():F1})");
+            //        }
+            //    });
+
+            var oef = new OneEuroFilter();
+
+            Observable.Interval(TimeSpan.FromMilliseconds(50)).Select(_ => rover.UltrasoundFront.Distance.Centimeters)
+               .Scan(new List<double>(), (list, d) => // sliding window
                 {
-                    var mean = l.Average();
-                    var stddev = Math.Sqrt(l.Select(d => (d - mean) * (d - mean)).Average());
-                    var maxrange = 1.5 * stddev;
-                    var valid = l.Where(d => Math.Abs(d - mean) < maxrange).ToList();
-                    if (valid.Count > 0)
-                    {
-                        Console.WriteLine($"Distance= {valid.Average():F1} cm ({valid.Count}: mean {mean:F1}, stddev {stddev:F1}, max {valid.Max():F1}, min {valid.Min():F1})");
-                    }
-                });
+                    const int window = 10;
+                    list.Add(d);
+                    if (list.Count > window) list.RemoveRange(0, list.Count - window);
+                    return new List<double>(list);
+                })
+               .Subscribe(l =>
+               {
+                   var mean = l.Average();
+                   var stddev = Math.Sqrt(l.Select(d => (d - mean) * (d - mean)).Average());
+                   var maxrange = 1.5 * stddev;
+                   var valid = l.Where(d => Math.Abs(d - mean) < maxrange).ToList();
+                   if (valid.Count > 0)
+                   {
+                       Console.WriteLine($"Distance= {valid.Average():F1} cm ({valid.Count}: mean {mean:F1}, stddev {stddev:F1}, max {valid.Max():F1}, min {valid.Min():F1})");
+                   }
+               });
 
             Console.WriteLine("Ok, go drive around");
             Console.ReadKey();
