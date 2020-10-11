@@ -1,4 +1,4 @@
-﻿using PiTop;
+using PiTop;
 using PiTop.Algorithms;
 using PiTop.Camera;
 using PiTop.MakerArchitecture.Expansion;
@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-
+using PiTop.MakerArchitecture.Foundation.Sensors;
 using UnitsNet;
 
 namespace Prototype.App
@@ -112,7 +112,7 @@ namespace Prototype.App
             //        }
             //    });
 
-            var oef = new OneEuroFilter();
+            var oef = new OneEuroFilter(minCutoff:0.004, beta:0.7);
 
             Observable.Interval(TimeSpan.FromMilliseconds(50)).Select(_ => rover.UltrasoundFront.Distance.Centimeters)
                .Scan(new List<double>(), (list, d) => // sliding window
