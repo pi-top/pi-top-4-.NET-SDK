@@ -57,9 +57,11 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             {
                 // Measurements should be 60ms apart, in order to prevent trigger signal mixing with echo signal
                 // ref https://components101.com/sites/default/files/component_datasheet/HCSR04%20Datasheet.pdf
-                while (Environment.TickCount - _lastMeasurement < 60)
+                var waitMillis = _lastMeasurement + 60 - Environment.TickCount;
+                while (waitMillis > 0)
                 {
-                    Thread.Sleep(TimeSpan.FromMilliseconds(_lastMeasurement + 60 - Environment.TickCount));
+                    Thread.Sleep(TimeSpan.FromMilliseconds(waitMillis));
+                    waitMillis = _lastMeasurement + 60 - Environment.TickCount;
                 }
 
                 if (TryGetDistance(out var result))
