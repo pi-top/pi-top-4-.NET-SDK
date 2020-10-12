@@ -3,6 +3,6 @@
     public enum BrakingType : byte
     {
         Coast = 0,
-        Brake  =1
+        Brake = 1
     }
 }

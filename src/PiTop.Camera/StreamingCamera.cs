@@ -1,5 +1,9 @@
 ﻿using System.Diagnostics;
 
+using Pocket;
+
+using static Pocket.Logger;
+
 namespace PiTop.Camera
 {
     /// <summary>
@@ -18,9 +22,11 @@ namespace PiTop.Camera
 
         public override void Connect()
         {
+            using var _ = Log.OnEnterAndExit();
             _process = Process.Start(new ProcessStartInfo("mjpg_streamer",
-                $"-i \"input_uvc.so -d /dev/video{_cameraId}\" -o output_http.so"));
+                $"-i \"input_uvc.so -d /dev/video{_cameraId} -r 1280x720\" -o output_http.so"));
             base.Connect();
+
         }
 
         public override void Dispose()

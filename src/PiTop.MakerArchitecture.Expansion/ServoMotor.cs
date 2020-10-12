@@ -94,7 +94,7 @@ namespace PiTop.MakerArchitecture.Expansion
             }
 
 
-            var dutyCycle = (short) Math.Round(MathHelpers.Interpolate((angle + ZeroPoint).Degrees,
+            var dutyCycle = (short) Math.Round(Interpolation.Interpolate((angle + ZeroPoint).Degrees,
                 -ANGLE_RANGE / 2, ANGLE_RANGE / 2, SERVO_LOWER_DUTY, SERVO_UPPER_DUTY));
             var s = (short) (Math.Round(speed.DegreesPerSecond * 10));
 

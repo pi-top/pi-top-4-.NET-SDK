@@ -7,9 +7,10 @@
     <PackageVersion>0.0.1</PackageVersion>
     <PackageId>pi-top</PackageId>
     <IsPackable>true</IsPackable>
-    <PackageDescription>pi-top board.</PackageDescription>
+    <PackageDescription>pi-top[4] device.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>pi-top_logo.jpg</PackageIcon>
+    <PackageTags>pi-top[4]</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>pit-top.OpenCvSharp4.runtime</id>
+        <version>4.2.0</version>
+        <title>OpenCvSharp native bindings for pit-top OS</title>
+        <authors>shimat</authors>
+        <projectUrl>https://github.com/shimat/opencvsharp</projectUrl>
+        <icon>resources/pi-top_logo.jpg</icon>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Internal implementation package for OpenCvSharp to work on pi-top[4]</description>
+        <summary>Internal implementation package for OpenCvSharp to work on pi-top[4]</summary>
+        <releaseNotes></releaseNotes>
+        <tags>Image Processing OpenCV Wrapper FFI opencvsharp</tags>
+        <dependencies>
+            <group targetFramework="netstandard2.0"></group>
+            <group targetFramework="netstandard2.1"></group>
+            <group targetFramework="netcoreapp2.1"></group>
+        </dependencies>
+        <frameworkAssemblies>
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="../../pi-top_logo.jpg" target="resources/" />
+        <file src="./linux-arm/libOpenCvSharpExtern.so" target="runtimes/linux-arm/native" />
+    </files>
+</package>

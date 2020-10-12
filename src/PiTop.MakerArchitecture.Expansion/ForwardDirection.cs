@@ -2,7 +2,7 @@
 {
     public enum ForwardDirection
     {
-        Clockwise  =1,
+        Clockwise = 1,
         CounterClockwise = -1
     }
 }

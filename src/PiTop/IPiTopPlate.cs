@@ -7,7 +7,7 @@ namespace PiTop
 {
     public abstract class PiTopPlate : IDisposable
     {
-        protected PiTop4Board PiTop4Board { get; }
+        public PiTop4Board PiTop4Board { get; }
 
         public abstract IEnumerable<IConnectedDevice> Devices { get; }
 
