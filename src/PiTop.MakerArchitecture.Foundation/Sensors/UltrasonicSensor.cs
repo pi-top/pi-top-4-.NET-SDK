@@ -1,10 +1,14 @@
 ﻿using PiTop.Abstractions;
+
 using Pocket;
+
 using System;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
+
 using UnitsNet;
+
 using static Pocket.Logger;
 
 namespace PiTop.MakerArchitecture.Foundation.Sensors
@@ -17,7 +21,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
         private readonly Stopwatch _timer = new Stopwatch();
 
         private int _lastMeasurement = 0;
-        private ManualResetEvent _echoReceived;
+        private readonly ManualResetEvent _echoReceived;
 
         public UltrasonicSensor(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
         {
@@ -73,7 +77,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
                 _lastMeasurement = Environment.TickCount; // ensure that we wait 60ms
             }
 
-            throw new InvalidOperationException($"Could not get reading from the sensor on port {Port}");
+            throw new SensorReadException($"Could not get reading from the sensor on port {Port}");
         }
 
         private bool TryGetDistance(out double result)

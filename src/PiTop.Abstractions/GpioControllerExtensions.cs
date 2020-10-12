@@ -18,7 +18,5 @@ namespace PiTop.Abstractions
             }
             return new SharedGpioController(controller);
         }
-
-
     }
 }
