@@ -10,7 +10,7 @@
   
   <ItemGroup>
     <PackageReference Include="Iot.Device.Bindings" Version="1.1.0-prerelease.20508.1" />
-    <PackageReference Include="PocketLogger" Version="0.3.0">
+    <PackageReference Include="PocketLogger" Version="0.4.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
