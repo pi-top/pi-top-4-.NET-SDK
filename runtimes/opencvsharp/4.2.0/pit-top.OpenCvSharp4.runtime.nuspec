@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>pit-top.OpenCvSharp4.runtime</id>
+        <id>pi-top.OpenCvSharp4.runtime</id>
         <version>4.2.0</version>
-        <title>OpenCvSharp native bindings for pit-top OS</title>
+        <title>OpenCvSharp native bindings for pi-top OS</title>
         <authors>shimat</authors>
         <projectUrl>https://github.com/shimat/opencvsharp</projectUrl>
         <icon>resources/pi-top_logo.jpg</icon>
