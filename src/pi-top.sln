@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp", "SampleApp\SampleApp.csproj", "{C4DB5902-DB47-4108-8423-8687D6395567}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation", "PiTopMakerArchitecture.Foundation\PiTopMakerArchitecture.Foundation.csproj", "{AB82DFB4-86E7-4F21-9033-9398F9407654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Foundation", "PiTop.MakerArchitecture.Foundation\PiTop.MakerArchitecture.Foundation.csproj", "{AB82DFB4-86E7-4F21-9033-9398F9407654}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop", "PiTop\PiTop.csproj", "{79EE7D16-C478-4159-A1B7-38C7B4764D30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.InteractiveExtension", "PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj", "{0264F0D4-CBB8-4A38-86FD-B65B8668C077}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.InteractiveExtension", "PiTopMakerArchitecture.Foundation.InteractiveExtension\PiTopMakerArchitecture.Foundation.InteractiveExtension.csproj", "{4BA30F39-13E1-4F37-B7F8-E7054FFB1A84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Foundation.InteractiveExtension", "PiTop.MakerArchitecture.Foundation.InteractiveExtension\PiTop.MakerArchitecture.Foundation.InteractiveExtension.csproj", "{4BA30F39-13E1-4F37-B7F8-E7054FFB1A84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InteractiveExtensions", "InteractiveExtensions", "{931E6A07-3272-4153-B7BA-A597BC40FAA5}"
 EndProject
@@ -21,19 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{3BAE42DC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.nuget", "PiTop.nuget\PiTop.nuget.csproj", "{B8EDB470-BCBD-4120-9CD0-9FC4CBF168F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.nuget", "PiTopMakerArchitecture.Foundation.nuget\PiTopMakerArchitecture.Foundation.nuget.csproj", "{7C99308D-A11A-43A0-9C2D-F28466A0B711}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Foundation.nuget", "PiTop.MakerArchitecture.Foundation.nuget\PiTop.MakerArchitecture.Foundation.nuget.csproj", "{7C99308D-A11A-43A0-9C2D-F28466A0B711}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Psi", "PiTopMakerArchitecture.Foundation.Psi\PiTopMakerArchitecture.Foundation.Psi.csproj", "{6003624A-34E4-4891-A29C-6957DE6ADF9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Foundation.Psi", "PiTop.MakerArchitecture.Foundation.Psi\PiTop.MakerArchitecture.Foundation.Psi.csproj", "{6003624A-34E4-4891-A29C-6957DE6ADF9F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension", "PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension\PiTopMakerArchitecture.Foundation.Psi.InteractiveExtension.csproj", "{5322025D-EFDF-472D-8CD7-947A23B15E38}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.PsiApp", "PiTop.PsiApp\PiTop.PsiApp.csproj", "{9F60841F-6489-49D6-952F-042B9ABD4226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Foundation.Psi.InteractiveExtension", "PiTop.MakerArchitecture.Foundation.Psi.InteractiveExtension\PiTop.MakerArchitecture.Foundation.Psi.InteractiveExtension.csproj", "{5322025D-EFDF-472D-8CD7-947A23B15E38}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera", "PiTop.Camera\PiTop.Camera.csproj", "{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{28231AC6-36A0-4746-8384-DE482C818EF0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.App", "PiTop.Camera.App\PiTop.Camera.App.csproj", "{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{28231AC6-36A0-4746-8384-DE482C818EF0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.Psi", "PiTop.Camera.Psi\PiTop.Camera.Psi.csproj", "{DEA5FE65-F3FD-4E85-9231-4F36F793307D}"
 EndProject
@@ -45,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.nuget", "PiTop
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.Psi.nuget", "PiTop.Camera.Psi.nuget\PiTop.Camera.Psi.nuget.csproj", "{4F6D165F-1B06-4C06-AF38-926FA15D20BB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Psi.nuget", "PiTopMakerArchitecture.Foundation.Psi.nuget\PiTopMakerArchitecture.Foundation.Psi.nuget.csproj", "{69ADCBFD-CA7F-4B89-A2D9-A39629B4B08F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Foundation.Psi.nuget", "PiTop.MakerArchitecture.Foundation.Psi.nuget\PiTop.MakerArchitecture.Foundation.Psi.nuget.csproj", "{69ADCBFD-CA7F-4B89-A2D9-A39629B4B08F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Display", "PiTop.Display\PiTop.Display.csproj", "{62783A37-DBE5-4998-AC14-23B5BFADE73C}"
 EndProject
@@ -53,13 +47,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{246885B4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Tests", "PiTop.Tests\PiTop.Tests.csproj", "{415E81AE-834F-466C-A9E4-45C8A0FDB1C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTopMakerArchitecture.Foundation.Tests", "PiTopMakerArchitecture.Foundation.Tests\PiTopMakerArchitecture.Foundation.Tests.csproj", "{B2D8BE0A-0241-4B5E-A75E-63820900425D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Foundation.Tests", "PiTop.MakerArchitecture.Foundation.Tests\PiTop.MakerArchitecture.Foundation.Tests.csproj", "{B2D8BE0A-0241-4B5E-A75E-63820900425D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.Tests", "PiTop.Camera.Tests\PiTop.Camera.Tests.csproj", "{E2513B57-C3B6-4382-870C-52F926AA3B0E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Abstractions", "PiTop.Abstractions\PiTop.Abstractions.csproj", "{CF6A6AB1-F8DD-4689-A450-F7F41D930589}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiTop.Display.App", "PiTop.Display.App\PiTop.Display.App.csproj", "{BA5A29E7-D255-4354-A950-48E09DC8FDA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion", "PiTop.MakerArchitecture.Expansion\PiTop.MakerArchitecture.Expansion.csproj", "{A129B750-0C31-4954-9917-B271C019FA29}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion.Tests", "PiTop.MakerArchitecture.Expansion.Tests\PiTop.MakerArchitecture.Expansion.Tests.csproj", "{35C84467-BBBA-4165-9C53-42A93724F156}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion.InteractiveExtension", "PiTop.MakerArchitecture.Expansion.InteractiveExtension\PiTop.MakerArchitecture.Expansion.InteractiveExtension.csproj", "{D5B72E80-7B38-4561-8F74-B663E30BDACD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion.nuget", "PiTop.MakerArchitecture.Expansion.nuget\PiTop.MakerArchitecture.Expansion.nuget.csproj", "{94A9251A-D4A5-42B3-81F6-4A10C233E726}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Algorithms", "PiTop.Algorithms\PiTop.Algorithms.csproj", "{6080FCBE-8E33-42AD-B787-5F72E69CD169}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Algortihms.Tests", "PiTop.Algortihms.Tests\PiTop.Algortihms.Tests.csproj", "{20AB9345-1435-4DBD-9131-8D551DE70C32}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion.Rover", "Examples\PiTop.MakerArchitecture.Expansion.Rover\PiTop.MakerArchitecture.Expansion.Rover.csproj", "{19E845B1-7761-4137-8196-C1E9E1C227F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.MakerArchitecture.Expansion.Rover.App", "Examples\PiTop.MakerArchitecture.Expansion.Rover.App\PiTop.MakerArchitecture.Expansion.Rover.App.csproj", "{A6B24074-022E-46F3-8147-BA29E31DE3C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype.App", "Examples\Prototype.App\Prototype.App.csproj", "{D05BDFF6-AE6F-4F9F-B3E5-56E3DBDEEB65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Camera.App", "Examples\PiTop.Camera.App\PiTop.Camera.App.csproj", "{1CB6C3A0-2D93-4137-9966-1B091BD81C3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.Display.App", "Examples\PiTop.Display.App\PiTop.Display.App.csproj", "{663A5070-F69D-4760-B50C-A1D0BE97E81B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiTop.PsiApp", "Examples\PiTop.PsiApp\PiTop.PsiApp.csproj", "{927177C4-7F3F-494F-92C6-1A22074B8399}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp", "Examples\SampleApp\SampleApp.csproj", "{82569A38-5C5F-42FF-B9BB-20415B337B92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +85,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C4DB5902-DB47-4108-8423-8687D6395567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4DB5902-DB47-4108-8423-8687D6395567}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4DB5902-DB47-4108-8423-8687D6395567}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4DB5902-DB47-4108-8423-8687D6395567}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB82DFB4-86E7-4F21-9033-9398F9407654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB82DFB4-86E7-4F21-9033-9398F9407654}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB82DFB4-86E7-4F21-9033-9398F9407654}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -103,18 +117,10 @@ Global
 		{5322025D-EFDF-472D-8CD7-947A23B15E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5322025D-EFDF-472D-8CD7-947A23B15E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5322025D-EFDF-472D-8CD7-947A23B15E38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F60841F-6489-49D6-952F-042B9ABD4226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F60841F-6489-49D6-952F-042B9ABD4226}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F60841F-6489-49D6-952F-042B9ABD4226}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F60841F-6489-49D6-952F-042B9ABD4226}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEA5FE65-F3FD-4E85-9231-4F36F793307D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEA5FE65-F3FD-4E85-9231-4F36F793307D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEA5FE65-F3FD-4E85-9231-4F36F793307D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -159,16 +165,63 @@ Global
 		{CF6A6AB1-F8DD-4689-A450-F7F41D930589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF6A6AB1-F8DD-4689-A450-F7F41D930589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF6A6AB1-F8DD-4689-A450-F7F41D930589}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA5A29E7-D255-4354-A950-48E09DC8FDA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA5A29E7-D255-4354-A950-48E09DC8FDA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA5A29E7-D255-4354-A950-48E09DC8FDA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA5A29E7-D255-4354-A950-48E09DC8FDA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A129B750-0C31-4954-9917-B271C019FA29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A129B750-0C31-4954-9917-B271C019FA29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A129B750-0C31-4954-9917-B271C019FA29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A129B750-0C31-4954-9917-B271C019FA29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35C84467-BBBA-4165-9C53-42A93724F156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35C84467-BBBA-4165-9C53-42A93724F156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35C84467-BBBA-4165-9C53-42A93724F156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35C84467-BBBA-4165-9C53-42A93724F156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5B72E80-7B38-4561-8F74-B663E30BDACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5B72E80-7B38-4561-8F74-B663E30BDACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5B72E80-7B38-4561-8F74-B663E30BDACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5B72E80-7B38-4561-8F74-B663E30BDACD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A9251A-D4A5-42B3-81F6-4A10C233E726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A9251A-D4A5-42B3-81F6-4A10C233E726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A9251A-D4A5-42B3-81F6-4A10C233E726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A9251A-D4A5-42B3-81F6-4A10C233E726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20AB9345-1435-4DBD-9131-8D551DE70C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20AB9345-1435-4DBD-9131-8D551DE70C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20AB9345-1435-4DBD-9131-8D551DE70C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20AB9345-1435-4DBD-9131-8D551DE70C32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19E845B1-7761-4137-8196-C1E9E1C227F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E845B1-7761-4137-8196-C1E9E1C227F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19E845B1-7761-4137-8196-C1E9E1C227F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19E845B1-7761-4137-8196-C1E9E1C227F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6B24074-022E-46F3-8147-BA29E31DE3C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6B24074-022E-46F3-8147-BA29E31DE3C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6B24074-022E-46F3-8147-BA29E31DE3C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6B24074-022E-46F3-8147-BA29E31DE3C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D05BDFF6-AE6F-4F9F-B3E5-56E3DBDEEB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D05BDFF6-AE6F-4F9F-B3E5-56E3DBDEEB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D05BDFF6-AE6F-4F9F-B3E5-56E3DBDEEB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D05BDFF6-AE6F-4F9F-B3E5-56E3DBDEEB65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CB6C3A0-2D93-4137-9966-1B091BD81C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CB6C3A0-2D93-4137-9966-1B091BD81C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CB6C3A0-2D93-4137-9966-1B091BD81C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CB6C3A0-2D93-4137-9966-1B091BD81C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{663A5070-F69D-4760-B50C-A1D0BE97E81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{663A5070-F69D-4760-B50C-A1D0BE97E81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{663A5070-F69D-4760-B50C-A1D0BE97E81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{663A5070-F69D-4760-B50C-A1D0BE97E81B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{927177C4-7F3F-494F-92C6-1A22074B8399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{927177C4-7F3F-494F-92C6-1A22074B8399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{927177C4-7F3F-494F-92C6-1A22074B8399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{927177C4-7F3F-494F-92C6-1A22074B8399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82569A38-5C5F-42FF-B9BB-20415B337B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82569A38-5C5F-42FF-B9BB-20415B337B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82569A38-5C5F-42FF-B9BB-20415B337B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82569A38-5C5F-42FF-B9BB-20415B337B92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C4DB5902-DB47-4108-8423-8687D6395567} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 		{AB82DFB4-86E7-4F21-9033-9398F9407654} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 		{79EE7D16-C478-4159-A1B7-38C7B4764D30} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 		{0264F0D4-CBB8-4A38-86FD-B65B8668C077} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
@@ -177,9 +230,7 @@ Global
 		{7C99308D-A11A-43A0-9C2D-F28466A0B711} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
 		{6003624A-34E4-4891-A29C-6957DE6ADF9F} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 		{5322025D-EFDF-472D-8CD7-947A23B15E38} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
-		{9F60841F-6489-49D6-952F-042B9ABD4226} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 		{3C6DC2E4-5A44-4E28-B03D-D4DFAC7C7791} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
-		{01BE48FD-2AD7-4E71-B1C5-8C6A608ACD1E} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 		{DEA5FE65-F3FD-4E85-9231-4F36F793307D} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
 		{51474BCA-7C44-4979-A018-BA95C8BFE505} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
 		{C04292F9-4FA1-4523-84C1-5E2000C2D609} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
@@ -191,7 +242,19 @@ Global
 		{B2D8BE0A-0241-4B5E-A75E-63820900425D} = {246885B4-382F-47A8-8F4F-BD41C7ED16CF}
 		{E2513B57-C3B6-4382-870C-52F926AA3B0E} = {246885B4-382F-47A8-8F4F-BD41C7ED16CF}
 		{CF6A6AB1-F8DD-4689-A450-F7F41D930589} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
-		{BA5A29E7-D255-4354-A950-48E09DC8FDA4} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{A129B750-0C31-4954-9917-B271C019FA29} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
+		{35C84467-BBBA-4165-9C53-42A93724F156} = {246885B4-382F-47A8-8F4F-BD41C7ED16CF}
+		{D5B72E80-7B38-4561-8F74-B663E30BDACD} = {931E6A07-3272-4153-B7BA-A597BC40FAA5}
+		{94A9251A-D4A5-42B3-81F6-4A10C233E726} = {3BAE42DC-A523-4500-9A93-8C28DDF532D4}
+		{6080FCBE-8E33-42AD-B787-5F72E69CD169} = {503E04AD-13D4-41FE-A5FD-CA2AB3B2623D}
+		{20AB9345-1435-4DBD-9131-8D551DE70C32} = {246885B4-382F-47A8-8F4F-BD41C7ED16CF}
+		{19E845B1-7761-4137-8196-C1E9E1C227F2} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{A6B24074-022E-46F3-8147-BA29E31DE3C8} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{D05BDFF6-AE6F-4F9F-B3E5-56E3DBDEEB65} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{1CB6C3A0-2D93-4137-9966-1B091BD81C3B} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{663A5070-F69D-4760-B50C-A1D0BE97E81B} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{927177C4-7F3F-494F-92C6-1A22074B8399} = {28231AC6-36A0-4746-8384-DE482C818EF0}
+		{82569A38-5C5F-42FF-B9BB-20415B337B92} = {28231AC6-36A0-4746-8384-DE482C818EF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98E1ADF8-88DF-4B1F-B486-650F4F9CC573}

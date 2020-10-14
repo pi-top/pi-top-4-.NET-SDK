@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
-using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
+
 using PiTop.Abstractions;
-using Xunit.Sdk;
 
 namespace PiTop.Tests
 {
@@ -18,7 +17,7 @@ namespace PiTop.Tests
 
         public void Dispose()
         {
-          
+
         }
 
         public PinNumberingScheme NumberingScheme { get; }

@@ -5,11 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageVersion>0.0.1</PackageVersion>
-    <PackageId>piTop.Camera</PackageId>
+    <PackageId>pi-top.Camera</PackageId>
     <IsPackable>true</IsPackable>
-    <PackageDescription>piTop Camera module module.</PackageDescription>
+    <PackageDescription>pi-top[4] Camera module.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>pi-top_logo.jpg</PackageIcon>
+    <PackageTags>pi-top[4]</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

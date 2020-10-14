@@ -8,7 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
-
+using Pocket;
+using static Pocket.Logger;
 using PiTop.Abstractions;
 
 
@@ -22,14 +23,15 @@ namespace PiTop
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         private readonly ConcurrentDictionary<Type, PiTopPlate> _plates = new ConcurrentDictionary<Type, PiTopPlate>();
-        private readonly ConcurrentDictionary<int, I2cDevice> _i2cBusses = new ConcurrentDictionary<int, I2cDevice>();
+        private readonly ConcurrentDictionary<int, I2cDevice> _i2cDevices = new ConcurrentDictionary<int, I2cDevice>();
         private readonly ConcurrentDictionary<SpiConnectionSettings, SpiDevice> _spiDevices = new ConcurrentDictionary<SpiConnectionSettings, SpiDevice>();
         private readonly ModuleDriverClient _moduleDriverClient;
         private readonly IGpioController _controller;
+        private readonly Func<SpiConnectionSettings, SpiDevice> _spiDeviceFactory;
+        private readonly Func<I2cConnectionSettings, I2cDevice> _i2CDeviceFactory;
         private readonly Dictionary<Type, object> _deviceFactories = new Dictionary<Type, object>();
 
         private const int I2CBusId = 1;
-
         public PiTopButton UpButton { get; } = new PiTopButton();
         public PiTopButton DownButton { get; } = new PiTopButton();
         public PiTopButton SelectButton { get; } = new PiTopButton();
@@ -44,6 +46,10 @@ namespace PiTop
                 {
                     if (_display == null)
                     {
+                        using var operation = Log.OnEnterAndExit();
+
+                        operation.Info("acquiring oled display");
+
                         _moduleDriverClient.AcquireDisplay();
                         _disposables.Add(File.Open("/tmp/pt-oled.lock", FileMode.OpenOrCreate, FileAccess.Write,
                             FileShare.None));
@@ -69,8 +75,10 @@ namespace PiTop
 
         private static PiTop4Board? _instance;
         private static IGpioController? _defaultController;
+        private static Func<SpiConnectionSettings, SpiDevice>? _defaultSpiDeviceFactory;
+        private static Func<I2cConnectionSettings, I2cDevice>? _defaultI2cDeviceFactory;
 
-        public static void Configure(IGpioController controller)
+        public static void Configure(IGpioController? controller = null, Func<SpiConnectionSettings, SpiDevice>? spiDeviceFactory = null, Func<I2cConnectionSettings, I2cDevice>? i2cDeviceFactory = null)
         {
 
             if (_instance != null)
@@ -79,24 +87,34 @@ namespace PiTop
             }
 
             _defaultController = controller;
+            _defaultSpiDeviceFactory = spiDeviceFactory;
+            _defaultI2cDeviceFactory = i2cDeviceFactory;
         }
-        public static PiTop4Board Instance => _instance ??= new PiTop4Board(_defaultController ??= new GpioController().AsManaged());
+        public static PiTop4Board Instance => _instance ??= new PiTop4Board(
+            _defaultController ??= new GpioController().AsManaged(),
+            _defaultSpiDeviceFactory ?? SpiDevice.Create,
+        _defaultI2cDeviceFactory ?? I2cDevice.Create);
 
-        private PiTop4Board(IGpioController controller)
+        private PiTop4Board(IGpioController controller, Func<SpiConnectionSettings, SpiDevice> spiDeviceFactory, Func<I2cConnectionSettings, I2cDevice> i2cDeviceFactory)
         {
             BatteryState = BatteryState.Empty;
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
+            _spiDeviceFactory = spiDeviceFactory ?? throw new ArgumentNullException(nameof(spiDeviceFactory));
+            _i2CDeviceFactory = i2cDeviceFactory ?? throw new ArgumentNullException(nameof(i2cDeviceFactory));
             _moduleDriverClient = new ModuleDriverClient();
             _moduleDriverClient.MessageReceived += ModuleDriverClientMessageReceived;
             _disposables.Add(Disposable.Create(() =>
             {
+                using var operation = Log.OnEnterAndExit();
+
+                operation.Info("disposing devices.");
                 var plates = _plates.Values.ToList();
                 foreach (var piTopPlate in plates)
                 {
                     piTopPlate.Dispose();
                 }
 
-                var busses = _i2cBusses.Values.ToList();
+                var busses = _i2cDevices.Values.ToList();
                 foreach (var i2CDevice in busses)
                 {
                     i2CDevice.Dispose();
@@ -121,11 +139,13 @@ namespace PiTop
         {
             var key = typeof(T);
             var plate = _plates.GetOrAdd(key, plateType =>
-           {
-               var newPlate = (Activator.CreateInstance(plateType, args: new object[] { this }) as T)!;
-               newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
-               return newPlate;
-           });
+            {
+                using var operation = Log.OnEnterAndConfirmOnExit();
+                var newPlate = (Activator.CreateInstance(plateType, args: new object[] { this }) as T)!;
+                newPlate.RegisterForDisposal(() => _plates.TryRemove(key, out _));
+                operation.Succeed();
+                return newPlate;
+            });
 
             return (plate as T)!;
         }
@@ -254,12 +274,12 @@ namespace PiTop
 
         public I2cDevice GetOrCreateI2CDevice(int deviceAddress)
         {
-            return _i2cBusses.GetOrAdd(deviceAddress, address => I2cDevice.Create(new I2cConnectionSettings(I2CBusId, deviceAddress)));
+            return _i2cDevices.GetOrAdd(deviceAddress, address => _i2CDeviceFactory(new I2cConnectionSettings(I2CBusId, deviceAddress)));
         }
 
         public SpiDevice GetOrCreateSpiDevice(SpiConnectionSettings connectionSettings)
         {
-            return _spiDevices.GetOrAdd(connectionSettings, settings => SpiDevice.Create(settings));
+            return _spiDevices.GetOrAdd(connectionSettings, settings => _spiDeviceFactory(settings));
         }
 
         public void Dispose()
@@ -285,6 +305,7 @@ namespace PiTop
             where TConnectionConfiguration : notnull
             where TDevice : IConnectedDevice
         {
+            using var operation = Log.OnEnterAndConfirmOnExit();
             if (connectedDeviceFactory == null)
             {
                 throw new ArgumentNullException(nameof(connectedDeviceFactory));
@@ -292,6 +313,7 @@ namespace PiTop
 
             _deviceFactories.Add(typeof(IConnectedDeviceFactory<TConnectionConfiguration, TDevice>), connectedDeviceFactory);
             _disposables.Add(connectedDeviceFactory);
+            operation.Succeed();
         }
 
         public void AddDeviceFactory<TConnectionConfiguration, TDevice>(Func<Type, Func<TConnectionConfiguration, TDevice>>? defaultDeviceFactoryGenerator = null)

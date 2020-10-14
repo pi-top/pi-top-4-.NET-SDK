@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.20509.1" />
+    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.20509.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation\PiTop.MakerArchitecture.Foundation.csproj" />
+  </ItemGroup>
+
+</Project>

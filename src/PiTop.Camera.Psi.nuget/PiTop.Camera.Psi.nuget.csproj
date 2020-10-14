@@ -5,16 +5,17 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageVersion>0.0.1</PackageVersion>
-    <PackageId>piTop.Camera.Psi</PackageId>
+    <PackageId>pi-top.Camera.Psi</PackageId>
     <IsPackable>true</IsPackable>
-    <PackageDescription>piTop Camera module module.</PackageDescription>
+    <PackageDescription>pi-top[4] Camera module module with PSI support.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>pi-top_logo.jpg</PackageIcon>
+    <PackageTags>pi-top[4]</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Psi.Imaging" Version="0.12.53.2-beta" />
-    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.12.53.2-beta" />
+    <PackageReference Include="Microsoft.Psi.Imaging" Version="0.13.38.2-beta" />
+    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.13.38.2-beta" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,8 +25,8 @@
     <ProjectReference Include="..\PiTop.Camera.Psi.InteractiveExtension\PiTop.Camera.Psi.InteractiveExtension.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj"/>
-    <ProjectReference Include="..\PiTop.Camera.nuget\PiTop.Camera.nuget.csproj"/>
+    <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj" />
+    <ProjectReference Include="..\PiTop.Camera.nuget\PiTop.Camera.nuget.csproj" />
   </ItemGroup>
 
   <ItemGroup>

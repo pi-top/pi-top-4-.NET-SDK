@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <PackageVersion>0.0.1</PackageVersion>
+    <PackageId>pi-top.MakerArchitecture.ExpansionKit</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageDescription>pi-top[4] Expansion Kit module.</PackageDescription>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIcon>pi-top_logo.jpg</PackageIcon>
+    <PackageTags>pi-top[4]</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PiTop.MakerArchitecture.Expansion\PiTop.MakerArchitecture.Expansion.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\PiTop.MakerArchitecture.Expansion.InteractiveExtension\PiTop.MakerArchitecture.Expansion.InteractiveExtension.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation.nuget\PiTop.MakerArchitecture.Foundation.nuget.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="4.3.2" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0010" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../PiTop.MakerArchitecture.Expansion/bin/$(Configuration)/$(TargetFramework)/PiTop.MakerArchitecture.Expansion.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
+    <None Include="../PiTop.MakerArchitecture.Expansion.InteractiveExtension/bin/$(Configuration)/$(TargetFramework)/PiTop.MakerArchitecture.Expansion.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
+    <None Include="../pi-top_logo.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>pi-top.OpenCvSharp4.runtime</id>
+        <version>4.2.0</version>
+        <title>OpenCvSharp native bindings for pi-top OS</title>
+        <authors>shimat</authors>
+        <projectUrl>https://github.com/shimat/opencvsharp</projectUrl>
+        <icon>resources/pi-top_logo.jpg</icon>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Internal implementation package for OpenCvSharp to work on pi-top[4]</description>
+        <summary>Internal implementation package for OpenCvSharp to work on pi-top[4]</summary>
+        <releaseNotes></releaseNotes>
+        <tags>Image Processing OpenCV Wrapper FFI opencvsharp</tags>
+        <dependencies>
+            <group targetFramework="netstandard2.0"></group>
+            <group targetFramework="netstandard2.1"></group>
+            <group targetFramework="netcoreapp2.1"></group>
+        </dependencies>
+        <frameworkAssemblies>
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="../../pi-top_logo.jpg" target="resources/" />
+        <file src="./linux-arm/libOpenCvSharpExtern.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_aruco.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_aruco.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_aruco.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_bgsegm.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_bgsegm.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_bgsegm.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_bioinspired.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_bioinspired.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_bioinspired.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_calib3d.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_calib3d.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_calib3d.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ccalib.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ccalib.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ccalib.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_core.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_core.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_core.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_datasets.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_datasets.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_datasets.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn_objdetect.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn_objdetect.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn_objdetect.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn_superres.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn_superres.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dnn_superres.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dpm.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dpm.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_dpm.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_face.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_face.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_face.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_features2d.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_features2d.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_features2d.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_flann.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_flann.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_flann.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_fuzzy.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_fuzzy.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_fuzzy.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_gapi.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_gapi.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_gapi.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_hdf.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_hdf.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_hdf.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_hfs.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_hfs.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_hfs.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_highgui.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_highgui.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_highgui.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_imgcodecs.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_imgcodecs.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_imgcodecs.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_imgproc.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_imgproc.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_imgproc.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_img_hash.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_img_hash.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_img_hash.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_line_descriptor.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_line_descriptor.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_line_descriptor.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ml.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ml.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ml.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_objdetect.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_objdetect.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_objdetect.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_optflow.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_optflow.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_optflow.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_phase_unwrapping.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_phase_unwrapping.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_phase_unwrapping.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_photo.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_photo.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_photo.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_plot.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_plot.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_plot.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_quality.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_quality.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_quality.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_reg.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_reg.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_reg.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_rgbd.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_rgbd.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_rgbd.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_saliency.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_saliency.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_saliency.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_shape.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_shape.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_shape.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_stereo.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_stereo.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_stereo.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_stitching.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_stitching.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_stitching.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_structured_light.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_structured_light.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_structured_light.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_superres.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_superres.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_superres.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_surface_matching.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_surface_matching.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_surface_matching.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_text.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_text.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_text.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_tracking.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_tracking.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_tracking.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_video.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_video.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_video.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_videoio.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_videoio.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_videoio.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_videostab.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_videostab.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_videostab.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xfeatures2d.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xfeatures2d.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xfeatures2d.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ximgproc.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ximgproc.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_ximgproc.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xobjdetect.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xobjdetect.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xobjdetect.so.4.2.0" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xphoto.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xphoto.so.4.2" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libopencv_xphoto.so.4.2.0" target="runtimes/linux-arm/native" />
+    </files>
+</package>

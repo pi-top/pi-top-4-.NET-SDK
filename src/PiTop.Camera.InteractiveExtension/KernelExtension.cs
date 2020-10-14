@@ -36,6 +36,10 @@ namespace PiTop.Camera.InteractiveExtension
                 writer.Write(imgTag);
             }, HtmlFormatter.MimeType);
 
+            KernelInvocationContext.Current?.Display(
+                $@"Added support for Camera.",
+                "text/markdown");
+
             return Task.CompletedTask;
         }
 

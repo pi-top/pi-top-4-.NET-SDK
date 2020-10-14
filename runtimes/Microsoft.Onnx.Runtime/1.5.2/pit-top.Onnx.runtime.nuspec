@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>pi-top.Onnx.runtime</id>
+        <version>1.5.2</version>
+        <title>Onnx native bindings for pi-top OS</title>
+        <authors>shimat</authors>
+        <projectUrl>https://microsoft.github.io/onnxruntime/</projectUrl>
+        <icon>resources/pi-top_logo.jpg</icon>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>This package contains native shared library artifacts for pi-top[4].</description>
+        <summary>This package contains native shared library artifacts for pi-top[4].</summary>
+        <releaseNotes></releaseNotes>
+        <tags>ONNX Runtime Machine Learning pi-top[4]</tags>
+        <dependencies>
+            <group targetFramework="netstandard2.0"></group>
+            <group targetFramework="netstandard2.1"></group>
+            <group targetFramework="netcoreapp2.1"></group>
+        </dependencies>
+        <frameworkAssemblies>
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="../../pi-top_logo.jpg" target="resources/" />
+        <file src="./linux-arm/libcustom_op_library.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libonnxruntime.so" target="runtimes/linux-arm/native" />
+        <file src="./linux-arm/libonnxruntime.so.1.5.2" target="runtimes/linux-arm/native" />
+    </files>
+</package>
