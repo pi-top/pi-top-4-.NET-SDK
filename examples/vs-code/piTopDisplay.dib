@@ -4,22 +4,22 @@
 
 #!csharp
 
-#!connect signalr --kernel-name piTop --hub-url http://pitop-diego.ngrok.io/kernelhub
+#!connect signalr --kernel-name pi-top --hub-url http://YOUR_ENDPOINT/kernelhub
 
 #!csharp
 
-#!piTop
-#r "nuget:piTop"
-#r "nuget:piTop.FoundationKit"
+#!pi-top
+#r "nuget:pi-top"
+#r "nuget:pi-top.FoundationKit"
 #r "nuget:SixLabors.Fonts,1.0.0-beta0010"
 
 #!csharp
 
-#!piTop
+#!pi-top
 using PiTop;
-using PiTopMakerArchitecture.Foundation;
-using PiTopMakerArchitecture.Foundation.Components;
-using PiTopMakerArchitecture.Foundation.Sensors;
+using PiTop.MakerArchitecture.Foundation;
+using PiTop.MakerArchitecture.Foundation.Components;
+using PiTop.MakerArchitecture.Foundation.Sensors;
 
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
@@ -28,18 +28,18 @@ using SixLabors.Fonts;
 
 #!csharp
 
-#!piTop
+#!pi-top
 var board = PiTop4Board.Instance;
 var plate = board.GetOrCreatePlate<FoundationPlate>();
 
 #!csharp
 
-#!piTop
+#!pi-top
 var builtinDisplay = board.Display;
 
 #!csharp
 
-#!piTop
+#!pi-top
 var font =  SystemFonts.Collection.Find("Roboto").CreateFont(10);
 board.Display.Draw((context, _) => {
                         context.Clear(Color.Black);
@@ -51,12 +51,12 @@ board.Display.Draw((context, _) => {
 
 #!csharp
 
-#!piTop
+#!pi-top
 display(builtinDisplay, "text/html");
 
 #!csharp
 
-#!piTop
+#!pi-top
  board.Display.Draw((d, _) =>
             {
                 d.Clear(Color.Black);
@@ -67,5 +67,5 @@ display(builtinDisplay, "text/html");
 
 #!csharp
 
-#!piTop
+#!pi-top
 board.Dispose();

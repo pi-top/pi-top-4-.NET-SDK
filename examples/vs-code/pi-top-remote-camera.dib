@@ -5,7 +5,7 @@
 
 #!csharp
 
-#!connect signalr --kernel-name piTop --hub-url http://pitop-interactive.ngrok.io/kernelhub
+#!connect signalr --kernel-name pi-top --hub-url http://YOUR_ENDPOINT/kernelhub
 
 #!markdown
 
@@ -13,23 +13,23 @@
 
 #!csharp
 
-#!piTop
+#!pi-top
 #i "nuget:/home/pi/localNuget"
 
 #!csharp
 
-#!piTop
-#r "nuget:piTop"
-#r "nuget:piTop.FoundationKit"
-#r "nuget:piTop.Camera"
+#!pi-top
+#r "nuget:pi-top"
+#r "nuget:pi-top.FoundationKit"
+#r "nuget:pi-top.Camera"
 
 #!csharp
 
-#!piTop
+#!pi-top
 using PiTop;
-using PiTopMakerArchitecture.Foundation;
-using PiTopMakerArchitecture.Foundation.Components;
-using PiTopMakerArchitecture.Foundation.Sensors;
+using PiTop.MakerArchitecture.Foundation;
+using PiTop.MakerArchitecture.Foundation.Components;
+using PiTop.MakerArchitecture.Foundation.Sensors;
 using PiTop.Camera;
 using OpenCvSharp;
 
@@ -39,7 +39,7 @@ Create a module and load the camera extensions
 
 #!csharp
 
-#!piTop
+#!pi-top
 var board = PiTop4Board.Instance.UseCamera();
 
 #!markdown
@@ -48,7 +48,7 @@ Create a camera
 
 #!csharp
 
-#!piTop
+#!pi-top
 var camera = board.GetOrCreateCamera<OpenCvCamera>(0);
 
 #!markdown
@@ -57,6 +57,6 @@ Display the plate to check the wiring
 
 #!csharp
 
-#!piTop
+#!pi-top
 var frame = camera.GetFrameAsMat();
 frame
