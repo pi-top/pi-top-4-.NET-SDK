@@ -5,7 +5,7 @@
 
 #!csharp
 
-#!connect signalr --kernel-name piTop --hub-url http://pitop-diego.ngrok.io/kernelhub 
+#!connect signalr --kernel-name pi-top --hub-url http://YOUR_ENDPOINT/kernelhub 
 
 #!markdown
 
@@ -13,22 +13,22 @@
 
 #!csharp
 
-#!piTop
+#!pi-top
 #i "nuget:/home/pi/localNuget"
 
 #!csharp
 
-#!piTop
-#r "nuget:piTop"
-#r "nuget:piTop.FoundationKit"
+#!pi-top
+#r "nuget:pi-top"
+#r "nuget:pi-top.FoundationKit"
 
 #!csharp
 
-#!piTop
+#!pi-top
 using PiTop;
-using PiTopMakerArchitecture.Foundation;
-using PiTopMakerArchitecture.Foundation.Components;
-using PiTopMakerArchitecture.Foundation.Sensors;
+using PiTop.MakerArchitecture.Foundation;
+using PiTop.MakerArchitecture.Foundation.Components;
+using PiTop.MakerArchitecture.Foundation.Sensors;
 using SixLabors.ImageSharp;
 
 #!markdown
@@ -37,7 +37,7 @@ Create a module and use it to create an instance of ```FoundationPlate```
 
 #!csharp
 
-#!piTop
+#!pi-top
 var board = PiTop4Board.Instance;
 var plate = board.GetOrCreatePlate<FoundationPlate>();
 
@@ -47,7 +47,7 @@ Create Leds and turn them off
 
 #!csharp
 
-#!piTop
+#!pi-top
 var greenLed = plate.GetOrCreateLed(DigitalPort.D0, Color.Green);
 var amberLed = plate.GetOrCreateLed(DigitalPort.D1, Color.Yellow);
 var redLed   = plate.GetOrCreateLed(DigitalPort.D2, Color.Red);
@@ -62,12 +62,12 @@ Display the plate to check the wiring
 
 #!csharp
 
-#!piTop
+#!pi-top
 plate
 
 #!csharp
 
-#!piTop
+#!pi-top
 greenLed.On()
 
 #!markdown
@@ -76,7 +76,7 @@ Let's add a ```Potentiometer``` and an ```Ultrasound``` sensor. Note that the ``
 
 #!csharp
 
-#!piTop
+#!pi-top
 var ultraSound = plate.GetOrCreateUltrasonicSensor(DigitalPort.D3);
 var pot = plate.GetOrCreatePotentiometer(AnaloguePort.A0);
 
@@ -85,12 +85,12 @@ display(pot);
 
 #!csharp
 
-#!piTop
+#!pi-top
 ultraSound.Distance.ToString()
 
 #!csharp
 
-#!piTop
+#!pi-top
 var distances = new List<double>(){0};
 
 void ScanForDanger(System.Threading.CancellationToken cancellationToken){
@@ -136,14 +136,14 @@ async Task readDistance(int count = 10){
 
 #!csharp
 
-#!piTop
+#!pi-top
 await readDistance(5);
 
 distances
 
 #!csharp
 
-#!piTop
+#!pi-top
 var source = new System.Threading.CancellationTokenSource();
 ScanForDanger(source.Token);
 
