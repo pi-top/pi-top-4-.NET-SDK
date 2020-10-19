@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="4.3.2" />
+    <PackageReference Include="UnitsNet" Version="4.72.0" />
+  </ItemGroup>
+
 </Project>

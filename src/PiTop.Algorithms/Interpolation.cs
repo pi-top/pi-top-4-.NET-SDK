@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace PiTop.MakerArchitecture.Expansion
+namespace PiTop.Algorithms
 {
     public static class Interpolation
     {
@@ -10,8 +10,8 @@ namespace PiTop.MakerArchitecture.Expansion
 
             var pos = (clamped - domainMin) / (domainMax - domainMin);
 
-            var interp = (pos * (codomainMax - codomainMin)) + codomainMin;
-            return interp;
+            var interpolatedValue = (pos * (codomainMax - codomainMin)) + codomainMin;
+            return interpolatedValue;
 
         }
 
@@ -29,7 +29,7 @@ namespace PiTop.MakerArchitecture.Expansion
             return Interpolate(point, map.First.First, map.First.Second, map.Second.First, map.Second.Second);
         }
 
-        public static double WithDeadzone(this double point, double minDomain, double maxDomain, double deadZone)
+        public static double WithDeadZone(this double point, double minDomain, double maxDomain, double deadZone)
         {
             return Interpolate(point, new[] { minDomain, -deadZone, deadZone, maxDomain }, new[] { minDomain, 0, 0, maxDomain });
         }

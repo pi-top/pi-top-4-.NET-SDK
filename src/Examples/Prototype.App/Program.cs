@@ -54,7 +54,7 @@ namespace Prototype
                 .DistinctUntilChanged()
                 .Subscribe(stick =>
                 {
-                    var left = stick.X.WithDeadzone(-.5, .5, .3);
+                    var left = stick.X.WithDeadZone(-.5, .5, .3);
                     var forward = stick.Y;
                     motorControl.SetPower((forward + left) / 1.5, (forward - left) / 1.5);
 

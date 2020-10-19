@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using PiTop.Algorithms;
 
 namespace Prototype
 {
@@ -79,9 +80,9 @@ namespace Prototype
             internal Stick(IObservable<JoystickEvent> events, Axis xAxis, Axis yAxis)
             {
                 events.OfType<AxisEvent>().Where(e => e.Axis == xAxis)
-                    .Subscribe(e => X = -e.Position.Interpolate(-1, 1).WithDeadzone(-1, 1, .01));
+                    .Subscribe(e => X = -e.Position.Interpolate(-1, 1).WithDeadZone(-1, 1, .01));
                 events.OfType<AxisEvent>().Where(e => e.Axis == yAxis)
-                    .Subscribe(e => Y = -e.Position.Interpolate(-1, 1).WithDeadzone(-1, 1, .01));
+                    .Subscribe(e => Y = -e.Position.Interpolate(-1, 1).WithDeadZone(-1, 1, .01));
             }
 
             public double X { get; private set; }
