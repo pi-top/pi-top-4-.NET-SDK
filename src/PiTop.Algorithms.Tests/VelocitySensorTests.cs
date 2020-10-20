@@ -1,5 +1,7 @@
 ﻿using System;
+
 using FluentAssertions;
+
 using Microsoft.Reactive.Testing;
 
 using UnitsNet;
@@ -10,24 +12,26 @@ namespace PiTop.Algorithms.Tests
 {
     public class VelocitySensorTests
     {
-        [Fact]
-        public void can_integrate_speed()
+        private static Func<Acceleration> CreateSampler(params Acceleration[] accelerations)
         {
-            var accelerations = new[]
-            {
-                Acceleration.FromMetersPerSecondSquared(2),
-                Acceleration.FromMetersPerSecondSquared(2),
-                Acceleration.FromMetersPerSecondSquared(0)
-            };
-            
             var pos = 0;
-            var scheduler = new TestScheduler();
-            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), () =>
+            return () =>
             {
                 var index = pos;
                 pos++;
                 return index < accelerations.Length ? accelerations[index] : Acceleration.Zero;
-            }, scheduler);
+            };
+        }
+
+        [Fact]
+        public void can_integrate_speed()
+        {
+            var scheduler = new TestScheduler();
+            var accelerationSampler = CreateSampler(
+                Acceleration.FromMetersPerSecondSquared(2),
+                Acceleration.FromMetersPerSecondSquared(2),
+                Acceleration.FromMetersPerSecondSquared(0));
+            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
 
             scheduler.AdvanceBy(TimeSpan.FromSeconds(3).Ticks);
             sensor.Velocity.Should().Be(Speed.FromMetersPerSecond(4));
@@ -36,21 +40,12 @@ namespace PiTop.Algorithms.Tests
         [Fact]
         public void single_sample_calculates_zero()
         {
-            var accelerations = new[]
-            {
+            var accelerationSampler = CreateSampler(
                 Acceleration.FromMetersPerSecondSquared(2),
                 Acceleration.FromMetersPerSecondSquared(2),
-                Acceleration.FromMetersPerSecondSquared(0)
-            };
-
-            var pos = 0;
+                Acceleration.FromMetersPerSecondSquared(0));
             var scheduler = new TestScheduler();
-            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), () =>
-            {
-                var index = pos;
-                pos++;
-                return index < accelerations.Length ? accelerations[index] : Acceleration.Zero;
-            }, scheduler);
+            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
 
             scheduler.AdvanceBy(TimeSpan.FromSeconds(1.1).Ticks);
             sensor.Velocity.Should().Be(Speed.Zero);
@@ -59,21 +54,13 @@ namespace PiTop.Algorithms.Tests
         [Fact]
         public void negative_accelerations_decrease_velocity()
         {
-            var accelerations = new[]
-            {
+
+            var accelerationSampler = CreateSampler(
                 Acceleration.FromMetersPerSecondSquared(2),
                 Acceleration.FromMetersPerSecondSquared(-2),
-                Acceleration.FromMetersPerSecondSquared(0)
-            };
-
-            var pos = 0;
+                Acceleration.FromMetersPerSecondSquared(0));
             var scheduler = new TestScheduler();
-            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), () =>
-            {
-                var index = pos;
-                pos++;
-                return index < accelerations.Length ? accelerations[index] : Acceleration.Zero;
-            }, scheduler);
+            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
 
             scheduler.AdvanceBy(TimeSpan.FromSeconds(3).Ticks);
             sensor.Velocity.Should().Be(Speed.Zero);
