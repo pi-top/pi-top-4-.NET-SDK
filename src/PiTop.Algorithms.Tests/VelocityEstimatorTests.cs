@@ -10,7 +10,7 @@ using Xunit;
 
 namespace PiTop.Algorithms.Tests
 {
-    public class VelocitySensorTests
+    public class VelocityEstimatorTests
     {
         private static Func<Acceleration> CreateSampler(params Acceleration[] accelerations)
         {
@@ -31,7 +31,7 @@ namespace PiTop.Algorithms.Tests
                 Acceleration.FromMetersPerSecondSquared(2),
                 Acceleration.FromMetersPerSecondSquared(2),
                 Acceleration.FromMetersPerSecondSquared(0));
-            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
+            using var sensor = new VelocityEstimator(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
 
             scheduler.AdvanceBy(TimeSpan.FromSeconds(3).Ticks);
             sensor.Velocity.Should().Be(Speed.FromMetersPerSecond(4));
@@ -45,7 +45,7 @@ namespace PiTop.Algorithms.Tests
                 Acceleration.FromMetersPerSecondSquared(2),
                 Acceleration.FromMetersPerSecondSquared(0));
             var scheduler = new TestScheduler();
-            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
+            using var sensor = new VelocityEstimator(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
 
             scheduler.AdvanceBy(TimeSpan.FromSeconds(1.1).Ticks);
             sensor.Velocity.Should().Be(Speed.Zero);
@@ -60,7 +60,7 @@ namespace PiTop.Algorithms.Tests
                 Acceleration.FromMetersPerSecondSquared(-2),
                 Acceleration.FromMetersPerSecondSquared(0));
             var scheduler = new TestScheduler();
-            using var sensor = new VelocitySensor(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
+            using var sensor = new VelocityEstimator(TimeSpan.FromSeconds(1), accelerationSampler, scheduler);
 
             scheduler.AdvanceBy(TimeSpan.FromSeconds(3).Ticks);
             sensor.Velocity.Should().Be(Speed.Zero);

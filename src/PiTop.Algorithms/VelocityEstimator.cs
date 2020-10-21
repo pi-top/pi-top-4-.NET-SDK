@@ -10,12 +10,12 @@ namespace PiTop.Algorithms
     /// Calculates the velocity by sampling acceleration values.
     /// The initial velocity of the sensor is 0 m/s and it will require a pair of sample for first value .
     /// </summary>
-    public class VelocitySensor : IDisposable
+    public class VelocityEstimator : IDisposable
     {
         private readonly IDisposable _sampler;
         private (DateTimeOffset Timestamp, Acceleration Accelecation)? _previousSample;
 
-        public VelocitySensor(TimeSpan samplingFrequency, Func<Acceleration> accelerationSampler, IScheduler samplingScheduler = null)
+        public VelocityEstimator(TimeSpan samplingFrequency, Func<Acceleration> accelerationSampler, IScheduler samplingScheduler = null)
         {
             Velocity = Speed.Zero;
             var scheduler = samplingScheduler ?? TaskPoolScheduler.Default;
