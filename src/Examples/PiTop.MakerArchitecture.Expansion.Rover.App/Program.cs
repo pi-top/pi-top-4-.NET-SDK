@@ -1,5 +1,5 @@
 ﻿using System;
-
+using PiTop.Algorithms;
 using PiTop.Camera;
 using PiTop.MakerArchitecture.Foundation;
 using Pocket;

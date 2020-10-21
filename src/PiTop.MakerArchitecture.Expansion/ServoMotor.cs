@@ -1,6 +1,7 @@
 ﻿using PiTop.Abstractions;
 using System;
 using System.Linq;
+using PiTop.Algorithms;
 using Pocket;
 using UnitsNet;
 using static Pocket.Logger;

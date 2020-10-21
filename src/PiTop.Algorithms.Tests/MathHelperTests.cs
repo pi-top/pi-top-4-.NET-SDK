@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using PiTop.MakerArchitecture.Expansion;
+
 using Xunit;
 
-namespace PiTop.Algortihms.Tests
+namespace PiTop.Algorithms.Tests
 {
     public class InterpolationTests
     {
