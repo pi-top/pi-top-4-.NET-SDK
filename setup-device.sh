@@ -98,7 +98,7 @@ echo ""
 ################################
 echo "Installing .NET OpenCVSharp..."
 echo ".NET OpenCVSharp: Extracting..."
-sudo tar -xzf ../libs/opencv_opencvsharp_libs.tar.gz -C /usr/local/lib/
+sudo unzip -d /usr/local/lib/ ../libs/opencv-dotnet-4.5.0.zip
 echo ".NET OpenCVSharp: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
