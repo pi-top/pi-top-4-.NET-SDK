@@ -4,30 +4,46 @@ Check out [dotnet/iot](https://github.com/dotnet/iot) for loads of device bindin
 
 [![Build status](https://ci.appveyor.com/api/projects/status/dcv5pwhl9n1vt8pi/branch/master?svg=true)](https://ci.appveyor.com/project/pi-top/pi-top-4-net-core-api/branch/master)
 
-## NOTE: Experimental!!
-Set up everything  by running this from your pi-top:
+## Quick Installation
+### Core
+To install and configure your pi-top with core .NET API support, run this from your pi-top:
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup-device.sh | bash -e
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup-device.sh | bash
 ```
 
+### Python Environment
+To extend with .NET Jupyter Notebook support, run this from your pi-top:
+```sh
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup-device-jupyter.sh | bash
+```
+
+## Quick Tour
 Once executed, you will have this repo cloned at
 ```sh
 /home/pi/pi-top-net-api
 ```
 
-The code is compiled and the NuGet packages version 1.1.1 are located at 
+The code is compiled and the latest NuGet packages are located at
 ```sh
 /home/pi/localNuget
 ```
 
 You can activate the Python environment using the command:
 ```sh
-pi@pi-top:~ source .jupyter_venv/bin/activate
+pi@pi-top:~ source /home/pi/.jupyter_venv/bin/activate
 ```
 
-Later on, you can just update using the command:
+## Quick Update
+After you have completed the initial installation, you can update using the following commands:
+
+### Core
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/update-device.sh | bash -e
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/update-device.sh | bash
+```
+
+### Python Environment
+```sh
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/update-device-jupyter.sh | bash
 ```
 
 ## Running Visual Studio Code Insiders and the .NET Interactive notebook extension on the device
