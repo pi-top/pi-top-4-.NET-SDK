@@ -1,4 +1,12 @@
-#!/bin/bash -e
+#!/bin/bash
+###############################################################
+#                Unofficial 'Bash strict mode'                #
+# http://redsymbol.net/articles/unofficial-bash-strict-mode/  #
+###############################################################
+set -euo pipefail
+IFS=$'\n\t'
+###############################################################
+
 
 ##########################################################
 ### Install System.Drawing dependencies and virtualenv ###
@@ -65,9 +73,9 @@ git clone https://github.com/pi-top/pi-top-4-.NET-Core-API.git pi-top-net-api
 echo ""
 cd pi-top-net-api/tools
 
-dotnetToolList="$(dotnet tool list -g)"
+dotnet_tool_list="$(dotnet tool list -g)"
 
-if echo "${dotnetToolList}" | grep -q "microsoft.dotnet-interactive"; then
+if echo "${dotnet_tool_list}" | grep -q "microsoft.dotnet-interactive"; then
   echo ".NET Interactive installation found - updating..."
   bash -ex ./update-global-tool.sh
 else
@@ -82,9 +90,9 @@ echo ""
 
 cd ~/pi-top-net-api/tools
 
-dotnetToolList="$(dotnet tool list -g)"
+dotnet_tool_list="$(dotnet tool list -g)"
 
-if echo "${dotnetToolList}" | grep -q "powershell"; then
+if echo "${dotnet_tool_list}" | grep -q "powershell"; then
   echo "PowerShell installation found - updating..."
   bash -ex ./update-powershell.sh
 else
@@ -110,25 +118,6 @@ echo ""
 echo "Building pi-top .NET API..."
 bash -ex ./pack.sh 0.0.1 "/home/pi/localNuget"
 echo ""
-
-
-#######################
-### Install Jupyter ###
-#######################
-cd
-
-# Create virtual env
-echo "Installing Jupyter: creating virtualenv..."
-rm -rf .jupyter_venv || true
-virtualenv .jupyter_venv -p python3
-source .jupyter_venv/bin/activate
-
-# Inside the virtual env: Install jupyter
-echo "virtualenv: pip install jupyter jupyterlab..."
-pip3 install jupyter jupyterlab
-
-# Inside the virtual env: Install .NET kernel
-echo "virtualenv: install .NET kernel..."
-dotnet interactive jupyter install
-
-deactivate
+echo "pi-top .NET API is installed."
+echo "Please run \`setup-device-jupyter.sh\` to install add Jupyter notebook support."
+echo "Note, this will install jupyterlab and .NET kernel inside a Python virtualenv (~/.jupyter_venv)"
