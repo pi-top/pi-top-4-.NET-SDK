@@ -30,13 +30,13 @@ if ! grep -q ".NET Core SDK tools" "/home/pi/.bashrc"; then
 export PATH=${PATH}:/home/pi/.dotnet
 export PATH=${PATH}:/home/pi/.dotnet/tools
 export DOTNET_ROOT=/home/pi/.dotnet
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH-}:/usr/local/lib
 EOF
 fi
 export PATH=${PATH}:/home/pi/.dotnet
 export PATH=${PATH}:/home/pi/.dotnet/tools
 export DOTNET_ROOT=/home/pi/.dotnet
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH-}:/usr/local/lib
 echo ""
 
 
