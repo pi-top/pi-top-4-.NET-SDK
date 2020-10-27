@@ -9,14 +9,14 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Iot.Device.Bindings" Version="1.1.0-prerelease.20508.1" />
+    <PackageReference Include="Iot.Device.Bindings" Version="1.1.0-prerelease.20523.2" />
     <PackageReference Include="PocketLogger" Version="0.4.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Reactive" Version="4.3.2" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0010" />
-    <PackageReference Include="UnitsNet" Version="4.72.0" />
+    <PackageReference Include="UnitsNet" Version="4.73.0" />
   </ItemGroup>
 
   <ItemGroup>
