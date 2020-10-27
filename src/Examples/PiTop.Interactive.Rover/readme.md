@@ -2,6 +2,12 @@
 
 This app will bootsrtap a rover app that embeds .NET Interactive. The kernels are exposed both as stdio and http interface.
 
+## Streaming Camera depedencies
+
+The rover app uses a special camera that streams the video over http, this has a dependency on the  [mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer) project. Follow the instruction to isntalle the tool before running the app.
+
+## Runnign and connecting to the kernel
+
 To start the app execute
 ```sh
 dotnet PiTop.Interactive.Rover.dll --http-port 1024
