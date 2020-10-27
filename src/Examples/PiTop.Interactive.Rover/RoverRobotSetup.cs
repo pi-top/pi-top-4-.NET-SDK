@@ -7,13 +7,15 @@ using lobe;
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Commands;
 using Microsoft.DotNet.Interactive.CSharp;
-
+using PiTop.Abstractions;
+using PiTop.Algorithms;
 using PiTop.Camera;
 using PiTop.Interactive.Rover.ML;
 using PiTop.MakerArchitecture.Expansion;
 using PiTop.MakerArchitecture.Expansion.Rover;
 using PiTop.MakerArchitecture.Foundation;
-
+using PiTop.MakerArchitecture.Foundation.Components;
+using PiTop.MakerArchitecture.Foundation.Sensors;
 using Pocket;
 
 using SixLabors.Fonts;
@@ -42,7 +44,7 @@ namespace PiTop.Interactive.Rover
         {
             await LoadAssemblyAndAddNamespace<RoverRobot>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ResourceScanner>(csharpKernel);
-            await AddNamespace(csharpKernel, typeof(ImageExtensions));
+            await AddNamespace(csharpKernel, typeof(ImageProcessing.ImageExtensions));
 
 
             var roverBody = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(),
@@ -132,6 +134,11 @@ namespace PiTop.Interactive.Rover
             await LoadAssemblyAndAddNamespace<StreamingCamera>(csharpKernel);
             await LoadAssemblyAndAddNamespace<FoundationPlate>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ExpansionPlate>(csharpKernel);
+
+            await AddNamespace(csharpKernel, typeof(Button));
+            await AddNamespace(csharpKernel, typeof(Led));
+            await AddNamespace(csharpKernel, typeof(IFilter));
+            await AddNamespace(csharpKernel, typeof(Display));
         }
 
         private static async Task ConfigureImageSharp(CSharpKernel csharpKernel)
@@ -140,6 +147,8 @@ namespace PiTop.Interactive.Rover
             await LoadAssemblyAndAddNamespace<Color>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ComplexPolygon>(csharpKernel);
             await LoadAssemblyAndAddNamespace<Font>(csharpKernel);
+            await AddNamespace(csharpKernel, typeof(ImageExtensions));
+
         }
 
         private static async Task LoadAssemblyAndAddNamespace<T>(CSharpKernel csharpKernel)
