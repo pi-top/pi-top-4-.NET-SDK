@@ -9,10 +9,10 @@ IFS=$'\n\t'
 
 
 ##########################################################
-### Install System.Drawing dependencies and virtualenv ###
+### Install dependencies and virtualenv ###
 ##########################################################
 echo "Installing dependencies..."
-sudo apt install -y libgdiplus virtualenv libffi-dev
+sudo apt install -y libgdiplus virtualenv libffi-dev zlib1g
 echo ""
 
 
