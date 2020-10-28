@@ -15,6 +15,7 @@ To run the app the configuration of the rover is
 *  front ultrasound on port `D7`
 *  back ultrasound on port `D6`
 *  sound sensor on port `A3`
+*  camera on plate usb port
 
 ## Streaming Camera depedencies
 
