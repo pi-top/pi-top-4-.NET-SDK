@@ -11,7 +11,7 @@ To run the app the configuration of the rover is
 *  tilt servo on port `S2`
 *  pan servo on port `S1`
 *  front green leds on ports `D3` and `D4`
-*  back red leds on port `D0` and ``D5`
+*  back red leds on port `D0` and `D5`
 *  front ultrasound on port `D7`
 *  back ultrasound on port `D6`
 *  sound sensor on port `A3`
