@@ -17,7 +17,7 @@ To run the app the configuration of the rover is
 *  sound sensor on port `A3`
 *  camera on plate usb port
 
-## Streaming Camera depedencies
+## Streaming Camera dependencies
 
 The rover app uses a special camera that streams the video over http, this has a dependency on the  [mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer) project. Follow the instruction to isntalle the tool before running the app.
 
