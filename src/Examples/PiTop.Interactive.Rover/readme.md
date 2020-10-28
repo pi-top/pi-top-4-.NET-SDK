@@ -19,7 +19,7 @@ To run the app the configuration of the rover is
 
 ## Streaming Camera dependencies
 
-The rover app uses a special camera that streams the video over http, this has a dependency on the  [mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer) project. Follow the instruction to isntalle the tool before running the app.
+The rover app uses a special camera that streams the video over HTTP. This has a dependency on the [mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer) project. Follow the install instructions before running.
 
 ## Runnign and connecting to the kernel
 
