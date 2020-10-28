@@ -8,13 +8,15 @@ Check out [dotnet/iot](https://github.com/dotnet/iot) for loads of device bindin
 ### Core
 To install and configure your pi-top with core .NET API support, run this from your pi-top:
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup-device.sh | bash
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup.sh | bash
 ```
+
+Note: you should be able to re-run this at a later date to update
 
 ### Python Environment
 To extend with .NET Jupyter Notebook support, run this from your pi-top:
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup-device-jupyter.sh | bash
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup-jupyter.sh | bash
 ```
 
 ## Quick Tour
@@ -31,19 +33,6 @@ The code is compiled and the latest NuGet packages are located at
 You can activate the Python environment using the command:
 ```sh
 pi@pi-top:~ source /home/pi/.jupyter_venv/bin/activate
-```
-
-## Quick Update
-After you have completed the initial installation, you can update using the following commands:
-
-### Core
-```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/update-device.sh | bash
-```
-
-### Python Environment
-```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/update-device-jupyter.sh | bash
 ```
 
 ## Running Visual Studio Code Insiders and the .NET Interactive notebook extension on the device

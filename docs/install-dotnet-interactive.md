@@ -14,12 +14,12 @@ If SDK 3.1 is not present follow the [install instructions](./install-dotnet-sdk
 
 You can now install latest dotnet interactive
 ```sh
- pi@pi-top:~ dotnet tool install -g --add-source "https://dotnet.myget.org/F/dotnet-try/api/v3/index.json" Microsoft.dotnet-interactive
+ pi@pi-top:~ dotnet tool install -g --add-source "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json" Microsoft.dotnet-interactive
 ```
 
 And later on update
 ```sh
- pi@pi-top:~ dotnet tool update -g --add-source "https://dotnet.myget.org/F/dotnet-try/api/v3/index.json" Microsoft.dotnet-interactive
+ pi@pi-top:~ dotnet tool update -g --add-source "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json" Microsoft.dotnet-interactive
 ```
 
-You cans use the ```install-global-tool.sh``` and ```update-global-tool.sh``` contained in the ```tools``` folder of the repo
+You can use the ```install-global-tool.sh``` script contained in the ```tools``` folder of the repo.

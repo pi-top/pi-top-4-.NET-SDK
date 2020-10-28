@@ -66,41 +66,29 @@ add_nuget_src https://www.powershellgallery.com/api/v2/ PSGallery
 echo ""
 
 
+#######################
+### Get source repo ###
+#######################
+cd
+if [[ -d "~/pi-top-4-.NET-Core-API" ]]; then
+  cd ~/pi-top-4-.NET-Core-API
+  git pull
+else
+  git clone https://github.com/pi-top/pi-top-4-.NET-Core-API.git
+  cd ~/pi-top-4-.NET-Core-API
+fi
+echo ""
+
 ################################
 ### Install .NET interactive ###
 ################################
-cd
-rm -rf pi-top-net-api || true
-git clone https://github.com/pi-top/pi-top-4-.NET-Core-API.git pi-top-net-api
-echo ""
-cd pi-top-net-api/tools
-
-dotnet_tool_list="$(dotnet tool list -g)"
-
-if echo "${dotnet_tool_list}" | grep -q "microsoft.dotnet-interactive"; then
-  echo ".NET Interactive installation found - updating..."
-  bash -ex ./update-global-tool.sh
-else
-  echo ".NET Interactive installation not found - installing..."
-  bash -ex ./install-global-tool.sh
-fi
+~/pi-top-4-.NET-Core-API/tools/install-global-tool.sh
 echo ""
 
 ##########################
 ### Install PowerShell ###
 ##########################
-
-cd ~/pi-top-net-api/tools
-
-dotnet_tool_list="$(dotnet tool list -g)"
-
-if echo "${dotnet_tool_list}" | grep -q "powershell"; then
-  echo "PowerShell installation found - updating..."
-  bash -ex ./update-powershell.sh
-else
-  echo "PowerShell installation not found - installing..."
-  bash -ex ./install-powershell.sh
-fi
+~/pi-top-4-.NET-Core-API/tools/install-powershell.sh
 echo ""
 
 ################################
@@ -108,7 +96,7 @@ echo ""
 ################################
 echo "Installing .NET OpenCVSharp..."
 echo ".NET OpenCVSharp: Extracting..."
-sudo unzip -d /usr/local/lib/ ../libs/opencv-dotnet-4.5.0.zip
+sudo unzip -d /usr/local/lib/ ~/pi-top-4-.NET-Core-API/libs/opencv-dotnet-4.5.0.zip
 echo ".NET OpenCVSharp: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
@@ -118,7 +106,7 @@ echo ""
 ################################
 echo "Installing ONNX Runtimes..."
 echo "ONNX Runtimes: Extracting..."
-sudo unzip -d /usr/local/lib/ ../libs/onnxruntime-1.5.2.zip
+sudo unzip -d /usr/local/lib/ ~/pi-top-4-.NET-Core-API/libs/onnxruntime-1.5.2.zip
 echo "ONNX Runtimes: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
@@ -128,8 +116,12 @@ echo ""
 ### Build pi-top .NET API ###
 #############################
 echo "Building pi-top .NET API..."
-bash -ex ./pack.sh 0.0.1 "/home/pi/localNuget"
+bash ./pack.sh 0.0.1 "/home/pi/localNuget"
 echo ""
+
+##############
+### Finish ###
+##############
 echo "pi-top .NET API is installed."
 echo "Please run \`setup-device-jupyter.sh\` to install add Jupyter notebook support."
 echo "Note, this will install jupyterlab and .NET kernel inside a Python virtualenv (~/.jupyter_venv)"
