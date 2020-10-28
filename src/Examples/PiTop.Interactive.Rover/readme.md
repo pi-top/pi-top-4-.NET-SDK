@@ -38,12 +38,17 @@ At this point you can submit code to the rover by using the `#!rover` kernel, fo
 ```csharp
 #!rover
 //initialise the rover and the state
+using System.IO;
+
 roverBody.TiltController.Pan = Angle.Zero;
 roverBody.TiltController.Tilt = Angle.Zero;
 ClassificationResult lastScanResult = null;
 Image lastFrame = null;
 var quadrant = new []{false,false,false,false};
 var currentQuadrant = -1;
+
+resourceScanner.CaptureFromCamera(roverBody.Camera);
+resourceScanner.LoadModel(new DirectoryInfo("/home/pi/models/v1"));
 
 ```
 
