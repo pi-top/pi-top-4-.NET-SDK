@@ -113,6 +113,16 @@ echo ".NET OpenCVSharp: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
 
+################################
+### Install ONNX Runtimes ###
+################################
+echo "Installing ONNX Runtimes..."
+echo "ONNX Runtimes: Extracting..."
+sudo unzip -d /usr/local/lib/ ../libs/onnxruntime-1.5.2.zip
+echo "ONNX Runtimes: Configuring dynamic linker run-time bindings..."
+sudo ldconfig
+echo ""
+
 
 #############################
 ### Build pi-top .NET API ###
