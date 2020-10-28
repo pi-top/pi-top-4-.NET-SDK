@@ -57,9 +57,11 @@ add_nuget_src() {
 mkdir -p "/home/pi/localNuget"
 add_nuget_src "/home/pi/localNuget" local
 add_nuget_src https://api.nuget.org/v3/index.json nuget.org
-add_nuget_src https://dotnet.myget.org/F/dotnet-try/api/v3/index.json dotnet-try
-add_nuget_src https://dotnet.myget.org/F/roslyn/api/v3/index.json roslyn
-add_nuget_src https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json dotnet-corefxlab
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-eng/nuget/v3/index.json dotnet-eng
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json dotnet-tools
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet3.1/nuget/v3/index.json dotnet3-dev
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json dotnet5
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/MachineLearning/nuget/v3/index.json MachineLearning
 add_nuget_src https://www.powershellgallery.com/api/v2/ PSGallery
 echo ""
 
@@ -108,6 +110,16 @@ echo "Installing .NET OpenCVSharp..."
 echo ".NET OpenCVSharp: Extracting..."
 sudo unzip -d /usr/local/lib/ ../libs/opencv-dotnet-4.5.0.zip
 echo ".NET OpenCVSharp: Configuring dynamic linker run-time bindings..."
+sudo ldconfig
+echo ""
+
+################################
+### Install ONNX Runtimes ###
+################################
+echo "Installing ONNX Runtimes..."
+echo "ONNX Runtimes: Extracting..."
+sudo unzip -d /usr/local/lib/ ../libs/onnxruntime-1.5.2.zip
+echo "ONNX Runtimes: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
 
