@@ -7,6 +7,30 @@ set -euo pipefail
 IFS=$'\n\t'
 ###############################################################
 
+echo "Updating NuGet sources..."
+nugetListSource="$(dotnet nuget list source)"
+
+add_nuget_src() {
+  local packageSourcePath="${1}"
+  local name="${2}"
+
+  if echo "${nugetListSource}" | grep -q "${packageSourcePath}"; then
+    dotnet nuget update source "${name}" -s "${packageSourcePath}"
+  else
+    dotnet nuget add source "${packageSourcePath}" -n "${name}"
+  fi
+}
+
+mkdir -p "/home/pi/localNuget"
+add_nuget_src "/home/pi/localNuget" local
+add_nuget_src https://api.nuget.org/v3/index.json nuget.org
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-eng/nuget/v3/index.json dotnet-eng
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json dotnet-tools
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet3.1/nuget/v3/index.json dotnet3-dev
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json dotnet5
+add_nuget_src https://pkgs.dev.azure.com/dnceng/public/_packaging/MachineLearning/nuget/v3/index.json MachineLearning
+add_nuget_src https://www.powershellgallery.com/api/v2/ PSGallery
+echo ""
 
 ###############################
 ### Update .NET interactive ###
