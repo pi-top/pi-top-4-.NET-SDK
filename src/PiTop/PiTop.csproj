@@ -12,9 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20508.1" />
-    <PackageReference Include="System.Reactive" Version="4.3.2" />
-    <PackageReference Include="UnitsNet" Version="4.72.0" />
+    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20523.2" />
   </ItemGroup>
 
   <ItemGroup>

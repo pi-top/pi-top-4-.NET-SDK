@@ -28,7 +28,14 @@ namespace PiTop.Camera
         public virtual void Connect()
         {
             // warm up the http client
-            GetFrame();
+            try
+            {
+                GetFrame();
+            }
+            catch
+            {
+
+            }
         }
 
         public Image GetFrame()

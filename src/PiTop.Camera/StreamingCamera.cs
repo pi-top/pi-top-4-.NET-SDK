@@ -23,8 +23,29 @@ namespace PiTop.Camera
         public override void Connect()
         {
             using var _ = Log.OnEnterAndExit();
-            _process = Process.Start(new ProcessStartInfo("mjpg_streamer",
-                $"-i \"input_uvc.so -d /dev/video{_cameraId} -r 1280x720\" -o output_http.so"));
+            var processStartInfo = new ProcessStartInfo("mjpg_streamer",
+                $"-i \"input_uvc.so -d /dev/video{_cameraId} -r 1280x720\" -o output_http.so")
+            {
+                RedirectStandardError = true,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false
+            };
+
+            _process = Process.Start(processStartInfo);
+
+            _process.OutputDataReceived += (sender, args) =>
+            {
+                using var operation = Log.OnEnterAndExit("mjpg_streamer");
+                operation.Info(args.Data);
+            };
+
+            _process.ErrorDataReceived += (sender, args) =>
+            {
+                using var operation = Log.OnEnterAndExit("mjpg_streamer");
+                operation.Error(args.Data);
+            };
+
             base.Connect();
 
         }

@@ -30,13 +30,13 @@ if ! grep -q ".NET Core SDK tools" "/home/pi/.bashrc"; then
 export PATH=${PATH}:/home/pi/.dotnet
 export PATH=${PATH}:/home/pi/.dotnet/tools
 export DOTNET_ROOT=/home/pi/.dotnet
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:/usr/local/lib
 EOF
 fi
 export PATH=${PATH}:/home/pi/.dotnet
 export PATH=${PATH}:/home/pi/.dotnet/tools
 export DOTNET_ROOT=/home/pi/.dotnet
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:/usr/local/lib
 echo ""
 
 
@@ -98,6 +98,16 @@ echo "Installing .NET OpenCVSharp..."
 echo ".NET OpenCVSharp: Extracting..."
 sudo unzip -d /usr/local/lib/ ~/pi-top-4-.NET-Core-API/libs/opencv-dotnet-4.5.0.zip
 echo ".NET OpenCVSharp: Configuring dynamic linker run-time bindings..."
+sudo ldconfig
+echo ""
+
+################################
+### Install ONNX Runtimes ###
+################################
+echo "Installing ONNX Runtimes..."
+echo "ONNX Runtimes: Extracting..."
+sudo unzip -d /usr/local/lib/ ../libs/onnxruntime-1.5.2.zip
+echo "ONNX Runtimes: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
 

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "StreamCapture": {
+      "commandName": "Project",
+      "commandLineArgs": "http://10.0.0.252:8080 C:\\Users\\dicolomb\\Documents\\pokemon_energy\\"
+    }
+  }
+}

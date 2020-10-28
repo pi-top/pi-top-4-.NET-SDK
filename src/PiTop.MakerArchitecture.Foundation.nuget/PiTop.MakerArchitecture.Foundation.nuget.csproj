@@ -27,10 +27,6 @@
     <ProjectReference Include="..\PiTop.nuget\PiTop.nuget.csproj"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Reactive" Version="4.3.2" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0010" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="../PiTop.MakerArchitecture.Foundation/bin/$(Configuration)/$(TargetFramework)/PiTop.MakerArchitecture.Foundation.dll" Pack="true" PackagePath="lib/$(TargetFramework)" />
