@@ -28,9 +28,30 @@ else
 fi
 echo ""
 
+################################
+### Install .NET OpenCVSharp ###
+################################
+echo "Installing .NET OpenCVSharp..."
+echo ".NET OpenCVSharp: Extracting..."
+sudo unzip -d /usr/local/lib/ ../libs/opencv-dotnet-4.5.0.zip
+echo ".NET OpenCVSharp: Configuring dynamic linker run-time bindings..."
+sudo ldconfig
+echo ""
+
+################################
+### Install ONNX Runtimes ###
+################################
+echo "Installing ONNX Runtimes..."
+echo "ONNX Runtimes: Extracting..."
+sudo unzip -d /usr/local/lib/ ../libs/onnxruntime-1.5.2.zip
+echo "ONNX Runtimes: Configuring dynamic linker run-time bindings..."
+sudo ldconfig
+echo ""
+
+
 ###############################
 ### Rebuild pi-top .NET API ###
 ###############################
 echo "Building pi-top .NET API..."
-bash -ex ./pack.sh 1.1.1 "/home/pi/localNuget"
+bash -ex ./pack.sh 0.0.1 "/home/pi/localNuget"
 echo ""
