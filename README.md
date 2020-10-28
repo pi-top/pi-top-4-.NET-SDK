@@ -11,6 +11,8 @@ To install and configure your pi-top with core .NET API support, run this from y
 pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup.sh | bash
 ```
 
+Note: you should be able to re-run this at a later date to update
+
 ### Python Environment
 To extend with .NET Jupyter Notebook support, run this from your pi-top:
 ```sh
