@@ -8,7 +8,7 @@ IFS=$'\n\t'
 ###############################################################
 
 
-if echo "${dotnet_tool_list}" | grep -q "microsoft.dotnet-interactive"; then
+if echo "$(dotnet tool list -g)" | grep -q "microsoft.dotnet-interactive"; then
   echo ".NET Interactive installation found - updating..."
   command="update"
 else

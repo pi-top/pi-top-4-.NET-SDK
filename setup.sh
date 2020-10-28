@@ -106,7 +106,7 @@ echo ""
 ################################
 echo "Installing ONNX Runtimes..."
 echo "ONNX Runtimes: Extracting..."
-sudo unzip -d /usr/local/lib/ ../libs/onnxruntime-1.5.2.zip
+sudo unzip -d /usr/local/lib/ ~/pi-top-4-.NET-Core-API/libs/onnxruntime-1.5.2.zip
 echo "ONNX Runtimes: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
