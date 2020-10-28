@@ -1,6 +1,6 @@
 # PiTop.Interactive.Rover
 
-This app will bootsrtap a rover app that embeds .NET Interactive. The kernels are exposed both as stdio and http interface.
+This app will bootstrap a rover app that embeds .NET Interactive. The kernels are exposed both as stdio and http interface.
 
 ## Setting up your pi-top
 
