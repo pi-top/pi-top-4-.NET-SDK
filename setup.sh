@@ -70,7 +70,7 @@ echo ""
 ### Get source repo ###
 #######################
 cd
-if [[ -d "pi-top-4-.NET-Core-API" ]]; then
+if [[ -d "~/pi-top-4-.NET-Core-API" ]]; then
   cd ~/pi-top-4-.NET-Core-API
   git pull
 else
