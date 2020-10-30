@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,8 +35,9 @@ namespace PiTop.Interactive.Rover
         {
             using var _ = Log.OnEnterAndExit();
 
+            await ConfigureNamespaces(csharpKernel);
             await ConfigureImageSharp(csharpKernel);
-            await LoadAssemblyAndAddNamespace<Speed>(csharpKernel);
+           
             await ConfigurePiTop(csharpKernel);
             await ConfigureLobe(csharpKernel);
             await ConfigureRover(csharpKernel);
@@ -45,7 +48,7 @@ namespace PiTop.Interactive.Rover
             await LoadAssemblyAndAddNamespace<RoverRobot>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ResourceScanner>(csharpKernel);
             await AddNamespace(csharpKernel, typeof(ImageProcessing.ImageExtensions));
-
+            
 
             var roverBody = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(),
                 PiTop4Board.Instance.GetOrCreateCamera<StreamingCamera>(0),
@@ -107,6 +110,15 @@ namespace PiTop.Interactive.Rover
             });
         }
 
+        private static async Task ConfigureNamespaces(CSharpKernel csharpKernel)
+        {
+            await AddNamespace(csharpKernel, typeof(Task));
+            await AddNamespace(csharpKernel, typeof(Directory));
+            await AddNamespace(csharpKernel, typeof(List<>));
+            await AddNamespace(csharpKernel, typeof(System.Linq.Enumerable));
+          
+        }
+
         private static async Task ConfigureLobe(CSharpKernel csharpKernel)
         {
             ImageClassifier.Register("onnx", () => new OnnxImageClassifier());
@@ -134,6 +146,7 @@ namespace PiTop.Interactive.Rover
             await LoadAssemblyAndAddNamespace<StreamingCamera>(csharpKernel);
             await LoadAssemblyAndAddNamespace<FoundationPlate>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ExpansionPlate>(csharpKernel);
+            await LoadAssemblyAndAddNamespace<Speed>(csharpKernel);
 
             await AddNamespace(csharpKernel, typeof(Button));
             await AddNamespace(csharpKernel, typeof(Led));
