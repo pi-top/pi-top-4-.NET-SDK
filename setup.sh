@@ -8,11 +8,11 @@ IFS=$'\n\t'
 ###############################################################
 
 
-##########################################################
-### Install dependencies and virtualenv ###
-##########################################################
+#############################
+### Install dependencies  ###
+#############################
 echo "Installing dependencies..."
-sudo apt install -y libgdiplus virtualenv libffi-dev zlib1g
+sudo apt install -y libgdiplus libffi-dev zlib1g
 echo ""
 
 
