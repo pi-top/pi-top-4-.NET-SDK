@@ -9,9 +9,15 @@ Check out [dotnet/iot](https://github.com/dotnet/iot) for loads of device bindin
 To install and configure your pi-top with core .NET API support, run this from your pi-top:
 ```sh
 pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup.sh | bash
+pi@pi-top:~ source ~/.bashrc
 ```
 
-Note: you should be able to re-run this at a later date to update
+Note: you should be able to re-run this at a later date to update.
+
+After this, you will want to update your environment variables. Either start a new terminal instance, or run:
+```sh
+pi@pi-top:~ source ~/.bashrc
+```
 
 ### Python Environment
 To extend with .NET Jupyter Notebook support, run this from your pi-top:
