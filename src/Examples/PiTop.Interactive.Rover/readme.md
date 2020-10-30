@@ -1,5 +1,7 @@
 # PiTop.Interactive.Rover
 
+![pi-top Rover](./../../../resources/pi-top-rover-green-mat.gif)
+
 This app will bootstrap a rover app that embeds .NET Interactive. The kernels are exposed both as stdio and http interface.
 
 ## Setting up your pi-top
@@ -37,47 +39,80 @@ At this point you can submit code to the rover by using the `#!rover` kernel, fo
 
 ```csharp
 #!rover
+//initialise the rover and the state
+using System.IO;
+
+roverBody.TiltController.Pan = Angle.Zero;
+roverBody.TiltController.Tilt = Angle.Zero;
+ClassificationResult lastScanResult = null;
+Image lastFrame = null;
+var quadrant = new []{false,false,false,false};
+var currentQuadrant = -1;
+
 resourceScanner.CaptureFromCamera(roverBody.Camera);
-var sign = 1;
+resourceScanner.LoadModel(new DirectoryInfo("/home/pi/models/v1"));
 
 ```
 
 The kernel gives you access to the rover via the `roverBody` and `roverBrain` variables.
 
-This snippet will acces the camera and display the frame
-```
-#!rover
-using PiTop.Interactive.Rover.ImageProcessing;
-roverBody.Camera.GetFrame().Preview()
-```
-
-Using the `roverBrain` you can define its behaviour
+Using the `roverBrain` you can define its behaviour, the `roverBrain` follows the classic model of the [intelligent agents](https://en.wikipedia.org/wiki/Intelligent_agent)
 ```csharp
 #!rover
-lastScanResoult = null;
+lastScanResult = null;
+lastFrame = null;
+quadrant = new []{false,false,false,false};
 rover.AllLightsOff();
 
 //use the Perceive step to read sensors and camera
 roverBrain.Perceive = (rover, now, token) => {
-
+    lastFrame = rover.Camera.GetFrame();
 };
 
 //use the Plan step tp formulate a plan. If PlanningResult.NoPlan is returned then the Act step will not be executed
 roverBrain.Plan = (rover, now, token) => {
-    sign *= -1;
-    Task.Delay(2000).Wait();
-    if(lastScanResoult != null && lastScanResoult.Label != "no energy") {
-        rover.BlinkAllLights();
+    if (quadrant.All()) {
         return PlanningResult.NoPlan;
     }
-    else {
-        return PlanningResult.NewPlan;
-    }
+
+    if(currentQuadrant >= 0)
+    {   
+        lastScanResult = resourceScanner.AnalyseFrame(lastFrame)?.Classification;
+        quadrant[currentQuadrant] = true;
+        currentQuadrant++;
+        
+    }else{
+        currentQuadrant = 0;
+    }   
+
+    return PlanningResult.NewPlan;
 };
 
 //perform actions 
 roverBrain.Act = (rover, now, token) => { 
-    rover.TiltController.Pan = Angle.FromDegrees(30* sign);
-    lastScanResoult = resourceScanner.Scan()?.Classification;     
+
+    if (lastScanResult != null)
+    {
+        rover.BlinkAllLights();
+    }
+
+    switch(currentQuadrant) {
+        case 0:
+            rover.TiltController.Pan = Angle.FromDegrees(90);
+            rover.TiltController.Tilt = Angle.FromDegrees(90);
+        break;
+        case 1:
+            rover.TiltController.Pan = Angle.FromDegrees(90);
+            rover.TiltController.Tilt = Angle.FromDegrees(90);
+        break;
+        case 2:
+            rover.TiltController.Pan = Angle.FromDegrees(90);
+            rover.TiltController.Tilt = Angle.FromDegrees(90);
+        break;
+        case 3:
+            rover.TiltController.Pan = Angle.FromDegrees(90);
+            rover.TiltController.Tilt = Angle.FromDegrees(90);
+        break;
+    }  
 };
 ```
