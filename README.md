@@ -22,7 +22,7 @@ pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-
 ## Quick Tour
 Once executed, you will have this repo cloned at
 ```sh
-/home/pi/pi-top-net-api
+/home/pi/pi-top-4-.NET-Core-API
 ```
 
 The code is compiled and the latest NuGet packages are located at
