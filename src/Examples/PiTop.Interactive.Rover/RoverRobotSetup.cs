@@ -45,6 +45,7 @@ namespace PiTop.Interactive.Rover
 
         private static async Task ConfigureRover(CSharpKernel csharpKernel)
         {
+            using var _ =  Log.OnEnterAndExit();
             await LoadAssemblyAndAddNamespace<RoverRobot>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ResourceScanner>(csharpKernel);
             await AddNamespace(csharpKernel, typeof(ImageProcessing.ImageExtensions));
@@ -68,20 +69,42 @@ namespace PiTop.Interactive.Rover
 
             var robotLoop = Task.Run(() =>
             {
+                using var operation = Log.OnEnterAndExit("roverBrainLoop");
                 while (!source.IsCancellationRequested)
                 {
-                    if (!source.IsCancellationRequested)
+                    var localCancellationSource = new CancellationTokenSource();
+                    if (!source.IsCancellationRequested && !localCancellationSource.IsCancellationRequested)
                     {
-                        roverBrain.Perceive?.Invoke(roverBody, DateTime.Now, source.Token);
+                        using var __ = operation.OnEnterAndExit("Perceive");
+                        try
+                        {
+                            roverBrain.Perceive?.Invoke(roverBody, DateTime.Now, localCancellationSource.Token);
+                        }
+                        catch (Exception e)
+                        {
+                            __.Error(e);
+                        }
                     }
 
-                    if (!source.IsCancellationRequested)
+                    if (!source.IsCancellationRequested && !localCancellationSource.IsCancellationRequested)
                     {
-                        var planResult = roverBrain.Plan?.Invoke(roverBody, DateTime.Now, source.Token) ??
-                                         PlanningResult.NoPlan;
-                        if (!source.IsCancellationRequested && planResult != PlanningResult.NoPlan)
+                        var planResult = PlanningResult.NoPlan;
+                        using var ___ = operation.OnEnterAndExit("Plan");
+                        try
                         {
-                            roverBrain.Act?.Invoke(roverBody, DateTime.Now, source.Token);
+                            planResult = roverBrain.Plan?.Invoke(roverBody, DateTime.Now, localCancellationSource.Token) ??
+                                             PlanningResult.NoPlan;
+                        }
+                        catch (Exception e)
+                        {
+                            ___.Error(e);
+                            planResult = PlanningResult.NoPlan;
+                        }
+
+                        if (!source.IsCancellationRequested && planResult != PlanningResult.NoPlan && !localCancellationSource.IsCancellationRequested)
+                        {
+                            using var ____ = operation.OnEnterAndExit("Act");
+                            roverBrain.Act?.Invoke(roverBody, DateTime.Now, localCancellationSource.Token);
                         }
                     }
                 }
@@ -91,11 +114,21 @@ namespace PiTop.Interactive.Rover
 
             var reactLoop = Task.Run(() =>
             {
+                using var operation = Log.OnEnterAndExit("roverBrainReactLoop");
                 while (!source.IsCancellationRequested)
                 {
-                    if (!source.IsCancellationRequested)
+                    var localCancellationSource = new CancellationTokenSource();
+                    if (!source.IsCancellationRequested && !localCancellationSource.IsCancellationRequested)
                     {
-                        roverBrain.React?.Invoke(roverBody, DateTime.Now, source.Token);
+                        using var __ = operation.OnEnterAndExit("React");
+                        try
+                        {
+                            roverBrain.React?.Invoke(roverBody, DateTime.Now, localCancellationSource.Token);
+                        }
+                        catch (Exception e)
+                        {
+                            __.Error(e);
+                        }
                     }
                 }
 

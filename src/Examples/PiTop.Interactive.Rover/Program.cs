@@ -29,24 +29,11 @@ namespace PiTop.Interactive.Rover
 
         public static async Task<int> Main(string[] args)
         {
-            //LogEvents.Subscribe(i =>
-            //{
-            //    i.Operation.Id = "";
-            //    Console.WriteLine(i.ToLogString());
-            //}, new[]
-            //{
-            //    typeof(PiTop4Board).Assembly,
-            //    typeof(FoundationPlate).Assembly,
-            //    typeof(ExpansionPlate).Assembly,
-            //    typeof(RoverRobot).Assembly,
-            //    typeof(StreamingCamera).Assembly,
-            //    typeof(Program).Assembly
-            //});
             Console.OutputEncoding = Encoding.UTF8;
-            return await CommandLine.CommandLineParser.Create(ServiceCollection).InvokeAsync(args);
+            return await CommandLineParser.Create(ServiceCollection).InvokeAsync(args);
         }
 
-        private static readonly Assembly[] _assembliesEmittingPocketLoggerLogs =
+        private static readonly Assembly[] AssembliesEmittingPocketLoggerLogs =
         {
             typeof(Startup).Assembly, // dotnet-interactive.dll
             typeof(Kernel).Assembly, // Microsoft.DotNet.Interactive.dll
@@ -71,8 +58,12 @@ namespace PiTop.Interactive.Rover
                           .CreateLogger();
 
                 var subscription = LogEvents.Subscribe(
-                    e => log.Information(e.ToLogString()),
-                    _assembliesEmittingPocketLoggerLogs);
+                    e =>
+                    {
+                        e.Operation.Id = "";
+                        log.Information(e.ToLogString());
+                    },
+                    AssembliesEmittingPocketLoggerLogs);
 
                 disposables.Add(subscription);
                 disposables.Add(log);
