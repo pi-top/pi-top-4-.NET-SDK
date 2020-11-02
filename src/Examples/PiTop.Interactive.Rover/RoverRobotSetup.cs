@@ -45,6 +45,7 @@ namespace PiTop.Interactive.Rover
 
         private static async Task ConfigureRover(CSharpKernel csharpKernel)
         {
+            using var _ =  Log.OnEnterAndExit();
             await LoadAssemblyAndAddNamespace<RoverRobot>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ResourceScanner>(csharpKernel);
             await AddNamespace(csharpKernel, typeof(ImageProcessing.ImageExtensions));
@@ -73,18 +74,18 @@ namespace PiTop.Interactive.Rover
                 {
                     if (!source.IsCancellationRequested)
                     {
-                        using var _ = operation.OnEnterAndExit("Perceive");
+                        using var __ = operation.OnEnterAndExit("Perceive");
                         roverBrain.Perceive?.Invoke(roverBody, DateTime.Now, source.Token);
                     }
 
                     if (!source.IsCancellationRequested)
                     {
-                        using var __ = operation.OnEnterAndExit("Plan");
+                        using var ___ = operation.OnEnterAndExit("Plan");
                         var planResult = roverBrain.Plan?.Invoke(roverBody, DateTime.Now, source.Token) ??
                                          PlanningResult.NoPlan;
                         if (!source.IsCancellationRequested && planResult != PlanningResult.NoPlan)
                         {
-                            using var ___ = operation.OnEnterAndExit("Act");
+                            using var ____ = operation.OnEnterAndExit("Act");
                             roverBrain.Act?.Invoke(roverBody, DateTime.Now, source.Token);
                         }
                     }
@@ -100,7 +101,7 @@ namespace PiTop.Interactive.Rover
                 {
                     if (!source.IsCancellationRequested)
                     {
-                        using var _ = operation.OnEnterAndExit("React");
+                        using var __ = operation.OnEnterAndExit("React");
                         roverBrain.React?.Invoke(roverBody, DateTime.Now, source.Token);
                     }
                 }
