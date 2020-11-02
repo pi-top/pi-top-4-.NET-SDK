@@ -68,19 +68,23 @@ namespace PiTop.Interactive.Rover
 
             var robotLoop = Task.Run(() =>
             {
+                using var operation = Log.OnEnterAndExit("roverBrainLoop");
                 while (!source.IsCancellationRequested)
                 {
                     if (!source.IsCancellationRequested)
                     {
+                        using var _ = operation.OnEnterAndExit("Perceive");
                         roverBrain.Perceive?.Invoke(roverBody, DateTime.Now, source.Token);
                     }
 
                     if (!source.IsCancellationRequested)
                     {
+                        using var __ = operation.OnEnterAndExit("Plan");
                         var planResult = roverBrain.Plan?.Invoke(roverBody, DateTime.Now, source.Token) ??
                                          PlanningResult.NoPlan;
                         if (!source.IsCancellationRequested && planResult != PlanningResult.NoPlan)
                         {
+                            using var ___ = operation.OnEnterAndExit("Act");
                             roverBrain.Act?.Invoke(roverBody, DateTime.Now, source.Token);
                         }
                     }
@@ -91,10 +95,12 @@ namespace PiTop.Interactive.Rover
 
             var reactLoop = Task.Run(() =>
             {
+                using var operation = Log.OnEnterAndExit("roverBrainReactLoop");
                 while (!source.IsCancellationRequested)
                 {
                     if (!source.IsCancellationRequested)
                     {
+                        using var _ = operation.OnEnterAndExit("React");
                         roverBrain.React?.Invoke(roverBody, DateTime.Now, source.Token);
                     }
                 }
