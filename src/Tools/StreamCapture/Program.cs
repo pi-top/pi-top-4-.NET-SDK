@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace StreamCapture
 {
@@ -49,6 +51,8 @@ namespace StreamCapture
             while (true)
             {
                 var key = Console.ReadKey(true);
+
+                var focus = (key.Modifiers & ConsoleModifiers.Shift) != 0;  
                 switch (key.Key)
                 {
 
@@ -58,17 +62,17 @@ namespace StreamCapture
                         break;
 
                     case ConsoleKey.Spacebar:
-                        await SaveImage(destination, client, url);
+                        await SaveImage(destination, client, url, focus);
                         break;
 
                     case ConsoleKey.Escape:
-                        await SaveImage(noEnergy, client, url);
+                        await SaveImage(noEnergy, client, url, focus);
                         break;
 
                     default:
                         if (int.TryParse(key.KeyChar.ToString(), out var i))
                         {
-                            await SaveImage(subfolder[i], client, url);
+                            await SaveImage(subfolder[i], client, url, focus);
                         }
                         break;
 
@@ -76,15 +80,25 @@ namespace StreamCapture
             }
         }
 
-        private static async Task SaveImage(DirectoryInfo destination, HttpClient client, string url)
+        private static async Task SaveImage(DirectoryInfo destination, HttpClient client, string url, bool focus)
         {
             var data = await client.GetByteArrayAsync(url);
             var image = Image.Load(data);
+            if (focus)
+            {
+                image = Focus(image);
+            }
             var imageFilePath = Path.Combine(destination.FullName,
                 $"{DateTimeOffset.Now.Year:0000}{DateTimeOffset.Now.Month:00}{DateTimeOffset.Now.Day:00}{DateTimeOffset.Now.Hour:00}{DateTimeOffset.Now.Minute:00}{DateTimeOffset.Now.Second:00}.png");
 
             
             await image.SaveAsync(imageFilePath);
+        }
+
+        public static Image<TPixel> Focus<TPixel>(Image<TPixel> source) where TPixel : unmanaged, IPixel<TPixel>
+        {
+            var rect = new Rectangle(source.Width / 4, source.Height / 4, source.Width / 2, source.Height / 2);
+            return source.Clone(c => c.Crop(rect));
         }
 
 
