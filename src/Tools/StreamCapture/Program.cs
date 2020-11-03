@@ -51,8 +51,7 @@ namespace StreamCapture
             while (true)
             {
                 var key = Console.ReadKey(true);
-
-                var focus = (key.Modifiers & ConsoleModifiers.Shift) != 0;  
+                var focus = (key.Modifiers & ConsoleModifiers.Alt) != 0;  
                 switch (key.Key)
                 {
 
@@ -95,12 +94,24 @@ namespace StreamCapture
             await image.SaveAsync(imageFilePath);
         }
 
-        public static Image<TPixel> Focus<TPixel>(Image<TPixel> source) where TPixel : unmanaged, IPixel<TPixel>
+        public static Image<TPixel> Focus<TPixel>(Image<TPixel> source, bool asSquare = true) where TPixel : unmanaged, IPixel<TPixel>
         {
-            var rect = new Rectangle(source.Width / 4, source.Height / 4, source.Width / 2, source.Height / 2);
+            var rect = CreateFocusRectangle(source, asSquare);
             return source.Clone(c => c.Crop(rect));
         }
-
+        private static Rectangle CreateFocusRectangle(Image source, bool asSquare)
+        {
+            var width = source.Width / 2;
+            var height = source.Height / 2;
+            if (asSquare)
+            {
+                width = height = Math.Min(height, width);
+            }
+            var x = (source.Width - width) / 2;
+            var y = (source.Height - height) / 2;
+            var rect = new Rectangle(x, y, width, height);
+            return rect;
+        }
 
     }
 }
