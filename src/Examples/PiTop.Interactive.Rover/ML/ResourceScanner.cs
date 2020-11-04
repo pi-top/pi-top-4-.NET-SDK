@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json.Linq;
 
 using PiTop.Camera;
-
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
@@ -96,14 +95,14 @@ namespace PiTop.Interactive.Rover.ML
                     classifications.First(c => c.Label == classification.SelectToken("outputs.Prediction[0]").Value<string>()),
                     classifications);
 
-            var results = classificationResults?.Classification?.Confidence > Threshold ? classificationResults : null;
+            var results = classificationResults?.Prediction?.Confidence > Threshold ? classificationResults : null;
             return results;
         }
 
         private ClassificationResults UseClassifier(Image frame)
         {
             var classificationResults = frame != null ? _classifier?.Classify(frame.CloneAs<Rgb24>()) : null;
-            var results = classificationResults?.Classification?.Confidence > Threshold ? classificationResults : null;
+            var results = classificationResults?.Prediction?.Confidence > Threshold ? classificationResults : null;
             return results;
         }
     }
