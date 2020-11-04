@@ -116,7 +116,7 @@ echo ""
 ### Build pi-top .NET API ###
 #############################
 echo "Building pi-top .NET API..."
-bash ./pack.sh 0.0.1 "/home/pi/localNuget"
+~/pi-top-4-.NET-Core-API/tools/pack.sh 0.0.1 "/home/pi/localNuget"
 echo ""
 
 ##############
