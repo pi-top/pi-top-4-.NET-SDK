@@ -1,4 +1,4 @@
-# .NET Core API for [pi-top \[4\]](https://www.pi-top.com/products/pi-top-4)
+# .NET Core SDK for [pi-top \[4\]](https://www.pi-top.com/products/pi-top-4)
 
 Check out [dotnet/iot](https://github.com/dotnet/iot) for loads of device bindings!
 
@@ -6,9 +6,9 @@ Check out [dotnet/iot](https://github.com/dotnet/iot) for loads of device bindin
 
 ## Quick Installation
 ### Core
-To install and configure your pi-top with core .NET API support, run this from your pi-top:
+To install and configure your pi-top [4] with .NET Core SDK support, run this from your pi-top:
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup.sh | bash
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-SDK/master/setup.sh | bash
 pi@pi-top:~ source ~/.bashrc
 ```
 
@@ -22,13 +22,13 @@ pi@pi-top:~ source ~/.bashrc
 ### Python Environment
 To extend with .NET Jupyter Notebook support, run this from your pi-top:
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-Core-API/master/setup-jupyter.sh | bash
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-SDK/master/setup-jupyter.sh | bash
 ```
 
 ## Quick Tour
 Once executed, you will have this repo cloned at
 ```sh
-/home/pi/pi-top-4-.NET-Core-API
+/home/pi/pi-top-4-.NET-SDK
 ```
 
 The code is compiled and the latest NuGet packages are located at

@@ -70,25 +70,25 @@ echo ""
 ### Get source repo ###
 #######################
 cd
-if [[ -d "~/pi-top-4-.NET-Core-API" ]]; then
-  cd ~/pi-top-4-.NET-Core-API
+if [[ -d "~/pi-top-4-.NET-SDK" ]]; then
+  cd ~/pi-top-4-.NET-SDK
   git pull
 else
-  git clone https://github.com/pi-top/pi-top-4-.NET-Core-API.git
-  cd ~/pi-top-4-.NET-Core-API
+  git clone https://github.com/pi-top/pi-top-4-.NET-SDK.git
+  cd ~/pi-top-4-.NET-SDK
 fi
 echo ""
 
 ################################
 ### Install .NET interactive ###
 ################################
-~/pi-top-4-.NET-Core-API/tools/install-global-tool.sh
+~/pi-top-4-.NET-SDK/tools/install-global-tool.sh
 echo ""
 
 ##########################
 ### Install PowerShell ###
 ##########################
-~/pi-top-4-.NET-Core-API/tools/install-powershell.sh
+~/pi-top-4-.NET-SDK/tools/install-powershell.sh
 echo ""
 
 ################################
@@ -96,7 +96,7 @@ echo ""
 ################################
 echo "Installing .NET OpenCVSharp..."
 echo ".NET OpenCVSharp: Extracting..."
-sudo unzip -d /usr/local/lib/ ~/pi-top-4-.NET-Core-API/libs/opencv-dotnet-4.5.0.zip
+sudo unzip -d /usr/local/lib/ ~/pi-top-4-.NET-SDK/libs/opencv-dotnet-4.5.0.zip
 echo ".NET OpenCVSharp: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
@@ -106,7 +106,7 @@ echo ""
 ################################
 echo "Installing ONNX Runtimes..."
 echo "ONNX Runtimes: Extracting..."
-sudo unzip -d /usr/local/lib/ ~/pi-top-4-.NET-Core-API/libs/onnxruntime-1.5.2.zip
+sudo unzip -d /usr/local/lib/ ~/pi-top-4-.NET-SDK/libs/onnxruntime-1.5.2.zip
 echo "ONNX Runtimes: Configuring dynamic linker run-time bindings..."
 sudo ldconfig
 echo ""
@@ -116,7 +116,7 @@ echo ""
 ### Build pi-top .NET API ###
 #############################
 echo "Building pi-top .NET API..."
-~/pi-top-4-.NET-Core-API/tools/pack.sh 0.0.1 "/home/pi/localNuget"
+~/pi-top-4-.NET-SDK/tools/pack.sh 0.0.1 "/home/pi/localNuget"
 echo ""
 
 ##############

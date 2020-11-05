@@ -11,8 +11,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>pi-top_logo.jpg</PackageIcon>
     <PackageTags>pi-top[4]</PackageTags>
-    <RepositoryUrl>https://github.com/pi-top/pi-top-4-.NET-Core-API</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/pi-top/pi-top-4-.NET-Core-API</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pi-top/pi-top-4-.NET-SDK</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/pi-top/pi-top-4-.NET-SDK</PackageProjectUrl>
     <Company>pi-top</Company>
     <Authors>pi-top</Authors>
     <Product>PiTop.nuget</Product>

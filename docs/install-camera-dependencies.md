@@ -4,7 +4,7 @@ To use the piTop.Camera pacakge you need to install the following dependencies f
 
 ## Install openCV
 
-Get the file ```opencv-dotnet``` from the [libs](https://github.com/pi-top/pi-top-4-.NET-Core-API/tree/master/libs) folder
+Get the file ```opencv-dotnet``` from the [libs](https://github.com/pi-top/pi-top-4-.NET-SDK/tree/master/libs) folder
 
 ```sh
 sudo unzip -d /usr/local/lib/ ../libs/opencv-dotnet-4.5.0.zip
