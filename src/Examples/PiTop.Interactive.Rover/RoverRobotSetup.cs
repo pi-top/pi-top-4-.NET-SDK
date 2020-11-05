@@ -49,7 +49,6 @@ namespace PiTop.Interactive.Rover
             await LoadAssemblyAndAddNamespace<RoverRobot>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ResourceScanner>(csharpKernel);
             await AddNamespace(csharpKernel, typeof(ImageProcessing.ImageExtensions));
-            
 
             var roverBody = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(),
                 PiTop4Board.Instance.GetOrCreateCamera<StreamingCamera>(0),
@@ -157,6 +156,7 @@ namespace PiTop.Interactive.Rover
             ImageClassifier.Register("onnx", () => new OnnxImageClassifier());
             await LoadAssemblyAndAddNamespace<ImageClassifier>(csharpKernel);
             await LoadAssemblyAndAddNamespace<OnnxImageClassifier>(csharpKernel);
+            await AddNamespace(csharpKernel, typeof(ClassificationResults));
         }
 
         private static async Task ConfigurePiTop(CSharpKernel csharpKernel)
