@@ -1,18 +1,13 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
 
 using lobe;
+using lobe.Http;
 using lobe.ImageSharp;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Newtonsoft.Json.Linq;
 
 using PiTop.Camera;
+
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace PiTop.Interactive.Rover.ML
@@ -21,7 +16,7 @@ namespace PiTop.Interactive.Rover.ML
     {
         private ImageClassifier _classifier;
         private Uri _predictionEndpoint;
-        private HttpClient _client;
+        private LobeClient _client;
         public Func<Image> CaptureImage { get; set; }
 
         public double Threshold { get; set; }
@@ -45,7 +40,7 @@ namespace PiTop.Interactive.Rover.ML
             _classifier?.Dispose();
             _classifier = null;
             _predictionEndpoint = predictionEndpoint;
-            _client = new HttpClient();
+            _client = new LobeClient(_predictionEndpoint);
         }
 
         public ClassificationResults Scan()
@@ -72,29 +67,7 @@ namespace PiTop.Interactive.Rover.ML
 
         private ClassificationResults UseService(Image frame)
         {
-            var image = frame.CloneAs<Rgb24>();
-            using var stream = new MemoryStream();
-            image.Save(stream, new PngEncoder());
-            stream.Flush();
-            var data = stream.ToArray();
-            var imageSource = $"{Convert.ToBase64String(data)}";
-
-            var content = new StringContent($"{{ \"inputs\": {{ \"Image\":  \"{imageSource}\" }} }}", Encoding.UTF8,
-                "application/json");
-            var response = _client.PostAsync(_predictionEndpoint, content).Result;
-            var body = response.Content.ReadAsStringAsync().Result;
-
-            var classification = JObject.Parse(body);
-
-            var classifications = classification.SelectToken("outputs.Labels").Values<JArray>()
-                .Select(ja => new Classification(ja[0].Value<string>(), ja[1].Value<double>())).ToArray();
-
-
-            var classificationResults =
-                new ClassificationResults(
-                    classifications.First(c => c.Label == classification.SelectToken("outputs.Prediction[0]").Value<string>()),
-                    classifications);
-
+            var classificationResults = frame != null ? _client?.Classify(frame.CloneAs<Rgb24>()) : null;
             var results = classificationResults?.Prediction?.Confidence > Threshold ? classificationResults : null;
             return results;
         }

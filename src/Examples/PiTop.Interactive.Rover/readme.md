@@ -23,6 +23,27 @@ To run the app the configuration of the rover is
 
 The rover app uses a special camera that streams the video over HTTP. This has a dependency on the [mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer) project. Follow the install instructions before running.
 
+## Usin lobe
+
+The rover uses [lobe](https://lobe.ai/) and the [lobe .NET api](https://github.com/lobe/lobe.NET) to classify frames. In our example it is trained to detect pokemon energy cards. Get your copy of the app
+and create your own model.
+
+You can export the model or use directly the app http endpoint.
+
+To use the app directly click on export and select the http api option, that will provide you with the url you need. 
+
+In your code then do
+```csharp
+// this way you use the lobe app directly
+resourceScanner.UseUri(new Uri("the address the lobe app is proiding"));
+```
+
+To use onnx models directly on pi-top jsut follow the instructions to export a tensorflow model and convert it to onnx, then copy the `signature.json` and `saved_model.onnx` to your pi-top (here we assume the destination apth to be `/home/pi/models/v1`)
+```csharp
+resourceScanner.LoadModel(new DirectoryInfo("/home/pi/models/v1"));
+```
+
+
 ## Runnign and connecting to the kernel
 
 To start the app execute
@@ -40,17 +61,39 @@ At this point you can submit code to the rover by using the `#!rover` kernel, fo
 ```csharp
 #!rover
 //initialise the rover and the state
-using System.IO;
-
-roverBody.TiltController.Pan = Angle.Zero;
-roverBody.TiltController.Tilt = Angle.Zero;
-ClassificationResult lastScanResult = null;
-Image lastFrame = null;
-var quadrant = new []{false,false,false,false};
-var currentQuadrant = -1;
+Microsoft.DotNet.Interactive.Formatting.Formatter.ListExpansionLimit = 25;
+var scannedSectors = CameraSector
+.CreateSectors(5,5, Angle.FromDegrees(-60),Angle.FromDegrees(60),Angle.FromDegrees(-15),Angle.FromDegrees(30))
+.Distinct()
+.ToArray();
+CameraSector currentSector = null;
 
 resourceScanner.CaptureFromCamera(roverBody.Camera);
+
+// this way you load an exported onnx model
 resourceScanner.LoadModel(new DirectoryInfo("/home/pi/models/v1"));
+
+
+void ResetSectors(IEnumerable<CameraSector> sectors){
+    foreach (var sector in sectors){
+        sector.Reset();
+    }
+}
+
+bool IsResource(ClassificationResults result){
+    return result.Prediction.Label.Contains("no energy") != true;
+}
+
+bool AllSectorScanned(IEnumerable<CameraSector> sectors){
+    return scannedSectors.All(v => v.Marked);
+}
+
+bool FoundResources(IEnumerable<CameraSector> sectors, int requiredCount){
+    return sectors.Where(s => s.ClassificationResults!= null && IsResource(s.ClassificationResults))
+    .Select(s => s.ClassificationResults.Prediction.Label)
+    .Distinct()
+    .Count() >= requiredCount;
+}
 
 ```
 
@@ -59,60 +102,56 @@ The kernel gives you access to the rover via the `roverBody` and `roverBrain` va
 Using the `roverBrain` you can define its behaviour, the `roverBrain` follows the classic model of the [intelligent agents](https://en.wikipedia.org/wiki/Intelligent_agent)
 ```csharp
 #!rover
-lastScanResult = null;
-lastFrame = null;
-quadrant = new []{false,false,false,false};
-rover.AllLightsOff();
+ResetSectors(scannedSectors);
+currentSector = null;
+roverBody.AllLightsOff();
+roverBody.TiltController.Reset();
 
 //use the Perceive step to read sensors and camera
 roverBrain.Perceive = (rover, now, token) => {
-    lastFrame = rover.Camera.GetFrame();
+    if(currentSector != null && currentSector.CapturedFrame == null){
+        Task.Delay(500).Wait();
+        currentSector.CapturedFrame = roverBody.Camera.GetFrame().Focus();
+    }
 };
 
 //use the Plan step tp formulate a plan. If PlanningResult.NoPlan is returned then the Act step will not be executed
 roverBrain.Plan = (rover, now, token) => {
-    if (quadrant.All()) {
+
+    if (AllSectorScanned(scannedSectors) || FoundResources(scannedSectors, 4)){
+        roverBody.AllLightsOff();
         return PlanningResult.NoPlan;
     }
+   
+    if(currentSector != null) {
+        if(currentSector.CapturedFrame != null) {
+            currentSector.ClassificationResults = resourceScanner.AnalyseFrame(currentSector.CapturedFrame);
+            if(currentSector.ClassificationResults!= null && IsResource(currentSector.ClassificationResults)) {
+                rover.BlinkAllLights();
+            }
+            else {
+                roverBody.AllLightsOff();
+            }       
+        }  
 
-    if(currentQuadrant >= 0)
-    {   
-        lastScanResult = resourceScanner.AnalyseFrame(lastFrame)?.Classification;
-        quadrant[currentQuadrant] = true;
-        currentQuadrant++;
-        
-    }else{
-        currentQuadrant = 0;
-    }   
+        currentSector.Marked = true;
+    }
+    
+    currentSector = scannedSectors.FirstOrDefault(s => s.Marked == false);
 
-    return PlanningResult.NewPlan;
+    if(currentSector != null)
+    {
+        return PlanningResult.NewPlan;
+    }
+
+    roverBody.AllLightsOff();
+    return PlanningResult.NoPlan;
 };
 
 //perform actions 
 roverBrain.Act = (rover, now, token) => { 
-
-    if (lastScanResult != null)
-    {
-        rover.BlinkAllLights();
-    }
-
-    switch(currentQuadrant) {
-        case 0:
-            rover.TiltController.Pan = Angle.FromDegrees(90);
-            rover.TiltController.Tilt = Angle.FromDegrees(90);
-        break;
-        case 1:
-            rover.TiltController.Pan = Angle.FromDegrees(90);
-            rover.TiltController.Tilt = Angle.FromDegrees(90);
-        break;
-        case 2:
-            rover.TiltController.Pan = Angle.FromDegrees(90);
-            rover.TiltController.Tilt = Angle.FromDegrees(90);
-        break;
-        case 3:
-            rover.TiltController.Pan = Angle.FromDegrees(90);
-            rover.TiltController.Tilt = Angle.FromDegrees(90);
-        break;
-    }  
+    if(currentSector != null){
+        rover.TiltController.GoToSector(currentSector);
+    }   
 };
 ```
