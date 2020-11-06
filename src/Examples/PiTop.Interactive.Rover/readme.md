@@ -43,7 +43,6 @@ To use onnx models directly on pi-top jsut follow the instructions to export a t
 resourceScanner.LoadModel(new DirectoryInfo("/home/pi/models/v1"));
 ```
 
-
 ## Runnign and connecting to the kernel
 
 To start the app execute
