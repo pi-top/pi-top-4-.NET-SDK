@@ -1,4 +1,4 @@
-# .NET Core SDK for [pi-top \[4\]](https://www.pi-top.com/products/pi-top-4)
+# [pi-top \[4\]](https://www.pi-top.com/products/pi-top-4) .NET Core SDK with .NET Interactive Extensions
 
 Check out [dotnet/iot](https://github.com/dotnet/iot) for loads of device bindings!
 
