@@ -5,49 +5,54 @@ on:
       # - master # Default release branch
       - feature/appveyorToGithubAction # Testing
 jobs:
-  publish:
-    name: Build, Pack & Publish
+  build-test-pack-and-publish:
+    name: Build, Test, Pack & Publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # - name: Setup dotnet
-      #   uses: actions/setup-dotnet@v1
-      #   with:
-      #     dotnet-version: 3.1.200
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
 
-      # Publish
-      - name: Publish on version change
+      - name: Install dependencies
+        run: dotnet restore src/pi-top.sln --verbosity q
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore src/pi-top.sln
+
+      - name: Publish PiTop.MakerArchitecture.Expansion.nuget
         id: publish_nuget
-        uses: rohith/publish-nuget@v2
+        uses: brandedoutcast/publish-nuget@v2
         with:
-          # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: src/pi-top.sln
-          
-          # NuGet package id, used for version detection & defaults to project name
-          # PACKAGE_NAME: Core
-          
-          # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
-          # VERSION_FILE_PATH: Directory.Build.props
+          PROJECT_FILE_PATH: src/PiTop.MakerArchitecture.Expansion.nuget/PiTop.MakerArchitecture.Expansion.nuget.csproj
 
-          # Regex pattern to extract version info in a capturing group
-          # VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
-          
-          # Useful with external providers like Nerdbank.GitVersioning, ignores VERSION_FILE_PATH & VERSION_REGEX
-          # VERSION_STATIC: 1.0.0
+      - name: Publish PiTop.MakerArchitecture.Foundation.nuget
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.MakerArchitecture.Foundation.nuget/PiTop.MakerArchitecture.Foundation.nuget.csproj
 
-          # Flag to toggle git tagging, enabled by default
-          # TAG_COMMIT: true
+      - name: Publish PiTop.MakerArchitecture.Foundation.Psi.nuget
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.MakerArchitecture.Foundation.Psi.nuget/PiTop.MakerArchitecture.Foundation.Psi.nuget.csproj
 
-          # Format of the git tag, [*] gets replaced with actual version
-          # TAG_FORMAT: v*
+      - name: Publish PiTop.nuget
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.nuget/PiTop.nuget.csproj
 
-          # API key to authenticate with NuGet server
-          # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: Publish PiTop.Camera.Psi.nuget
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.Camera.Psi.nuget/PiTop.Camera.Psi.nuget.csproj
 
-          # NuGet server uri hosting the packages, defaults to https://api.nuget.org
-          # NUGET_SOURCE: https://api.nuget.org
-
-          # Flag to toggle pushing symbols along with nuget package to the server, disabled by default
-          # INCLUDE_SYMBOLS: false
+      - name: Publish PiTop.Camera.nuget
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.Camera.nuget/PiTop.Camera.nuget.csproj
