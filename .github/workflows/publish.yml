@@ -2,7 +2,8 @@ name: Publish to NuGet
 on:
   push:
     branches:
-      - master # Default release branch
+      # - master # Default release branch
+      - feature/appveyorToGithubAction # Testing
 jobs:
   publish:
     name: Build, Pack & Publish
