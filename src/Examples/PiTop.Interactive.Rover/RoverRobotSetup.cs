@@ -50,18 +50,18 @@ namespace PiTop.Interactive.Rover
             await LoadAssemblyAndAddNamespace<ResourceScanner>(csharpKernel);
             await AddNamespace(csharpKernel, typeof(ImageProcessing.ImageExtensions));
 
-            var roverBody = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(),
+            var RoverBody = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(),
                 PiTop4Board.Instance.GetOrCreateCamera<StreamingCamera>(0),
                 RoverRobotConfiguration.Default);
-            var roverBrain = new RoverRobotStrategies();
+            var RoverBrain = new RoverRobotStrategies();
 
-            var resourceScanner = new ResourceScanner();
+            var ResourceScanner = new ResourceScanner();
 
-            roverBody.BlinkAllLights();
+            RoverBody.BlinkAllLights();
 
-            await csharpKernel.SetVariableAsync(nameof(roverBody), roverBody);
-            await csharpKernel.SetVariableAsync(nameof(roverBrain), roverBrain);
-            await csharpKernel.SetVariableAsync(nameof(resourceScanner), resourceScanner);
+            await csharpKernel.SetVariableAsync(nameof(RoverBody), RoverBody);
+            await csharpKernel.SetVariableAsync(nameof(RoverBrain), RoverBrain);
+            await csharpKernel.SetVariableAsync(nameof(ResourceScanner), ResourceScanner);
 
             var source = new CancellationTokenSource();
 
@@ -76,7 +76,7 @@ namespace PiTop.Interactive.Rover
                         using var __ = operation.OnEnterAndExit("Perceive");
                         try
                         {
-                            roverBrain.Perceive?.Invoke(roverBody, DateTime.Now, localCancellationSource.Token);
+                            RoverBrain.Perceive?.Invoke(RoverBody, DateTime.Now, localCancellationSource.Token);
                         }
                         catch (Exception e)
                         {
@@ -90,7 +90,7 @@ namespace PiTop.Interactive.Rover
                         using var ___ = operation.OnEnterAndExit("Plan");
                         try
                         {
-                            planResult = roverBrain.Plan?.Invoke(roverBody, DateTime.Now, localCancellationSource.Token) ??
+                            planResult = RoverBrain.Plan?.Invoke(RoverBody, DateTime.Now, localCancellationSource.Token) ??
                                              PlanningResult.NoPlan;
                         }
                         catch (Exception e)
@@ -102,12 +102,12 @@ namespace PiTop.Interactive.Rover
                         if (!source.IsCancellationRequested && planResult != PlanningResult.NoPlan && !localCancellationSource.IsCancellationRequested)
                         {
                             using var ____ = operation.OnEnterAndExit("Act");
-                            roverBrain.Act?.Invoke(roverBody, DateTime.Now, localCancellationSource.Token);
+                            RoverBrain.Act?.Invoke(RoverBody, DateTime.Now, localCancellationSource.Token);
                         }
                     }
                 }
 
-                roverBody.MotionComponent.Stop();
+                RoverBody.MotionComponent.Stop();
             }, source.Token);
 
             var reactLoop = Task.Run(() =>
@@ -121,7 +121,7 @@ namespace PiTop.Interactive.Rover
                         using var __ = operation.OnEnterAndExit("React");
                         try
                         {
-                            roverBrain.React?.Invoke(roverBody, DateTime.Now, localCancellationSource.Token);
+                            RoverBrain.React?.Invoke(RoverBody, DateTime.Now, localCancellationSource.Token);
                         }
                         catch (Exception e)
                         {
@@ -130,14 +130,14 @@ namespace PiTop.Interactive.Rover
                     }
                 }
 
-                roverBody.MotionComponent.Stop();
+                RoverBody.MotionComponent.Stop();
             }, source.Token);
 
             csharpKernel.RegisterForDisposal(() =>
             {
                 source.Cancel(false);
                 Task.WaitAll(new[] {robotLoop, reactLoop}, TimeSpan.FromSeconds(10));
-                roverBody.Dispose();
+                RoverBody.Dispose();
             });
         }
 
