@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
 {
-    public class RoverRobotStrategies
+    public class RoverRobotAgent
     {
         public Action<RoverRobot, DateTime, CancellationToken> Perceive { get; set; }
 
@@ -12,5 +12,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
         public Action<RoverRobot, DateTime, CancellationToken> Act { get; set; }
 
         public Action<RoverRobot, DateTime, CancellationToken> React { get; set; }
+
+        public Action<RoverRobot, DateTime, CancellationToken> ClearState { get; set; }
     }
 }

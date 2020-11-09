@@ -53,7 +53,7 @@ namespace PiTop.Interactive.Rover
             var RoverBody = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(),
                 PiTop4Board.Instance.GetOrCreateCamera<StreamingCamera>(0),
                 RoverRobotConfiguration.Default);
-            var RoverBrain = new RoverRobotStrategies();
+            var RoverBrain = new RoverRobotAgent();
 
             var ResourceScanner = new ResourceScanner();
 
