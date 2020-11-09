@@ -57,7 +57,6 @@ namespace PiTop.Interactive.Rover
 
             var resourceScanner = new ResourceScanner();
 
-            roverBody.AllLightsOn();
             roverBody.BlinkAllLights();
 
             await csharpKernel.SetVariableAsync(nameof(roverBody), roverBody);
