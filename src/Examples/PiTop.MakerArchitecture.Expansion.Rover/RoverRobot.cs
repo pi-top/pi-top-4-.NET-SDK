@@ -82,6 +82,13 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             throw new NotImplementedException();
         }
 
+        public void Reset()
+        {
+            AllLightsOff();
+            TiltController?.Reset();
+            MotionComponent?.Stop();
+        }
+
         public void Dispose()
         {
             AllLightsOff();
