@@ -76,7 +76,7 @@ namespace PiTop.Interactive.Rover
                         using var __ = operation.OnEnterAndExit("Perceive");
                         try
                         {
-                            RoverBrain.Perceive?.Invoke(RoverBody, DateTime.Now, localCancellationSource.Token);
+                            RoverBrain.Perceive();
                         }
                         catch (Exception e)
                         {
@@ -90,8 +90,7 @@ namespace PiTop.Interactive.Rover
                         using var ___ = operation.OnEnterAndExit("Plan");
                         try
                         {
-                            planResult = RoverBrain.Plan?.Invoke(RoverBody, DateTime.Now, localCancellationSource.Token) ??
-                                             PlanningResult.NoPlan;
+                            planResult = RoverBrain.Plan();
                         }
                         catch (Exception e)
                         {
@@ -102,7 +101,7 @@ namespace PiTop.Interactive.Rover
                         if (!source.IsCancellationRequested && planResult != PlanningResult.NoPlan && !localCancellationSource.IsCancellationRequested)
                         {
                             using var ____ = operation.OnEnterAndExit("Act");
-                            RoverBrain.Act?.Invoke(RoverBody, DateTime.Now, localCancellationSource.Token);
+                            RoverBrain.Act();
                         }
                     }
                 }
@@ -121,7 +120,7 @@ namespace PiTop.Interactive.Rover
                         using var __ = operation.OnEnterAndExit("React");
                         try
                         {
-                            RoverBrain.React?.Invoke(RoverBody, DateTime.Now, localCancellationSource.Token);
+                            RoverBrain.React();
                         }
                         catch (Exception e)
                         {

@@ -1,18 +1,43 @@
 ﻿using System;
-using System.Threading;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
 {
     public class RoverRobotAgent
     {
-        public Action<RoverRobot, DateTime, CancellationToken> Perceive { get; set; }
+        private Func<PlanningResult> _plan;
+        private Action _perceive;
+        private Action _act;
+        private Action _react;
+        private Action _clearState;
 
-        public Func<RoverRobot, DateTime, CancellationToken, PlanningResult> Plan { get; set; }
+        public Action Perceive
+        {
+            get => _perceive;
+            set => _perceive = value ?? (() => {});
+        }
 
-        public Action<RoverRobot, DateTime, CancellationToken> Act { get; set; }
+        public Func<PlanningResult> Plan
+        {
+            get => _plan;
+            set => _plan = value?? (() => PlanningResult.NoPlan);
+        }
 
-        public Action<RoverRobot, DateTime, CancellationToken> React { get; set; }
+        public Action Act
+        {
+            get => _act;
+            set => _act = value ?? (() => { });
+        }
 
-        public Action<RoverRobot> ClearState { get; set; }
+        public Action React
+        {
+            get => _react;
+            set => _react = value ?? (() => { });
+        }
+
+        public Action ClearState
+        {
+            get => _clearState;
+            set => _clearState = value ?? (() => { });
+        }
     }
 }
