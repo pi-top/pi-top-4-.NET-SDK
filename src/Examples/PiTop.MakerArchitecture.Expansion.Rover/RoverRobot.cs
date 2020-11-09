@@ -112,7 +112,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             BackLeftLed.Off();
         }
 
-        public void BlinkAllLights(int blinkCount = 5)
+        public void BlinkAllLights(int blinkCount = 6)
         {
             Observable
                 .Interval(TimeSpan.FromSeconds(0.2))
