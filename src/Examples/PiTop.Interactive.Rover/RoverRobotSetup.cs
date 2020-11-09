@@ -45,6 +45,7 @@ namespace PiTop.Interactive.Rover
 
         private static async Task ConfigureRover(CSharpKernel csharpKernel)
         {
+            Microsoft.DotNet.Interactive.Formatting.Formatter.ListExpansionLimit = 42;
             using var _ =  Log.OnEnterAndExit();
             await LoadAssemblyAndAddNamespace<RoverRobot>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ResourceScanner>(csharpKernel);
