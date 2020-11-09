@@ -70,8 +70,8 @@ namespace PiTop.Interactive.Rover
                 using var operation = Log.OnEnterAndExit("roverBrainLoop");
                 while (!source.IsCancellationRequested)
                 {
-                    var localCancellationSource = new CancellationTokenSource();
-                    if (!source.IsCancellationRequested && !localCancellationSource.IsCancellationRequested)
+                  
+                    if (!source.IsCancellationRequested)
                     {
                         using var __ = operation.OnEnterAndExit("Perceive");
                         try
@@ -84,7 +84,7 @@ namespace PiTop.Interactive.Rover
                         }
                     }
 
-                    if (!source.IsCancellationRequested && !localCancellationSource.IsCancellationRequested)
+                    if (!source.IsCancellationRequested)
                     {
                         var planResult = PlanningResult.NoPlan;
                         using var ___ = operation.OnEnterAndExit("Plan");
@@ -98,7 +98,7 @@ namespace PiTop.Interactive.Rover
                             planResult = PlanningResult.NoPlan;
                         }
 
-                        if (!source.IsCancellationRequested && planResult != PlanningResult.NoPlan && !localCancellationSource.IsCancellationRequested)
+                        if (!source.IsCancellationRequested && planResult != PlanningResult.NoPlan)
                         {
                             using var ____ = operation.OnEnterAndExit("Act");
                             RoverBrain.Act();
@@ -114,8 +114,7 @@ namespace PiTop.Interactive.Rover
                 using var operation = Log.OnEnterAndExit("roverBrainReactLoop");
                 while (!source.IsCancellationRequested)
                 {
-                    var localCancellationSource = new CancellationTokenSource();
-                    if (!source.IsCancellationRequested && !localCancellationSource.IsCancellationRequested)
+                    if (!source.IsCancellationRequested)
                     {
                         using var __ = operation.OnEnterAndExit("React");
                         try

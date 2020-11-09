@@ -39,5 +39,14 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             get => _clearState;
             set => _clearState = value ?? (() => { });
         }
+
+        public void Reset()
+        {
+            Perceive = null;
+            Plan = null;
+            Act = null;
+            React = null;
+            ClearState = null;
+        }
     }
 }
