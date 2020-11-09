@@ -10,6 +10,11 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
         private Action _react;
         private Action _clearState;
 
+        public RoverRobotAgent()
+        {
+            Reset();
+        }
+
         public Action Perceive
         {
             get => _perceive;
