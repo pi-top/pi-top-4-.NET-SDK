@@ -117,6 +117,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
             Observable
                 .Interval(TimeSpan.FromSeconds(0.2))
                 .Take(blinkCount)
+                .Finally(() => { AllLightsOff(); })
                 .Subscribe(_ =>
             {
                 ToggleAllLights();
