@@ -13,6 +13,6 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public Action<RoverRobot, DateTime, CancellationToken> React { get; set; }
 
-        public Action<RoverRobot, DateTime, CancellationToken> ClearState { get; set; }
+        public Action<RoverRobot> ClearState { get; set; }
     }
 }
