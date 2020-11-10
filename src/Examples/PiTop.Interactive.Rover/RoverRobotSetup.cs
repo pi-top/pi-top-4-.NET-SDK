@@ -12,6 +12,7 @@ using lobe;
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Commands;
 using Microsoft.DotNet.Interactive.CSharp;
+using Microsoft.DotNet.Interactive.Formatting;
 using PiTop.Abstractions;
 using PiTop.Algorithms;
 using PiTop.Camera;
@@ -66,6 +67,7 @@ namespace PiTop.Interactive.Rover
             await csharpKernel.SetVariableAsync(nameof(RoverBody), RoverBody);
             await csharpKernel.SetVariableAsync(nameof(RoverBrain), RoverBrain);
             await csharpKernel.SetVariableAsync(nameof(ResourceScanner), ResourceScanner);
+            
             var command = new Command("#!reset", "Reset RoverBody, RoverBrain and BrainState")
             {
 new Option<bool>("--body",description:"Resets the rover body"),
@@ -79,27 +81,34 @@ new Option<bool>("--all", description:"Resets the entire rover"),
                 if (body || brain || state || all)
                 {
                     var code = new StringBuilder();
-
-                    if (state)
+                    var resetTarget = new List<string>();
+                    if (brain || all)
                     {
-                        code.AppendLine("RoverBrain.ClearState()");
+                        code.AppendLine($"{nameof(RoverBrain)}.Reset()");
+                        resetTarget.Add("brain");
+                    }
+
+                    if (state || all)
+                    {
+                        code.AppendLine($"{nameof(RoverBrain)}.ClearState()");
+                        resetTarget.Add("state");
                     }
 
                     if (body || all)
                     {
-                        code.AppendLine("RoverBody.Reset()");
+                        code.AppendLine($"{nameof(RoverBody)}.Reset()");
+                        resetTarget.Add("body");
                     }
 
-                    if (brain || all)
-                    {
-                        code.AppendLine("RoverBrain.Reset()");
-                    }
+
+                    context.Display($"Reset for {string.Join(", ", resetTarget)} done!", PlainTextFormatter.MimeType);
 
                     await csharpKernel.SendAsync(new SubmitCode(code.ToString()));
                 }
             });
 
             csharpKernel.AddDirective(command);
+
             var source = new CancellationTokenSource();
 
             var robotLoop = Task.Run(() =>
