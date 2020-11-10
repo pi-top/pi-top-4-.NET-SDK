@@ -192,6 +192,7 @@ namespace PiTop.Interactive.Rover.CommandLine
             };
 
             var csharpKernel = new CSharpKernel()
+                .UseDefaultMagicCommands()
                 .UseDefaultFormatting()
                 .UseNugetDirective()
                 .UseKernelHelpers()
