@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.CommandLine;
+using System.CommandLine.Invocation;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -63,7 +66,40 @@ namespace PiTop.Interactive.Rover
             await csharpKernel.SetVariableAsync(nameof(RoverBody), RoverBody);
             await csharpKernel.SetVariableAsync(nameof(RoverBrain), RoverBrain);
             await csharpKernel.SetVariableAsync(nameof(ResourceScanner), ResourceScanner);
+            var command = new Command("#!reset", "Reset RoverBody, RoverBrain and BrainState")
+            {
+new Option<bool>("--body",description:"Resets the rover body"),
+new Option<bool>("--brain", description:"Resets the rover brain"),
+new Option<bool>("--state", description:"Resets the rover brain state"),
+new Option<bool>("--all", description:"Resets the entire rover"),
+            };
 
+            command.Handler = CommandHandler.Create<bool, bool, bool, bool, KernelInvocationContext>(async (body, brain, state, all, context) =>
+            {
+                if (body || brain || state || all)
+                {
+                    var code = new StringBuilder();
+
+                    if (state)
+                    {
+                        code.AppendLine("RoverBrain.ClearState()");
+                    }
+
+                    if (body || all)
+                    {
+                        code.AppendLine("RoverBody.Reset()");
+                    }
+
+                    if (brain || all)
+                    {
+                        code.AppendLine("RoverBrain.Reset()");
+                    }
+
+                    await csharpKernel.SendAsync(new SubmitCode(code.ToString()));
+                }
+            });
+
+            csharpKernel.AddDirective(command);
             var source = new CancellationTokenSource();
 
             var robotLoop = Task.Run(() =>
