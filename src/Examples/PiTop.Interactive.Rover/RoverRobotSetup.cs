@@ -84,26 +84,27 @@ new Option<bool>("--all", description:"Resets the entire rover"),
                     var resetTarget = new List<string>();
                     if (brain || all)
                     {
-                        code.AppendLine($"{nameof(RoverBrain)}.Reset()");
+                        code.AppendLine($"{nameof(RoverBrain)}.Reset();");
                         resetTarget.Add("brain");
                     }
 
                     if (state || all)
                     {
-                        code.AppendLine($"{nameof(RoverBrain)}.ClearState()");
+                        code.AppendLine($"{nameof(RoverBrain)}.ClearState();");
                         resetTarget.Add("state");
                     }
 
                     if (body || all)
                     {
-                        code.AppendLine($"{nameof(RoverBody)}.Reset()");
+                        code.AppendLine($"{nameof(RoverBody)}.Reset();");
                         resetTarget.Add("body");
                     }
 
-
-                    context.Display($"Reset for {string.Join(", ", resetTarget)} done!", PlainTextFormatter.MimeType);
+                    var value = context.Display($"Reset for {string.Join(", ", resetTarget)} in progress", PlainTextFormatter.MimeType);
 
                     await csharpKernel.SendAsync(new SubmitCode(code.ToString()));
+                   
+                    value.Update($"Reset for {string.Join(", ", resetTarget)} done!");
                 }
             });
 
