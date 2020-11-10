@@ -17,36 +17,38 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
 
         public Action Perceive
         {
-            get => _perceive;
+            get => _perceive ??= () => { };
             set => _perceive = value ?? (() => {});
         }
 
         public Func<PlanningResult> Plan
         {
-            get => _plan;
+            get => _plan ??= () => PlanningResult.NoPlan;
             set => _plan = value?? (() => PlanningResult.NoPlan);
         }
 
         public Action Act
         {
-            get => _act;
+            get => _act ??= () => { };
             set => _act = value ?? (() => { });
         }
 
         public Action React
         {
-            get => _react;
+            get => _react ??= () => { };
             set => _react = value ?? (() => { });
         }
 
         public Action ClearState
         {
-            get => _clearState;
+            get => _clearState??= () => { };
             set => _clearState = value ?? (() => { });
         }
 
         public void Reset()
         {
+            ClearState?.Invoke();
+
             Perceive = null;
             Plan = null;
             Act = null;
