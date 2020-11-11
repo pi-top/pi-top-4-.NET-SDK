@@ -9,7 +9,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0010" />
-    <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20523.2" />
+    <PackageReference Include="System.Device.Gpio" Version="1.1.0" />
     <PackageReference Include="System.Reactive" Version="4.3.2" />
     <PackageReference Include="UnitsNet" Version="4.73.0" />
   </ItemGroup>
