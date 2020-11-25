@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="lobe.Http" Version="1.0.14" />
-    <PackageReference Include="lobe.ImageSharp" Version="1.0.14" />
-    <PackageReference Include="lobe.Onnx" Version="1.0.14" />
+    <PackageReference Include="lobe.Http" Version="1.0.15" />
+    <PackageReference Include="lobe.ImageSharp" Version="1.0.15" />
+    <PackageReference Include="lobe.Onnx" Version="1.0.15" />
     <PackageReference Include="Serilog.Sinks.RollingFileAlternate" Version="2.0.9" />
     <PackageReference Include="Pocket.Disposable" Version="1.1.0">
       <PrivateAssets>all</PrivateAssets>
@@ -27,9 +27,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.DotNet.Interactive" Version="1.0.0-beta.20553.2" />
-    <PackageReference Include="Microsoft.DotNet.Interactive.CSharp" Version="1.0.0-beta.20553.2" />
-    <PackageReference Include="Microsoft.DotNet.Interactive.Http" Version="1.0.0-beta.20553.2" />
+    <PackageReference Include="Microsoft.DotNet.Interactive" Version="1.0.0-beta.20574.9" />
+    <PackageReference Include="Microsoft.DotNet.Interactive.CSharp" Version="1.0.0-beta.20574.9" />
+    <PackageReference Include="Microsoft.DotNet.Interactive.Http" Version="1.0.0-beta.20574.9" />
   </ItemGroup>
 
   <ItemGroup>
