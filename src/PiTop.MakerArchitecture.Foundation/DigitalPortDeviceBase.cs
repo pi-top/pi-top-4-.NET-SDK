@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Device.Gpio;
 using System.Reactive.Disposables;
 
 using PiTop.Abstractions;
@@ -10,7 +11,7 @@ namespace PiTop.MakerArchitecture.Foundation
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         public DigitalPort Port { get; }
-        protected IGpioController Controller { get; }
+        protected GpioController Controller { get; }
 
         public ICollection<DisplayPropertyBase> DisplayProperties { get; }
 

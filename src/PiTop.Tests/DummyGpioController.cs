@@ -1,69 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Device.Gpio;
-using System.Threading;
-using System.Threading.Tasks;
-
-using PiTop.Abstractions;
 
 namespace PiTop.Tests
 {
-    public class DummyGpioController : IGpioController
+    public class DummyGpioController : GpioController
     {
         private readonly List<int> _openPins = new List<int>();
         public ICollection<int> OpenPins => _openPins;
         private readonly Dictionary<int, List<PinValue>> _writtenData = new Dictionary<int, List<PinValue>>();
         private readonly Dictionary<int, PinMode> _pinMode = new Dictionary<int, PinMode>();
 
-        public void Dispose()
+        public DummyGpioController():base(PinNumberingScheme.Logical, null)
         {
-
+            
         }
 
-        public PinNumberingScheme NumberingScheme { get; }
-        public int PinCount { get; }
-        public void OpenPin(int pinNumber)
+        protected override void OpenPinCore(int pinNumber)
         {
             OpenPins.Add(pinNumber);
         }
 
-        public void OpenPin(int pinNumber, PinMode mode)
-        {
-            OpenPins.Add(pinNumber);
-            SetPinMode(pinNumber, mode);
-        }
-
-        public void ClosePin(int pinNumber)
+        protected override void ClosePinCore(int pinNumber)
         {
             OpenPins.Remove(pinNumber);
         }
 
-        public void SetPinMode(int pinNumber, PinMode mode)
+        public override void SetPinMode(int pinNumber, PinMode mode)
         {
             _pinMode[pinNumber] = mode;
         }
 
-        public PinMode GetPinMode(int pinNumber)
+        public override PinMode GetPinMode(int pinNumber)
         {
             return _pinMode[pinNumber];
         }
 
-        public bool IsPinOpen(int pinNumber)
-        {
-            return OpenPins.Contains(pinNumber);
-        }
-
-        public bool IsPinModeSupported(int pinNumber, PinMode mode)
-        {
-            throw new NotImplementedException();
-        }
-
-        public PinValue Read(int pinNumber)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Write(int pinNumber, PinValue value)
+        public override void Write(int pinNumber, PinValue value)
         {
             if (!_writtenData.TryGetValue(pinNumber, out var data))
             {
@@ -74,44 +46,5 @@ namespace PiTop.Tests
             data.Add(value);
         }
 
-        public WaitForEventResult WaitForEvent(int pinNumber, PinEventTypes eventTypes, TimeSpan timeout)
-        {
-            throw new NotImplementedException();
-        }
-
-        public WaitForEventResult WaitForEvent(int pinNumber, PinEventTypes eventTypes, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ValueTask<WaitForEventResult> WaitForEventAsync(int pinNumber, PinEventTypes eventTypes, TimeSpan timeout)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ValueTask<WaitForEventResult> WaitForEventAsync(int pinNumber, PinEventTypes eventTypes, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RegisterCallbackForPinValueChangedEvent(int pinNumber, PinEventTypes eventTypes, PinChangeEventHandler callback)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UnregisterCallbackForPinValueChangedEvent(int pinNumber, PinChangeEventHandler callback)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Write(ReadOnlySpan<PinValuePair> pinValuePairs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Read(Span<PinValuePair> pinValuePairs)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
