@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="lobe.Http" Version="1.0.14" />
-    <PackageReference Include="lobe.ImageSharp" Version="1.0.14" />
-    <PackageReference Include="lobe.Onnx" Version="1.0.14" />
+    <PackageReference Include="lobe.Http" Version="1.0.15" />
+    <PackageReference Include="lobe.ImageSharp" Version="1.0.15" />
+    <PackageReference Include="lobe.Onnx" Version="1.0.15" />
     <PackageReference Include="Serilog.Sinks.RollingFileAlternate" Version="2.0.9" />
     <PackageReference Include="Pocket.Disposable" Version="1.1.0">
       <PrivateAssets>all</PrivateAssets>

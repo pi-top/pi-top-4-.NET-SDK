@@ -54,7 +54,7 @@ Then add the [.NET interactive extension](https://github.com/dotnet/interactive#
 
 The `src` directory contains the code for libraries you can use to create .NET Core apps for the amazing [pi-top4 platform](https://www.pi-top.com/products/pi-top-4). Get one and get creative.
 
-Requires [.NET Core SDK 3.1 LTS for ARM32](./docs/install-dotnet-sdk.md)
+Requires [.NET Core SDK 5.0 LTS for ARM32](./docs/install-dotnet-sdk.md)
 
 The libraries comes along with [`dotnet interactive`](https://github.com/dotnet/interactive/) integration so you can use notebooks to explore the power of pi-top.
 
