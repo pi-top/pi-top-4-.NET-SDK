@@ -57,7 +57,7 @@ namespace PiTop.Tests
             source.IsPinOpen(1).Should().BeFalse();
             source.IsPinOpen(2).Should().BeTrue();
 
-            firstSharedController.IsPinOpen(1).Should().BeFalse();
+            firstSharedController.IsPinOpen(1).Should().BeTrue();
             firstSharedController.IsPinOpen(2).Should().BeFalse();
         }
     }

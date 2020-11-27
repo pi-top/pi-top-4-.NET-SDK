@@ -9,12 +9,12 @@ namespace PiTop.OledDevice
     internal class SpiInterface : ISerialInterface
     {
         private readonly SpiDevice _device;
-        private readonly IGpioController _controller;
+        private readonly GpioController _controller;
         private readonly int _dcPin;
         private readonly int _rstPin;
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
-        public SpiInterface(SpiDevice device, IGpioController controller, int dcPin, int rstPin)
+        public SpiInterface(SpiDevice device, GpioController controller, int dcPin, int rstPin)
         {
             _device = device ?? throw new ArgumentNullException(nameof(device));
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));

@@ -1,7 +1,9 @@
-﻿namespace PiTop.Abstractions
+﻿using System.Device.Gpio;
+
+namespace PiTop.Abstractions
 {
     public interface IGpioControllerFactory
     {
-        IGpioController GetOrCreateController();
+        GpioController GetOrCreateController();
     }
 }

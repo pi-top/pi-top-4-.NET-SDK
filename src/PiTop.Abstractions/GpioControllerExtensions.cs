@@ -1,16 +1,31 @@
 ﻿using System;
 using System.Device.Gpio;
+using System.Reactive.Disposables;
 
 namespace PiTop.Abstractions
 {
     public static class GpioControllerExtensions
     {
-        public static IGpioController AsManaged(this GpioController controller)
+        public static IDisposable OpenPinAsDisposable(this GpioController controller, int pinNumber)
         {
-            return new GpioControllerWrapper(controller);
+            controller.OpenPin(pinNumber);
+            return Disposable.Create(() => controller.ClosePin(pinNumber));
         }
 
-        public static IGpioController Share(this IGpioController controller)
+        public static IDisposable OpenPinAsDisposable(this GpioController controller, int pinNumber, PinMode mode)
+        {
+            controller.OpenPin(pinNumber, mode);
+            return Disposable.Create(() => controller.ClosePin(pinNumber));
+        }
+
+        public static IDisposable RegisterCallbackForPinValueChangedEventAsDisposable(this GpioController controller,
+            int pinNumber, PinEventTypes eventTypes, PinChangeEventHandler callback)
+        {
+            controller.RegisterCallbackForPinValueChangedEvent(pinNumber, eventTypes, callback);
+            return Disposable.Create(() => controller.UnregisterCallbackForPinValueChangedEvent(pinNumber, callback));
+        }
+
+        public static GpioController Share(this GpioController controller)
         {
             if (controller == null)
             {
