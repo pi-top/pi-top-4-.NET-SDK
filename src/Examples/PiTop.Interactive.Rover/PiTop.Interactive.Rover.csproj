@@ -27,9 +27,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.DotNet.Interactive" Version="1.0.0-beta.20609.1" />
-    <PackageReference Include="Microsoft.DotNet.Interactive.CSharp" Version="1.0.0-beta.20609.1" />
-    <PackageReference Include="Microsoft.DotNet.Interactive.Http" Version="1.0.0-beta.20609.1" />
+    <PackageReference Include="Microsoft.DotNet.Interactive" Version="1.0.0-beta.20610.1" />
+    <PackageReference Include="Microsoft.DotNet.Interactive.CSharp" Version="1.0.0-beta.20610.1" />
+    <PackageReference Include="Microsoft.DotNet.Interactive.Http" Version="1.0.0-beta.20610.1" />
   </ItemGroup>
 
   <ItemGroup>
