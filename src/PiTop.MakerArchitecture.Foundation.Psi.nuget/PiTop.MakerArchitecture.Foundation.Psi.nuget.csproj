@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.13.38.2-beta" />
+    <PackageReference Include="Microsoft.Psi.Runtime" Version="0.14.35.3-beta" />
   </ItemGroup>
 
   <ItemGroup>

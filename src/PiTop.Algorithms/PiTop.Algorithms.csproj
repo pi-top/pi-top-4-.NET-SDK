@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="5.0.0" />
-    <PackageReference Include="UnitsNet" Version="4.78.0" />
+    <PackageReference Include="UnitsNet" Version="4.82.0" />
   </ItemGroup>
 
 </Project>
