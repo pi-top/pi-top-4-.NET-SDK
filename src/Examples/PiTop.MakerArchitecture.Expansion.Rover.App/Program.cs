@@ -21,7 +21,11 @@ namespace PiTop.MakerArchitecture.Expansion.Rover.App
             });
             Console.WriteLine("Test Rover App");
             PiTop4Board.Instance.UseCamera();
-            using var rover = new RoverRobot(PiTop4Board.Instance.GetOrCreateExpansionPlate(), PiTop4Board.Instance.GetOrCreateCamera<OpenCvCamera>(0), RoverRobotConfiguration.Default);
+
+            using var rover = new RoverRobot(
+                PiTop4Board.Instance.GetOrCreateExpansionPlate(),
+                PiTop4Board.Instance.GetOrCreateCamera<StreamingCamera>(0), 
+                RoverRobotConfiguration.Default);
 
             var camControl = rover.TiltController;
             var motorControl = rover.MotionComponent as SteeringMotorController;
@@ -36,7 +40,7 @@ namespace PiTop.MakerArchitecture.Expansion.Rover.App
                 try
                 {
                     var e = js.ReadEvent();
-                   // Console.WriteLine($"ts={e.timestamp}, v={e.value}, t={e.type}, n={e.number}");
+
                     if (e.type == 1)
                     {
                         switch (e.number)

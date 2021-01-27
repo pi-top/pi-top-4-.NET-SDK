@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Formatting;
 
 using OpenCvSharp;
-using SixLabors.ImageSharp;
+
 using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.PixelFormats;
+
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
-using Image = System.Drawing.Image;
 
 namespace PiTop.Camera.InteractiveExtension
 {
@@ -28,18 +26,7 @@ namespace PiTop.Camera.InteractiveExtension
                 writer.Write(imgTag);
             }, HtmlFormatter.MimeType);
 
-            Formatter.Register<Bitmap>((bitmapImage, writer) =>
-            {
-                var id = Guid.NewGuid().ToString("N");
-                using var stream = new MemoryStream();
-                bitmapImage.Save(stream, ImageFormat.Png);
-                stream.Flush();
-                var data = stream.ToArray();
-                var imgTag = CreateImgTag(data, id, bitmapImage.Height, bitmapImage.Width);
-                writer.Write(imgTag);
-            }, HtmlFormatter.MimeType);
-
-            Formatter.Register<Image>((image, writer) =>
+            Formatter.Register<System.Drawing.Image>((image, writer) =>
             {
                 var id = Guid.NewGuid().ToString("N");
                 using var stream = new MemoryStream();
@@ -50,24 +37,19 @@ namespace PiTop.Camera.InteractiveExtension
                 writer.Write(imgTag);
             }, HtmlFormatter.MimeType);
 
-            Formatter.Register<Image<Rgb24>>((image, writer) =>
+            Formatter.Register<SixLabors.ImageSharp.Image>((image, writer) =>
             {
                 var id = Guid.NewGuid().ToString("N");
-                using var stream = new MemoryStream();
-                image.Save(stream, new PngEncoder());
-                stream.Flush();
-                var data = stream.ToArray();
+                var data = GetImageBytes(image);
                 var imgTag = CreateImgTag(data, id, image.Height, image.Width);
                 writer.Write(imgTag);
             }, HtmlFormatter.MimeType);
 
-            Formatter.Register<SixLabors.ImageSharp.Image>((image, writer) =>
+            Formatter.Register<ICamera>((camera, writer) =>
             {
+                var image = camera.GetFrame();
                 var id = Guid.NewGuid().ToString("N");
-                using var stream = new MemoryStream();
-                image.Save(stream, new PngEncoder());
-                stream.Flush();
-                var data = stream.ToArray();
+                var data = GetImageBytes(image);
                 var imgTag = CreateImgTag(data, id, image.Height, image.Width);
                 writer.Write(imgTag);
             }, HtmlFormatter.MimeType);
@@ -77,6 +59,15 @@ namespace PiTop.Camera.InteractiveExtension
                 "text/markdown");
 
             return Task.CompletedTask;
+        }
+
+        private static byte[] GetImageBytes(SixLabors.ImageSharp.Image image)
+        {
+            using var stream = new MemoryStream();
+            image.Save(stream, new PngEncoder());
+            stream.Flush();
+            var data = stream.ToArray();
+            return data;
         }
 
         private static PocketView CreateImgTag(byte[] data, string id, int height, int width)

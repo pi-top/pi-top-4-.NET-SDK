@@ -3,9 +3,11 @@
 using Microsoft.Psi;
 
 using PiTop.MakerArchitecture.Foundation;
-using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Psi;
-using PiTop.MakerArchitecture.Foundation.Sensors;
+
+using Pocket;
+
+using SixLabors.ImageSharp;
 
 namespace PiTop.PsiApp
 {
@@ -13,24 +15,35 @@ namespace PiTop.PsiApp
     {
         static void Main(string[] args)
         {
+            LogEvents.Subscribe(i =>
+            {
+                i.Operation.Id = "";
+                Console.WriteLine(i.ToLogString());
+            }, new[]
+            {
+                //typeof(PiTop4Board).Assembly,
+                //typeof(FoundationPlate).Assembly,
+                typeof(Program).Assembly
+            });
+
             using var pipeline = Pipeline.Create("PiTop", DeliveryPolicy.Unlimited);
             using var module = PiTop4Board.Instance;
-            var plate = module.GetOrCreatePlate<FoundationPlate>();
+            var plate = module.GetOrCreateFoundationPlate();
 
             var threshold = plate
-                .GetOrCreateDevice<Potentiometer>(AnaloguePort.A0)
+                .GetOrCreatePotentiometer(AnaloguePort.A0)
                 .CreateComponent(pipeline, TimeSpan.FromSeconds(0.5));
 
             var distance = plate
-                .GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D3)
+                .GetOrCreateUltrasonicSensor(DigitalPort.D0)
                 .CreateComponent(pipeline, TimeSpan.FromSeconds(0.2));
 
             var alert = new ValueAlertComponent(pipeline,
                 new[]
                 {
-                   plate.GetOrCreateDevice<Led>(DigitalPort.D0),
-                   plate.GetOrCreateDevice<Led>(DigitalPort.D1),
-                   plate.GetOrCreateDevice<Led>(DigitalPort.D2)
+                   plate.GetOrCreateLed(DigitalPort.D1, Color.Green),
+                   plate.GetOrCreateLed(DigitalPort.D2, Color.Gold),
+                   plate.GetOrCreateLed(DigitalPort.D3, Color.RebeccaPurple)
                 });
 
             threshold
@@ -38,7 +51,7 @@ namespace PiTop.PsiApp
                 .PipeTo(alert.Threshold);
 
             distance
-                .Select(d => d.Value)
+                .Select(d => Math.Min(d.Value, 50))
                 .PipeTo(alert.Value);
 
             pipeline.Run();
