@@ -10,7 +10,9 @@ using SixLabors.ImageSharp.PixelFormats;
 
 using System;
 using System.Reactive.Linq;
-
+using SixLabors.Fonts;
+using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.Processing;
 using static Pocket.Logger;
 
 namespace PiTop.MakerArchitecture.Expansion.Rover
@@ -58,16 +60,16 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
                 ExpansionPlate.GetOrCreateEncoderMotor(configuration.RightMotorPort)
                 );
 
-            FrontRightLed = ExpansionPlate.GetOrCreateLed(DigitalPort.D3, Color.Green);
-            FrontLeftLed = ExpansionPlate.GetOrCreateLed(DigitalPort.D4, Color.Green);
+            FrontRightLed = ExpansionPlate.GetOrCreateLed(configuration.FrontRightLedPort, configuration.FrontRightLedColor);
+            FrontLeftLed = ExpansionPlate.GetOrCreateLed(configuration.FrontLeftLedPort, configuration.FrontLeftLedColor);
 
-            BackRightLed = ExpansionPlate.GetOrCreateLed(DigitalPort.D0, Color.Red);
-            BackLeftLed = ExpansionPlate.GetOrCreateLed(DigitalPort.D5, Color.Red);
+            BackRightLed = ExpansionPlate.GetOrCreateLed(configuration.BackRightLedPort, configuration.BackRightLedColor);
+            BackLeftLed = ExpansionPlate.GetOrCreateLed(configuration.BackLeftLedPort, configuration.BackLeftLedColor);
 
-            UltrasoundFront = ExpansionPlate.GetOrCreateUltrasonicSensor(DigitalPort.D7);
-            UltrasoundBack = ExpansionPlate.GetOrCreateUltrasonicSensor(DigitalPort.D6);
+            UltrasoundFront = ExpansionPlate.GetOrCreateUltrasonicSensor(configuration.FrontUltrasoundSensorPort);
+            UltrasoundBack = ExpansionPlate.GetOrCreateUltrasonicSensor(configuration.BackUltrasoundSensorPort);
 
-            Sound = ExpansionPlate.GetOrCreateSoundSensor(AnaloguePort.A3);
+            Sound = ExpansionPlate.GetOrCreateSoundSensor(configuration.SoundSensorPort);
 
             FrontRightLed.Off();
             FrontLeftLed.Off();
@@ -76,6 +78,27 @@ namespace PiTop.MakerArchitecture.Expansion.Rover
         }
 
         public RoverDashboard DashBoard { get; }
+
+        public void WriteToDisplay(string text)
+        {
+            var font = SystemFonts.Collection.Find("Roboto").CreateFont(14);
+           
+            PiTop4Board.Instance.Display.Draw((context, cr) => {
+                context.Clear(Color.Black);
+                var rect = TextMeasurer.Measure(text, new RendererOptions(font));
+                var x = (cr.Width - rect.Width) / 2;
+                var y = (cr.Height + rect.Height) / 2;
+                context.DrawText(text, font, Color.White, new PointF(0, 0));
+            });
+        }
+
+        public void WriteToDisplay(Image image)
+        {
+            PiTop4Board.Instance.Display.Draw((context, cr) => {
+                context.Clear(Color.Black);
+                context.DrawImage(image,1);
+            });
+        }
 
         public RoverRobotState GetCurrentState()
         {

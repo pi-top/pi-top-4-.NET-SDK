@@ -38,7 +38,7 @@ namespace SampleApp
                     await TestPotentiometer(AnaloguePort.A0);
                     break;
                 case '2':
-                    await TestButton(DigitalPort.D4, DigitalPort.D0.GetDigitalPortRange(3).ToArray());
+                    await TestButton(DigitalPort.D4, DigitalPort.D1.GetDigitalPortRange(3).ToArray());
                     break;
                 case '3':
                     await TestLed01();
@@ -47,7 +47,7 @@ namespace SampleApp
                     await TestUltrasoundSensor();
                     break;
                 case '5':
-                    await TestSemaphore(DigitalPort.D3, DigitalPort.D0, DigitalPort.D1, DigitalPort.D2, 40, 20, 5);
+                    await TestSemaphore(DigitalPort.D0, DigitalPort.D1, DigitalPort.D2, DigitalPort.D2, 40, 20, 5);
                     break;
                 default:
                     Console.WriteLine("invalid option");
@@ -144,7 +144,7 @@ namespace SampleApp
                     .Where(e => e.EventArgs)
                     .Select(_ =>
                     {
-                        var next = ((pos + 1) % leds.Length);
+                        var next = (pos + 1) % leds.Length;
                         var pair = new { Prev = pos, Next = ((pos + 1) % leds.Length) };
                         pos = next;
                         return pair;

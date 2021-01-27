@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
-
+using lobe;
+using lobe.ImageSharp;
 using PiTop;
 using PiTop.Algorithms;
 using PiTop.Camera;
@@ -13,7 +15,7 @@ using PiTop.MakerArchitecture.Foundation;
 using Pocket;
 
 using SixLabors.ImageSharp;
-
+using SixLabors.ImageSharp.PixelFormats;
 using UnitsNet;
 
 namespace Prototype
@@ -22,20 +24,22 @@ namespace Prototype
     {
         static void Main(string[] args)
         {
-            LogEvents.Subscribe(i =>
-            {
-                i.Operation.Id = "";
-                Console.WriteLine(i.ToLogString());
-            }, new[]
-            {
-                typeof(PiTop4Board).Assembly,
-                typeof(FoundationPlate).Assembly,
-                typeof(ExpansionPlate).Assembly,
-                typeof(RoverRobot).Assembly,
-                typeof(StreamingCamera).Assembly,
-                typeof(Program).Assembly,
-            });
+            //LogEvents.Subscribe(i =>
+            //{
+            //    i.Operation.Id = "";
+            //    Console.WriteLine(i.ToLogString());
+            //}, new[]
+            //{
+            //    typeof(PiTop4Board).Assembly,
+            //    typeof(FoundationPlate).Assembly,
+            //    typeof(ExpansionPlate).Assembly,
+            //    typeof(RoverRobot).Assembly,
+            //    typeof(StreamingCamera).Assembly,
+            //    typeof(Program).Assembly,
+            //});
 
+            ImageClassifier.Register("onnx", () => new OnnxImageClassifier());
+            ImageClassifier classifier = null;
             var js = new XBoxController();
 
             // using ` mjpg_streamer -i "input_uvc.so -d /dev/video0" -o output_http.so`
@@ -73,10 +77,31 @@ namespace Prototype
                     }
                 });
 
-            js.Events.OfType<ButtonEvent>().Where(e => e.Button == Button.X && e.Pressed)
+            js.Events.OfType<ButtonEvent>().Where(e => e.Button == Button.B && e.Pressed)
                 .Subscribe(e =>
                 {
                     rover.Camera.GetFrame().Save("/home/pi/shot.jpg");
+                });
+
+            js.Events.OfType<ButtonEvent>().Where(e => e.Button == Button.Y && e.Pressed)
+                .Subscribe(e =>
+                {
+                    classifier?.Dispose();
+                    var signatureFile = new FileInfo("/home/pi/models/pics/signature.json");
+                    classifier = ImageClassifier.CreateFromSignatureFile(signatureFile);
+                    Console.WriteLine($"Loaded model from {signatureFile.FullName}");
+                });
+
+            js.Events.OfType<ButtonEvent>().Where(e => e.Button == Button.X && e.Pressed)
+                .Subscribe(e =>
+                {
+                  var frame =   rover.Camera.GetFrame().Focus();
+                  var result = classifier?.Classify(frame.CloneAs<Rgb24>());
+                  if(result is { })
+                  {
+                        Console.WriteLine($"{result.Prediction.Label}");
+
+                  }
                 });
 
             Observable.Interval(TimeSpan.FromMilliseconds(100))
@@ -113,27 +138,27 @@ namespace Prototype
             //        }
             //    });
 
-            var oef = new OneEuroFilter(minCutoff: 0.004, beta: 0.7);
+            //var oef = new OneEuroFilter(minCutoff: 0.004, beta: 0.7);
 
-            Observable.Interval(TimeSpan.FromMilliseconds(100)).Select(_ => oef.Apply(rover.UltrasoundFront.Distance.Centimeters))
-               .Scan(new List<double>(), (list, d) => // sliding window
-                {
-                    const int window = 10;
-                    list.Add(d);
-                    if (list.Count > window) list.RemoveRange(0, list.Count - window);
-                    return new List<double>(list);
-                })
-               .Subscribe(l =>
-               {
-                   var mean = l.Average();
-                   var stddev = Math.Sqrt(l.Select(d => (d - mean) * (d - mean)).Average());
-                   var maxrange = 1.5 * stddev;
-                   var valid = l.Where(d => Math.Abs(d - mean) < maxrange).ToList();
-                   if (valid.Count > 0)
-                   {
-                       Console.WriteLine($"Distance= {valid.Average():F1} cm ({valid.Count}: mean {mean:F1}, stddev {stddev:F1}, max {valid.Max():F1}, min {valid.Min():F1})");
-                   }
-               });
+            //Observable.Interval(TimeSpan.FromMilliseconds(100)).Select(_ => oef.Apply(rover.UltrasoundFront.Distance.Centimeters))
+            //   .Scan(new List<double>(), (list, d) => // sliding window
+            //    {
+            //        const int window = 10;
+            //        list.Add(d);
+            //        if (list.Count > window) list.RemoveRange(0, list.Count - window);
+            //        return new List<double>(list);
+            //    })
+            //   .Subscribe(l =>
+            //   {
+            //       var mean = l.Average();
+            //       var stddev = Math.Sqrt(l.Select(d => (d - mean) * (d - mean)).Average());
+            //       var maxrange = 1.5 * stddev;
+            //       var valid = l.Where(d => Math.Abs(d - mean) < maxrange).ToList();
+            //       if (valid.Count > 0)
+            //       {
+            //           Console.WriteLine($"Distance= {valid.Average():F1} cm ({valid.Count}: mean {mean:F1}, stddev {stddev:F1}, max {valid.Max():F1}, min {valid.Min():F1})");
+            //       }
+            //   });
 
             Console.WriteLine("Ok, go drive around");
             Console.ReadKey();

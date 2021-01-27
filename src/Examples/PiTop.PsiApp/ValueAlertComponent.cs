@@ -4,6 +4,10 @@ using Microsoft.Psi;
 
 using PiTop.MakerArchitecture.Foundation.Components;
 
+using Pocket;
+
+using static Pocket.Logger;
+
 namespace PiTop.PsiApp
 {
     public class ValueAlertComponent
@@ -11,6 +15,7 @@ namespace PiTop.PsiApp
         private readonly Led[] _alertDisplay;
         private double _currentThreshold;
         private double _currentValue;
+        private double _currentAlertLevel;
 
         public ValueAlertComponent(Pipeline pipeline, Led[] alertDisplay)
         {
@@ -22,32 +27,38 @@ namespace PiTop.PsiApp
         private void OnValue(Message<double> valueMessage)
         {
             _currentValue = Math.Round(valueMessage.Data, 1);
-            UpdateDisplay();
+            UpdateAlertLevel();
         }
 
-        private void UpdateDisplay()
+        private void UpdateAlertLevel()
         {
             var alertLevel = ComputeAlertLevel();
-            if (Math.Abs(alertLevel) < 0.001)
+            if (Math.Abs(_currentAlertLevel - alertLevel) > 0.05)
             {
-                _alertDisplay[0].On();
-                for (var i = 1; i < _alertDisplay.Length; i++)
+                using var op = Log.OnEnterAndExit();
+                op.Info($"Current Level: {_currentAlertLevel}");
+                _currentAlertLevel = alertLevel;
+                if (Math.Abs(alertLevel) < 0.001)
                 {
-                    _alertDisplay[i].Off();
-                }
-            }
-            else
-            {
-                var limit = Math.Floor(_alertDisplay.Length * alertLevel);
-                for (var i = 0; i < _alertDisplay.Length; i++)
-                {
-                    if (i <= limit)
-                    {
-                        _alertDisplay[i].On();
-                    }
-                    else
+                    _alertDisplay[0].On();
+                    for (var i = 1; i < _alertDisplay.Length; i++)
                     {
                         _alertDisplay[i].Off();
+                    }
+                }
+                else
+                {
+                    var limit = Math.Floor(_alertDisplay.Length * alertLevel);
+                    for (var i = 0; i < _alertDisplay.Length; i++)
+                    {
+                        if (i <= limit)
+                        {
+                            _alertDisplay[i].On();
+                        }
+                        else
+                        {
+                            _alertDisplay[i].Off();
+                        }
                     }
                 }
             }
@@ -60,7 +71,7 @@ namespace PiTop.PsiApp
                 return 0;
             }
 
-            var level = Math.Min(Math.Max((_currentThreshold - _currentValue) / _currentThreshold, 0), 1);
+            var level = Math.Round(Math.Min(Math.Max((_currentThreshold - _currentValue) / _currentThreshold, 0), 1), 2);
             return level;
         }
 
@@ -72,7 +83,7 @@ namespace PiTop.PsiApp
             if (Math.Abs(thresholdValue - _currentThreshold) > 0.01)
             {
                 _currentThreshold = thresholdValue;
-                UpdateDisplay();
+                UpdateAlertLevel();
 
             }
         }

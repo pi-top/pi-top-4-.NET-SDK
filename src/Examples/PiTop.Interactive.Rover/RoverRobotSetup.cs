@@ -13,6 +13,7 @@ using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Commands;
 using Microsoft.DotNet.Interactive.CSharp;
 using Microsoft.DotNet.Interactive.Formatting;
+
 using PiTop.Abstractions;
 using PiTop.Algorithms;
 using PiTop.Camera;
@@ -22,6 +23,7 @@ using PiTop.MakerArchitecture.Expansion.Rover;
 using PiTop.MakerArchitecture.Foundation;
 using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Sensors;
+
 using Pocket;
 
 using SixLabors.Fonts;
@@ -41,16 +43,18 @@ namespace PiTop.Interactive.Rover
 
             await ConfigureNamespaces(csharpKernel);
             await ConfigureImageSharp(csharpKernel);
-           
+
             await ConfigurePiTop(csharpKernel);
             await ConfigureLobe(csharpKernel);
             await ConfigureRover(csharpKernel);
+
+            await ConfigureJoystick(csharpKernel);
         }
 
         private static async Task ConfigureRover(CSharpKernel csharpKernel)
         {
             Microsoft.DotNet.Interactive.Formatting.Formatter.ListExpansionLimit = 42;
-            using var _ =  Log.OnEnterAndExit();
+            using var _ = Log.OnEnterAndExit();
             await LoadAssemblyAndAddNamespace<RoverRobot>(csharpKernel);
             await LoadAssemblyAndAddNamespace<ResourceScanner>(csharpKernel);
             await AddNamespace(csharpKernel, typeof(ImageProcessing.ImageExtensions));
@@ -67,7 +71,7 @@ namespace PiTop.Interactive.Rover
             await csharpKernel.SetVariableAsync(nameof(RoverBody), RoverBody);
             await csharpKernel.SetVariableAsync(nameof(RoverBrain), RoverBrain);
             await csharpKernel.SetVariableAsync(nameof(ResourceScanner), ResourceScanner);
-            
+
             var command = new Command("#!reset", "Reset RoverBody, RoverBrain and BrainState")
             {
 new Option<bool>("--body",description:"Resets the rover body"),
@@ -103,7 +107,7 @@ new Option<bool>("--all", description:"Resets the entire rover"),
                     var value = context.Display($"Reset for {string.Join(", ", resetTarget)} in progress", PlainTextFormatter.MimeType);
 
                     await csharpKernel.SendAsync(new SubmitCode(code.ToString()));
-                   
+
                     value.Update($"Reset for {string.Join(", ", resetTarget)} done!");
                 }
             });
@@ -117,7 +121,7 @@ new Option<bool>("--all", description:"Resets the entire rover"),
                 using var operation = Log.OnEnterAndExit("roverBrainLoop");
                 while (!source.IsCancellationRequested)
                 {
-                  
+
                     if (!source.IsCancellationRequested)
                     {
                         using var __ = operation.OnEnterAndExit("Perceive");
@@ -181,7 +185,7 @@ new Option<bool>("--all", description:"Resets the entire rover"),
             csharpKernel.RegisterForDisposal(() =>
             {
                 source.Cancel(false);
-                Task.WaitAll(new[] {robotLoop, reactLoop}, TimeSpan.FromSeconds(10));
+                Task.WaitAll(new[] { robotLoop, reactLoop }, TimeSpan.FromSeconds(10));
                 RoverBody.Dispose();
             });
         }
@@ -192,12 +196,13 @@ new Option<bool>("--all", description:"Resets the entire rover"),
             await AddNamespace(csharpKernel, typeof(Directory));
             await AddNamespace(csharpKernel, typeof(List<>));
             await AddNamespace(csharpKernel, typeof(System.Linq.Enumerable));
-          
+
         }
 
         private static async Task ConfigureLobe(CSharpKernel csharpKernel)
         {
             ImageClassifier.Register("onnx", () => new OnnxImageClassifier());
+
             await LoadAssemblyAndAddNamespace<ImageClassifier>(csharpKernel);
             await LoadAssemblyAndAddNamespace<OnnxImageClassifier>(csharpKernel);
             await AddNamespace(csharpKernel, typeof(ClassificationResults));
@@ -229,6 +234,11 @@ new Option<bool>("--all", description:"Resets the entire rover"),
             await AddNamespace(csharpKernel, typeof(Led));
             await AddNamespace(csharpKernel, typeof(IFilter));
             await AddNamespace(csharpKernel, typeof(Display));
+        }
+
+        private static async Task ConfigureJoystick(CSharpKernel csharpKernel)
+        {
+            await LoadAssemblyAndAddNamespace<LinuxJoystick>(csharpKernel);
         }
 
         private static async Task ConfigureImageSharp(CSharpKernel csharpKernel)

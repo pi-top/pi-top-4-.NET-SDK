@@ -32,7 +32,7 @@ namespace PiTop.Interactive.Rover.ML
             _predictionEndpoint = null;
             _classifier?.Dispose();
             _classifier = ImageClassifier.CreateFromSignatureFile(
-                 new FileInfo(Path.Combine(modelLocation.FullName, "signature.json")), format: "onnx", modelFileName: "saved_model.onnx");
+                 new FileInfo(Path.Combine(modelLocation.FullName, "signature.json")));
         }
 
         public void UseUri(Uri predictionEndpoint)
