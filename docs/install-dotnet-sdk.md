@@ -13,7 +13,7 @@ Create a folder to use a local nuget source
 pi@pi-top:~ mkdir /home/pi/localNuget
 ```
 
-Configure the Nuget soruces by having a ```Nuget.Config``` file in the folder ```~/.nuget/NuGet```
+Configure the Nuget sources by having a ```Nuget.Config``` file in the folder ```~/.nuget/NuGet```
 
 The file should contain the following sources
 ```xml
