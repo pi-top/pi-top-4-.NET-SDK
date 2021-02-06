@@ -22,7 +22,7 @@
     <PackageReference Include="NetMQ" Version="4.0.1.6" />
     <PackageReference Include="System.Device.Gpio" Version="1.3.0" />
     <PackageReference Include="UnitsNet" Version="4.82.0" />
-    <PackageReference Include="System.Reactive" Version="5.0.0" />
+    <PackageReference Include="System.Reactive" Version="4.4.1" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta11" />
   </ItemGroup>
 
