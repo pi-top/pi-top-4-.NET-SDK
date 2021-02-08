@@ -73,6 +73,7 @@ Build the libraries and packages
  * if you do not have it, create the folder `/home/pi/localNuget`
  * pack the projects with `> sh tools/pack.sh 1.1.1` it will package the project into the `/home/pi/localnuget` using version 1.1.1
 
+Note: persistent issues during `nuget restore` could be related to `ca-certificates.conf` issues. Installing the latest version of pi-topOS/Raspberry Pi OS should fix this. Follow the instructions on the [pi-top knowledge base](https://knowledgebase.pi-top.com/knowledge/sdcard) to reinstall the latest available version.
 
 ## Example
 
