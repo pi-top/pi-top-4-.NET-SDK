@@ -19,6 +19,13 @@ After this, you will want to update your environment variables. Either start a n
 pi@pi-top:~ source ~/.bashrc
 ```
 
+### Install xbox controller support
+To use xbox controller via bluetooth run this from the pi-top:
+```sh
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-SDK/master/setup-xbox-controller.sh | bash
+```
+Then reboot the pi-top for the changes to take effect.
+
 ### Python Environment
 To extend with .NET Jupyter Notebook support, run this from your pi-top:
 ```sh
