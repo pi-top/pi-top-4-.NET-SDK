@@ -22,7 +22,7 @@ pi@pi-top:~ source ~/.bashrc
 ### Install xbox controller support
 To use xbox controller via bluetooth run this from the pi-top:
 ```sh
-pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-SDK/master/setup-xbox-xontroller.sh | bash
+pi@pi-top:~ curl -L https://raw.githubusercontent.com/pi-top/pi-top-4-.NET-SDK/master/setup-xbox-controller.sh | bash
 ```
 Then reboot the pi-top for the changes to take effect.
 
