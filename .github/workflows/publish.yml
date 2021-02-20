@@ -1,0 +1,58 @@
+name: Publish to NuGet
+on:
+  push:
+    branches:
+      # - master # Default release branch
+      - feature/appveyorToGithubAction # Testing
+jobs:
+  build-test-pack-and-publish:
+    name: Build, Test, Pack & Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+
+      - name: Install dependencies
+        run: dotnet restore src/pi-top.sln --verbosity q
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore src/pi-top.sln
+
+      - name: Publish PiTop.MakerArchitecture.Expansion.nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.MakerArchitecture.Expansion.nuget/PiTop.MakerArchitecture.Expansion.nuget.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: Publish PiTop.MakerArchitecture.Foundation.nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.MakerArchitecture.Foundation.nuget/PiTop.MakerArchitecture.Foundation.nuget.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: Publish PiTop.MakerArchitecture.Foundation.Psi.nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.MakerArchitecture.Foundation.Psi.nuget/PiTop.MakerArchitecture.Foundation.Psi.nuget.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: Publish PiTop.nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.nuget/PiTop.nuget.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: Publish PiTop.Camera.Psi.nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.Camera.Psi.nuget/PiTop.Camera.Psi.nuget.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: Publish PiTop.Camera.nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/PiTop.Camera.nuget/PiTop.Camera.nuget.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
