@@ -193,7 +193,6 @@ namespace PiTop.Interactive.Rover.CommandLine
 
             var csharpKernel = new CSharpKernel()
                 .UseDefaultMagicCommands()
-                .UseDefaultFormatting()
                 .UseNugetDirective()
                 .UseKernelHelpers()
                 .UseWho()
@@ -204,7 +203,7 @@ namespace PiTop.Interactive.Rover.CommandLine
                 new[] { "c#", "C#" });
 
             var kernel = compositeKernel
-                         .UseLog()
+                         .UseLogMagicCommand()
                          .UseKernelClientConnection(new ConnectNamedPipe())
                          .UseKernelClientConnection(new ConnectSignalR());
 
