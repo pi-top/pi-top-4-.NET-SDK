@@ -16,7 +16,8 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
         private static JsonSerializerOptions SerializerOptions { get; } = 
             new JsonSerializerOptions(JsonSerializerDefaults.General)
             {
-                WriteIndented = false,
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 NumberHandling =System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals|System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
             };
@@ -25,7 +26,6 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
         {
             Formatter.Register<FoundationPlate>((plate, writer) =>
             {
-                
                 var root = JsonSerializer.Serialize(plate.ToDictionary(), SerializerOptions);
                 writer.Write(root);
             }, JsonFormatter.MimeType);
