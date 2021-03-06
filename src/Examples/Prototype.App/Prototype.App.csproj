@@ -15,8 +15,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="lobe.ImageSharp" Version="1.0.22" />
-    <PackageReference Include="lobe.Onnx" Version="1.0.22" />
+    <PackageReference Include="lobe.ImageSharp" Version="1.0.23" />
+    <PackageReference Include="lobe.Onnx" Version="1.0.23" />
     <PackageReference Include="PocketLogger.Subscribe" Version="0.7.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
