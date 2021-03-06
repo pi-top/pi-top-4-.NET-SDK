@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Formatting;
 
-using Newtonsoft.Json;
 
 using PiTop.MakerArchitecture.Foundation.Components;
 using PiTop.MakerArchitecture.Foundation.Sensors;
@@ -12,12 +13,21 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension
     {
+        private static JsonSerializerOptions SerializerOptions { get; } = 
+            new JsonSerializerOptions(JsonSerializerDefaults.General)
+            {
+                WriteIndented = false,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                NumberHandling =System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals|System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
+            };
+
         public Task OnLoadAsync(Kernel kernel)
         {
             Formatter.Register<FoundationPlate>((plate, writer) =>
             {
-                var root = plate.ToJObject();
-                writer.Write(root.ToString(Formatting.Indented));
+                
+                var root = JsonSerializer.Serialize(plate.ToDictionary(), SerializerOptions);
+                writer.Write(root);
             }, JsonFormatter.MimeType);
 
             Formatter.Register<FoundationPlate>((plate, writer) =>

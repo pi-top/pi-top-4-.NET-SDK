@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Html;
 using Microsoft.DotNet.Interactive.Formatting;
 
-using Newtonsoft.Json.Linq;
 
 using static Microsoft.DotNet.Interactive.Formatting.PocketViewTags;
 
@@ -12,26 +11,27 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
 {
     public static class PlateExtensions
     {
-        public static JObject ToJObject(this FoundationPlate plate)
+        public static Dictionary<string,object> ToDictionary(this FoundationPlate plate)
         {
-            var root = new JObject();
+            var root = new Dictionary<string,object>();
 
             foreach (var piTopComponent in plate.Devices)
             {
                 switch (piTopComponent)
                 {
                     case DigitalPortDeviceBase digitalDevice:
-                        root[digitalDevice.Port.ToString()] = new JObject
+                        
+                        root[digitalDevice.Port.ToString()] = new Dictionary<string, object>()
                         {
                             {"type", digitalDevice.GetType().Name },
-                            {"value", JToken.FromObject( digitalDevice.GetDeviceValue()) },
+                            {"value", digitalDevice.GetDeviceValue() },
                         };
                         break;
                     case AnaloguePortDeviceBase analogueDevice:
-                        root[analogueDevice.Port.ToString()] = new JObject
+                        root[analogueDevice.Port.ToString()] = new Dictionary<string, object>()
                         {
                             {"type", analogueDevice.GetType().Name },
-                            {"value", JToken.FromObject( analogueDevice.GetDeviceValue() )},
+                            {"value", analogueDevice.GetDeviceValue()},
                         };
                         break;
                 }
