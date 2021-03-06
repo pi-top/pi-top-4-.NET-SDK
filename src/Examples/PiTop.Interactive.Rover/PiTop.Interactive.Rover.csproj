@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="lobe.Http" Version="1.0.22" />
-    <PackageReference Include="lobe.ImageSharp" Version="1.0.22" />
-    <PackageReference Include="lobe.Onnx" Version="1.0.22" />
+    <PackageReference Include="lobe.Http" Version="1.0.23" />
+    <PackageReference Include="lobe.ImageSharp" Version="1.0.23" />
+    <PackageReference Include="lobe.Onnx" Version="1.0.23" />
     <PackageReference Include="Serilog.Sinks.RollingFileAlternate" Version="2.0.9" />
     <PackageReference Include="Pocket.Disposable" Version="1.1.0">
       <PrivateAssets>all</PrivateAssets>
@@ -27,9 +27,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.DotNet.Interactive" Version="1.0.0-beta.21065.1" />
-    <PackageReference Include="Microsoft.DotNet.Interactive.CSharp" Version="1.0.0-beta.21065.1" />
-    <PackageReference Include="Microsoft.DotNet.Interactive.Http" Version="1.0.0-beta.21065.1" />
+    <PackageReference Include="Microsoft.DotNet.Interactive" Version="1.0.0-beta.21155.3" />
+    <PackageReference Include="Microsoft.DotNet.Interactive.CSharp" Version="1.0.0-beta.21155.3" />
+    <PackageReference Include="Microsoft.DotNet.Interactive.Http" Version="1.0.0-beta.21155.3" />
   </ItemGroup>
 
   <ItemGroup>
