@@ -16,10 +16,5 @@ root="$(dirname "${DIR}")"
 version="${1:-1.1.1}"
 localNugetPath="${2:-/home/pi/localNuget}"
 
-dotnet build "${root}/src"
-
-for project in "${root}/src/"**/*".nuget.csproj"
-do
-  echo "Packing ${project}"
-  dotnet pack "${project}" "/p:PackageVersion=${version}" -o "${localNugetPath}"
-done
+dotnet build "${root}/src" -c Release
+dotnet pack "${project}" "/p:PackageVersion=${version}" -o "${localNugetPath}" -c Release
