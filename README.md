@@ -40,7 +40,7 @@ The code is compiled and the latest NuGet packages are located at
 
 ## Running Visual Studio Code Insiders and the .NET Interactive notebook extension on the device
 
-Then add the [.NET interactive extension](https://github.com/dotnet/interactive#visual-studio-code) and now you can use .NET Interactive notebooks directly on your pi-top.
+Open VScode and add the [.NET interactive extension](https://github.com/dotnet/interactive#visual-studio-code). Now you can use .NET Interactive notebooks directly on your pi-top.
 
 ## Manual installation steps
 
