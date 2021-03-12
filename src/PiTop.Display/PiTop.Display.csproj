@@ -3,6 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>PiTop</RootNamespace>
+    <PackageVersion>0.0.1</PackageVersion>
+    <PackageId>pi-top.Display</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageDescription>pi-top[4] device.</PackageDescription>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIcon>pi-top_logo.jpg</PackageIcon>
+    <PackageTags>pi-top[4]</PackageTags>
+    <RepositoryUrl>https://github.com/pi-top/pi-top-4-.NET-SDK</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/pi-top/pi-top-4-.NET-SDK</PackageProjectUrl>
+    <Company>pi-top</Company>
+    <Authors>pi-top</Authors>
+    <Product>PiTop.nuget</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +27,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PiTop.Abstractions\PiTop.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\pi-top_logo.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

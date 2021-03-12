@@ -117,12 +117,12 @@ echo ""
 ### Build pi-top .NET API ###
 #############################
 echo "Building pi-top .NET API..."
-~/pi-top-4-.NET-SDK/tools/pack.sh 0.0.1 "/home/pi/localNuget"
+~/pi-top-4-.NET-SDK/tools/pack.sh 0.0.1-local "/home/pi/localNuget"
 echo ""
 
 ##############
 ### Finish ###
 ##############
 echo "pi-top .NET API is installed."
-echo "Please run \`setup-device-jupyter.sh\` to install add Jupyter notebook support."
+echo "To install add Jupyter notebook supportPlease run \`setup-device-jupyter.sh\`."
 echo "Note, this will install jupyterlab and .NET kernel inside a Python virtualenv (~/.jupyter_venv)"
