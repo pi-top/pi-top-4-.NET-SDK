@@ -53,7 +53,7 @@ The libraries comes along with [`dotnet interactive`](https://github.com/dotnet/
  * install the `dotnet interactive` tool as shown [here](./docs/install-dotnet-interactive.md) 
  * install [Camera library dependencies](./docs/install-camera-dependencies.md)
 
-To use the notebook sampples in the folder `examples/vs-code` you will need vs-code and vs-code extension on your local machine
+To use the notebook samples in `examples/vs-code`, you will need vs-code and vs-code extension on your local machine
 * install [vscode extension](./docs/vscode-extension.md)
 
 Build the libraries and packages
