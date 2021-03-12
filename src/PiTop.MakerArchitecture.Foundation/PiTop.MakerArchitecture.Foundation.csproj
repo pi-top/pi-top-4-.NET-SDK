@@ -2,11 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>PiTop.MakerArchitecture.Foundation</RootNamespace>
-    <AssemblyName>PiTop.MakerArchitecture.Foundation</AssemblyName>
     <Nullable>enable</Nullable>
     <PackageVersion>0.0.1</PackageVersion>
-    <PackageId>pi-top.MakerArchitecture.FoundationKit</PackageId>
+    <PackageId>pi-top.MakerArchitecture.Foundation</PackageId>
     <IsPackable>true</IsPackable>
     <PackageDescription>pi-top[4] Foundation Kit module.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
