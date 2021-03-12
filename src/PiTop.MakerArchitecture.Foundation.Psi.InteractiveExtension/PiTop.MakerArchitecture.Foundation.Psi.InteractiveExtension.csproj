@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
     <PackageVersion>0.0.1</PackageVersion>
-    <PackageId>pi-top.FoundationKit.Psi.DotNet.Interactive</PackageId>
+    <PackageId>PiTop.MakerArchitecture.Foundation.Psi.DotNet.Interactive</PackageId>
     <IsPackable>true</IsPackable>
     <PackageDescription>PSI components for pi-top[4] Foundation Kit module.</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
