@@ -1,8 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <PackageVersion>0.0.1</PackageVersion>
+    <PackageId>pi-top.FoundationKit.Psi.DotNet.Interactive</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageDescription>PSI components for pi-top[4] Foundation Kit module.</PackageDescription>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIcon>pi-top_logo.jpg</PackageIcon>
+    <PackageTags>pi-top[4]</PackageTags>
+    <RepositoryUrl>https://github.com/pi-top/pi-top-4-.NET-SDK</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/pi-top/pi-top-4-.NET-SDK</PackageProjectUrl>
+    <Company>pi-top</Company>
+    <Authors>pi-top</Authors>
+    <Product>PiTop.MakerArchitecture.Foundation.Psi.nuget</Product>
   </PropertyGroup>
 
 
@@ -12,8 +24,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="$(OutputPath)/PiTop.MakerArchitecture.Foundation.Psi.InteractiveExtension.dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation.Psi\PiTop.MakerArchitecture.Foundation.Psi.csproj" />
     <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation\PiTop.MakerArchitecture.Foundation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\pi-top_logo.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
