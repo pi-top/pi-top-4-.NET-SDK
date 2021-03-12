@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>PiTop.MakerArchitecture.Foundation</RootNamespace>
+    <RootNamespace>pi-top.MakerArchitecture.Foundation</RootNamespace>
     <AssemblyName>PiTop.MakerArchitecture.Foundation</AssemblyName>
     <Nullable>enable</Nullable>
     <PackageVersion>0.0.1</PackageVersion>
