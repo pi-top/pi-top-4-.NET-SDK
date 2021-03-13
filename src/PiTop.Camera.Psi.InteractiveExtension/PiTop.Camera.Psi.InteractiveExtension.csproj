@@ -28,7 +28,9 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTop.Camera.InteractiveExtension\PiTop.Camera.InteractiveExtension.csproj" />
     <ProjectReference Include="..\PiTop.Camera.Psi\PiTop.Camera.Psi.csproj" />
+    <ProjectReference Include="..\PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj" />
   </ItemGroup>
 
   <ItemGroup>

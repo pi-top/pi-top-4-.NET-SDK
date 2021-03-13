@@ -28,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj" />
+    <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation.InteractiveExtension\PiTop.MakerArchitecture.Foundation.InteractiveExtension.csproj" />
     <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation.Psi\PiTop.MakerArchitecture.Foundation.Psi.csproj" />
     <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation\PiTop.MakerArchitecture.Foundation.csproj" />
   </ItemGroup>
