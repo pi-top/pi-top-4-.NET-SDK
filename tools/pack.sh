@@ -17,4 +17,4 @@ version="${1:-1.1.1}"
 localNugetPath="${2:-/home/pi/localNuget}"
 
 dotnet build "${root}/src" -c Release
-dotnet pack "${project}" "/p:PackageVersion=${version}" -o "${localNugetPath}" -c Release
+dotnet pack "${root}/src" "/p:PackageVersion=${version}" -o "${localNugetPath}" -c Release
