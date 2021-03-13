@@ -25,7 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj" />
     <ProjectReference Include="..\PiTop.MakerArchitecture.Expansion\PiTop.MakerArchitecture.Expansion.csproj" />
+    <ProjectReference Include="..\PiTop.MakerArchitecture.Foundation.InteractiveExtension\PiTop.MakerArchitecture.Foundation.InteractiveExtension.csproj" />
   </ItemGroup>
 
   <ItemGroup>
