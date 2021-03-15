@@ -13,6 +13,8 @@
     <PackageProjectUrl>https://github.com/pi-top/pi-top-4-.NET-SDK</PackageProjectUrl>
     <Company>pi-top</Company>
     <Authors>pi-top</Authors>
+    <Product>pi-top[4]</Product>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
 
