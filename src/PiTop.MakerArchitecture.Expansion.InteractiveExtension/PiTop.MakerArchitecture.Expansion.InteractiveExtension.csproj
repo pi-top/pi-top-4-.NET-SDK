@@ -18,8 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.21155.3" />
-    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.21155.3" />
+    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.21181.2" />
+    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.21181.2" />
   </ItemGroup>
 
   <ItemGroup>
