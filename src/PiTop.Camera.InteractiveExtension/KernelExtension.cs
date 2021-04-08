@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.DotNet.Interactive;
+using Microsoft.DotNet.Interactive.Commands;
 using Microsoft.DotNet.Interactive.Formatting;
 
 using OpenCvSharp;
@@ -16,7 +17,7 @@ namespace PiTop.Camera.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension
     {
-        public Task OnLoadAsync(Kernel kernel)
+        public async Task OnLoadAsync(Kernel kernel)
         {
             Formatter.Register<Mat>((openCvImage, writer) =>
             {
@@ -54,11 +55,11 @@ namespace PiTop.Camera.InteractiveExtension
                 writer.Write(imgTag);
             }, HtmlFormatter.MimeType);
 
-            KernelInvocationContext.Current?.Display(
-                $@"Added support for Camera.",
-                "text/markdown");
 
-            return Task.CompletedTask;
+            await kernel.SendAsync(
+                new DisplayValue(new FormattedValue(
+                    "text/markdown",
+                    "Added support for Camera.")));
         }
 
         private static byte[] GetImageBytes(SixLabors.ImageSharp.Image image)

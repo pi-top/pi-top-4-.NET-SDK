@@ -1,18 +1,18 @@
 ﻿using System.Threading.Tasks;
 
 using Microsoft.DotNet.Interactive;
+using Microsoft.DotNet.Interactive.Commands;
 
 namespace PiTop.MakerArchitecture.Expansion.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension
     {
-        public Task OnLoadAsync(Kernel kernel)
+        public async Task OnLoadAsync(Kernel kernel)
         {
-            KernelInvocationContext.Current?.Display(
-                $@"Added support for the ExpansionPlate.",
-                "text/markdown");
-
-            return Task.CompletedTask;
+            await kernel.SendAsync(
+                new DisplayValue(new FormattedValue(
+                    "text/markdown", 
+                    "Added support for the ExpansionPlate.")));
         }
     }
 }
