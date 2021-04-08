@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <PackageVersion>0.0.1</PackageVersion>
     <PackageId>pi-top.Camera.DotNet.Interactive</PackageId>
     <IsPackable>true</IsPackable>
     <PackageDescription>pi-top[4] Camera module.</PackageDescription>
