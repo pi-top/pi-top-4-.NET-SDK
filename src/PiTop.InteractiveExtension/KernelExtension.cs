@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Microsoft.DotNet.Interactive;
+using Microsoft.DotNet.Interactive.Commands;
 using Microsoft.DotNet.Interactive.Formatting;
 
 using SixLabors.ImageSharp;
@@ -12,7 +13,7 @@ namespace PiTop.InteractiveExtension
 {
     public class KernelExtension : IKernelExtension
     {
-        public Task OnLoadAsync(Kernel kernel)
+        public async Task OnLoadAsync(Kernel kernel)
         {
             Formatter.Register<Sh1106Display>((d, w) =>
             {
@@ -24,7 +25,10 @@ namespace PiTop.InteractiveExtension
                 }
             }, "text/html");
 
-            return Task.CompletedTask;
+            await kernel.SendAsync(
+                new DisplayValue(new FormattedValue(
+                    "text/markdown",
+                    "Added support for pi-top[4] module.")));
         }
     }
 }

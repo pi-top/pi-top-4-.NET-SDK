@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 using Microsoft.DotNet.Interactive;
+using Microsoft.DotNet.Interactive.Commands;
 using Microsoft.DotNet.Interactive.Formatting;
 
 
@@ -22,7 +23,7 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
                 NumberHandling =System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals|System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
             };
 
-        public Task OnLoadAsync(Kernel kernel)
+        public async Task OnLoadAsync(Kernel kernel)
         {
             Formatter.Register<FoundationPlate>((plate, writer) =>
             {
@@ -87,11 +88,11 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
             Formatter.SetPreferredMimeTypeFor(typeof(Potentiometer), HtmlFormatter.MimeType);
             Formatter.SetPreferredMimeTypeFor(typeof(Buzzer), HtmlFormatter.MimeType);
 
-            KernelInvocationContext.Current?.Display(
-                $@"Added support for FoundationPlate.",
-                "text/markdown");
+            await kernel.SendAsync(
+                new DisplayValue(new FormattedValue(
+                    "text/markdown",
+                    "Added support for FoundationPlate.")));
 
-            return Task.CompletedTask;
         }
 
 
