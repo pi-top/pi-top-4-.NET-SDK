@@ -3,6 +3,9 @@ using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion
 {
+    /// <summary>
+    /// Extensions for <see cref="EncoderMotor"/>
+    /// </summary>
     public static class EncoderMotorExtension
     {
         /// <summary>

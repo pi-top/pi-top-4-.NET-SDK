@@ -1,13 +1,7 @@
 ﻿using System;
 
 using FluentAssertions;
-
-using PiTop;
 using PiTop.Tests;
-
-using PiTop.MakerArchitecture.Foundation.Components;
-using PiTop.MakerArchitecture.Foundation.Sensors;
-
 using Xunit;
 
 namespace PiTop.MakerArchitecture.Foundation.Tests
@@ -18,7 +12,9 @@ namespace PiTop.MakerArchitecture.Foundation.Tests
 
         public FoundationPlateTests()
         {
-            PiTop4Board.Configure(new DummyGpioController());
+            PiTop4Board.Configure(
+                new DummyGpioController(), 
+                i2cDeviceFactory:settings => new DummyI2CDevice(settings));
             _module = PiTop4Board.Instance;
         }
 
@@ -35,7 +31,7 @@ namespace PiTop.MakerArchitecture.Foundation.Tests
         {
             using var plate = _module.GetOrCreatePlate<FoundationPlate>();
 
-            using var led = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
+            using var led = plate.GetOrCreateLed(DigitalPort.D0);
 
             led.Should().NotBeNull();
         }
@@ -45,8 +41,8 @@ namespace PiTop.MakerArchitecture.Foundation.Tests
         {
             using var plate = _module.GetOrCreatePlate<FoundationPlate>();
 
-            var led1 = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
-            var led2 = plate.GetOrCreateDevice<Led>(DigitalPort.D0);
+            var led1 = plate.GetOrCreateLed(DigitalPort.D0);
+            var led2 = plate.GetOrCreateLed(DigitalPort.D0);
 
             led2.Should().BeSameAs(led1);
         }
@@ -56,17 +52,17 @@ namespace PiTop.MakerArchitecture.Foundation.Tests
         {
             using var plate = _module.GetOrCreatePlate<FoundationPlate>();
 
-            plate.GetOrCreateDevice<Led>(DigitalPort.D0);
+            plate.GetOrCreateLed(DigitalPort.D0);
 
             var action = new Action(() =>
             {
-                plate.GetOrCreateDevice<UltrasonicSensor>(DigitalPort.D0);
+                plate.GetOrCreateUltrasonicSensor(DigitalPort.D0);
             });
 
-            action.Should().Throw<InvalidOperationException>()
+            action.Should().Throw<PlatePortInUseException>()
                 .Which
                 .Message
-                .Should().Match("Connection D0 is already used by PiTop.MakerArchitecture.Foundation.Components.Led device");
+                .Should().Match("Port already in use by (another) PiTop.MakerArchitecture.Foundation.Components.Led");
         }
 
         public void Dispose()

@@ -1,5 +1,12 @@
-﻿namespace PiTop.MakerArchitecture.Expansion
+﻿using PiTop.MakerArchitecture.Expansion.Sensors;
+using PiTop.MakerArchitecture.Foundation;
+using PiTop.MakerArchitecture.Foundation.Sensors;
+
+namespace PiTop.MakerArchitecture.Expansion
 {
+    /// <summary>
+    /// Extensions for <see cref="ExpansionPlate"/>.
+    /// </summary>
     public static class ExpansionPlateExtensions
     {
         public static ExpansionPlate GetOrCreateExpansionPlate(this PiTop4Board module)
@@ -7,14 +14,24 @@
             return module.GetOrCreatePlate<ExpansionPlate>();
         }
 
-        public static ServoMotor GetOrCreateServoMotor(this IExpansionPlate plate, ServoMotorPort motorPort)
+        public static ServoMotor GetOrCreateServoMotor(this ExpansionPlate plate, ServoMotorPort port)
         {
-            return plate.GetOrCreateDevice<ServoMotor>(motorPort);
+            return plate.GetOrCreateConnectedDevice(port.ToString(), () => new ServoMotor(port, plate.GetOrCreateMcu()));
         }
 
-        public static EncoderMotor GetOrCreateEncoderMotor(this IExpansionPlate plate, EncoderMotorPort port)
+        public static EncoderMotor GetOrCreateEncoderMotor(this ExpansionPlate plate, EncoderMotorPort port)
         {
-            return plate.GetOrCreateDevice<EncoderMotor>(port);
+            return plate.GetOrCreateConnectedDevice(port.ToString(), ()=> new EncoderMotor(port, plate.GetOrCreateMcu()));
+        }
+
+        public static UltrasonicSensor GetOrCreateUltrasonicSensor(this ExpansionPlate plate, AnaloguePort port)
+        {
+            return plate.GetOrCreateConnectedDevice(port.ToString(), () => new UltrasonicSensorSMBus());
+        }
+
+        public static UltrasonicSensor GetOrCreateUltrasonicSensor(this ExpansionPlate plate, DigitalPort port)
+        {
+            return plate.GetOrCreateConnectedDevice(port.ToString(), () => new UltrasonicSensorGpio());
         }
     }
 }

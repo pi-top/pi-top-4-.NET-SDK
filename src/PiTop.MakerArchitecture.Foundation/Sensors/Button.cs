@@ -5,21 +5,36 @@ using PiTop.Abstractions;
 
 namespace PiTop.MakerArchitecture.Foundation.Sensors
 {
-    public class Button : DigitalPortDeviceBase
+    public class Button : PlateConnectedDevice
     {
         public event EventHandler<bool>? PressedChanged;
         public event EventHandler<EventArgs>? Pressed;
         public event EventHandler<EventArgs>? Released;
-        public Button(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
+
+        private GpioController? _controller;
+
+
+        /// <inheritdoc />
+        protected override void OnConnection()
         {
-            var (buttonPin, _) = Port.ToPinPair();
-            var openPinAsDisposable = Controller.OpenPinAsDisposable(buttonPin, PinMode.Input);
-            var registerCallbackForPinValueChangedEventAsDisposable = Controller.RegisterCallbackForPinValueChangedEventAsDisposable(buttonPin, PinEventTypes.Falling | PinEventTypes.Rising, Callback);
+            var buttonPin = -1;
+            _controller = Port!.GpioController;
+            if (Port!.PinPair is { } pinPair)
+            {
+                buttonPin = pinPair.pin0;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Port {Port.Name} as no pin pair.");
+            }
+            
+            var openPinAsDisposable = _controller.OpenPinAsDisposable(buttonPin, PinMode.Input);
+            var registerCallbackForPinValueChangedEventAsDisposable = _controller.RegisterCallbackForPinValueChangedEventAsDisposable(buttonPin, PinEventTypes.Falling | PinEventTypes.Rising, Callback);
 
             AddToDisposables(registerCallbackForPinValueChangedEventAsDisposable);
             AddToDisposables(openPinAsDisposable);
 
-            IsPressed = Controller.Read(buttonPin) == PinValue.Low;
+            IsPressed = _controller.Read(buttonPin) == PinValue.Low;
         }
 
         private void Callback(object? _, PinValueChangedEventArgs pinValueChangedEventArgs)
@@ -40,6 +55,6 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
             PressedChanged?.Invoke(this, IsPressed);
         }
 
-        public bool IsPressed { get; set; }
+        public bool IsPressed { get; private set; }
     }
 }
