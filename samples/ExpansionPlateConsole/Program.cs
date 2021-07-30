@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using PiTop;
 using PiTop.MakerArchitecture.Expansion;
 using PiTop.MakerArchitecture.Foundation;
+using PiTop.MakerArchitecture.Foundation.Sensors;
 using Spectre.Console;
 using Pocket;
 
@@ -40,60 +41,50 @@ namespace ExpansionPlateConsole
                 typeof(ExpansionPlate).Assembly,
                 typeof(Program).Assembly,
             });
+            UltrasonicSensor frontUltrasound = null; 
+            UltrasonicSensor backUltrasound = null;
+            var frontSensorValue = new SensorValue("Front", 0, Color.Green);
+            var backSensorValue = new SensorValue("Back", 0, Color.Green);
 
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
                 using var _ = Logger.Log.OnEnterAndConfirmOnExit("Device is on");
                 using var expansionPlate = PiTop4Board.Instance.GetOrCreateExpansionPlate();
-                var frontUltrasound = expansionPlate.GetOrCreateUltrasonicSensor(AnaloguePort.A1);
+                frontUltrasound = expansionPlate.GetOrCreateUltrasonicSensor(AnaloguePort.A1);
 
-                var backUltrasound = expansionPlate.GetOrCreateUltrasonicSensor(AnaloguePort.A3);
-
-                AnsiConsole.Markup($"[underline red]Front[/] {frontUltrasound.Distance}");
-                AnsiConsole.Markup($"[underline red]Back[/] {backUltrasound.Distance}!");
-
-                while (true)
-                {
-                    await Task.Delay(500);
-                   // AnsiConsole.Markup($"[underline red]Front[/] {frontUltrasound.Distance}");
-                   // AnsiConsole.Markup($"[underline red]Back[/] {backUltrasound.Distance}!");
-
-                }
+                backUltrasound = expansionPlate.GetOrCreateUltrasonicSensor(AnaloguePort.A3);              
             }
 
             var rnd = new Random();
-            var frontSensorValue = new SensorValue("Front", rnd.Next(1, 50), Color.Green);
-            var backSensorValue = new SensorValue("Back", rnd.Next(1, 50), Color.Green);
-            
-            var chart = new BarChart()
-                .Width(60)
-                .Label("[green bold underline]Ultrasound readings[/]")
-                .CenterLabel()
-                .AddItem(frontSensorValue)
-                .AddItem(backSensorValue);
 
+     
+
+            var chart = new BarChart()
+.Width(60)
+.Label("[green bold underline]Ultrasound readings[/]")
+.CenterLabel()
+.AddItem(frontSensorValue)
+.AddItem(backSensorValue);
 
             await AnsiConsole.Live(chart)
-                .Start(async ctx =>
+                .StartAsync(async ctx =>
                 {
 
                     while (true)
                     {
                         await Task.Delay(500);
-                        frontSensorValue.Value = rnd.Next(1, 50);
-                        backSensorValue.Value = rnd.Next(1, 50);
 
-                        chart
-                        .AddItem(frontSensorValue)
+                        frontSensorValue.Value = frontUltrasound?.Distance.Centimeters ?? rnd.Next(1, 50);
+                        backSensorValue.Value = backUltrasound?.Distance.Centimeters ?? rnd.Next(1, 50);
+
+                        chart.Data.Clear();
+
+                        chart.AddItem(frontSensorValue)
                         .AddItem(backSensorValue);
-                        ctx.Refresh();
 
+                        ctx.UpdateTarget(chart);
                     }
-
                 });
-
-            
-
         }
     }
 }
