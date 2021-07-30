@@ -3,6 +3,9 @@ using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Expansion
 {
+    /// <summary>
+    /// Extensions for <see cref="UnitsNet"/>
+    /// </summary>
     public static class UnitsExtensions
     {
         public static RotationalSpeed ToRotationalSpeedFromCircumference(this Speed linearSpeed,

@@ -1,28 +1,18 @@
 ﻿using System;
-
-using PiTop.Abstractions;
-
 using UnitsNet;
 
 namespace PiTop.MakerArchitecture.Foundation.Sensors
 {
-    public class SoundSensor : AnaloguePortDeviceBase
+    public class SoundSensor : PlateConnectedDevice
     {
         private readonly bool _normalizeValue;
-        private readonly AnalogueDigitalConverter _adc;
+        private AnalogueDigitalConverter _adc;
 
-        public SoundSensor(AnaloguePort port, int deviceAddress, II2CDeviceFactory i2CDeviceFactory) : this(port, deviceAddress, i2CDeviceFactory, true)
-        {
-        }
 
-        public SoundSensor(AnaloguePort port, int deviceAddress, II2CDeviceFactory i2CDeviceFactory, bool normalizeValue) : base(port, deviceAddress, i2CDeviceFactory)
+        public SoundSensor( bool normalizeValue = true) 
         {
             _normalizeValue = normalizeValue;
-            var (pin1, _) = Port.ToPinPair();
-            var bus = i2CDeviceFactory.GetOrCreateI2CDevice(DeviceAddress);
-            _adc = new AnalogueDigitalConverter(bus, pin1);
-
-            AddToDisposables(_adc);
+          
         }
 
         public double Value => ReadValue(_normalizeValue);
@@ -44,6 +34,21 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
                 value /= ushort.MaxValue;
             }
             return Math.Round(value);
+        }
+
+        /// <inheritdoc />
+        protected override void OnConnection()
+        {
+            if (Port!.PinPair is { } pinPair)
+            {
+                var bus = Port.Bus;
+                _adc = new AnalogueDigitalConverter(bus, pinPair.pin0);
+            }
+            else
+            {
+                throw new InvalidOperationException($"Port {Port.Name} as no pin pair.");
+            }
+            
         }
     }
 }

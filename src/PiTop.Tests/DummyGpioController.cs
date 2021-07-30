@@ -3,6 +3,7 @@ using System.Device.Gpio;
 
 namespace PiTop.Tests
 {
+  
     public class DummyGpioController : GpioController
     {
         private readonly List<int> _openPins = new List<int>();

@@ -1,32 +1,42 @@
-﻿using System.Device.Gpio;
+﻿using System;
+using System.Device.Gpio;
 
 using PiTop.Abstractions;
 
 namespace PiTop.MakerArchitecture.Foundation.Components
 {
-    public class Led : DigitalPortDeviceBase
+    public class Led : PlateConnectedDevice
     {
-        private readonly int _ledPin;
+        private int _ledPin;
         private bool _isOn;
+        private GpioController? _controller;
 
-        public Led(DigitalPort port, IGpioControllerFactory controllerFactory) : base(port, controllerFactory)
-        {
-            (_ledPin, _) = Port.ToPinPair();
-        }
 
+        /// <inheritdoc />
         protected override void OnConnection()
         {
+            _controller = Port!.GpioController;
+            if (Port!.PinPair is { } pinPair)
+            {
+                _ledPin = pinPair.pin0;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Port {Port.Name} as no pin pair.");
+            }
+
             _isOn = false;
-            AddToDisposables(Controller.OpenPinAsDisposable(_ledPin, PinMode.Output));
-            Controller.Write(_ledPin, PinValue.Low);
+            AddToDisposables(_controller.OpenPinAsDisposable(_ledPin, PinMode.Output));
+            _controller.Write(_ledPin, PinValue.Low);
         }
+        
 
         public Led On()
         {
-            if (!_isOn)
+            if (!_isOn && _controller is { })
             {
                 _isOn = true;
-                Controller.Write(_ledPin, PinValue.High);
+                _controller.Write(_ledPin, PinValue.High);
             }
 
             return this;
@@ -34,10 +44,10 @@ namespace PiTop.MakerArchitecture.Foundation.Components
 
         public Led Off()
         {
-            if (_isOn)
+            if (_isOn && _controller is {})
             {
                 _isOn = false;
-                Controller.Write(_ledPin, PinValue.Low);
+                _controller.Write(_ledPin, PinValue.Low);
             }
             return this;
         }
