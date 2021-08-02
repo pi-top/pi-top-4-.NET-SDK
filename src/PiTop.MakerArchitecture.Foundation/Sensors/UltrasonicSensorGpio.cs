@@ -96,7 +96,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
 
             operation.Info("Trigger starting");
             _timer.Reset();
-            _echoReceived.Reset();
+            _echoReceived!.Reset();
             // Trigger input for 10uS to start ranging
             _controller.Write(_triggerPin, PinValue.High);
             Thread.Sleep(TimeSpan.FromMilliseconds(0.01));
