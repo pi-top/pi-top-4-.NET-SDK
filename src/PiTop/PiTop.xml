@@ -86,5 +86,16 @@
         <member name="M:PiTop.PlateConnectedDevice.Dispose">
             <inheritdoc />
         </member>
+        <member name="P:PiTop.PlatePort.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PiTop.PlatePortInUseException.#ctor(PiTop.PlatePort)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="port">The Port that is already used.</param>
+        </member>
     </members>
 </doc>
