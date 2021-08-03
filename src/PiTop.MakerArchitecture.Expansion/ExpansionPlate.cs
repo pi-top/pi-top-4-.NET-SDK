@@ -1,4 +1,6 @@
 ﻿using Iot.Device.Imu;
+
+using PiTop.Abstractions;
 using PiTop.MakerArchitecture.Foundation;
 
 using System;
@@ -112,7 +114,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
             Mpu9250 CreateAndCalibrate()
             {
-                var device = new Mpu9250(GetOrCreateMcu().I2c);
+                var device = new Mpu9250(GetOrCreateMcu());
                 device.CalibrateMagnetometer();
                 device.CalibrateGyroscopeAccelerometer();
                 return device;

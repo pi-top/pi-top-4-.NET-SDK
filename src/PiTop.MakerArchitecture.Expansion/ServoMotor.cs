@@ -1,5 +1,6 @@
 ﻿using PiTop.Abstractions;
 using System;
+using System.Device.I2c;
 using System.Linq;
 using PiTop.Algorithms;
 using Pocket;
@@ -10,7 +11,7 @@ namespace PiTop.MakerArchitecture.Expansion
 {
     public class ServoMotor : PlateConnectedDevice
     {
-        private readonly I2CBusDevice _controller;
+        private readonly I2cDevice _controller;
         private Angle _zeroPoint;
         private RotationalSpeed _defaultSpeed;
         public ServoMotorPort Port { get; }
@@ -37,7 +38,7 @@ namespace PiTop.MakerArchitecture.Expansion
         private byte RegisterSpeed => (byte)(0x56 + Port);
         private byte RegisterAngleAndSpeed => (byte)(0x5C + Port);
 
-        public ServoMotor(ServoMotorPort port, I2CBusDevice controller)
+        public ServoMotor(ServoMotorPort port, I2cDevice controller)
         {
             _controller = controller;
             Port = port;

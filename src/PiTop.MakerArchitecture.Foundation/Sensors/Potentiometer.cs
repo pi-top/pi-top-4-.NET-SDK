@@ -26,7 +26,7 @@ namespace PiTop.MakerArchitecture.Foundation.Sensors
         {
             if (Port!.PinPair is { } pinPair)
             {
-                var bus = Port.I2CBus;
+                var bus = Port.I2CDevice;
                 _adc = new AnalogueDigitalConverter(bus, pinPair.pin0);
             }
             else

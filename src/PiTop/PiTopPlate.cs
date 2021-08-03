@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Device.I2c;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace PiTop
 {
     public abstract class PiTopPlate : IDisposable
     {
-        private I2CBusDevice? _mcu;
+        private I2cDevice? _mcu;
 
         private readonly ConcurrentDictionary<string, PlatePort> _connectedPorts =
             new(StringComparer.InvariantCultureIgnoreCase);
@@ -45,13 +46,13 @@ namespace PiTop
             _disposables.Dispose();
         }
 
-        public I2CBusDevice GetOrCreateMcu()
+        public I2cDevice GetOrCreateMcu()
         {
             if (_mcu is null)
             {
                 Logger.Log.Info($"Creating I2CBusDevice on 0x{McuI2CAddress:X2}");
             }
-            return _mcu ??= new I2CBusDevice(PiTop4Board.GetOrCreateI2CDevice(McuI2CAddress));
+            return _mcu ??= PiTop4Board.GetOrCreateI2CDevice(McuI2CAddress);
         }
 
         protected void RegisterPort(PlatePort port)
@@ -182,7 +183,7 @@ namespace PiTop
 
         protected virtual void OnDispose(bool isDisposing)
         {
-            _mcu?.I2c.Dispose();
+            _mcu?.Dispose();
         }
     }
 }

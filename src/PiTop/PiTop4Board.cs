@@ -293,7 +293,6 @@ namespace PiTop
         {
             return _spiDevices.GetOrAdd(connectionSettings, settings => _spiDeviceFactory(settings));
         }
-
         public void Dispose()
         {
             _moduleDriverClient.MessageReceived -= ModuleDriverClientMessageReceived;
