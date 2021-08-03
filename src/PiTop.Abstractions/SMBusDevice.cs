@@ -53,9 +53,9 @@ namespace PiTop.Abstractions
         public short ReadWordSigned(byte commandCode)
         {
             var data = new byte[2];
-
+            
             I2c.WriteRead(new[] { commandCode }, data);
-
+            
             return BitConverter.ToInt16(data, 0);
         }
 
