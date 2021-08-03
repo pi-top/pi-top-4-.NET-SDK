@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Device.I2c;
 using PiTop.Abstractions;
@@ -55,22 +54,10 @@ namespace PiTop
         }
 
         /// <summary>
-        /// 
+        /// Gets the Port Name.
         /// </summary>
         public string Name { get;  }
 
-
-        public bool Is<T>()
-        {
-            var enumType = typeof(T);
-            if (enumType.IsEnum)
-            {
-                var names = new HashSet<string>( Enum.GetNames(enumType));
-                return names.Contains(Name);
-            }
-
-            throw new ArgumentException($"{enumType.Name} is not an enum.");
-        }
-
+       
     }
 }
