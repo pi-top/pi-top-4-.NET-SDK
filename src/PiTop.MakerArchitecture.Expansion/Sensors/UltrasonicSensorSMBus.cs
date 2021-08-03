@@ -46,7 +46,6 @@ namespace PiTop.MakerArchitecture.Expansion.Sensors
             {
                 operation.Fail(e);
                 throw new SensorReadException($"Could not get reading from the sensor on port {Port.Name}",e);
-
             }
         }
 

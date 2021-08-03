@@ -28,6 +28,7 @@ namespace ExpansionPlateConsole
 
         static async Task Main(string[] args)
         {
+            using var operation = Logger.Log.OnEnterAndExit();
 
             LogEvents.Subscribe(i =>
             {
@@ -47,7 +48,7 @@ namespace ExpansionPlateConsole
 
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
-                using var _ = Logger.Log.OnEnterAndConfirmOnExit("Device is on");
+                operation.Info("Creating pi-top device");
                 using var expansionPlate = PiTop4Board.Instance.GetOrCreateExpansionPlate();
                 frontUltrasound = expansionPlate.GetOrCreateUltrasonicSensor(AnaloguePort.A1);
 
