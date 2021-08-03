@@ -45,7 +45,7 @@ namespace PiTop.MakerArchitecture.Expansion.Sensors
             catch (Exception e)
             {
                 operation.Fail(e);
-                throw new SensorReadException($"Could not get reading from the sensor on port {Port}",e);
+                throw new SensorReadException($"Could not get reading from the sensor on port {Port.Name}",e);
 
             }
         }

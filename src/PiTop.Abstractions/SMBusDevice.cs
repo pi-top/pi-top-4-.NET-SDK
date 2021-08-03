@@ -14,7 +14,7 @@ namespace PiTop.Abstractions
 
         public SMBusDevice(I2cDevice device)
         {
-            I2c = device;
+            I2c = device ?? throw new ArgumentNullException(nameof(device));
         }
 
         public void WriteByte(byte commandCode, byte dataByte)
