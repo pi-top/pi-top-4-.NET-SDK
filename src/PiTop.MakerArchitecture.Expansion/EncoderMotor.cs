@@ -1,6 +1,7 @@
 ﻿using PiTop.Abstractions;
 using Pocket;
 using System;
+using System.Device.I2c;
 using System.IO;
 using UnitsNet;
 using static Pocket.Logger;
@@ -11,7 +12,7 @@ namespace PiTop.MakerArchitecture.Expansion
     {
         private const int MMK_STANDARD_GEAR_RATIO = 42;
         private const int MAX_DC_MOTOR_RPM = 6000;
-        private readonly I2CBusDevice _controller;
+        private readonly I2cDevice _controller;
 
         public EncoderMotorPort Port { get; }
         private byte RegisterControlMode => (byte)(0x60 + Port);
@@ -66,7 +67,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
         public RotationalSpeed ActualRpm => ControlMode == 0 ? RotationalSpeed.Zero : ReadActualRpm();
 
-        public EncoderMotor(EncoderMotorPort port, I2CBusDevice controller)
+        public EncoderMotor(EncoderMotorPort port, I2cDevice controller)
         {
             ForwardDirection = ForwardDirection.Clockwise;
             _controller = controller;
