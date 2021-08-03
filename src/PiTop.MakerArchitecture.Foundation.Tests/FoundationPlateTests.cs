@@ -62,7 +62,7 @@ namespace PiTop.MakerArchitecture.Foundation.Tests
             action.Should().Throw<PlatePortInUseException>()
                 .Which
                 .Message
-                .Should().Match("Port already in use by (another) PiTop.MakerArchitecture.Foundation.Components.Led");
+                .Should().Match("Port D0 already in use by (another) PiTop.MakerArchitecture.Foundation.Components.Led");
         }
 
         public void Dispose()

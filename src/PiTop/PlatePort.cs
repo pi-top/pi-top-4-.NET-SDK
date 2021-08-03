@@ -54,6 +54,9 @@ namespace PiTop
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get;  }
 
 
