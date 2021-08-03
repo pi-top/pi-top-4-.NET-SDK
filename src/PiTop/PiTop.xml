@@ -88,8 +88,15 @@
         </member>
         <member name="P:PiTop.PlatePort.Name">
             <summary>
-            
+            Gets the Port Name.
             </summary>
+        </member>
+        <member name="M:PiTop.PlatePortExtensions.Is``1(PiTop.PlatePort)">
+            <summary>
+            Utility to check if a port name is a value from an enum type.
+            </summary>
+            <typeparam name="T">The Enum type to test against.</typeparam>
+            <returns>True if the port name is one of the Enum value.</returns>
         </member>
         <member name="M:PiTop.PlatePortInUseException.#ctor(PiTop.PlatePort)">
             <summary>
