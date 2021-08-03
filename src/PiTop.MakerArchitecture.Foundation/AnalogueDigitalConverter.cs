@@ -5,10 +5,10 @@ namespace PiTop.MakerArchitecture.Foundation
 {
     internal class AnalogueDigitalConverter
     {
-        private readonly SMBusDevice _device;
+        private readonly I2CBusDevice _device;
         private readonly int _channel;
 
-        public AnalogueDigitalConverter(SMBusDevice device, int channel)
+        public AnalogueDigitalConverter(I2CBusDevice device, int channel)
         {
             _device = device ?? throw new ArgumentNullException(nameof(device));
             _channel = channel;
@@ -63,7 +63,7 @@ namespace PiTop.MakerArchitecture.Foundation
 
 
 
-        private int ReadRegister(byte registerAddress, SMBusDevice device)
+        private int ReadRegister(byte registerAddress, I2CBusDevice device)
         {
             return device.ReadWord(registerAddress);
         }

@@ -11,7 +11,7 @@ namespace PiTop.MakerArchitecture.Expansion.Sensors
 
     public class UltrasonicSensorSMBus: UltrasonicSensor
     {
-        private SMBusDevice? _bus;
+        private I2CBusDevice? _bus;
         private byte _configRegister;
         private byte _dataRegister;
         
@@ -72,7 +72,7 @@ namespace PiTop.MakerArchitecture.Expansion.Sensors
 
             Logger.Log.Info($"Using Data Register 0x{_dataRegister:X2} and Config Register 0x{_configRegister:X2}");
             
-            _bus = Port.Bus;
+            _bus = Port.I2CBus;
             _bus.WriteByte(_configRegister, data);
             var test = _bus.ReadByte(_configRegister);
             Logger.Log.Info($"Configured writing  0x{test:X2}");

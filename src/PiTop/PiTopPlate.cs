@@ -11,7 +11,7 @@ namespace PiTop
 {
     public abstract class PiTopPlate : IDisposable
     {
-        private SMBusDevice? _mcu;
+        private I2CBusDevice? _mcu;
 
         private readonly ConcurrentDictionary<string, PlatePort> _connectedPorts =
             new(StringComparer.InvariantCultureIgnoreCase);
@@ -45,13 +45,13 @@ namespace PiTop
             _disposables.Dispose();
         }
 
-        public SMBusDevice GetOrCreateMcu()
+        public I2CBusDevice GetOrCreateMcu()
         {
             if (_mcu is null)
             {
-                Logger.Log.Info($"Creating SMBusDevice on 0x{McuI2CAddress:X2}");
+                Logger.Log.Info($"Creating I2CBusDevice on 0x{McuI2CAddress:X2}");
             }
-            return _mcu ??= new SMBusDevice(PiTop4Board.GetOrCreateI2CDevice(McuI2CAddress));
+            return _mcu ??= new I2CBusDevice(PiTop4Board.GetOrCreateI2CDevice(McuI2CAddress));
         }
 
         protected void RegisterPort(PlatePort port)

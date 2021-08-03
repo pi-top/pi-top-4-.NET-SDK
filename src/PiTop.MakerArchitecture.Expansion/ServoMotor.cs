@@ -10,7 +10,7 @@ namespace PiTop.MakerArchitecture.Expansion
 {
     public class ServoMotor : PlateConnectedDevice
     {
-        private readonly SMBusDevice _controller;
+        private readonly I2CBusDevice _controller;
         private Angle _zeroPoint;
         private RotationalSpeed _defaultSpeed;
         public ServoMotorPort Port { get; }
@@ -37,7 +37,7 @@ namespace PiTop.MakerArchitecture.Expansion
         private byte RegisterSpeed => (byte)(0x56 + Port);
         private byte RegisterAngleAndSpeed => (byte)(0x5C + Port);
 
-        public ServoMotor(ServoMotorPort port, SMBusDevice controller)
+        public ServoMotor(ServoMotorPort port, I2CBusDevice controller)
         {
             _controller = controller;
             Port = port;

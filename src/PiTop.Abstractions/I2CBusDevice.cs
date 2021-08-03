@@ -8,11 +8,11 @@ namespace PiTop.Abstractions
     /// Wraps I2C device to expose SMBus functions.
     /// See http://smbus.org/specs/SMBus_3_0_20141220.pdf
     /// </summary>
-    public class SMBusDevice
+    public class I2CBusDevice
     {
         public I2cDevice I2c { get; }
 
-        public SMBusDevice(I2cDevice device)
+        public I2CBusDevice(I2cDevice device)
         {
             I2c = device ?? throw new ArgumentNullException(nameof(device));
         }
