@@ -11,7 +11,7 @@ namespace PiTop.MakerArchitecture.Expansion
     {
         private const int MMK_STANDARD_GEAR_RATIO = 42;
         private const int MAX_DC_MOTOR_RPM = 6000;
-        private readonly SMBusDevice _controller;
+        private readonly I2CBusDevice _controller;
 
         public EncoderMotorPort Port { get; }
         private byte RegisterControlMode => (byte)(0x60 + Port);
@@ -66,7 +66,7 @@ namespace PiTop.MakerArchitecture.Expansion
 
         public RotationalSpeed ActualRpm => ControlMode == 0 ? RotationalSpeed.Zero : ReadActualRpm();
 
-        public EncoderMotor(EncoderMotorPort port, SMBusDevice controller)
+        public EncoderMotor(EncoderMotorPort port, I2CBusDevice controller)
         {
             ForwardDirection = ForwardDirection.Clockwise;
             _controller = controller;

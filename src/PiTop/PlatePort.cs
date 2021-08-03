@@ -9,14 +9,14 @@ namespace PiTop
     {
         public (int pin0, int pin1)? PinPair { get; }
 
-        public SMBusDevice Bus { get; }
+        public I2CBusDevice I2CBus { get; }
 
         public GpioController GpioController { get; }
 
         private PlateConnectedDevice? _device;
 
         public PlatePort(string name, (int pin0, int pin1)? pinPair = null, GpioController gpioController = null,
-            SMBusDevice bus = null)
+            I2CBusDevice i2CBus = null)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -24,7 +24,7 @@ namespace PiTop
             }
 
             PinPair = pinPair;
-            Bus = bus;
+            I2CBus = i2CBus;
             GpioController = gpioController;
             Name = name;
         }
