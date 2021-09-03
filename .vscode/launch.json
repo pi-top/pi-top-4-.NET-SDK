@@ -18,7 +18,7 @@
              "stopAtEntry": false
          },
          {
-             "name": ".NET Core Launch (remote console)",
+             "name": ".NET Core Launch (remote console) Diego Version Pi-top01",
              "type": "coreclr",
              "request": "launch",
              //"preLaunchTask": "PublishAndDeploy",
