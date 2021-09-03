@@ -49,7 +49,7 @@ namespace ExpansionPlateConsole
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
                 operation.Info("Creating pi-top device");
-                using var expansionPlate = PiTop4Board.Instance.GetOrCreateExpansionPlate();
+                var expansionPlate = PiTop4Board.Instance.GetOrCreateExpansionPlate();
                 frontUltrasound = expansionPlate.GetOrCreateUltrasonicSensor(AnaloguePort.A1);
 
                 backUltrasound = expansionPlate.GetOrCreateUltrasonicSensor(AnaloguePort.A3);              
