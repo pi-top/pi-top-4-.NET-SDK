@@ -34,7 +34,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta11" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
   </ItemGroup>
 
   <ItemGroup>
