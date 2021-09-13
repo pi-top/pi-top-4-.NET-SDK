@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="5.0.0" />
-    <PackageReference Include="UnitsNet" Version="4.101.0" />
+    <PackageReference Include="UnitsNet" Version="4.102.0" />
   </ItemGroup>
 
   <ItemGroup>
