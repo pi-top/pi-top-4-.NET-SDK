@@ -31,8 +31,8 @@
     <PackageReference Include="Interactive.Extension.ImageSharp" Version="1.0.24" />
     <PackageReference Include="Interactive.Extension.OpenCvSharp4" Version="1.0.24" />
     <PackageReference Include="Interactive.Extension.System.Drawing" Version="1.0.24" />
-    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.21459.1" />
-    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.21459.1" />
+    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.21506.4" />
+    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.21506.4" />
   </ItemGroup>
 
 
