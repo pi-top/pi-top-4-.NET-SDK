@@ -2,6 +2,7 @@
 using FluentAssertions.Primitives;
 
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace PiTop.Tests
@@ -12,7 +13,7 @@ namespace PiTop.Tests
         {
             for (var y = 0; y < actual.Height; y++)
             {
-                var row = actual.GetPixelRowSpan(y);
+                var row = actual.DangerousGetPixelRowMemory(y).ToArray();
 
                 for (var x = 0; x < actual.Width; x++)
                 {
