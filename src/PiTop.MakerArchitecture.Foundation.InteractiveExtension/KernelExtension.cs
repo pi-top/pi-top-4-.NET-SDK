@@ -79,14 +79,14 @@ namespace PiTop.MakerArchitecture.Foundation.InteractiveExtension
                 writer.Write(svg);
             }, HtmlFormatter.MimeType);
 
-            Formatter.SetPreferredMimeTypeFor(typeof(FoundationPlate), HtmlFormatter.MimeType);
-            Formatter.SetPreferredMimeTypeFor(typeof(Led), HtmlFormatter.MimeType);
-            Formatter.SetPreferredMimeTypeFor(typeof(UltrasonicSensor), HtmlFormatter.MimeType);
-            Formatter.SetPreferredMimeTypeFor(typeof(SoundSensor), HtmlFormatter.MimeType);
-            Formatter.SetPreferredMimeTypeFor(typeof(LightSensor), HtmlFormatter.MimeType);
-            Formatter.SetPreferredMimeTypeFor(typeof(Button), HtmlFormatter.MimeType);
-            Formatter.SetPreferredMimeTypeFor(typeof(Potentiometer), HtmlFormatter.MimeType);
-            Formatter.SetPreferredMimeTypeFor(typeof(Buzzer), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypesFor(typeof(FoundationPlate), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypesFor(typeof(Led), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypesFor(typeof(UltrasonicSensor), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypesFor(typeof(SoundSensor), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypesFor(typeof(LightSensor), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypesFor(typeof(Button), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypesFor(typeof(Potentiometer), HtmlFormatter.MimeType);
+            Formatter.SetPreferredMimeTypesFor(typeof(Buzzer), HtmlFormatter.MimeType);
 
             await kernel.SendAsync(
                 new DisplayValue(new FormattedValue(
