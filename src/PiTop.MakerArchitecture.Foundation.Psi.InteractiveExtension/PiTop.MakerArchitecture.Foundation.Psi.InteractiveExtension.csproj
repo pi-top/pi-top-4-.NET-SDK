@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <PackageVersion>0.0.1</PackageVersion>
     <PackageId>pi-top.MakerArchitecture.Foundation.Psi.DotNet.Interactive</PackageId>
@@ -28,8 +28,8 @@
 
 
   <ItemGroup>
-    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.21506.4" />
-    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.21506.4" />
+    <PackageReference Include="microsoft.dotnet.interactive" Version="1.0.0-beta.22103.1" />
+    <PackageReference Include="microsoft.dotnet.interactive.formatting" Version="1.0.0-beta.22103.1" />
   </ItemGroup>
 
   <ItemGroup>

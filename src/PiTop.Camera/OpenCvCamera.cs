@@ -1,7 +1,6 @@
 ﻿using System;
 
 using OpenCvSharp;
-using OpenCvSharp.Extensions;
 
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -11,7 +10,6 @@ namespace PiTop.Camera
     public class OpenCvCamera :
         ICamera,
         IFrameSource<Mat>,
-        IFrameSource<System.Drawing.Bitmap>,
         IFrameSource<Image<Rgb24>>
 
     {
@@ -62,13 +60,6 @@ namespace PiTop.Camera
         public void Connect()
         {
             _capture.Open(_index);
-        }
-
-        System.Drawing.Bitmap IFrameSource<System.Drawing.Bitmap>.GetFrame()
-        {
-            var raw = GetFrameAsMat();
-            var frame = raw.ToBitmap();
-            return frame;
         }
 
         Mat IFrameSource<Mat>.GetFrame()

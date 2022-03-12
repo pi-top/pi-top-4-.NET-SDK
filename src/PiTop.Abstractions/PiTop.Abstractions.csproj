@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <PackageVersion>0.0.1</PackageVersion>
     <PackageId>pi-top.Abstractions</PackageId>
     <IsPackable>true</IsPackable>
@@ -29,10 +29,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
-    <PackageReference Include="System.Device.Gpio" Version="1.5.0" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
+    <PackageReference Include="System.Device.Gpio" Version="2.1.0" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
-    <PackageReference Include="UnitsNet" Version="4.102.0" />
+    <PackageReference Include="UnitsNet" Version="4.125.0" />
   </ItemGroup>
 
   <ItemGroup>

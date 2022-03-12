@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <PackageVersion>0.0.1</PackageVersion>
     <PackageId>pi-top.Camera.Psi.DotNet.Interactive</PackageId>
@@ -39,7 +39,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PiTop.Camera.InteractiveExtension\PiTop.Camera.InteractiveExtension.csproj" />
-    <ProjectReference Include="..\PiTop.Camera.Psi\PiTop.Camera.Psi.csproj" />
     <ProjectReference Include="..\PiTop.InteractiveExtension\PiTop.InteractiveExtension.csproj" />
   </ItemGroup>
 
