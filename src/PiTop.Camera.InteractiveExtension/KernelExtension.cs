@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.DotNet.Interactive;
 using Microsoft.DotNet.Interactive.Commands;
 using Microsoft.DotNet.Interactive.Formatting;
 
-using OpenCvSharp;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Gif;
@@ -30,6 +27,12 @@ namespace PiTop.Camera.InteractiveExtension
                 writer.Write(imgTag);
             }, HtmlFormatter.MimeType);
 
+            var opencvExtension = new OpenCvSharp4.InteractiveExtension.KernelExtension();
+
+            await opencvExtension.OnLoadAsync(kernel);
+
+            var imagesharpExtension = new ImageSharp.InteractiveExtension.KernelExtension();
+            await imagesharpExtension.OnLoadAsync(kernel);
 
             await kernel.SendAsync(
                 new DisplayValue(new FormattedValue(
